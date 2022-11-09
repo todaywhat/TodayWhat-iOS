@@ -11,13 +11,13 @@ struct MainView: View {
                 
                 Text("옵션변경")
                     .font(.system(size: 14))
-                    .foregroundColor(Color.extraGray)
+                    .foregroundColor(Color("Sub"))
             }
             .padding(.top, 8)
             .padding(.bottom, 4)
             .padding(.horizontal, 12)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.extraGray)
+            .background(Color("Main"))
             .cornerRadius(8)
             .onTapGesture {
                 isPresentedOption.toggle()
@@ -30,7 +30,7 @@ struct MainView: View {
                             timetableView(timetable)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.extraPrimary)
+                        .background(Color("Main"))
                         .cornerRadius(8)
                     }
                 } else {
@@ -39,7 +39,7 @@ struct MainView: View {
                             mealView(meal)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.extraPrimary)
+                        .background(Color("Sub"))
                         .cornerRadius(8)
                     }
                 }
@@ -66,12 +66,12 @@ struct MainView: View {
     @ViewBuilder
     func timetableView(_ timetable: TimeTable) -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("\(timetable.perio)교시")
-                .font(.system(size: 14))
-            
             Text(timetable.content)
-                .foregroundColor(.extraGray)
-                .font(.system(size: 16))
+                .font(.system(size: 14, weight: .medium))
+            
+            Text("\(timetable.perio)교시")
+                .foregroundColor(Color("Sub"))
+                .font(.system(size: 14))
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 12)

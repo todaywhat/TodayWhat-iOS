@@ -217,13 +217,6 @@
 			path = SchoolSetting;
 			sourceTree = "<group>";
 		};
-		4603105D291B67B800A5CB09 /* Clients */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Clients;
-			sourceTree = "<group>";
-		};
 		460843CE28DBFE2300D60E39 = {
 			isa = PBXGroup;
 			children = (
@@ -326,7 +319,6 @@
 		4647B12028DC0A9000FAB81B /* shared */ = {
 			isa = PBXGroup;
 			children = (
-				4603105D291B67B800A5CB09 /* Clients */,
 				4647B13C28DC415400FAB81B /* Domains */,
 				4647B13828DC3C1200FAB81B /* Error */,
 				4647B12528DC1C1600FAB81B /* Utils */,

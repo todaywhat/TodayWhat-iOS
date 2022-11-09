@@ -11,7 +11,7 @@ import SwiftUI
 struct TodayWhatApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Text("")
         }
     }
 }
