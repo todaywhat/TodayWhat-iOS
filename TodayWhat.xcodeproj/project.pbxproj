@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4603102E2918D3A100A5CB09 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 4603102D2918D3A100A5CB09 /* ComposableArchitecture */; };
 		460310302918D3A100A5CB09 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 4603102F2918D3A100A5CB09 /* Dependencies */; };
+		4603105B291B674000A5CB09 /* SchoolSettingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46031059291B674000A5CB09 /* SchoolSettingCore.swift */; };
+		4603105C291B674000A5CB09 /* SchoolSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603105A291B674000A5CB09 /* SchoolSettingView.swift */; };
 		460843DB28DBFE2400D60E39 /* TodayWhatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460843DA28DBFE2400D60E39 /* TodayWhatApp.swift */; };
 		460843DF28DBFE2500D60E39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460843DE28DBFE2500D60E39 /* Assets.xcassets */; };
 		460843E228DBFE2500D60E39 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460843E128DBFE2500D60E39 /* Preview Assets.xcassets */; };
@@ -94,6 +96,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		46031059291B674000A5CB09 /* SchoolSettingCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolSettingCore.swift; sourceTree = "<group>"; };
+		4603105A291B674000A5CB09 /* SchoolSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolSettingView.swift; sourceTree = "<group>"; };
 		460843D728DBFE2400D60E39 /* TodayWhat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodayWhat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		460843DA28DBFE2400D60E39 /* TodayWhatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhatApp.swift; sourceTree = "<group>"; };
 		460843DE28DBFE2500D60E39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -207,8 +211,17 @@
 		46031058291B626500A5CB09 /* SchoolSetting */ = {
 			isa = PBXGroup;
 			children = (
+				46031059291B674000A5CB09 /* SchoolSettingCore.swift */,
+				4603105A291B674000A5CB09 /* SchoolSettingView.swift */,
 			);
 			path = SchoolSetting;
+			sourceTree = "<group>";
+		};
+		4603105D291B67B800A5CB09 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Clients;
 			sourceTree = "<group>";
 		};
 		460843CE28DBFE2300D60E39 = {
@@ -313,7 +326,8 @@
 		4647B12028DC0A9000FAB81B /* shared */ = {
 			isa = PBXGroup;
 			children = (
-				4647B13C28DC415400FAB81B /* Domain */,
+				4603105D291B67B800A5CB09 /* Clients */,
+				4647B13C28DC415400FAB81B /* Domains */,
 				4647B13828DC3C1200FAB81B /* Error */,
 				4647B12528DC1C1600FAB81B /* Utils */,
 				4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */,
@@ -364,29 +378,21 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
-		4647B13C28DC415400FAB81B /* Domain */ = {
+		4647B13C28DC415400FAB81B /* Domains */ = {
 			isa = PBXGroup;
 			children = (
-				4647B14628DC517100FAB81B /* DataSources */,
-				4647B13D28DC416000FAB81B /* Entity */,
+				4647B13D28DC416000FAB81B /* Entities */,
 			);
-			path = Domain;
+			path = Domains;
 			sourceTree = "<group>";
 		};
-		4647B13D28DC416000FAB81B /* Entity */ = {
+		4647B13D28DC416000FAB81B /* Entities */ = {
 			isa = PBXGroup;
 			children = (
 				4647B13E28DC416400FAB81B /* Meal.swift */,
 				4647B14128DC417400FAB81B /* TimeTable.swift */,
 			);
-			path = Entity;
-			sourceTree = "<group>";
-		};
-		4647B14628DC517100FAB81B /* DataSources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DataSources;
+			path = Entities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -621,7 +627,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4647B13A28DC3C2100FAB81B /* TodayWhatError.swift in Sources */,
+				4603105B291B674000A5CB09 /* SchoolSettingCore.swift in Sources */,
 				4647B12828DC1C2800FAB81B /* Color+Ext.swift in Sources */,
+				4603105C291B674000A5CB09 /* SchoolSettingView.swift in Sources */,
 				4647B13628DC292300FAB81B /* View+Ext.swift in Sources */,
 				4647B14228DC417400FAB81B /* TimeTable.swift in Sources */,
 				4647B13F28DC416400FAB81B /* Meal.swift in Sources */,
