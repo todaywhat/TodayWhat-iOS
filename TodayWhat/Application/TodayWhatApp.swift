@@ -11,8 +11,7 @@ import SwiftUI
 struct TodayWhatApp: App {
     var body: some Scene {
         WindowGroup {
-            TestView()
-                .padding()
+            Text("A")
         }
     }
 }

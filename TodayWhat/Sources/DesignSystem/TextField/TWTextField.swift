@@ -75,16 +75,3 @@ struct TWTextField: View {
         .animation(.default, value: isFocused)
     }
 }
-
-struct TWTextField_Previews: PreviewProvider {
-    static var previews: some View {
-        TestView()
-    }
-}
-
-struct TestView: View {
-    @State var text = ""
-    var body: some View {
-        TWTextField(text: $text, placeholder: "학교이름")
-    }
-}
