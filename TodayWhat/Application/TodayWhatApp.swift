@@ -11,7 +11,12 @@ import SwiftUI
 struct TodayWhatApp: App {
     var body: some Scene {
         WindowGroup {
-            Text("A")
+            SchoolSettingView(
+                store: .init(
+                    initialState: .init(),
+                    reducer: SchoolSettingCore()
+                )
+            )
         }
     }
 }

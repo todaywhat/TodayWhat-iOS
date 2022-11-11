@@ -14,6 +14,10 @@
 		46031065291B8E9E00A5CB09 /* TWTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46031064291B8E9E00A5CB09 /* TWTextField.swift */; };
 		46031069291BB28800A5CB09 /* TWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46031068291BB28800A5CB09 /* TWButton.swift */; };
 		46031087291CA5E900A5CB09 /* TWButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46031086291CA5E900A5CB09 /* TWButtonStyle.swift */; };
+		4603108D291CD76F00A5CB09 /* SchoolSettingCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603108C291CD76F00A5CB09 /* SchoolSettingCoreTests.swift */; };
+		4603108F291D1C0600A5CB09 /* School.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603108E291D1C0600A5CB09 /* School.swift */; };
+		46031092291D1E3F00A5CB09 /* SchoolKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46031091291D1E3F00A5CB09 /* SchoolKind.swift */; };
+		46031094291D1E6100A5CB09 /* SchoolType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46031093291D1E6100A5CB09 /* SchoolType.swift */; };
 		460843DB28DBFE2400D60E39 /* TodayWhatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460843DA28DBFE2400D60E39 /* TodayWhatApp.swift */; };
 		460843DF28DBFE2500D60E39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460843DE28DBFE2500D60E39 /* Assets.xcassets */; };
 		460843E228DBFE2500D60E39 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460843E128DBFE2500D60E39 /* Preview Assets.xcassets */; };
@@ -104,6 +108,10 @@
 		46031064291B8E9E00A5CB09 /* TWTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWTextField.swift; sourceTree = "<group>"; };
 		46031068291BB28800A5CB09 /* TWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWButton.swift; sourceTree = "<group>"; };
 		46031086291CA5E900A5CB09 /* TWButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWButtonStyle.swift; sourceTree = "<group>"; };
+		4603108C291CD76F00A5CB09 /* SchoolSettingCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolSettingCoreTests.swift; sourceTree = "<group>"; };
+		4603108E291D1C0600A5CB09 /* School.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = School.swift; sourceTree = "<group>"; };
+		46031091291D1E3F00A5CB09 /* SchoolKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolKind.swift; sourceTree = "<group>"; };
+		46031093291D1E6100A5CB09 /* SchoolType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolType.swift; sourceTree = "<group>"; };
 		460843D728DBFE2400D60E39 /* TodayWhat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodayWhat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		460843DA28DBFE2400D60E39 /* TodayWhatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhatApp.swift; sourceTree = "<group>"; };
 		460843DE28DBFE2500D60E39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -259,6 +267,31 @@
 			path = Button;
 			sourceTree = "<group>";
 		};
+		4603108A291CD74600A5CB09 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				4603108B291CD74B00A5CB09 /* SchoolSetting */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		4603108B291CD74B00A5CB09 /* SchoolSetting */ = {
+			isa = PBXGroup;
+			children = (
+				4603108C291CD76F00A5CB09 /* SchoolSettingCoreTests.swift */,
+			);
+			path = SchoolSetting;
+			sourceTree = "<group>";
+		};
+		46031090291D1E3600A5CB09 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				46031091291D1E3F00A5CB09 /* SchoolKind.swift */,
+				46031093291D1E6100A5CB09 /* SchoolType.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
 		460843CE28DBFE2300D60E39 = {
 			isa = PBXGroup;
 			children = (
@@ -308,6 +341,7 @@
 		460843EA28DBFE2500D60E39 /* TodayWhatTests */ = {
 			isa = PBXGroup;
 			children = (
+				4603108A291CD74600A5CB09 /* Features */,
 				460843EB28DBFE2500D60E39 /* TodayWhatTests.swift */,
 			);
 			path = TodayWhatTests;
@@ -414,6 +448,7 @@
 		4647B13C28DC415400FAB81B /* Domains */ = {
 			isa = PBXGroup;
 			children = (
+				46031090291D1E3600A5CB09 /* Enum */,
 				4647B13D28DC416000FAB81B /* Entities */,
 			);
 			path = Domains;
@@ -424,6 +459,7 @@
 			children = (
 				4647B13E28DC416400FAB81B /* Meal.swift */,
 				4647B14128DC417400FAB81B /* TimeTable.swift */,
+				4603108E291D1C0600A5CB09 /* School.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -664,9 +700,12 @@
 				4647B12828DC1C2800FAB81B /* Color+Ext.swift in Sources */,
 				46031087291CA5E900A5CB09 /* TWButtonStyle.swift in Sources */,
 				4603105C291B674000A5CB09 /* SchoolSettingView.swift in Sources */,
+				46031094291D1E6100A5CB09 /* SchoolType.swift in Sources */,
 				46031069291BB28800A5CB09 /* TWButton.swift in Sources */,
 				4647B13628DC292300FAB81B /* View+Ext.swift in Sources */,
+				4603108F291D1C0600A5CB09 /* School.swift in Sources */,
 				46031065291B8E9E00A5CB09 /* TWTextField.swift in Sources */,
+				46031092291D1E3F00A5CB09 /* SchoolKind.swift in Sources */,
 				4647B14228DC417400FAB81B /* TimeTable.swift in Sources */,
 				4647B13F28DC416400FAB81B /* Meal.swift in Sources */,
 				460843DB28DBFE2400D60E39 /* TodayWhatApp.swift in Sources */,
@@ -680,6 +719,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				460843EC28DBFE2500D60E39 /* TodayWhatTests.swift in Sources */,
+				4603108D291CD76F00A5CB09 /* SchoolSettingCoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

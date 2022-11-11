@@ -7,8 +7,8 @@ struct TWTextField: View {
     @FocusState var isFocused: Bool
 
     public init(
+        _ placeholder: String = "",
         text: Binding<String>,
-        placeholder: String = "",
         onCommit: @escaping () -> Void = {}
     ) {
         _text = text
