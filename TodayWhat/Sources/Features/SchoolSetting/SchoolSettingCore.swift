@@ -7,6 +7,7 @@ public struct SchoolSettingCore: ReducerProtocol {
         public var school = ""
         public var grade = ""
         public var `class` = ""
+        public var selectedSchool: School?
         public var isFocusedSchool = false
         public var schoolList: [School] = []
         public var isError = false
@@ -32,6 +33,7 @@ public struct SchoolSettingCore: ReducerProtocol {
         case gradeChanged(String)
         case classChanged(String)
         case schoolListResponse(TaskResult<[School]>)
+        case schoolRowDidSelect(School)
     }
 
     @Dependency(\.schoolClient) var schoolClient
@@ -67,6 +69,11 @@ public struct SchoolSettingCore: ReducerProtocol {
             case let .schoolListResponse(.failure(error)):
                 state.isError = true
                 state.errorMessage = error.localizedDescription
+
+            case let .schoolRowDidSelect(school):
+                state.selectedSchool = school
+                state.school = school.name
+                state.isFocusedSchool = false
             
             default:
                 return .none

@@ -60,15 +60,16 @@ public struct SchoolSettingView: View {
                     get: \.school,
                     send: SchoolSettingCore.Action.schoolChanged
                 )
-            ) {
-                focusField = .grade
-            }
+            )
             .focused($focusField, equals: .school)
 
             if viewStore.isFocusedSchool {
                 ForEach(viewStore.schoolList, id: \.schoolCode) { school in
                     HStack {
                         schoolRowView(school: school)
+                            .onTapGesture {
+                                viewStore.send(.schoolRowDidSelect(school))
+                            }
 
                         Spacer()
                     }
@@ -83,6 +84,9 @@ public struct SchoolSettingView: View {
         .padding(.horizontal, 16)
         .onChange(of: focusField) { newValue in
             viewStore.send(.schoolFocusedChanged(newValue == .school), animation: .default)
+        }
+        .onChange(of: viewStore.selectedSchool) { _ in
+            focusField = .grade
         }
         .onChange(of: viewStore.grade) { newValue in
             if newValue.count > 0 {
