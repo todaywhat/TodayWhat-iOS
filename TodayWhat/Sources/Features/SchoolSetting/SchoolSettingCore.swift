@@ -1,4 +1,5 @@
 import ComposableArchitecture
+import Foundation
 
 public struct SchoolSettingCore: ReducerProtocol {
     public init() {}
@@ -7,6 +8,9 @@ public struct SchoolSettingCore: ReducerProtocol {
         public var grade = ""
         public var `class` = ""
         public var isFocusedSchool = false
+        public var schoolList: [School] = []
+        public var isError = false
+        public var errorMessage = ""
 
         public var titleMessage: String {
             if school.isEmpty {
@@ -27,13 +31,26 @@ public struct SchoolSettingCore: ReducerProtocol {
         case schoolFocusedChanged(Bool)
         case gradeChanged(String)
         case classChanged(String)
+        case schoolListResponse(TaskResult<[School]>)
     }
+
+    @Dependency(\.schoolClient) var schoolClient
+
+    struct SchoolDebounceID: Hashable {}
 
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
             case let .schoolChanged(school):
                 state.school = school
+                return .task { [school = state.school] in
+                    return .schoolListResponse(
+                        await TaskResult {
+                            try await schoolClient.fetchSchoolList(school)
+                        }
+                    )
+                }
+                .debounce(id: SchoolDebounceID(), for: .milliseconds(150), scheduler: DispatchQueue.main)
 
             case let .schoolFocusedChanged(focused):
                 state.isFocusedSchool = focused
@@ -43,6 +60,13 @@ public struct SchoolSettingCore: ReducerProtocol {
 
             case let .classChanged(`class`):
                 state.class = "\(`class`)"
+
+            case let .schoolListResponse(.success(list)):
+                state.schoolList = list
+
+            case let .schoolListResponse(.failure(error)):
+                state.isError = true
+                state.errorMessage = error.localizedDescription
             
             default:
                 return .none

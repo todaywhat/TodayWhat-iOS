@@ -1,4 +1,4 @@
-enum SchoolType: String, Decodable {
+public enum SchoolType: String, Decodable {
     case elementary
     case middle
     case high

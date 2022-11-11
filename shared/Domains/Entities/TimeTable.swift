@@ -1,6 +1,6 @@
 import Foundation
 
-struct TimeTable: Equatable, Hashable {
-    let perio: Int
-    let content: String
+public struct TimeTable: Equatable, Hashable {
+    public let perio: Int
+    public let content: String
 }

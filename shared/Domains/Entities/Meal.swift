@@ -1,7 +1,7 @@
 import Foundation
 
-struct Meal: Equatable{
-    let breakfast: [String]
-    let lunch: [String]
-    let dinner: [String]
+public struct Meal: Equatable{
+    public let breakfast: [String]
+    public let lunch: [String]
+    public let dinner: [String]
 }

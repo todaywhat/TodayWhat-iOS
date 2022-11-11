@@ -65,6 +65,16 @@ public struct SchoolSettingView: View {
             }
             .focused($focusField, equals: .school)
 
+            if viewStore.isFocusedSchool {
+                ForEach(viewStore.schoolList, id: \.schoolCode) { school in
+                    HStack {
+                        schoolRowView(school: school)
+
+                        Spacer()
+                    }
+                }
+            }
+
             Spacer()
         }
         .animation(.default, value: viewStore.grade)
@@ -78,6 +88,18 @@ public struct SchoolSettingView: View {
             if newValue.count > 0 {
                 focusField = .class
             }
+        }
+    }
+
+    @ViewBuilder
+    func schoolRowView(school: School) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(school.name)
+                .font(.system(size: 14, weight: .bold))
+
+            Text(school.location)
+                .font(.system(size: 12))
+                .foregroundColor(.extraGray)
         }
     }
 }

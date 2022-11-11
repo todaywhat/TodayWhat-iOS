@@ -1,5 +1,5 @@
 import ComposableArchitecture
-import TodayWhat
+@testable import TodayWhat
 import XCTest
 
 @MainActor
@@ -9,10 +9,31 @@ final class SchoolSettingCoreTests: XCTestCase {
             initialState: SchoolSettingCore.State(),
             reducer: SchoolSettingCore()
         )
+        
+        let dummySchool = School(orgCode: "3", schoolCode: "2", name: "광소마고", location: "미궁", schoolType: .high)
+        store.dependencies.schoolClient.fetchSchoolList = { keyword in
+            if keyword == "error" {
+                throw TodayWhatError.failedToFetch
+            }
+            return [dummySchool]
+        }
 
         await store.send(.schoolChanged("광주소")) {
             $0.school = "광주소"
-        }.finish()
+        }.finish(timeout: .seconds(1))
+
+        await store.receive(.schoolListResponse(.success([dummySchool]))) {
+            $0.schoolList = [dummySchool]
+        }
+
+        await store.send(.schoolChanged("error")) {
+            $0.school = "error"
+        }.finish(timeout: .seconds(1))
+
+        await store.receive(.schoolListResponse(.failure(TodayWhatError.failedToFetch))) {
+            $0.isError = true
+            $0.errorMessage = TodayWhatError.failedToFetch.localizedDescription
+        }
 
         await store.send(.schoolFocusedChanged(true)) {
             $0.isFocusedSchool = true
@@ -29,7 +50,5 @@ final class SchoolSettingCoreTests: XCTestCase {
         await store.send(.classChanged("2")) {
             $0.class = "2"
         }.finish()
-
-        
     }
 }
