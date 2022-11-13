@@ -1,13 +1,29 @@
 import SwiftUI
 
 struct TWButtonStyle: ButtonStyle {
+    enum Style {
+        case cta
+        case wide
+    }
+    private var style: Style
+
+    init(style: Style) {
+        self.style = style
+    }
+
     func makeBody(configuration: Configuration) -> some View {
-        DefaultButton(configuration: configuration)
+        switch style {
+        case .cta:
+            CTAButton(configuration: configuration)
+
+        case .wide:
+            WideButton(configuration: configuration)
+        }
     }
 }
 
 private extension TWButtonStyle {
-    struct DefaultButton: View {
+    struct CTAButton: View {
         let configuration: ButtonStyle.Configuration
         @Environment(\.isEnabled) var isEnabled
 
@@ -26,6 +42,27 @@ private extension TWButtonStyle {
                 .foregroundColor(.veryLightGray)
                 .background(background)
                 .cornerRadius(8)
+        }
+    }
+
+    struct WideButton: View {
+        let configuration: ButtonStyle.Configuration
+        @Environment(\.isEnabled) var isEnabled
+
+        var background: Color {
+            if isEnabled {
+                return configuration.isPressed ?
+                    .black :
+                    .extraPrimary
+            } else {
+                return .extraGray
+            }
+        }
+        var body: some View {
+            configuration.label
+                .font(.system(size: 14))
+                .foregroundColor(.veryLightGray)
+                .background(background)
         }
     }
 }

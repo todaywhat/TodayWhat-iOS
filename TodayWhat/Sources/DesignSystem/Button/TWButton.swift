@@ -1,14 +1,17 @@
 import SwiftUI
 
 struct TWButton: View {
-    var title: String
-    var action: () -> Void
+    private var title: String
+    private var style: TWButtonStyle.Style
+    private var action: () -> Void
 
-    public init(
+    init(
         title: String,
+        style: TWButtonStyle.Style = .cta,
         action: @escaping () -> Void = {}
     ) {
         self.title = title
+        self.style = style
         self.action = action
     }
 
@@ -23,7 +26,7 @@ struct TWButton: View {
                 Spacer()
             }
         }
-        .buttonStyle(TWButtonStyle())
+        .buttonStyle(TWButtonStyle(style: style))
     }
 }
 
