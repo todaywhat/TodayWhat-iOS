@@ -42,7 +42,7 @@ public struct SchoolSettingView: View {
                         }
                         .padding(.bottom, 16)
                         .onTapGesture {
-                            viewStore.send(.majorTextFieldDidTap)
+                            viewStore.send(.majorTextFieldDidTap, animation: .default)
                             focusField = nil
                         }
                     }
@@ -54,7 +54,10 @@ public struct SchoolSettingView: View {
                                 get: \.class,
                                 send: SchoolSettingCore.Action.classChanged
                             )
-                        )
+                        ) {
+                            viewStore.send(.majorTextFieldDidTap, animation: .default)
+                            focusField = nil
+                        }
                         .focused($focusField, equals: .class)
                         .keyboardType(.numberPad)
                         .padding(.bottom, 16)
@@ -67,7 +70,9 @@ public struct SchoolSettingView: View {
                                 get: \.grade,
                                 send: SchoolSettingCore.Action.gradeChanged
                             )
-                        )
+                        ) {
+                            focusField = .class
+                        }
                         .focused($focusField, equals: .grade)
                         .keyboardType(.numberPad)
                         .padding(.bottom, 16)
@@ -80,7 +85,9 @@ public struct SchoolSettingView: View {
                         get: \.school,
                         send: SchoolSettingCore.Action.schoolChanged
                     )
-                )
+                ) {
+                    focusField = .grade
+                }
                 .focused($focusField, equals: .school)
 
                 if viewStore.isFocusedSchool {
@@ -88,7 +95,7 @@ public struct SchoolSettingView: View {
                         HStack {
                             schoolRowView(school: school)
                                 .onTapGesture {
-                                    viewStore.send(.schoolRowDidSelect(school))
+                                    viewStore.send(.schoolRowDidSelect(school), animation: .default)
                                 }
 
                             Spacer()
@@ -102,6 +109,7 @@ public struct SchoolSettingView: View {
             .animation(.default, value: viewStore.class)
             .animation(.default, value: viewStore.school)
             .padding(.horizontal, 16)
+            .padding(.top, 24)
             .onChange(of: focusField) { newValue in
                 viewStore.send(.schoolFocusedChanged(newValue == .school), animation: .default)
             }
@@ -119,7 +127,7 @@ public struct SchoolSettingView: View {
 
                 if !viewStore.class.isEmpty && !viewStore.isFocusedSchool {
                     TWButton(title: viewStore.nextButtonTitle, style: .wide) {
-                        viewStore.send(.nextButtonDidTap)
+                        viewStore.send(.nextButtonDidTap, animation: .default)
                         focusField = nil
                     }
                 }

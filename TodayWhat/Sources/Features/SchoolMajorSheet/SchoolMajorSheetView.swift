@@ -21,13 +21,12 @@ public struct SchoolMajorSheetView: View {
                             schoolMajorRowView(major: major)
                                 .padding(2)
                         }
-
                     }
                 }
             }
-            .padding(.top, 32)
             .padding(.horizontal, 32)
         }
+        .padding(.top, 32)
     }
 
     @ViewBuilder

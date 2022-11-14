@@ -55,23 +55,28 @@ struct TWTextField: View {
             }
             .animation(.default, value: isFocused)
 
-            if isFocused && !text.isEmpty {
-                HStack {
-                    Spacer()
-
-                    Button {
+            
+            HStack {
+                Spacer()
+                
+                Button {
+                    withAnimation {
                         text = ""
-                    } label: {
+                    }
+                } label: {
+                    if isFocused && !text.isEmpty {
                         Image(systemName: "xmark.circle.fill")
                             .font(.system(size: 16, weight: .medium))
                             .foregroundColor(.extraGray)
+                    } else {
+                        EmptyView()
                     }
                 }
-                .zIndex(2)
-                .padding()
             }
+            .zIndex(2)
+            .padding()
+            .animation(.default, value: text)
+            .animation(.default, value: isFocused)
         }
-        .animation(.default, value: text)
-        .animation(.default, value: isFocused)
     }
 }

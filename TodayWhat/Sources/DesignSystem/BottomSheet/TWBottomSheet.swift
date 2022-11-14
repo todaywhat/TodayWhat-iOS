@@ -61,6 +61,7 @@ struct TWBottomSheet<T: View>: ViewModifier {
                         VStack {
                             self.content()
                                 .frame(maxWidth: .infinity)
+                                .transition(.move(edge: .bottom))
                         }
                         .padding(.bottom, 42)
                         .offset(y: -dragHeight)
@@ -75,6 +76,7 @@ struct TWBottomSheet<T: View>: ViewModifier {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
             .ignoresSafeArea()
         }
+        .animation(.default, value: isShowing)
     }
 }
 

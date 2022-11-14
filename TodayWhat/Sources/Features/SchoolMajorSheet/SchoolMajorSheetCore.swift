@@ -21,10 +21,13 @@ public struct SchoolMajorSheetCore: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
+            case let .majorRowDidSelect(major):
+                state.selectedMajor = major
             
             default:
                 return .none
             }
+            return .none
         }
     }
 }
