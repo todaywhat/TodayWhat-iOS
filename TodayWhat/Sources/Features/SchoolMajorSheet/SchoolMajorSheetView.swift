@@ -16,9 +16,10 @@ public struct SchoolMajorSheetView: View {
                 LazyVStack(spacing: 32) {
                     ForEach(viewStore.majorList, id: \.self) { major in
                         Button {
-                            viewStore.send(.majorRowDidSelect(major))
+                            viewStore.send(.majorRowDidSelect(major), animation: .default)
                         } label: {
                             schoolMajorRowView(major: major)
+                                .padding(2)
                         }
 
                     }
@@ -37,6 +38,10 @@ public struct SchoolMajorSheetView: View {
                 .foregroundColor(.extraPrimary)
 
             Spacer()
+
+            TWRadioButton(isChecked: viewStore.selectedMajor == major) {
+                viewStore.send(.majorRowDidSelect(major), animation: .default)
+            }
         }
     }
 }
