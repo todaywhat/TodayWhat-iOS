@@ -23,7 +23,7 @@ public struct SchoolSettingView: View {
                 if !viewStore.isFocusedSchool {
                     HStack {
                         Text(viewStore.titleMessage)
-                            .font(.system(size: 16, weight: .medium))
+                            .font(.system(size: 20, weight: .medium))
 
                         Spacer()
                     }
@@ -86,7 +86,7 @@ public struct SchoolSettingView: View {
                         send: SchoolSettingCore.Action.schoolChanged
                     )
                 ) {
-                    focusField = .grade
+                    focusField = .school
                 }
                 .focused($focusField, equals: .school)
 
@@ -152,10 +152,10 @@ public struct SchoolSettingView: View {
     func schoolRowView(school: School) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(school.name)
-                .font(.system(size: 14, weight: .bold))
+                .font(.system(size: 16, weight: .bold))
 
             Text(school.location)
-                .font(.system(size: 12))
+                .font(.system(size: 14))
                 .foregroundColor(.extraGray)
         }
     }

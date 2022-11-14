@@ -19,7 +19,7 @@ struct TWTextField: View {
     var body: some View {
         ZStack(alignment: .leading) {
             TextField("", text: $text)
-                .font(.system(size: 14))
+                .font(.system(size: 16))
                 .foregroundColor(.extraPrimary)
                 .padding()
                 .background {
@@ -44,7 +44,7 @@ struct TWTextField: View {
                         .zIndex(0)
                 } else {
                     Text(placeholder)
-                        .font(.system(size: 14))
+                        .font(.system(size: 16))
                         .foregroundColor(.extraGray)
                         .padding()
                         .onTapGesture {
@@ -68,13 +68,14 @@ struct TWTextField: View {
                         Image(systemName: "xmark.circle.fill")
                             .font(.system(size: 16, weight: .medium))
                             .foregroundColor(.extraGray)
+                            .frame(width: 28, height: 28)
                     } else {
                         EmptyView()
                     }
                 }
             }
             .zIndex(2)
-            .padding()
+            .padding(.trailing)
             .animation(.default, value: text)
             .animation(.default, value: isFocused)
         }
