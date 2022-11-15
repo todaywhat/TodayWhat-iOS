@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "grdb.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/groue/GRDB.swift.git",
+      "state" : {
+        "revision" : "2d31ed46183d46927eec91f3421ef3c24f75e93d",
+        "version" : "6.3.1"
+      }
+    },
+    {
       "identity" : "linknavigator",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/interactord/LinkNavigator.git",

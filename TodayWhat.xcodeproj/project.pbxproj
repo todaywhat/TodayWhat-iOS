@@ -34,6 +34,7 @@
 		4603110E2923093500A5CB09 /* SplashCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603110C2923093500A5CB09 /* SplashCore.swift */; };
 		4603110F2923093500A5CB09 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603110D2923093500A5CB09 /* SplashView.swift */; };
 		460311172923202500A5CB09 /* View+eraseToAnyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460311162923202500A5CB09 /* View+eraseToAnyView.swift */; };
+		4603112629234F8100A5CB09 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 4603112529234F8100A5CB09 /* GRDB */; };
 		460843DB28DBFE2400D60E39 /* TodayWhatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460843DA28DBFE2400D60E39 /* TodayWhatApp.swift */; };
 		460843DF28DBFE2500D60E39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460843DE28DBFE2500D60E39 /* Assets.xcassets */; };
 		460843E228DBFE2500D60E39 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460843E128DBFE2500D60E39 /* Preview Assets.xcassets */; };
@@ -178,6 +179,7 @@
 				460310A3291DD96900A5CB09 /* SwiftyJSON in Frameworks */,
 				460310302918D3A100A5CB09 /* Dependencies in Frameworks */,
 				4603102E2918D3A100A5CB09 /* ComposableArchitecture in Frameworks */,
+				4603112629234F8100A5CB09 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,6 +627,7 @@
 				4603102D2918D3A100A5CB09 /* ComposableArchitecture */,
 				4603102F2918D3A100A5CB09 /* Dependencies */,
 				460310A2291DD96900A5CB09 /* SwiftyJSON */,
+				4603112529234F8100A5CB09 /* GRDB */,
 			);
 			productName = TodayWhat;
 			productReference = 460843D728DBFE2400D60E39 /* TodayWhat.app */;
@@ -766,6 +769,7 @@
 				4603102C2918D3A100A5CB09 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				460310A1291DD96900A5CB09 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				460311002923067E00A5CB09 /* XCRemoteSwiftPackageReference "LinkNavigator" */,
+				4603112429234F8100A5CB09 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 			);
 			productRefGroup = 460843D828DBFE2400D60E39 /* Products */;
 			projectDirPath = "";
@@ -1450,6 +1454,14 @@
 				minimumVersion = 0.3.1;
 			};
 		};
+		4603112429234F8100A5CB09 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.3.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1467,6 +1479,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 460310A1291DD96900A5CB09 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
+		};
+		4603112529234F8100A5CB09 /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4603112429234F8100A5CB09 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
+			productName = GRDB;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
