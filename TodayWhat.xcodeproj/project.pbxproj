@@ -43,6 +43,7 @@
 		460311552923DCE800A5CB09 /* TodayWhatWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 460311512923DCE700A5CB09 /* TodayWhatWidget.intentdefinition */; };
 		460311562923DCE800A5CB09 /* TodayWhatWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 460311512923DCE700A5CB09 /* TodayWhatWidget.intentdefinition */; };
 		460311592923DCE800A5CB09 /* TodayWhatWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 460311482923DCE700A5CB09 /* TodayWhatWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		460311602924503600A5CB09 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603115F2924503600A5CB09 /* AppGroup.swift */; };
 		460843DB28DBFE2400D60E39 /* TodayWhatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460843DA28DBFE2400D60E39 /* TodayWhatApp.swift */; };
 		460843DF28DBFE2500D60E39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460843DE28DBFE2500D60E39 /* Assets.xcassets */; };
 		460843E228DBFE2500D60E39 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460843E128DBFE2500D60E39 /* Preview Assets.xcassets */; };
@@ -176,6 +177,8 @@
 		460311512923DCE700A5CB09 /* TodayWhatWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = TodayWhatWidget.intentdefinition; sourceTree = "<group>"; };
 		460311522923DCE800A5CB09 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		460311542923DCE800A5CB09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4603115F2924503600A5CB09 /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroup.swift; sourceTree = "<group>"; };
+		460311612924505B00A5CB09 /* TodayWhat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayWhat.entitlements; sourceTree = "<group>"; };
 		460843D728DBFE2400D60E39 /* TodayWhat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodayWhat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		460843DA28DBFE2400D60E39 /* TodayWhatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhatApp.swift; sourceTree = "<group>"; };
 		460843DE28DBFE2500D60E39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -541,6 +544,7 @@
 		460843D928DBFE2400D60E39 /* TodayWhat */ = {
 			isa = PBXGroup;
 			children = (
+				460311612924505B00A5CB09 /* TodayWhat.entitlements */,
 				46031055291B614100A5CB09 /* Application */,
 				46031056291B616C00A5CB09 /* Sources */,
 				4603104F291B609600A5CB09 /* Resources */,
@@ -630,6 +634,7 @@
 			children = (
 				4647B12628DC1C1B00FAB81B /* Extensions */,
 				4603109F291DCE4200A5CB09 /* Consts.swift */,
+				4603115F2924503600A5CB09 /* AppGroup.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -985,6 +990,7 @@
 				4603108F291D1C0600A5CB09 /* School.swift in Sources */,
 				46031065291B8E9E00A5CB09 /* TWTextField.swift in Sources */,
 				46031092291D1E3F00A5CB09 /* SchoolKind.swift in Sources */,
+				460311602924503600A5CB09 /* AppGroup.swift in Sources */,
 				4647B14228DC417400FAB81B /* TimeTable.swift in Sources */,
 				4647B13F28DC416400FAB81B /* Meal.swift in Sources */,
 				460843DB28DBFE2400D60E39 /* TodayWhatApp.swift in Sources */,
@@ -1321,6 +1327,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TodayWhat/TodayWhat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TodayWhat/Preview Content\"";
@@ -1354,6 +1361,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TodayWhat/TodayWhat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TodayWhat/Preview Content\"";
