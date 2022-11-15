@@ -9,7 +9,7 @@ public struct SchoolSettingView: View {
         case major
     }
     let store: StoreOf<SchoolSettingCore>
-    @ObservedObject var viewStore: ViewStore<SchoolSettingCore.State, SchoolSettingCore.Action>
+    @ObservedObject var viewStore: ViewStoreOf<SchoolSettingCore>
     @FocusState private var focusField: FocusField?
     
     public init(store: StoreOf<SchoolSettingCore>) {

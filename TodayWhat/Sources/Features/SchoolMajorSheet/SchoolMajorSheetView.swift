@@ -3,7 +3,7 @@ import SwiftUI
 
 public struct SchoolMajorSheetView: View {
     let store: StoreOf<SchoolMajorSheetCore>
-    @ObservedObject var viewStore: ViewStore<SchoolMajorSheetCore.State, SchoolMajorSheetCore.Action>
+    @ObservedObject var viewStore: ViewStoreOf<SchoolMajorSheetCore>
     
     public init(store: StoreOf<SchoolMajorSheetCore>) {
         self.store = store

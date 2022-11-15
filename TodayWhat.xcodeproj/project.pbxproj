@@ -31,6 +31,9 @@
 		460310F32921C33D00A5CB09 /* View+if.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460310F22921C33D00A5CB09 /* View+if.swift */; };
 		460310F42921C38700A5CB09 /* View+if.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460310F22921C33D00A5CB09 /* View+if.swift */; };
 		460310F72921C96800A5CB09 /* TWRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460310F62921C96800A5CB09 /* TWRadioButton.swift */; };
+		4603110E2923093500A5CB09 /* SplashCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603110C2923093500A5CB09 /* SplashCore.swift */; };
+		4603110F2923093500A5CB09 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603110D2923093500A5CB09 /* SplashView.swift */; };
+		460311172923202500A5CB09 /* View+eraseToAnyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460311162923202500A5CB09 /* View+eraseToAnyView.swift */; };
 		460843DB28DBFE2400D60E39 /* TodayWhatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460843DA28DBFE2400D60E39 /* TodayWhatApp.swift */; };
 		460843DF28DBFE2500D60E39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460843DE28DBFE2500D60E39 /* Assets.xcassets */; };
 		460843E228DBFE2500D60E39 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460843E128DBFE2500D60E39 /* Preview Assets.xcassets */; };
@@ -135,6 +138,9 @@
 		460310EB2921C2C000A5CB09 /* TWBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWBottomSheet.swift; sourceTree = "<group>"; };
 		460310F22921C33D00A5CB09 /* View+if.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+if.swift"; sourceTree = "<group>"; };
 		460310F62921C96800A5CB09 /* TWRadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWRadioButton.swift; sourceTree = "<group>"; };
+		4603110C2923093500A5CB09 /* SplashCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCore.swift; sourceTree = "<group>"; };
+		4603110D2923093500A5CB09 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		460311162923202500A5CB09 /* View+eraseToAnyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+eraseToAnyView.swift"; sourceTree = "<group>"; };
 		460843D728DBFE2400D60E39 /* TodayWhat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodayWhat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		460843DA28DBFE2400D60E39 /* TodayWhatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhatApp.swift; sourceTree = "<group>"; };
 		460843DE28DBFE2500D60E39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -242,6 +248,7 @@
 		46031057291B617000A5CB09 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				4603110B2923092B00A5CB09 /* Splash */,
 				460310E02921BE2800A5CB09 /* SchoolMajorSheet */,
 				46031058291B626500A5CB09 /* SchoolSetting */,
 			);
@@ -398,6 +405,7 @@
 		460310EF2921C30600A5CB09 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				460311162923202500A5CB09 /* View+eraseToAnyView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -408,6 +416,15 @@
 				460310F62921C96800A5CB09 /* TWRadioButton.swift */,
 			);
 			path = RadioButton;
+			sourceTree = "<group>";
+		};
+		4603110B2923092B00A5CB09 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				4603110C2923093500A5CB09 /* SplashCore.swift */,
+				4603110D2923093500A5CB09 /* SplashView.swift */,
+			);
+			path = Splash;
 			sourceTree = "<group>";
 		};
 		460843CE28DBFE2300D60E39 = {
@@ -748,6 +765,7 @@
 			packageReferences = (
 				4603102C2918D3A100A5CB09 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				460310A1291DD96900A5CB09 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				460311002923067E00A5CB09 /* XCRemoteSwiftPackageReference "LinkNavigator" */,
 			);
 			productRefGroup = 460843D828DBFE2400D60E39 /* Products */;
 			projectDirPath = "";
@@ -817,6 +835,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				460311172923202500A5CB09 /* View+eraseToAnyView.swift in Sources */,
 				4647B13A28DC3C2100FAB81B /* TodayWhatError.swift in Sources */,
 				460310A0291DCE4200A5CB09 /* Consts.swift in Sources */,
 				4603105B291B674000A5CB09 /* SchoolSettingCore.swift in Sources */,
@@ -826,11 +845,13 @@
 				4603109D291DCA1100A5CB09 /* SingleSchoolResponseDTO.swift in Sources */,
 				460310EC2921C2C000A5CB09 /* TWBottomSheet.swift in Sources */,
 				46031087291CA5E900A5CB09 /* TWButtonStyle.swift in Sources */,
+				4603110F2923093500A5CB09 /* SplashView.swift in Sources */,
 				4603105C291B674000A5CB09 /* SchoolSettingView.swift in Sources */,
 				46031094291D1E6100A5CB09 /* SchoolType.swift in Sources */,
 				46031069291BB28800A5CB09 /* TWButton.swift in Sources */,
 				460310DB2921B3DA00A5CB09 /* NeisClient.swift in Sources */,
 				4647B13628DC292300FAB81B /* View+cornerRadius.swift in Sources */,
+				4603110E2923093500A5CB09 /* SplashCore.swift in Sources */,
 				460310DE2921BB7B00A5CB09 /* SingleSchoolMajorResponseDTO.swift in Sources */,
 				4603108F291D1C0600A5CB09 /* School.swift in Sources */,
 				46031065291B8E9E00A5CB09 /* TWTextField.swift in Sources */,
@@ -1419,6 +1440,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.0.0;
+			};
+		};
+		460311002923067E00A5CB09 /* XCRemoteSwiftPackageReference "LinkNavigator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/interactord/LinkNavigator.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
