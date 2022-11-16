@@ -1,6 +1,5 @@
 import ComposableArchitecture
 import Foundation
-import SwiftyJSON
 import XCTestDynamicOverlay
 
 struct SchoolClient: Sendable {

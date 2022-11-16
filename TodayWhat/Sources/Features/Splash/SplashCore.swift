@@ -7,7 +7,7 @@ public struct SplashCore: ReducerProtocol {
     }
 
     public enum Action: Equatable {
-        
+        case onAppear
     }
 
     public var body: some ReducerProtocol<State, Action> {

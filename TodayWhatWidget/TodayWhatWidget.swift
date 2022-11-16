@@ -42,9 +42,17 @@ struct SimpleEntry: TimelineEntry {
 
 struct TodayWhatWidgetEntryView : View {
     var entry: Provider.Entry
+    var dummy = ["친환경백미찹쌀밥", "매콤어묵무국", "닭갈비", "청포묵무침", "치즈소떡소떡&양념소스", "배추김치", "상큼이주스", "닭가슴살양상추샐러드&오리엔탈"]
 
     var body: some View {
-        Text(entry.date, style: .time)
+        VStack(alignment: .leading) {
+            ForEach(dummy, id: \.self) { meal in
+                Text(meal)
+                    .font(.system(size: 13))
+                    .lineLimit(1)
+            }
+        }
+        .padding(4)
     }
 }
 

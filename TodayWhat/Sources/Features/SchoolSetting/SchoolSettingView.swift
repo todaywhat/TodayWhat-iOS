@@ -94,11 +94,16 @@ public struct SchoolSettingView: View {
                     ForEach(viewStore.schoolList, id: \.schoolCode) { school in
                         HStack {
                             schoolRowView(school: school)
-                                .onTapGesture {
-                                    viewStore.send(.schoolRowDidSelect(school), animation: .default)
-                                }
 
                             Spacer()
+                        }
+                        .frame(maxWidth: .infinity)
+                        .background {
+                            Color.background
+                        }
+                        .onTapGesture {
+                            viewStore.send(.schoolRowDidSelect(school), animation: .default)
+                            focusField = .grade
                         }
                     }
                 }
@@ -112,9 +117,6 @@ public struct SchoolSettingView: View {
             .padding(.top, 24)
             .onChange(of: focusField) { newValue in
                 viewStore.send(.schoolFocusedChanged(newValue == .school), animation: .default)
-            }
-            .onChange(of: viewStore.selectedSchool) { _ in
-                focusField = .grade
             }
             .onChange(of: viewStore.grade) { newValue in
                 if newValue.count > 0 {
@@ -132,6 +134,14 @@ public struct SchoolSettingView: View {
                     }
                 }
             }
+        }
+        .onAppear {
+            withAnimation {
+                focusField = .school
+            }
+        }
+        .background {
+            Color.background
         }
         .twBottomSheet(
             isShowing: viewStore.binding(
