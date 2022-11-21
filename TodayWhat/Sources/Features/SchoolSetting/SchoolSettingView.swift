@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import SwiftUI
+import Entity
 
 public struct SchoolSettingView: View {
     private enum FocusField: Hashable {

@@ -1,4 +1,5 @@
 import SwiftUI
+import Entity
 
 struct MainView: View {
     @StateObject var viewModel = MainViewModel()

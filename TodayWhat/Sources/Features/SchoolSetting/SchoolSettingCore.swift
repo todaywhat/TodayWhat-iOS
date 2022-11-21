@@ -1,5 +1,7 @@
 import ComposableArchitecture
 import Foundation
+import Entity
+import SchoolClient
 
 public struct SchoolSettingCore: ReducerProtocol {
     public init() {}
