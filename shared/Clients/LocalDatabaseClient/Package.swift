@@ -14,14 +14,16 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.45.0"),
-        .package(url: "https://github.com/groue/GRDB.swift.git", exact: "6.3.1")
+        .package(url: "https://github.com/groue/GRDB.swift.git", exact: "6.3.1"),
+        .package(path: "../Common/Utilities")
     ],
     targets: [
         .target(
             name: "LocalDatabaseClient",
             dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "GRDB", package: "GRDB.swift")
+                .product(name: "GRDB", package: "GRDB.swift"),
+                .product(name: "ConstantUtil", package: "Utilities"),
             ]),
         .testTarget(
             name: "LocalDatabaseClientTests",

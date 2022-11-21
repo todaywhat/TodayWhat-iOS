@@ -1,3 +1,4 @@
+import Dependencies
 import WidgetKit
 import SwiftUI
 import Intents
