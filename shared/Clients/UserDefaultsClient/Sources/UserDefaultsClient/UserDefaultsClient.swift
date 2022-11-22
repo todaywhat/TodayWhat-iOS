@@ -15,48 +15,25 @@ public enum UserDefaultsKeys: String {
 }
 
 public struct UserDefaultsClient {
-    private let userDefaults: UserDefaults
-
-    public init(userDefaults: UserDefaults) {
-        self.userDefaults = userDefaults
-    }
+    public let setValue: (UserDefaultsKeys, Any) -> Void
 }
 
 extension UserDefaultsClient: DependencyKey {
-    public static var liveValue: UserDefaultsClient = UserDefaultsClient(userDefaults: .app)
+    public static var liveValue: UserDefaultsClient = UserDefaultsClient(
+        setValue: { key, value in
+            UserDefaults.app.set(value, forKey: key.rawValue)
+        }
+    )
 
-    public var schoolType: SchoolType? {
-        get { SchoolType(rawValue: userDefaults.string(forKey: UserDefaultsKeys.schoolType.rawValue) ?? "") }
-        set { userDefaults.set(newValue, forKey: UserDefaultsKeys.schoolType.rawValue) }
-    }
-    public var orgCode: String? {
-        get { userDefaults.string(forKey: UserDefaultsKeys.orgCode.rawValue) }
-        set { userDefaults.set(newValue, forKey: UserDefaultsKeys.orgCode.rawValue) }
-    }
-    public var schoolCode: String? {
-        get { userDefaults.string(forKey: UserDefaultsKeys.schoolCode.rawValue) }
-        set { userDefaults.set(newValue, forKey: UserDefaultsKeys.schoolCode.rawValue) }
-    }
-    public var school: String? {
-        get { userDefaults.string(forKey: UserDefaultsKeys.school.rawValue) }
-        set { userDefaults.set(newValue, forKey: UserDefaultsKeys.school.rawValue) }
-    }
-    public var grade: Int {
-        get { userDefaults.integer(forKey: UserDefaultsKeys.grade.rawValue) }
-        set { userDefaults.set(newValue, forKey: UserDefaultsKeys.grade.rawValue) }
-    }
-    public var `class`: Int {
-        get { userDefaults.integer(forKey: UserDefaultsKeys.class.rawValue) }
-        set { userDefaults.set(newValue, forKey: UserDefaultsKeys.class.rawValue) }
-    }
-    public var major: String? {
-        get { userDefaults.string(forKey: UserDefaultsKeys.major.rawValue) }
-        set { userDefaults.set(newValue, forKey: UserDefaultsKeys.major.rawValue) }
+    public func getValue<T: Codable>(key: UserDefaultsKeys, type: T.Type) -> T? {
+        UserDefaults.app.value(forKey: key.rawValue) as? T
     }
 }
 
 extension UserDefaultsClient: TestDependencyKey {
-    public static var testValue: UserDefaultsClient = UserDefaultsClient(userDefaults: .init())
+    public static var testValue: UserDefaultsClient = UserDefaultsClient(
+        setValue: { _, _ in }
+    )
 }
 
 extension DependencyValues {

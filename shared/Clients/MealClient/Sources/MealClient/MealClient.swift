@@ -16,8 +16,8 @@ extension MealClient: DependencyKey {
         fetchMeal: { date in
             @Dependency(\.userDefaultsClient) var userDefaultsClient
             guard
-                let orgCode = userDefaultsClient.orgCode,
-                let code = userDefaultsClient.schoolCode
+                let orgCode = userDefaultsClient.getValue(key: .orgCode, type: String.self),
+                let code = userDefaultsClient.getValue(key: .schoolCode, type: String.self)
             else {
                 return Meal(
                     breakfast: .init(meals: [], cal: 0),

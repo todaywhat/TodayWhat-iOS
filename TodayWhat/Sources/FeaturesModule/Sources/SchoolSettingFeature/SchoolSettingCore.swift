@@ -2,6 +2,7 @@ import ComposableArchitecture
 import Foundation
 import Entity
 import SchoolClient
+import UserDefaultsClient
 import SchoolMajorSheetFeature
 
 public struct SchoolSettingCore: ReducerProtocol {
@@ -56,9 +57,11 @@ public struct SchoolSettingCore: ReducerProtocol {
         case majorTextFieldDidTap
         case majorSheetDismissed
         case schoolMajorSheetCore(SchoolMajorSheetCore.Action)
+        case schoolSettingFinished
     }
 
     @Dependency(\.schoolClient) var schoolClient
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     struct SchoolDebounceID: Hashable {}
 
@@ -115,6 +118,23 @@ public struct SchoolSettingCore: ReducerProtocol {
                 if state.major.isEmpty && !state.schoolMajorList.isEmpty {
                     state.schoolMajorSheetCore = .init(majorList: state.schoolMajorList, selectedMajor: state.major)
                     state.isPresentedMajorSheet = true
+                } else {
+                    guard let selectedSchool = state.selectedSchool else { return .none }
+                    let dict: [(UserDefaultsKeys, Any)] = [
+                        (UserDefaultsKeys.school, state.school),
+                        (.orgCode, selectedSchool.orgCode),
+                        (.schoolCode, selectedSchool.schoolCode),
+                        (.grade, Int(state.grade) ?? 1),
+                        (.class, Int(state.class) ?? 1),
+                        (.major, state.major),
+                        (.schoolType, selectedSchool.schoolType.rawValue)
+                    ]
+                    dict.forEach {
+                        userDefaultsClient.setValue($0.0, $0.1)
+                    }
+                    return .run { send in
+                        await send(.schoolSettingFinished)
+                    }
                 }
 
             case .majorTextFieldDidTap:

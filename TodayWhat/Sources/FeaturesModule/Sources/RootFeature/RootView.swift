@@ -1,16 +1,27 @@
 import ComposableArchitecture
 import SwiftUI
+import SplashFeature
+import SchoolSettingFeature
+import MainFeature
 
 public struct RootView: View {
-    let store: StoreOf<RootCore>
-    @ObservedObject var viewStore: ViewStoreOf<RootCore>
+    private let store: StoreOf<RootCore>
     
     public init(store: StoreOf<RootCore>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
     }
 
     public var body: some View {
-        EmptyView()
+        SwitchStore(store) {
+            CaseLet(state: /RootCore.State.splashCore, action: RootCore.Action.splashCore) { store in
+                SplashView(store: store)
+            }
+            CaseLet(state: /RootCore.State.schoolSettingCore, action: RootCore.Action.schoolSettingCore) { store in
+                SchoolSettingView(store: store)
+            }
+            CaseLet(state: /RootCore.State.mainCore, action: RootCore.Action.mainCore) { store in
+                MainView(store: store)
+            }
+        }
     }
 }

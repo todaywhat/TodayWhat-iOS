@@ -133,7 +133,10 @@ public struct SchoolSettingView: View {
             VStack {
                 Spacer()
 
-                if !viewStore.class.isEmpty && !viewStore.isFocusedSchool {
+                if !viewStore.class.isEmpty &&
+                    !viewStore.grade.isEmpty &&
+                    !viewStore.isFocusedSchool &&
+                    !viewStore.school.isEmpty {
                     TWButton(title: viewStore.nextButtonTitle, style: .wide) {
                         viewStore.send(.nextButtonDidTap, animation: .default)
                         focusField = nil

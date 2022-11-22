@@ -18,11 +18,21 @@ let package = Package(
         .library(
             name: "SchoolMajorSheetFeature",
             targets: ["SchoolMajorSheetFeature"]
+        ),
+        .library(
+            name: "MainFeature",
+            targets: ["MainFeature"]
+        ),
+        .library(
+            name: "SplashFeature",
+            targets: ["SplashFeature"]
         )
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.45.0"),
         .package(path: "../../Domains/Entity"),
+        .package(path: "../../Clients/UserDefaultsClient"),
+        .package(path: "../../Clients/SchoolClient"),
         .package(path: "../DesignSystem")
     ],
     targets: [
@@ -31,7 +41,10 @@ let package = Package(
             dependencies: [
                 .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                "SchoolSettingFeature"
+                "SchoolSettingFeature",
+                "MainFeature",
+                "UserDefaultsClient",
+                "SplashFeature"
             ]
         ),
         .testTarget(name: "RootFeatureTests", dependencies: ["RootFeature"]),
@@ -45,7 +58,9 @@ let package = Package(
                 .product(name: "TWTextField", package: "DesignSystem"),
                 .product(name: "TWBottomSheet", package: "DesignSystem"),
                 "Entity",
-                "SchoolMajorSheetFeature"
+                "SchoolMajorSheetFeature",
+                "SchoolClient",
+                "UserDefaultsClient"
             ]
         ),
         .testTarget(name: "SchoolSettingFeatureTests", dependencies: ["SchoolSettingFeature"]),
@@ -55,9 +70,28 @@ let package = Package(
             dependencies: [
                 .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "TWRadioButton", package: "DesignSystem"),
+                .product(name: "TWRadioButton", package: "DesignSystem")
             ]
         ),
-        .testTarget(name: "SchoolMajorSheetFeatureTests", dependencies: ["SchoolMajorSheetFeature"])
+        .testTarget(name: "SchoolMajorSheetFeatureTests", dependencies: ["SchoolMajorSheetFeature"]),
+        
+        .target(
+            name: "MainFeature",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-composable-architecture"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+            ]
+        ),
+        .testTarget(name: "MainFeatureTests", dependencies: ["MainFeature"]),
+
+        .target(
+            name: "SplashFeature",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-composable-architecture"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                "UserDefaultsClient"
+            ]
+        ),
+        .testTarget(name: "SplashFeatureTests", dependencies: ["SplashFeature"])
     ]
 )
