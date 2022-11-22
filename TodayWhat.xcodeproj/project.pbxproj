@@ -9,22 +9,9 @@
 /* Begin PBXBuildFile section */
 		4603102E2918D3A100A5CB09 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 4603102D2918D3A100A5CB09 /* ComposableArchitecture */; };
 		460310302918D3A100A5CB09 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 4603102F2918D3A100A5CB09 /* Dependencies */; };
-		4603105B291B674000A5CB09 /* SchoolSettingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46031059291B674000A5CB09 /* SchoolSettingCore.swift */; };
-		4603105C291B674000A5CB09 /* SchoolSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603105A291B674000A5CB09 /* SchoolSettingView.swift */; };
-		46031065291B8E9E00A5CB09 /* TWTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46031064291B8E9E00A5CB09 /* TWTextField.swift */; };
-		46031069291BB28800A5CB09 /* TWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46031068291BB28800A5CB09 /* TWButton.swift */; };
-		46031087291CA5E900A5CB09 /* TWButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46031086291CA5E900A5CB09 /* TWButtonStyle.swift */; };
 		4603108D291CD76F00A5CB09 /* SchoolSettingCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603108C291CD76F00A5CB09 /* SchoolSettingCoreTests.swift */; };
 		460310A3291DD96900A5CB09 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 460310A2291DD96900A5CB09 /* SwiftyJSON */; };
-		460310E32921BE3700A5CB09 /* SchoolMajorSheetCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460310E12921BE3700A5CB09 /* SchoolMajorSheetCore.swift */; };
-		460310E42921BE3700A5CB09 /* SchoolMajorSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460310E22921BE3700A5CB09 /* SchoolMajorSheetView.swift */; };
 		460310E72921BED700A5CB09 /* SchoolMajorSheetCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460310E62921BED700A5CB09 /* SchoolMajorSheetCoreTests.swift */; };
-		460310EC2921C2C000A5CB09 /* TWBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460310EB2921C2C000A5CB09 /* TWBottomSheet.swift */; };
-		460310F32921C33D00A5CB09 /* View+if.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460310F22921C33D00A5CB09 /* View+if.swift */; };
-		460310F42921C38700A5CB09 /* View+if.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460310F22921C33D00A5CB09 /* View+if.swift */; };
-		460310F72921C96800A5CB09 /* TWRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460310F62921C96800A5CB09 /* TWRadioButton.swift */; };
-		4603110E2923093500A5CB09 /* SplashCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603110C2923093500A5CB09 /* SplashCore.swift */; };
-		4603110F2923093500A5CB09 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603110D2923093500A5CB09 /* SplashView.swift */; };
 		460311172923202500A5CB09 /* View+eraseToAnyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460311162923202500A5CB09 /* View+eraseToAnyView.swift */; };
 		4603112629234F8100A5CB09 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 4603112529234F8100A5CB09 /* GRDB */; };
 		4603112D292356F600A5CB09 /* BaseLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603112C292356F600A5CB09 /* BaseLocalDataSource.swift */; };
@@ -47,15 +34,21 @@
 		4608441428DBFE2600D60E39 /* TodayWhat_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608441328DBFE2600D60E39 /* TodayWhat_Watch_AppTests.swift */; };
 		4608441E28DBFE2600D60E39 /* TodayWhat_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608441D28DBFE2600D60E39 /* TodayWhat_Watch_AppUITests.swift */; };
 		4608442028DBFE2600D60E39 /* TodayWhat_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608441F28DBFE2600D60E39 /* TodayWhat_Watch_AppUITestsLaunchTests.swift */; };
+		461C2337292C574100B3A9CB /* TWColor in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2336292C574100B3A9CB /* TWColor */; };
+		461C2339292C57AB00B3A9CB /* TWBottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2338292C57AB00B3A9CB /* TWBottomSheet */; };
+		461C233B292C57AB00B3A9CB /* TWButton in Frameworks */ = {isa = PBXBuildFile; productRef = 461C233A292C57AB00B3A9CB /* TWButton */; };
+		461C233D292C57AB00B3A9CB /* TWColor in Frameworks */ = {isa = PBXBuildFile; productRef = 461C233C292C57AB00B3A9CB /* TWColor */; };
+		461C233F292C57AB00B3A9CB /* TWRadioButton in Frameworks */ = {isa = PBXBuildFile; productRef = 461C233E292C57AB00B3A9CB /* TWRadioButton */; };
+		461C2341292C57AB00B3A9CB /* TWTextField in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2340292C57AB00B3A9CB /* TWTextField */; };
+		461C2343292C57B300B3A9CB /* RootFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2342292C57B300B3A9CB /* RootFeature */; };
+		461C2345292C57B300B3A9CB /* SchoolMajorSheetFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2344292C57B300B3A9CB /* SchoolMajorSheetFeature */; };
+		461C2347292C57B300B3A9CB /* SchoolSettingFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2346292C57B300B3A9CB /* SchoolSettingFeature */; };
+		461C2349292C58D600B3A9CB /* SwiftUIUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2348292C58D600B3A9CB /* SwiftUIUtil */; };
 		4647B12328DC0AE700FAB81B /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */; };
 		4647B12428DC0AFF00FAB81B /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */; };
-		4647B12828DC1C2800FAB81B /* Color+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12728DC1C2800FAB81B /* Color+Ext.swift */; };
-		4647B12928DC1C2800FAB81B /* Color+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12728DC1C2800FAB81B /* Color+Ext.swift */; };
 		4647B12C28DC1CC800FAB81B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12A28DC1CC800FAB81B /* MainViewModel.swift */; };
 		4647B13328DC27CE00FAB81B /* PartSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B13228DC27CE00FAB81B /* PartSelectView.swift */; };
 		4647B13428DC27CE00FAB81B /* PartSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B13228DC27CE00FAB81B /* PartSelectView.swift */; };
-		4647B13628DC292300FAB81B /* View+cornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B13528DC292300FAB81B /* View+cornerRadius.swift */; };
-		4647B13728DC292300FAB81B /* View+cornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B13528DC292300FAB81B /* View+cornerRadius.swift */; };
 		4650234429267847008B015A /* ErrorModule in Frameworks */ = {isa = PBXBuildFile; productRef = 4650234329267847008B015A /* ErrorModule */; };
 		4650234B2926811C008B015A /* ConstantUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 4650234A2926811C008B015A /* ConstantUtil */; };
 		4650234D29268217008B015A /* NeisClient in Frameworks */ = {isa = PBXBuildFile; productRef = 4650234C29268217008B015A /* NeisClient */; };
@@ -81,6 +74,7 @@
 		465023BA292B093E008B015A /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 465023B9292B093E008B015A /* Dependencies */; };
 		465023BC292B09D8008B015A /* UserDefaultsClient in Frameworks */ = {isa = PBXBuildFile; productRef = 465023BB292B09D8008B015A /* UserDefaultsClient */; };
 		465023BE292B1C3D008B015A /* DateUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 465023BD292B1C3D008B015A /* DateUtil */; };
+		467CD847292BC51100A9766A /* MealClient in Frameworks */ = {isa = PBXBuildFile; productRef = 467CD846292BC51100A9766A /* MealClient */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,20 +148,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		46031059291B674000A5CB09 /* SchoolSettingCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolSettingCore.swift; sourceTree = "<group>"; };
-		4603105A291B674000A5CB09 /* SchoolSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolSettingView.swift; sourceTree = "<group>"; };
-		46031064291B8E9E00A5CB09 /* TWTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWTextField.swift; sourceTree = "<group>"; };
-		46031068291BB28800A5CB09 /* TWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWButton.swift; sourceTree = "<group>"; };
-		46031086291CA5E900A5CB09 /* TWButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWButtonStyle.swift; sourceTree = "<group>"; };
 		4603108C291CD76F00A5CB09 /* SchoolSettingCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolSettingCoreTests.swift; sourceTree = "<group>"; };
-		460310E12921BE3700A5CB09 /* SchoolMajorSheetCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolMajorSheetCore.swift; sourceTree = "<group>"; };
-		460310E22921BE3700A5CB09 /* SchoolMajorSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolMajorSheetView.swift; sourceTree = "<group>"; };
 		460310E62921BED700A5CB09 /* SchoolMajorSheetCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolMajorSheetCoreTests.swift; sourceTree = "<group>"; };
-		460310EB2921C2C000A5CB09 /* TWBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWBottomSheet.swift; sourceTree = "<group>"; };
-		460310F22921C33D00A5CB09 /* View+if.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+if.swift"; sourceTree = "<group>"; };
-		460310F62921C96800A5CB09 /* TWRadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWRadioButton.swift; sourceTree = "<group>"; };
-		4603110C2923093500A5CB09 /* SplashCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCore.swift; sourceTree = "<group>"; };
-		4603110D2923093500A5CB09 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		460311162923202500A5CB09 /* View+eraseToAnyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+eraseToAnyView.swift"; sourceTree = "<group>"; };
 		4603112C292356F600A5CB09 /* BaseLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLocalDataSource.swift; sourceTree = "<group>"; };
 		460311482923DCE700A5CB09 /* TodayWhatWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TodayWhatWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -197,10 +179,8 @@
 		4608441D28DBFE2600D60E39 /* TodayWhat_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhat_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		4608441F28DBFE2600D60E39 /* TodayWhat_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhat_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayInfoPart.swift; sourceTree = "<group>"; };
-		4647B12728DC1C2800FAB81B /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
 		4647B12A28DC1CC800FAB81B /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		4647B13228DC27CE00FAB81B /* PartSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartSelectView.swift; sourceTree = "<group>"; };
-		4647B13528DC292300FAB81B /* View+cornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+cornerRadius.swift"; sourceTree = "<group>"; };
 		465023422926783C008B015A /* ErrorModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ErrorModule; sourceTree = "<group>"; };
 		465023452926798F008B015A /* NeisClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NeisClient; sourceTree = "<group>"; };
 		4650234729268003008B015A /* Utilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utilities; sourceTree = "<group>"; };
@@ -215,6 +195,8 @@
 		4650237829272E4F008B015A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		46502379292730B7008B015A /* MealPartTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPartTime.swift; sourceTree = "<group>"; };
 		465023B0292AFF7E008B015A /* MealClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MealClient; sourceTree = "<group>"; };
+		467CD849292C4D1A00A9766A /* FeaturesModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FeaturesModule; sourceTree = "<group>"; };
+		467CD84A292C512400A9766A /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignSystem; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +204,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				467CD847292BC51100A9766A /* MealClient in Frameworks */,
 				465023B8292B093E008B015A /* ComposableArchitecture in Frameworks */,
 				465023AF292AFF4E008B015A /* Entity in Frameworks */,
 				465023AD292AFF37008B015A /* NeisClient in Frameworks */,
@@ -241,16 +224,24 @@
 				465023592926F97C008B015A /* ResponseDTO in Frameworks */,
 				465023712927109B008B015A /* LocalDatabaseClient in Frameworks */,
 				4650234D29268217008B015A /* NeisClient in Frameworks */,
+				461C2341292C57AB00B3A9CB /* TWTextField in Frameworks */,
 				465023572926F97C008B015A /* RequestDTO in Frameworks */,
 				465023662926FEBC008B015A /* UserDefaultsClient in Frameworks */,
 				460310302918D3A100A5CB09 /* Dependencies in Frameworks */,
 				4650234429267847008B015A /* ErrorModule in Frameworks */,
+				461C2339292C57AB00B3A9CB /* TWBottomSheet in Frameworks */,
+				461C2345292C57B300B3A9CB /* SchoolMajorSheetFeature in Frameworks */,
 				4650234B2926811C008B015A /* ConstantUtil in Frameworks */,
 				4650235F2926FC19008B015A /* Entity in Frameworks */,
+				461C233F292C57AB00B3A9CB /* TWRadioButton in Frameworks */,
+				461C2347292C57B300B3A9CB /* SchoolSettingFeature in Frameworks */,
 				4603102E2918D3A100A5CB09 /* ComposableArchitecture in Frameworks */,
 				4603112629234F8100A5CB09 /* GRDB in Frameworks */,
 				4650235D2926F984008B015A /* EnumUtil in Frameworks */,
+				461C233D292C57AB00B3A9CB /* TWColor in Frameworks */,
 				465023632926FE1F008B015A /* SchoolClient in Frameworks */,
+				461C233B292C57AB00B3A9CB /* TWButton in Frameworks */,
+				461C2343292C57B300B3A9CB /* RootFeature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +264,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				465023B6292B0587008B015A /* Dependencies in Frameworks */,
+				461C2337292C574100B3A9CB /* TWColor in Frameworks */,
+				461C2349292C58D600B3A9CB /* SwiftUIUtil in Frameworks */,
 				465023B4292B0587008B015A /* ComposableArchitecture in Frameworks */,
 				465023B2292B049F008B015A /* Entity in Frameworks */,
 			);
@@ -315,67 +308,11 @@
 		46031056291B616C00A5CB09 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				467CD84A292C512400A9766A /* DesignSystem */,
+				467CD849292C4D1A00A9766A /* FeaturesModule */,
 				460310ED2921C30200A5CB09 /* Utils */,
-				46031060291B8B9D00A5CB09 /* DesignSystem */,
-				46031057291B617000A5CB09 /* Features */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		46031057291B617000A5CB09 /* Features */ = {
-			isa = PBXGroup;
-			children = (
-				4603110B2923092B00A5CB09 /* Splash */,
-				460310E02921BE2800A5CB09 /* SchoolMajorSheet */,
-				46031058291B626500A5CB09 /* SchoolSetting */,
-			);
-			path = Features;
-			sourceTree = "<group>";
-		};
-		46031058291B626500A5CB09 /* SchoolSetting */ = {
-			isa = PBXGroup;
-			children = (
-				46031059291B674000A5CB09 /* SchoolSettingCore.swift */,
-				4603105A291B674000A5CB09 /* SchoolSettingView.swift */,
-			);
-			path = SchoolSetting;
-			sourceTree = "<group>";
-		};
-		46031060291B8B9D00A5CB09 /* DesignSystem */ = {
-			isa = PBXGroup;
-			children = (
-				460310F52921C95E00A5CB09 /* RadioButton */,
-				460310EA2921C29B00A5CB09 /* BottomSheet */,
-				46031067291BB26000A5CB09 /* Button */,
-				46031066291B987600A5CB09 /* Color */,
-				46031061291B8BA400A5CB09 /* TextField */,
-			);
-			path = DesignSystem;
-			sourceTree = "<group>";
-		};
-		46031061291B8BA400A5CB09 /* TextField */ = {
-			isa = PBXGroup;
-			children = (
-				46031064291B8E9E00A5CB09 /* TWTextField.swift */,
-			);
-			path = TextField;
-			sourceTree = "<group>";
-		};
-		46031066291B987600A5CB09 /* Color */ = {
-			isa = PBXGroup;
-			children = (
-				4647B12728DC1C2800FAB81B /* Color+Ext.swift */,
-			);
-			path = Color;
-			sourceTree = "<group>";
-		};
-		46031067291BB26000A5CB09 /* Button */ = {
-			isa = PBXGroup;
-			children = (
-				46031068291BB28800A5CB09 /* TWButton.swift */,
-				46031086291CA5E900A5CB09 /* TWButtonStyle.swift */,
-			);
-			path = Button;
 			sourceTree = "<group>";
 		};
 		4603108A291CD74600A5CB09 /* Features */ = {
@@ -415,29 +352,12 @@
 			path = DataMapping;
 			sourceTree = "<group>";
 		};
-		460310E02921BE2800A5CB09 /* SchoolMajorSheet */ = {
-			isa = PBXGroup;
-			children = (
-				460310E12921BE3700A5CB09 /* SchoolMajorSheetCore.swift */,
-				460310E22921BE3700A5CB09 /* SchoolMajorSheetView.swift */,
-			);
-			path = SchoolMajorSheet;
-			sourceTree = "<group>";
-		};
 		460310E52921BEC900A5CB09 /* SchoolMajorSheet */ = {
 			isa = PBXGroup;
 			children = (
 				460310E62921BED700A5CB09 /* SchoolMajorSheetCoreTests.swift */,
 			);
 			path = SchoolMajorSheet;
-			sourceTree = "<group>";
-		};
-		460310EA2921C29B00A5CB09 /* BottomSheet */ = {
-			isa = PBXGroup;
-			children = (
-				460310EB2921C2C000A5CB09 /* TWBottomSheet.swift */,
-			);
-			path = BottomSheet;
 			sourceTree = "<group>";
 		};
 		460310ED2921C30200A5CB09 /* Utils */ = {
@@ -462,23 +382,6 @@
 				460311162923202500A5CB09 /* View+eraseToAnyView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		460310F52921C95E00A5CB09 /* RadioButton */ = {
-			isa = PBXGroup;
-			children = (
-				460310F62921C96800A5CB09 /* TWRadioButton.swift */,
-			);
-			path = RadioButton;
-			sourceTree = "<group>";
-		};
-		4603110B2923092B00A5CB09 /* Splash */ = {
-			isa = PBXGroup;
-			children = (
-				4603110C2923093500A5CB09 /* SplashCore.swift */,
-				4603110D2923093500A5CB09 /* SplashView.swift */,
-			);
-			path = Splash;
 			sourceTree = "<group>";
 		};
 		4603112A2923568C00A5CB09 /* DataSource */ = {
@@ -517,15 +420,6 @@
 				460311542923DCE800A5CB09 /* Info.plist */,
 			);
 			path = TodayWhatWidget;
-			sourceTree = "<group>";
-		};
-		46031164292452F200A5CB09 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				4647B13528DC292300FAB81B /* View+cornerRadius.swift */,
-				460310F22921C33D00A5CB09 /* View+if.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		460843CE28DBFE2300D60E39 = {
@@ -633,26 +527,9 @@
 				46031098291DC9D200A5CB09 /* DataMapping */,
 				46031095291DC95400A5CB09 /* Clients */,
 				4647B13C28DC415400FAB81B /* Domains */,
-				4647B12528DC1C1600FAB81B /* Utils */,
 				4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */,
 			);
 			path = shared;
-			sourceTree = "<group>";
-		};
-		4647B12528DC1C1600FAB81B /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				4647B12628DC1C1B00FAB81B /* Extensions */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
-		4647B12628DC1C1B00FAB81B /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				46031164292452F200A5CB09 /* View */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		4647B12D28DC1CCC00FAB81B /* Scenes */ = {
@@ -729,6 +606,7 @@
 				465023B9292B093E008B015A /* Dependencies */,
 				465023BB292B09D8008B015A /* UserDefaultsClient */,
 				465023BD292B1C3D008B015A /* DateUtil */,
+				467CD846292BC51100A9766A /* MealClient */,
 			);
 			productName = TodayWhatWidgetExtension;
 			productReference = 460311482923DCE700A5CB09 /* TodayWhatWidgetExtension.appex */;
@@ -766,6 +644,14 @@
 				465023622926FE1F008B015A /* SchoolClient */,
 				465023652926FEBC008B015A /* UserDefaultsClient */,
 				465023702927109B008B015A /* LocalDatabaseClient */,
+				461C2338292C57AB00B3A9CB /* TWBottomSheet */,
+				461C233A292C57AB00B3A9CB /* TWButton */,
+				461C233C292C57AB00B3A9CB /* TWColor */,
+				461C233E292C57AB00B3A9CB /* TWRadioButton */,
+				461C2340292C57AB00B3A9CB /* TWTextField */,
+				461C2342292C57B300B3A9CB /* RootFeature */,
+				461C2344292C57B300B3A9CB /* SchoolMajorSheetFeature */,
+				461C2346292C57B300B3A9CB /* SchoolSettingFeature */,
 			);
 			productName = TodayWhat;
 			productReference = 460843D728DBFE2400D60E39 /* TodayWhat.app */;
@@ -824,6 +710,8 @@
 				465023B1292B049F008B015A /* Entity */,
 				465023B3292B0587008B015A /* ComposableArchitecture */,
 				465023B5292B0587008B015A /* Dependencies */,
+				461C2336292C574100B3A9CB /* TWColor */,
+				461C2348292C58D600B3A9CB /* SwiftUIUtil */,
 			);
 			productName = "TodayWhat Watch App";
 			productReference = 460843FD28DBFE2500D60E39 /* TodayWhat Watch App.app */;
@@ -1007,25 +895,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				460311172923202500A5CB09 /* View+eraseToAnyView.swift in Sources */,
-				4603105B291B674000A5CB09 /* SchoolSettingCore.swift in Sources */,
-				4647B12828DC1C2800FAB81B /* Color+Ext.swift in Sources */,
-				460310E42921BE3700A5CB09 /* SchoolMajorSheetView.swift in Sources */,
-				460310E32921BE3700A5CB09 /* SchoolMajorSheetCore.swift in Sources */,
-				460310EC2921C2C000A5CB09 /* TWBottomSheet.swift in Sources */,
-				46031087291CA5E900A5CB09 /* TWButtonStyle.swift in Sources */,
-				4603110F2923093500A5CB09 /* SplashView.swift in Sources */,
-				4603105C291B674000A5CB09 /* SchoolSettingView.swift in Sources */,
-				46031069291BB28800A5CB09 /* TWButton.swift in Sources */,
-				4647B13628DC292300FAB81B /* View+cornerRadius.swift in Sources */,
-				4603110E2923093500A5CB09 /* SplashCore.swift in Sources */,
 				460311562923DCE800A5CB09 /* TodayWhatWidget.intentdefinition in Sources */,
 				4603112D292356F600A5CB09 /* BaseLocalDataSource.swift in Sources */,
-				46031065291B8E9E00A5CB09 /* TWTextField.swift in Sources */,
 				460843DB28DBFE2400D60E39 /* TodayWhatApp.swift in Sources */,
 				4647B13328DC27CE00FAB81B /* PartSelectView.swift in Sources */,
-				460310F72921C96800A5CB09 /* TWRadioButton.swift in Sources */,
 				4647B12428DC0AFF00FAB81B /* DisplayInfoPart.swift in Sources */,
-				460310F32921C33D00A5CB09 /* View+if.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1052,11 +926,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4647B13728DC292300FAB81B /* View+cornerRadius.swift in Sources */,
 				4608440528DBFE2500D60E39 /* MainView.swift in Sources */,
 				4647B13428DC27CE00FAB81B /* PartSelectView.swift in Sources */,
-				4647B12928DC1C2800FAB81B /* Color+Ext.swift in Sources */,
-				460310F42921C38700A5CB09 /* View+if.swift in Sources */,
 				4608440328DBFE2500D60E39 /* TodayWhatApp.swift in Sources */,
 				4647B12328DC0AE700FAB81B /* DisplayInfoPart.swift in Sources */,
 				4647B12C28DC1CC800FAB81B /* MainViewModel.swift in Sources */,
@@ -1709,6 +1580,46 @@
 			package = 4603112429234F8100A5CB09 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
 			productName = GRDB;
 		};
+		461C2336292C574100B3A9CB /* TWColor */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TWColor;
+		};
+		461C2338292C57AB00B3A9CB /* TWBottomSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TWBottomSheet;
+		};
+		461C233A292C57AB00B3A9CB /* TWButton */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TWButton;
+		};
+		461C233C292C57AB00B3A9CB /* TWColor */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TWColor;
+		};
+		461C233E292C57AB00B3A9CB /* TWRadioButton */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TWRadioButton;
+		};
+		461C2340292C57AB00B3A9CB /* TWTextField */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TWTextField;
+		};
+		461C2342292C57B300B3A9CB /* RootFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RootFeature;
+		};
+		461C2344292C57B300B3A9CB /* SchoolMajorSheetFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SchoolMajorSheetFeature;
+		};
+		461C2346292C57B300B3A9CB /* SchoolSettingFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SchoolSettingFeature;
+		};
+		461C2348292C58D600B3A9CB /* SwiftUIUtil */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftUIUtil;
+		};
 		4650234329267847008B015A /* ErrorModule */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ErrorModule;
@@ -1788,6 +1699,10 @@
 		465023BD292B1C3D008B015A /* DateUtil */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DateUtil;
+		};
+		467CD846292BC51100A9766A /* MealClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MealClient;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

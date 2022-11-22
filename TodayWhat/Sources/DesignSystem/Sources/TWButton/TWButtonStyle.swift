@@ -1,7 +1,8 @@
 import SwiftUI
+import TWColor
 
-struct TWButtonStyle: ButtonStyle {
-    enum Style {
+public struct TWButtonStyle: ButtonStyle {
+    public enum Style {
         case cta
         case wide
     }
@@ -11,7 +12,7 @@ struct TWButtonStyle: ButtonStyle {
         self.style = style
     }
 
-    func makeBody(configuration: Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         switch style {
         case .cta:
             CTAButton(configuration: configuration)

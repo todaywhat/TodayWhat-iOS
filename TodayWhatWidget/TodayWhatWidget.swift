@@ -3,12 +3,15 @@ import WidgetKit
 import SwiftUI
 import Intents
 import Entity
+import MealClient
 
 struct Provider: IntentTimelineProvider {
     typealias Entry = SimpleEntry
+
+    @Dependency(\.mealClient) var mealClient
+
     func placeholder(in context: Context) -> SimpleEntry {
-        let currentDate = Date()
-        return SimpleEntry(date: currentDate, configuration: ConfigurationIntent(), mealPartTime: MealPartTime(hour: currentDate))
+        return SimpleEntry.empty(configuration: ConfigurationIntent())
     }
 
     func getSnapshot(
@@ -17,8 +20,21 @@ struct Provider: IntentTimelineProvider {
         completion: @escaping (SimpleEntry) -> ()
     ) {
         let currentDate = Date()
-        let entry = SimpleEntry(date: currentDate, configuration: configuration, mealPartTime: .breakfast)
-        completion(entry)
+        Task {
+            do {
+                let meal = try await mealClient.fetchMeal(currentDate)
+                let entry = SimpleEntry(
+                    date: currentDate,
+                    configuration: configuration,
+                    meal: meal,
+                    mealPartTime: MealPartTime(hour: currentDate)
+                )
+                completion(entry)
+            } catch {
+                let entry = SimpleEntry.empty(configuration: configuration)
+                completion(entry)
+            }
+        }
     }
 
     func getTimeline(
@@ -27,25 +43,45 @@ struct Provider: IntentTimelineProvider {
         completion: @escaping (Timeline<Entry>) -> ()
     ) {
         let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? .init()
-        var entries: [SimpleEntry] = []
-
         let currentDate = Date()
-        for hourOffset in 0 ..< 24 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let mealPartTime = MealPartTime(hour: currentDate)
-            let entry = SimpleEntry(date: entryDate, configuration: configuration, mealPartTime: mealPartTime)
-            entries.append(entry)
+        Task {
+            do {
+                let meal = try await mealClient.fetchMeal(currentDate)
+                let entry = SimpleEntry(
+                    date: currentDate,
+                    configuration: configuration,
+                    meal: meal,
+                    mealPartTime: MealPartTime(hour: currentDate)
+                )
+                let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+                completion(timeline)
+            } catch {
+                let entry = SimpleEntry.empty(configuration: configuration)
+                let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+                completion(timeline)
+            }
         }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
     }
 }
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
+    let meal: Meal
     let mealPartTime: MealPartTime
+
+    static func empty(configuration: ConfigurationIntent) -> SimpleEntry {
+        SimpleEntry(
+            date: Date(),
+            configuration: configuration,
+            meal: .init(
+                breakfast: .init(meals: [], cal: 0),
+                lunch: .init(meals: [], cal: 0),
+                dinner: .init(meals: [], cal: 0)
+            ),
+            mealPartTime: .breakfast
+        )
+    }
 }
 
 @main
@@ -67,11 +103,7 @@ struct TodayWhatWidget: Widget {
 struct TodayWhatWidget_Previews: PreviewProvider {
     static var previews: some View {
         MealWidgetEntryView(
-            entry: .init(
-                date: Date(),
-                configuration: ConfigurationIntent(),
-                mealPartTime: .breakfast
-            )
+            entry: .empty(configuration: ConfigurationIntent())
         )
         .previewContext(WidgetPreviewContext(family: .systemLarge))
     }

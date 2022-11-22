@@ -27,11 +27,11 @@ enum MealPartTime {
         case 8..<13:
             self = .lunch
 
-        case 13..<23:
+        case 13..<20:
             self = .dinner
 
         default:
-            self = .dinner
+            self = .breakfast
         }
     }
 }

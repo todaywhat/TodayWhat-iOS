@@ -1,10 +1,11 @@
 import SwiftUI
+import TWColor
 
-struct TWTextField: View {
-    @Binding var text: String
-    var placeholder: String
-    var onCommit: () -> Void
-    @FocusState var isFocused: Bool
+public struct TWTextField: View {
+    @Binding private var text: String
+    private var placeholder: String
+    private var onCommit: () -> Void
+    @FocusState private var isFocused: Bool
 
     public init(
         _ placeholder: String = "",
@@ -16,7 +17,7 @@ struct TWTextField: View {
         self.onCommit = onCommit
     }
 
-    var body: some View {
+    public var body: some View {
         ZStack(alignment: .leading) {
             TextField("", text: $text)
                 .font(.system(size: 16))

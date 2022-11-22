@@ -1,6 +1,7 @@
 import ComposableArchitecture
 
 public struct SchoolMajorSheetCore: ReducerProtocol {
+    public init() {}
     public struct State: Equatable {
         public var majorList: [String] = []
         public var selectedMajor: String?

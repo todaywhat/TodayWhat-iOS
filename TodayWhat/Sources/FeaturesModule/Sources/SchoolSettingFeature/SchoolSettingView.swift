@@ -1,6 +1,11 @@
 import ComposableArchitecture
 import SwiftUI
 import Entity
+import TWTextField
+import TWButton
+import TWColor
+import TWBottomSheet
+import SchoolMajorSheetFeature
 
 public struct SchoolSettingView: View {
     private enum FocusField: Hashable {

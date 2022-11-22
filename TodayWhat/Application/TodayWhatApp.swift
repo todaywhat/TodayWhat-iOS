@@ -1,13 +1,15 @@
 import SwiftUI
+import RootFeature
+import ComposableArchitecture
 
 @main
 struct TodayWhatApp: App {
     var body: some Scene {
         WindowGroup {
-            SchoolSettingView(
+            RootView(
                 store: .init(
                     initialState: .init(),
-                    reducer: SchoolSettingCore()
+                    reducer: RootCore()
                 )
             )
         }

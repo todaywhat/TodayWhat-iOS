@@ -1,6 +1,7 @@
 import ComposableArchitecture
 
-public struct SplashCore: ReducerProtocol {
+public struct RootCore: ReducerProtocol {
+    public init() {}
     public struct State: Equatable {
         
         public init() {}

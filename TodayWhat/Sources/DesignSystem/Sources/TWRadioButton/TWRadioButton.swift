@@ -1,10 +1,11 @@
 import SwiftUI
+import TWColor
 
-struct TWRadioButton: View {
+public struct TWRadioButton: View {
     private var isChecked: Bool
     private var onTap: () -> Void
 
-    init(
+    public init(
         isChecked: Bool,
         onTap: @escaping () -> Void = {}
     ) {
@@ -12,7 +13,7 @@ struct TWRadioButton: View {
         self.onTap = onTap
     }
 
-    var body: some View {
+    public var body: some View {
         Button(action: onTap) {
             ZStack {
                 Circle()

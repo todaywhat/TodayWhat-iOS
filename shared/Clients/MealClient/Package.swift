@@ -15,7 +15,8 @@ let package = Package(
         .package(path: "../NeisClient"),
         .package(path: "../UserDefaultsClient"),
         .package(path: "../../Domains/Entity"),
-        .package(path: "../../DataMapping/DataMapping")
+        .package(path: "../../DataMapping/DataMapping"),
+        .package(path: "../Common/Utilities")
     ],
     targets: [
         .target(
@@ -24,7 +25,8 @@ let package = Package(
                 .product(name: "ResponseDTO", package: "DataMapping"),
                 "Entity",
                 "NeisClient",
-                "UserDefaultsClient"
+                "UserDefaultsClient",
+                .product(name: "DateUtil", package: "Utilities")
             ]
         ),
         .testTarget(

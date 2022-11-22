@@ -22,6 +22,10 @@ let package = Package(
         .library(
             name: "DateUtil",
             targets: ["DateUtil"]
+        ),
+        .library(
+            name: "SwiftUIUtil",
+            targets: ["SwiftUIUtil"]
         )
     ],
     dependencies: [],
@@ -36,6 +40,8 @@ let package = Package(
         .testTarget(name: "FoundationUtilTests"),
 
         .target(name: "DateUtil"),
-        .testTarget(name: "DateUtilTests")
+        .testTarget(name: "DateUtilTests"),
+
+        .target(name: "SwiftUIUtil")
     ]
 )

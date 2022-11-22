@@ -1,11 +1,11 @@
 import ComposableArchitecture
 import SwiftUI
 
-public struct SplashView: View {
-    let store: StoreOf<SplashCore>
-    @ObservedObject var viewStore: ViewStoreOf<SplashCore>
+public struct RootView: View {
+    let store: StoreOf<RootCore>
+    @ObservedObject var viewStore: ViewStoreOf<RootCore>
     
-    public init(store: StoreOf<SplashCore>) {
+    public init(store: StoreOf<RootCore>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
     }
