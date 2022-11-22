@@ -1,6 +1,7 @@
 import ComposableArchitecture
 import SwiftUI
 import TWColor
+import TWImage
 
 public struct MainView: View {
     let store: StoreOf<MainCore>
@@ -21,6 +22,16 @@ public struct MainView: View {
                     Text("ONMI")
                         .font(.custom("Fraunces72pt-Black", size: 32))
                         .foregroundColor(.extraGray)
+                }
+
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+
+                    } label: {
+                        Image.gear
+                            .renderingMode(.original)
+                    }
+
                 }
             }
         }

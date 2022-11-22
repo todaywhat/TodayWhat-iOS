@@ -27,6 +27,10 @@ let package = Package(
         .library(
             name: "TWBottomSheet",
             targets: ["TWBottomSheet"]
+        ),
+        .library(
+            name: "TWImage",
+            targets: ["TWImage"]
         )
     ],
     dependencies: [
@@ -61,6 +65,9 @@ let package = Package(
                 "TWColor",
                 .product(name: "SwiftUIUtil", package: "Utilities")
             ]
+        ),
+        .target(
+            name: "TWImage"
         )
     ]
 )
