@@ -33,11 +33,11 @@ public struct SplashCore: ReducerProtocol {
                     !type.isEmpty
                 else {
                     return .run { send in
-                        await send(.userInfoIsRequired)
+                        await send(.userInfoIsRequired, animation: .default)
                     }
                 }
                 return .run { send in
-                    await send(.userInfoIsExist)
+                    await send(.userInfoIsExist, animation: .default)
                 }
             
             default:

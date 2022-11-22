@@ -133,7 +133,7 @@ public struct SchoolSettingCore: ReducerProtocol {
                         userDefaultsClient.setValue($0.0, $0.1)
                     }
                     return .run { send in
-                        await send(.schoolSettingFinished)
+                        await send(.schoolSettingFinished, animation: .default)
                     }
                 }
 

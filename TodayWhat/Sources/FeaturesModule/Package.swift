@@ -79,7 +79,8 @@ let package = Package(
             name: "MainFeature",
             dependencies: [
                 .product(name: "Dependencies", package: "swift-composable-architecture"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "TWColor", package: "DesignSystem")
             ]
         ),
         .testTarget(name: "MainFeatureTests", dependencies: ["MainFeature"]),

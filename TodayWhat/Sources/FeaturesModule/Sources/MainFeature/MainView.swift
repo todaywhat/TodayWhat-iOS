@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import SwiftUI
+import TWColor
 
 public struct MainView: View {
     let store: StoreOf<MainCore>
@@ -14,6 +15,13 @@ public struct MainView: View {
         NavigationView {
             VStack {
                 
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Text("ONMI")
+                        .font(.custom("Fraunces72pt-Black", size: 32))
+                        .foregroundColor(.extraGray)
+                }
             }
         }
     }
