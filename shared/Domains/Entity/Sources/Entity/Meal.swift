@@ -1,4 +1,5 @@
 import Foundation
+import EnumUtil
 
 public struct Meal: Equatable, Hashable {
     public let breakfast: SubMeal
@@ -18,6 +19,19 @@ public struct Meal: Equatable, Hashable {
         public init(meals: [String], cal: Int) {
             self.meals = meals
             self.cal = cal
+        }
+    }
+
+    public func mealByType(type: MealType) -> SubMeal {
+        switch type {
+        case .breakfast:
+            return breakfast
+
+        case .lunch:
+            return lunch
+
+        case .dinner:
+            return dinner
         }
     }
 }

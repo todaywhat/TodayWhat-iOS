@@ -26,6 +26,10 @@ let package = Package(
         .library(
             name: "SplashFeature",
             targets: ["SplashFeature"]
+        ),
+        .library(
+            name: "MealFeature",
+            targets: ["MealFeature"]
         )
     ],
     dependencies: [
@@ -82,7 +86,9 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "TWColor", package: "DesignSystem"),
                 .product(name: "TWImage", package: "DesignSystem"),
-                "UserDefaultsClient"
+                "UserDefaultsClient",
+                "MealFeature",
+                "ScheduleFeature"
             ]
         ),
         .testTarget(name: "MainFeatureTests", dependencies: ["MainFeature"]),
@@ -95,6 +101,24 @@ let package = Package(
                 "UserDefaultsClient"
             ]
         ),
-        .testTarget(name: "SplashFeatureTests", dependencies: ["SplashFeature"])
+        .testTarget(name: "SplashFeatureTests", dependencies: ["SplashFeature"]),
+        
+        .target(
+            name: "MealFeature",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-composable-architecture"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+            ]
+        ),
+        .testTarget(name: "MealFeatureTests", dependencies: ["MealFeature"]),
+        
+        .target(
+            name: "ScheduleFeature",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-composable-architecture"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+            ]
+        ),
+        .testTarget(name: "ScheduleFeatureTests", dependencies: ["ScheduleFeature"])
     ]
 )

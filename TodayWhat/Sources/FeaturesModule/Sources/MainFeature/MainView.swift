@@ -2,6 +2,8 @@ import ComposableArchitecture
 import SwiftUI
 import TWColor
 import TWImage
+import MealFeature
+import ScheduleFeature
 
 public struct MainView: View {
     let store: StoreOf<MainCore>
@@ -35,11 +37,19 @@ public struct MainView: View {
                         send: MainCore.Action.tabChanged
                     ).animation(.default)
                 ) {
-                    Text("급식")
-                        .tag(0)
+                    IfLetStore(
+                        store.scope(state: \.mealCore, action: MainCore.Action.mealCore)
+                    ) { store in
+                        MealView(store: store)
+                    }
+                    .tag(0)
 
-                    Text("시간표")
-                        .tag(1)
+                    IfLetStore(
+                        store.scope(state: \.scheduleCore, action: MainCore.Action.scheduleCore)
+                    ) { store in
+                        ScheduleView(store: store)
+                    }
+                    .tag(1)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
             }

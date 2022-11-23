@@ -1,5 +1,7 @@
 import ComposableArchitecture
 import UserDefaultsClient
+import MealFeature
+import ScheduleFeature
 
 public struct MainCore: ReducerProtocol {
     public init() {}
@@ -8,6 +10,8 @@ public struct MainCore: ReducerProtocol {
         public var grade = ""
         public var `class` = ""
         public var currentTab = 0
+        public var mealCore: MealCore.State? = MealCore.State()
+        public var scheduleCore: ScheduleCore.State? = ScheduleCore.State()
         
         public init() {}
     }
@@ -15,6 +19,8 @@ public struct MainCore: ReducerProtocol {
     public enum Action: Equatable {
         case onAppear
         case tabChanged(Int)
+        case mealCore(MealCore.Action)
+        case scheduleCore(ScheduleCore.Action)
     }
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
@@ -34,6 +40,12 @@ public struct MainCore: ReducerProtocol {
                 return .none
             }
             return .none
+        }
+        .ifLet(\.mealCore, action: /Action.mealCore) {
+            MealCore()
+        }
+        .ifLet(\.scheduleCore, action: /Action.scheduleCore) {
+            ScheduleCore()
         }
     }
 }
