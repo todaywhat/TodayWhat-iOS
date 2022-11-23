@@ -45,6 +45,8 @@
 		461C2347292C57B300B3A9CB /* SchoolSettingFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2346292C57B300B3A9CB /* SchoolSettingFeature */; };
 		461C2349292C58D600B3A9CB /* SwiftUIUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2348292C58D600B3A9CB /* SwiftUIUtil */; };
 		461C2350292DA89D00B3A9CB /* TWColor in Frameworks */ = {isa = PBXBuildFile; productRef = 461C234F292DA89D00B3A9CB /* TWColor */; };
+		461C2352292DD50800B3A9CB /* Fraunces9pt-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 461C2351292DD50700B3A9CB /* Fraunces9pt-Black.ttf */; };
+		461C2353292DD50800B3A9CB /* Fraunces9pt-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 461C2351292DD50700B3A9CB /* Fraunces9pt-Black.ttf */; };
 		4647B12328DC0AE700FAB81B /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */; };
 		4647B12428DC0AFF00FAB81B /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */; };
 		4647B12C28DC1CC800FAB81B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12A28DC1CC800FAB81B /* MainViewModel.swift */; };
@@ -61,8 +63,6 @@
 		465023662926FEBC008B015A /* UserDefaultsClient in Frameworks */ = {isa = PBXBuildFile; productRef = 465023652926FEBC008B015A /* UserDefaultsClient */; };
 		4650236C29270791008B015A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4650236B29270791008B015A /* Preview Assets.xcassets */; };
 		465023712927109B008B015A /* LocalDatabaseClient in Frameworks */ = {isa = PBXBuildFile; productRef = 465023702927109B008B015A /* LocalDatabaseClient */; };
-		4650237629272DF4008B015A /* Fraunces72pt-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4650237529272DF4008B015A /* Fraunces72pt-Black.ttf */; };
-		4650237729272DF4008B015A /* Fraunces72pt-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4650237529272DF4008B015A /* Fraunces72pt-Black.ttf */; };
 		4650237B292730B7008B015A /* MealPartTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46502379292730B7008B015A /* MealPartTime.swift */; };
 		4650237C29273179008B015A /* TodayWhatWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603114F2923DCE700A5CB09 /* TodayWhatWidget.swift */; };
 		4650237D292731F2008B015A /* MealWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46502372292719B8008B015A /* MealWidgetEntryView.swift */; };
@@ -180,6 +180,7 @@
 		4608441D28DBFE2600D60E39 /* TodayWhat_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhat_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		4608441F28DBFE2600D60E39 /* TodayWhat_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhat_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		461C234E292CEF5F00B3A9CB /* TodayWhatWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayWhatWidgetExtension.entitlements; sourceTree = "<group>"; };
+		461C2351292DD50700B3A9CB /* Fraunces9pt-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces9pt-Black.ttf"; sourceTree = "<group>"; };
 		4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayInfoPart.swift; sourceTree = "<group>"; };
 		4647B12A28DC1CC800FAB81B /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		4647B13228DC27CE00FAB81B /* PartSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartSelectView.swift; sourceTree = "<group>"; };
@@ -193,7 +194,6 @@
 		4650236B29270791008B015A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4650236D2927092B008B015A /* LocalDatabaseClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LocalDatabaseClient; sourceTree = "<group>"; };
 		46502372292719B8008B015A /* MealWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealWidgetEntryView.swift; sourceTree = "<group>"; };
-		4650237529272DF4008B015A /* Fraunces72pt-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces72pt-Black.ttf"; sourceTree = "<group>"; };
 		4650237829272E4F008B015A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		46502379292730B7008B015A /* MealPartTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPartTime.swift; sourceTree = "<group>"; };
 		465023B0292AFF7E008B015A /* MealClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MealClient; sourceTree = "<group>"; };
@@ -582,7 +582,7 @@
 		465023742927297A008B015A /* Font */ = {
 			isa = PBXGroup;
 			children = (
-				4650237529272DF4008B015A /* Fraunces72pt-Black.ttf */,
+				461C2351292DD50700B3A9CB /* Fraunces9pt-Black.ttf */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -829,8 +829,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4650237729272DF4008B015A /* Fraunces72pt-Black.ttf in Resources */,
 				460311532923DCE800A5CB09 /* Assets.xcassets in Resources */,
+				461C2353292DD50800B3A9CB /* Fraunces9pt-Black.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -838,9 +838,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4650237629272DF4008B015A /* Fraunces72pt-Black.ttf in Resources */,
 				4650236C29270791008B015A /* Preview Assets.xcassets in Resources */,
 				460843DF28DBFE2500D60E39 /* Assets.xcassets in Resources */,
+				461C2352292DD50800B3A9CB /* Fraunces9pt-Black.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

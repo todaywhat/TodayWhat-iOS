@@ -86,7 +86,7 @@ private struct MediumMealWidgetView: View {
             VStack(spacing: 4) {
                 HStack(spacing: 4) {
                     Text("ONMI")
-                        .font(.custom("Fraunces72pt-Black", size: 16))
+                        .font(.custom("Fraunces9pt-Black", size: 16))
 
                     Text("[\(entry.mealPartTime.display)]")
                         .font(.system(size: 12))

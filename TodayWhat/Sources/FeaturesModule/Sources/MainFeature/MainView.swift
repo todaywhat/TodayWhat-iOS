@@ -17,7 +17,8 @@ public struct MainView: View {
         NavigationView {
             VStack {
                 schoolInfoCardView()
-                    .padding(16)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 12)
 
                 TopTabbarView(
                     currentTab: viewStore.binding(
@@ -26,6 +27,7 @@ public struct MainView: View {
                     ),
                     items: ["급식", "시간표"]
                 )
+                .padding(.top, 32)
 
                 TabView(
                     selection: viewStore.binding(
@@ -45,7 +47,7 @@ public struct MainView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Text("ONMI")
-                        .font(.custom("Fraunces72pt-Black", size: 32))
+                        .font(.custom("Fraunces9pt-Black", size: 32))
                         .foregroundColor(.extraGray)
                 }
 
@@ -67,7 +69,7 @@ public struct MainView: View {
 
     @ViewBuilder
     private func schoolInfoCardView() -> some View {
-        ZStack {
+        ZStack(alignment: .bottomTrailing) {
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(viewStore.school)
@@ -83,6 +85,23 @@ public struct MainView: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 25.5)
+
+            HStack {
+                Spacer()
+                
+                if viewStore.currentTab == 0 {
+                    Image.meal
+                        .transition(
+                            .move(edge: .top).combined(with: .opacity)
+                        )
+                } else {
+                    Image.book
+                        .transition(
+                            .move(edge: .bottom).combined(with: .opacity)
+                        )
+                }
+            }
+            .padding(.trailing, 10)
         }
         .frame(maxWidth: .infinity)
         .background {
