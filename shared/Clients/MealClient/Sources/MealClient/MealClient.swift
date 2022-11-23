@@ -1,6 +1,5 @@
 import Dependencies
 import Foundation
-import XCTestDynamicOverlay
 import NeisClient
 import Entity
 import ResponseDTO
@@ -14,6 +13,7 @@ public struct MealClient: Sendable {
 extension MealClient: DependencyKey {
     public static var liveValue: MealClient = MealClient(
         fetchMeal: { date in
+            var date = date
             @Dependency(\.userDefaultsClient) var userDefaultsClient: UserDefaultsClient
 
             guard
@@ -31,7 +31,7 @@ extension MealClient: DependencyKey {
 
             let month = date.month < 10 ? "0\(date.month)" : "\(date.month)"
             let day = date.day < 10 ? "0\(date.day)" : "\(date.day)"
-            let date = "\(date.year)\(month)\(day)"
+            let reqDate = "\(date.year)\(month)\(day)"
 
             let response = try await neisClient.fetchDataOnNeis(
                 "mealServiceDietInfo",
@@ -42,8 +42,8 @@ extension MealClient: DependencyKey {
                     .init(name: "pSize", value: "10"),
                     .init(name: "ATPT_OFCDC_SC_CODE", value: orgCode),
                     .init(name: "SD_SCHUL_CODE", value: code),
-                    .init(name: "MLSV_FROM_YMD", value: date),
-                    .init(name: "MLSV_TO_YMD", value: date)
+                    .init(name: "MLSV_FROM_YMD", value: reqDate),
+                    .init(name: "MLSV_TO_YMD", value: reqDate)
                 ],
                 key: "mealServiceDietInfo",
                 type: [SingleMealResponseDTO].self

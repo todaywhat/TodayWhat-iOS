@@ -1,7 +1,7 @@
 import Foundation
 import Entity
 
-public struct TimeTableResponseDTO: Decodable {
+public struct SingleTimeTableResponseDTO: Decodable {
     public let perio: String
     public let content: String
     
@@ -11,7 +11,7 @@ public struct TimeTableResponseDTO: Decodable {
     }
 }
 
-public extension TimeTableResponseDTO {
+public extension SingleTimeTableResponseDTO {
     func toDomain() -> TimeTable {
         return .init(
             perio: Int(perio) ?? 1,

@@ -1,11 +1,11 @@
 import XCTest
-@testable import ScheduleClient
+@testable import TimeTableClient
 
-final class ScheduleClientTests: XCTestCase {
+final class TimeTableClientTests: XCTestCase {
     func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(ScheduleClient().text, "Hello, World!")
+        XCTAssertEqual(TimeTableClient().text, "Hello, World!")
     }
 }
