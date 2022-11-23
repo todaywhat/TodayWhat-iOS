@@ -1,6 +1,6 @@
 import ComposableArchitecture
 
-public struct ScheduleCore: ReducerProtocol {
+public struct TimeTableCore: ReducerProtocol {
     public init() {}
     public struct State: Equatable {
         

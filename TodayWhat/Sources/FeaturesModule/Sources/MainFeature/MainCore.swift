@@ -1,7 +1,7 @@
 import ComposableArchitecture
 import UserDefaultsClient
 import MealFeature
-import ScheduleFeature
+import TimeTableFeature
 
 public struct MainCore: ReducerProtocol {
     public init() {}
@@ -11,7 +11,7 @@ public struct MainCore: ReducerProtocol {
         public var `class` = ""
         public var currentTab = 0
         public var mealCore: MealCore.State? = MealCore.State()
-        public var scheduleCore: ScheduleCore.State? = ScheduleCore.State()
+        public var timeTableCore: TimeTableCore.State? = TimeTableCore.State()
         
         public init() {}
     }
@@ -20,7 +20,7 @@ public struct MainCore: ReducerProtocol {
         case onAppear
         case tabChanged(Int)
         case mealCore(MealCore.Action)
-        case scheduleCore(ScheduleCore.Action)
+        case timeTableCore(TimeTableCore.Action)
     }
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
@@ -42,10 +42,10 @@ public struct MainCore: ReducerProtocol {
             return .none
         }
         .ifLet(\.mealCore, action: /Action.mealCore) {
-            MealCore()._printChanges()
+            MealCore()
         }
-        .ifLet(\.scheduleCore, action: /Action.scheduleCore) {
-            ScheduleCore()
+        .ifLet(\.timeTableCore, action: /Action.timeTableCore) {
+            TimeTableCore()
         }
     }
 }

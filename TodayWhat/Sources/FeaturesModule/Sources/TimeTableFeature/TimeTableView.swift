@@ -1,11 +1,11 @@
 import ComposableArchitecture
 import SwiftUI
 
-public struct ScheduleView: View {
-    let store: StoreOf<ScheduleCore>
-    @ObservedObject var viewStore: ViewStoreOf<ScheduleCore>
+public struct TimeTableView: View {
+    let store: StoreOf<TimeTableCore>
+    @ObservedObject var viewStore: ViewStoreOf<TimeTableCore>
     
-    public init(store: StoreOf<ScheduleCore>) {
+    public init(store: StoreOf<TimeTableCore>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
     }

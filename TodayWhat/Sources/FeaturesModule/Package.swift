@@ -30,6 +30,10 @@ let package = Package(
         .library(
             name: "MealFeature",
             targets: ["MealFeature"]
+        ),
+        .library(
+            name: "TimeTableFeature",
+            targets: ["TimeTableFeature"]
         )
     ],
     dependencies: [
@@ -89,7 +93,7 @@ let package = Package(
                 .product(name: "TWImage", package: "DesignSystem"),
                 "UserDefaultsClient",
                 "MealFeature",
-                "ScheduleFeature"
+                "TimeTableFeature"
             ]
         ),
         .testTarget(name: "MainFeatureTests", dependencies: ["MainFeature"]),
@@ -117,13 +121,13 @@ let package = Package(
         .testTarget(name: "MealFeatureTests", dependencies: ["MealFeature"]),
         
         .target(
-            name: "ScheduleFeature",
+            name: "TimeTableFeature",
             dependencies: [
                 .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 "Entity"
             ]
         ),
-        .testTarget(name: "ScheduleFeatureTests", dependencies: ["ScheduleFeature"])
+        .testTarget(name: "TimeTableFeatureTests", dependencies: ["TimeTableFeature"])
     ]
 )

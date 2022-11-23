@@ -3,7 +3,7 @@ import SwiftUI
 import TWColor
 import TWImage
 import MealFeature
-import ScheduleFeature
+import TimeTableFeature
 
 public struct MainView: View {
     let store: StoreOf<MainCore>
@@ -45,9 +45,9 @@ public struct MainView: View {
                     .tag(0)
 
                     IfLetStore(
-                        store.scope(state: \.scheduleCore, action: MainCore.Action.scheduleCore)
+                        store.scope(state: \.timeTableCore, action: MainCore.Action.timeTableCore)
                     ) { store in
-                        ScheduleView(store: store)
+                        TimeTableView(store: store)
                     }
                     .tag(1)
                 }
