@@ -15,7 +15,7 @@ public enum UserDefaultsKeys: String {
 }
 
 public struct UserDefaultsClient {
-    public let setValue: (UserDefaultsKeys, Any) -> Void
+    public let setValue: (UserDefaultsKeys, Any?) -> Void
 }
 
 extension UserDefaultsClient: DependencyKey {

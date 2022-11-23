@@ -44,6 +44,7 @@
 		461C2345292C57B300B3A9CB /* SchoolMajorSheetFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2344292C57B300B3A9CB /* SchoolMajorSheetFeature */; };
 		461C2347292C57B300B3A9CB /* SchoolSettingFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2346292C57B300B3A9CB /* SchoolSettingFeature */; };
 		461C2349292C58D600B3A9CB /* SwiftUIUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2348292C58D600B3A9CB /* SwiftUIUtil */; };
+		461C2350292DA89D00B3A9CB /* TWColor in Frameworks */ = {isa = PBXBuildFile; productRef = 461C234F292DA89D00B3A9CB /* TWColor */; };
 		4647B12328DC0AE700FAB81B /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */; };
 		4647B12428DC0AFF00FAB81B /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */; };
 		4647B12C28DC1CC800FAB81B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12A28DC1CC800FAB81B /* MainViewModel.swift */; };
@@ -178,6 +179,7 @@
 		4608441928DBFE2600D60E39 /* TodayWhat Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TodayWhat Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4608441D28DBFE2600D60E39 /* TodayWhat_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhat_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		4608441F28DBFE2600D60E39 /* TodayWhat_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhat_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		461C234E292CEF5F00B3A9CB /* TodayWhatWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayWhatWidgetExtension.entitlements; sourceTree = "<group>"; };
 		4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayInfoPart.swift; sourceTree = "<group>"; };
 		4647B12A28DC1CC800FAB81B /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		4647B13228DC27CE00FAB81B /* PartSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartSelectView.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				465023BA292B093E008B015A /* Dependencies in Frameworks */,
 				465023BE292B1C3D008B015A /* DateUtil in Frameworks */,
 				465023BC292B09D8008B015A /* UserDefaultsClient in Frameworks */,
+				461C2350292DA89D00B3A9CB /* TWColor in Frameworks */,
 				4603114D2923DCE700A5CB09 /* SwiftUI.framework in Frameworks */,
 				4603114B2923DCE700A5CB09 /* WidgetKit.framework in Frameworks */,
 			);
@@ -425,6 +428,7 @@
 		460843CE28DBFE2300D60E39 = {
 			isa = PBXGroup;
 			children = (
+				461C234E292CEF5F00B3A9CB /* TodayWhatWidgetExtension.entitlements */,
 				4647B12028DC0A9000FAB81B /* shared */,
 				460843D928DBFE2400D60E39 /* TodayWhat */,
 				460843EA28DBFE2500D60E39 /* TodayWhatTests */,
@@ -607,6 +611,7 @@
 				465023BB292B09D8008B015A /* UserDefaultsClient */,
 				465023BD292B1C3D008B015A /* DateUtil */,
 				467CD846292BC51100A9766A /* MealClient */,
+				461C234F292DA89D00B3A9CB /* TWColor */,
 			);
 			productName = TodayWhatWidgetExtension;
 			productReference = 460311482923DCE700A5CB09 /* TodayWhatWidgetExtension.appex */;
@@ -992,6 +997,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = TodayWhatWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 235C2RVZ7L;
@@ -1021,6 +1027,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = TodayWhatWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 235C2RVZ7L;
@@ -1619,6 +1626,10 @@
 		461C2348292C58D600B3A9CB /* SwiftUIUtil */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftUIUtil;
+		};
+		461C234F292DA89D00B3A9CB /* TWColor */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TWColor;
 		};
 		4650234329267847008B015A /* ErrorModule */ = {
 			isa = XCSwiftPackageProductDependency;

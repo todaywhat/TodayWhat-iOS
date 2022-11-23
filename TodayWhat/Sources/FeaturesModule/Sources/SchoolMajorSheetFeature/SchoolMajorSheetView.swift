@@ -44,5 +44,8 @@ public struct SchoolMajorSheetView: View {
                 viewStore.send(.majorRowDidSelect(major), animation: .default)
             }
         }
+        .onTapGesture {
+            viewStore.send(.majorRowDidSelect(major), animation: .default)
+        }
     }
 }

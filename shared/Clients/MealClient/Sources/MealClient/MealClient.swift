@@ -14,7 +14,8 @@ public struct MealClient: Sendable {
 extension MealClient: DependencyKey {
     public static var liveValue: MealClient = MealClient(
         fetchMeal: { date in
-            @Dependency(\.userDefaultsClient) var userDefaultsClient
+            @Dependency(\.userDefaultsClient) var userDefaultsClient: UserDefaultsClient
+
             guard
                 let orgCode = userDefaultsClient.getValue(key: .orgCode, type: String.self),
                 let code = userDefaultsClient.getValue(key: .schoolCode, type: String.self)

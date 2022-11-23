@@ -3,6 +3,7 @@ import WidgetKit
 import Intents
 import Dependencies
 import Entity
+import TWColor
 
 struct MealWidgetEntryView: View {
     @Environment(\.widgetFamily) var widgetFamily
@@ -76,6 +77,9 @@ private struct SmallMealWidgetView: View {
 private struct MediumMealWidgetView: View {
     var entry: Provider.Entry
     private let rows = Array(repeating: GridItem(.flexible(), spacing: nil), count: 4)
+    private var calorie: CGFloat {
+        CGFloat(entry.meal.meals(mealPartTime: entry.mealPartTime).cal)
+    }
 
     var body: some View {
         GeometryReader { proxy in
@@ -89,9 +93,9 @@ private struct MediumMealWidgetView: View {
 
                     Spacer()
 
-                    Text("\(entry.meal.meals(mealPartTime: entry.mealPartTime).cal) kcal")
+                    Text("\(calorie) kcal")
                         .font(.system(size: 12))
-                        .foregroundColor(Color("Gray"))
+                        .foregroundColor(Color.extraGray)
                 }
                 .padding(.horizontal, 4)
 
@@ -110,7 +114,7 @@ private struct MediumMealWidgetView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(8)
                 .background {
-                    Color("VeryLightGray")
+                    Color.veryLightGray
                         .cornerRadius(8)
                 }
                 .padding([.bottom, .horizontal], 4)
@@ -122,6 +126,9 @@ private struct MediumMealWidgetView: View {
 
 private struct LargeMealWidgetView: View {
     var entry: Provider.Entry
+    private var calorie: CGFloat {
+        CGFloat(entry.meal.meals(mealPartTime: entry.mealPartTime).cal)
+    }
 
     var body: some View {
         VStack(spacing: 4) {
@@ -134,14 +141,21 @@ private struct LargeMealWidgetView: View {
 
                 Spacer()
 
-                Text("\(entry.meal.meals(mealPartTime: entry.mealPartTime).cal) Kcal")
+                Text("\(calorie) Kcal")
                     .font(.system(size: 12))
-                    .foregroundColor(Color("Gray"))
+                    .foregroundColor(Color.extraGray)
             }
 
-            RoundedRectangle(cornerRadius: 2)
-                .fill(Color("LightGray"))
-                .frame(height: 8)
+            GeometryReader { proxy in
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(Color.lightGray)
+                    .frame(height: 8)
+                    .overlay(alignment: .leading) {
+                        RoundedRectangle(cornerRadius: 2)
+                            .fill(Color.extraPrimary)
+                            .frame(width: proxy.size.width * calorie / 2350, height: 8)
+                    }
+            }
 
             VStack(alignment: .leading, spacing: 0) {
                 ForEach(entry.meal.meals(mealPartTime: entry.mealPartTime).meals, id: \.hashValue) { meal in
@@ -158,7 +172,7 @@ private struct LargeMealWidgetView: View {
             .padding(.top, 4)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
-                Color("VeryLightGray")
+                Color.veryLightGray
             }
             .cornerRadius(8)
         }
