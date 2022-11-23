@@ -42,7 +42,7 @@ public struct MainCore: ReducerProtocol {
             return .none
         }
         .ifLet(\.mealCore, action: /Action.mealCore) {
-            MealCore()
+            MealCore()._printChanges()
         }
         .ifLet(\.scheduleCore, action: /Action.scheduleCore) {
             ScheduleCore()

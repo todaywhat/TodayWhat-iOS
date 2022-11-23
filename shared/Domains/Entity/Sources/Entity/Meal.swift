@@ -14,9 +14,9 @@ public struct Meal: Equatable, Hashable {
 
     public struct SubMeal: Equatable, Hashable {
         public let meals: [String]
-        public let cal: Int
+        public let cal: Double
 
-        public init(meals: [String], cal: Int) {
+        public init(meals: [String], cal: Double) {
             self.meals = meals
             self.cal = cal
         }

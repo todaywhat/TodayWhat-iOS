@@ -95,6 +95,7 @@ public struct MainView: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 25.5)
+            .zIndex(1)
 
             HStack {
                 Spacer()
@@ -112,6 +113,7 @@ public struct MainView: View {
                 }
             }
             .padding(.trailing, 10)
+            .zIndex(0)
         }
         .frame(maxWidth: .infinity)
         .background {

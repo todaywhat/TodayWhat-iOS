@@ -53,21 +53,21 @@ extension MealClient: DependencyKey {
                 .map { dto in
                     Meal.SubMeal(
                         meals: dto.info.replacingOccurrences(of: " ", with: "").components(separatedBy: "<br/>"),
-                        cal: Int(dto.calInfo.components(separatedBy: " ").first ?? "0") ?? 0
+                        cal: Double(dto.calInfo.components(separatedBy: " ").first ?? "0") ?? 0
                     )
                 }
             let lunch = response.first { $0.type == .lunch }
                 .map { dto in
                     Meal.SubMeal(
                         meals: dto.info.replacingOccurrences(of: " ", with: "").components(separatedBy: "<br/>"),
-                        cal: Int(dto.calInfo.components(separatedBy: " ").first ?? "0") ?? 0
+                        cal: Double(dto.calInfo.components(separatedBy: " ").first ?? "0") ?? 0
                     )
                 }
             let dinner = response.first { $0.type == .dinner }
                 .map { dto in
                     Meal.SubMeal(
                         meals: dto.info.replacingOccurrences(of: " ", with: "").components(separatedBy: "<br/>"),
-                        cal: Int(dto.calInfo.components(separatedBy: " ").first ?? "0") ?? 0
+                        cal: Double(dto.calInfo.components(separatedBy: " ").first ?? "0") ?? 0
                     )
                 }
             guard

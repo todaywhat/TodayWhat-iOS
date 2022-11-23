@@ -31,6 +31,10 @@ let package = Package(
         .library(
             name: "TWImage",
             targets: ["TWImage"]
+        ),
+        .library(
+            name: "LabelledDivider",
+            targets: ["LabelledDivider"]
         )
     ],
     dependencies: [
@@ -68,6 +72,12 @@ let package = Package(
         ),
         .target(
             name: "TWImage"
+        ),
+        .target(
+            name: "LabelledDivider",
+            dependencies: [
+                "TWColor"
+            ]
         )
     ]
 )

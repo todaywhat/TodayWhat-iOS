@@ -37,6 +37,7 @@ let package = Package(
         .package(path: "../../Domains/Entity"),
         .package(path: "../../Clients/UserDefaultsClient"),
         .package(path: "../../Clients/SchoolClient"),
+        .package(path: "../../Clients/MealClient"),
         .package(path: "../DesignSystem")
     ],
     targets: [
@@ -108,7 +109,9 @@ let package = Package(
             dependencies: [
                 .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                "Entity"
+                .product(name: "LabelledDivider", package: "DesignSystem"),
+                "Entity",
+                "MealClient"
             ]
         ),
         .testTarget(name: "MealFeatureTests", dependencies: ["MealFeature"]),
