@@ -20,6 +20,7 @@ public struct SchoolSettingCore: ReducerProtocol {
         public var schoolMajorList: [String] = []
         public var isError = false
         public var errorMessage = ""
+        public var isLoading = false
 
         public var titleMessage: String {
             if school.isEmpty {
@@ -70,6 +71,7 @@ public struct SchoolSettingCore: ReducerProtocol {
             switch action {
             case let .schoolChanged(school):
                 state.school = school
+                state.isLoading = true
                 return .task { [school = state.school] in
                     .schoolListResponse(
                         await TaskResult {
@@ -89,9 +91,11 @@ public struct SchoolSettingCore: ReducerProtocol {
                 state.class = "\(`class`)"
 
             case let .schoolListResponse(.success(list)):
+                state.isLoading = false
                 state.schoolList = list
 
             case let .schoolListResponse(.failure(error)):
+                state.isLoading = true
                 state.isError = true
                 state.errorMessage = error.localizedDescription
 

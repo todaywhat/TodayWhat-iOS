@@ -107,7 +107,8 @@ let package = Package(
             name: "MealFeature",
             dependencies: [
                 .product(name: "Dependencies", package: "swift-composable-architecture"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                "Entity"
             ]
         ),
         .testTarget(name: "MealFeatureTests", dependencies: ["MealFeature"]),
@@ -116,7 +117,8 @@ let package = Package(
             name: "ScheduleFeature",
             dependencies: [
                 .product(name: "Dependencies", package: "swift-composable-architecture"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                "Entity"
             ]
         ),
         .testTarget(name: "ScheduleFeatureTests", dependencies: ["ScheduleFeature"])

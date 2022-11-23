@@ -1,9 +1,10 @@
 import ComposableArchitecture
+import Entity
 
 public struct MealCore: ReducerProtocol {
     public init() {}
     public struct State: Equatable {
-        
+        public var meal: Meal?
         public init() {}
     }
 

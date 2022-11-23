@@ -97,19 +97,24 @@ public struct SchoolSettingView: View {
                 .focused($focusField, equals: .school)
 
                 if viewStore.isFocusedSchool {
-                    ForEach(viewStore.schoolList, id: \.schoolCode) { school in
-                        HStack {
-                            schoolRowView(school: school)
+                    if viewStore.isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                    } else {
+                        ForEach(viewStore.schoolList, id: \.schoolCode) { school in
+                            HStack {
+                                schoolRowView(school: school)
 
-                            Spacer()
-                        }
-                        .frame(maxWidth: .infinity)
-                        .background {
-                            Color.background
-                        }
-                        .onTapGesture {
-                            viewStore.send(.schoolRowDidSelect(school), animation: .default)
-                            focusField = .grade
+                                Spacer()
+                            }
+                            .frame(maxWidth: .infinity)
+                            .background {
+                                Color.background
+                            }
+                            .onTapGesture {
+                                viewStore.send(.schoolRowDidSelect(school), animation: .default)
+                                focusField = .grade
+                            }
                         }
                     }
                 }
