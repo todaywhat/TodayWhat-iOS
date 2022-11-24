@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "TimeTableClient",
+    platforms: [.iOS(.v15), .watchOS(.v8)],
     products: [
         .library(
             name: "TimeTableClient",

@@ -12,7 +12,7 @@ public struct TimeTableClient: Sendable {
     public var fetchTimeTable: @Sendable (_ date: Date) async throws -> [TimeTable]
 }
 
-public extension TimeTableClient: DependencyKey {
+extension TimeTableClient: DependencyKey {
     public static var liveValue: TimeTableClient = TimeTableClient(
         fetchTimeTable: { date in
             var date = date
@@ -59,8 +59,15 @@ public extension TimeTableClient: DependencyKey {
     )
 }
 
-public extension TimeTableClient: TestDependencyKey {
+extension TimeTableClient: TestDependencyKey {
     public static var testValue: TimeTableClient = TimeTableClient(
         fetchTimeTable: { _ in [] }
     )
+}
+
+extension DependencyValues {
+    public var timeTableClient: TimeTableClient {
+        get { self[TimeTableClient.self] }
+        set { self[TimeTableClient.self] = newValue }
+    }
 }

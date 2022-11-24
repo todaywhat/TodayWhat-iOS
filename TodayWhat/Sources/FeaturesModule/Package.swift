@@ -42,6 +42,7 @@ let package = Package(
         .package(path: "../../Clients/UserDefaultsClient"),
         .package(path: "../../Clients/SchoolClient"),
         .package(path: "../../Clients/MealClient"),
+        .package(path: "../../Clients/TimeTableClient"),
         .package(path: "../DesignSystem")
     ],
     targets: [
@@ -125,7 +126,9 @@ let package = Package(
             dependencies: [
                 .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                "Entity"
+                .product(name: "TWColor", package: "DesignSystem"),
+                "Entity",
+                "TimeTableClient"
             ]
         ),
         .testTarget(name: "TimeTableFeatureTests", dependencies: ["TimeTableFeature"])
