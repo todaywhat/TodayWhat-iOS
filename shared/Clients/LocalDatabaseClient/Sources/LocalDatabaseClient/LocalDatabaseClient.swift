@@ -23,7 +23,7 @@ public struct LocalDatabaseClient {
 
     public func readRecords<Record: FetchableRecord & PersistableRecord>(
         as record: Record.Type,
-        ordered: [SQLOrderingTerm]
+        ordered: [SQLOrderingTerm] = []
     ) throws -> [Record] {
         try dbQueue.write { db in
             try record.order(ordered).fetchAll(db)
@@ -127,7 +127,10 @@ extension LocalDatabaseClient: DependencyKey {
         migrator.eraseDatabaseOnSchemaChange = true
 #endif
         migrator.registerMigration("v1.0.0") { db in
-            
+            try db.create(table: "allergyLocalEntity") { t in
+                t.column("id", .text).primaryKey(onConflict: .replace).notNull()
+                t.column("allergy", .text).notNull()
+            }
         }
     }
 }

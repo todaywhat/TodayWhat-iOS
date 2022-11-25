@@ -16,9 +16,9 @@ public struct MainCore: ReducerProtocol {
         public var timeTableCore: TimeTableCore.State? = TimeTableCore.State()
         public var confirmationDialog: ConfirmationDialogState<Action>? = nil
         public var isNavigateSchoolSetting = false
-        public var schoolSettingCore: SchoolSettingCore.State?
+        public var schoolSettingCore: SchoolSettingCore.State? = nil
         public var isNavigateAllergySetting = false
-        public var allergySettingCore: AllergySettingCore.State?
+        public var allergySettingCore: AllergySettingCore.State? = nil
 
         public init() {}
     }

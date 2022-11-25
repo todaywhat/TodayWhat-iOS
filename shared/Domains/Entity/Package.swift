@@ -14,7 +14,8 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../Common/Utilities")
+        .package(path: "../Common/Utilities"),
+        .package(url: "https://github.com/groue/GRDB.swift.git", exact: "6.3.1")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -22,7 +23,8 @@ let package = Package(
         .target(
             name: "Entity",
             dependencies: [
-                .product(name: "EnumUtil", package: "Utilities")
+                .product(name: "EnumUtil", package: "Utilities"),
+                .product(name: "GRDB", package: "GRDB.swift")
             ]
         ),
         .testTarget(

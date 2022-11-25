@@ -43,6 +43,7 @@ let package = Package(
         .package(path: "../../Clients/SchoolClient"),
         .package(path: "../../Clients/MealClient"),
         .package(path: "../../Clients/TimeTableClient"),
+        .package(path: "../../Clients/LocalDatabaseClient"),
         .package(path: "../DesignSystem"),
         .package(path: "../../Common/Utilities")
     ],
@@ -144,7 +145,9 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "EnumUtil", package: "Utilities"),
                 .product(name: "SwiftUIUtil", package: "Utilities"),
-                .product(name: "TWColor", package: "DesignSystem")
+                .product(name: "TWColor", package: "DesignSystem"),
+                "LocalDatabaseClient",
+                "Entity"
             ]
         ),
         .testTarget(name: "AllergySettingFeatureTests", dependencies: ["AllergySettingFeature"])
