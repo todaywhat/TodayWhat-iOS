@@ -3,6 +3,7 @@ import UserDefaultsClient
 import MealFeature
 import TimeTableFeature
 import SchoolSettingFeature
+import AllergySettingFeature
 
 public struct MainCore: ReducerProtocol {
     public init() {}
@@ -16,6 +17,8 @@ public struct MainCore: ReducerProtocol {
         public var confirmationDialog: ConfirmationDialogState<Action>? = nil
         public var isNavigateSchoolSetting = false
         public var schoolSettingCore: SchoolSettingCore.State?
+        public var isNavigateAllergySetting = false
+        public var allergySettingCore: AllergySettingCore.State?
 
         public init() {}
     }
@@ -30,8 +33,10 @@ public struct MainCore: ReducerProtocol {
         case skipWeekDidSelect
         case allergySettingDidSelect
         case schoolSettingDidSelect
-        case schoolSettingDismissed
         case schoolSettingCore(SchoolSettingCore.Action)
+        case schoolSettingDismissed
+        case allergySettingCore(AllergySettingCore.Action)
+        case allergySettingDismissed
     }
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
@@ -73,9 +78,14 @@ public struct MainCore: ReducerProtocol {
             case .schoolSettingCore(.schoolSettingFinished):
                 state.schoolSettingCore = nil
                 state.isNavigateSchoolSetting = false
-                return .run { send in
-                    await send(.onAppear)
-                }
+
+            case .allergySettingDidSelect:
+                state.allergySettingCore = .init()
+                state.isNavigateAllergySetting = true
+
+            case .allergySettingDismissed:
+                state.allergySettingCore = nil
+                state.isNavigateAllergySetting = false
             
             default:
                 return .none
@@ -90,6 +100,9 @@ public struct MainCore: ReducerProtocol {
         }
         .ifLet(\.schoolSettingCore, action: /Action.schoolSettingCore) {
             SchoolSettingCore()
+        }
+        .ifLet(\.allergySettingCore, action: /Action.allergySettingCore) {
+            AllergySettingCore()
         }
     }
 }

@@ -82,7 +82,7 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "TWRadioButton", package: "DesignSystem"),
-                .product(name: "SwiftUIUtil", package: "Utilities"),
+                .product(name: "SwiftUIUtil", package: "Utilities")
             ]
         ),
         .testTarget(name: "SchoolMajorSheetFeatureTests", dependencies: ["SchoolMajorSheetFeature"]),
@@ -97,7 +97,8 @@ let package = Package(
                 "UserDefaultsClient",
                 "MealFeature",
                 "TimeTableFeature",
-                "SchoolSettingFeature"
+                "SchoolSettingFeature",
+                "AllergySettingFeature"
             ]
         ),
         .testTarget(name: "MainFeatureTests", dependencies: ["MainFeature"]),
@@ -134,6 +135,18 @@ let package = Package(
                 "TimeTableClient"
             ]
         ),
-        .testTarget(name: "TimeTableFeatureTests", dependencies: ["TimeTableFeature"])
+        .testTarget(name: "TimeTableFeatureTests", dependencies: ["TimeTableFeature"]),
+        
+        .target(
+            name: "AllergySettingFeature",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-composable-architecture"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "EnumUtil", package: "Utilities"),
+                .product(name: "SwiftUIUtil", package: "Utilities"),
+                .product(name: "TWColor", package: "DesignSystem")
+            ]
+        ),
+        .testTarget(name: "AllergySettingFeatureTests", dependencies: ["AllergySettingFeature"])
     ]
 )

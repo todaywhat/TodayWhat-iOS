@@ -5,6 +5,7 @@ import TWImage
 import MealFeature
 import TimeTableFeature
 import SchoolSettingFeature
+import AllergySettingFeature
 
 public struct MainView: View {
     let store: StoreOf<MainCore>
@@ -143,6 +144,21 @@ public struct MainView: View {
                     state: \.schoolSettingCore, action: MainCore.Action.schoolSettingCore)
             ) { store in
                 SchoolSettingView(store: store, isNavigationPushed: true)
+            }
+        } label: {
+            EmptyView()
+        }
+
+        NavigationLink(
+            isActive: viewStore.binding(
+                get: \.isNavigateAllergySetting,
+                send: MainCore.Action.allergySettingDismissed
+            )
+        ) {
+            IfLetStore(
+                store.scope(state: \.allergySettingCore, action: MainCore.Action.allergySettingCore)
+            ) { store in
+                AllergySettingView(store: store)
             }
         } label: {
             EmptyView()

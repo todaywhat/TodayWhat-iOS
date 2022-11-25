@@ -2,9 +2,9 @@ import ComposableArchitecture
 
 public struct AllergySettingCore: ReducerProtocol {
     public init() {}
-    public enum State: Equatable {
+    public struct State: Equatable {
         
-        public init() { self = .splashCore(.init()) }
+        public init() {}
     }
 
     public enum Action: Equatable {
@@ -14,9 +14,6 @@ public struct AllergySettingCore: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             
-            default:
-                return .none
-            }
             return .none
         }
     }
