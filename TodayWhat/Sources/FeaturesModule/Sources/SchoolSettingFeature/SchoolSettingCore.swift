@@ -110,6 +110,7 @@ public struct SchoolSettingCore: ReducerProtocol {
                 state.selectedSchool = school
                 state.school = school.name
                 state.isFocusedSchool = false
+                state.major = ""
                 return .task {
                     .schoolMajorListResponse(
                         await TaskResult {

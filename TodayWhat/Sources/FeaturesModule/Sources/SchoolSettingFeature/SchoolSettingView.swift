@@ -6,6 +6,7 @@ import TWButton
 import TWColor
 import TWBottomSheet
 import SchoolMajorSheetFeature
+import SwiftUIUtil
 
 public struct SchoolSettingView: View {
     private enum FocusField: Hashable {
@@ -15,12 +16,18 @@ public struct SchoolSettingView: View {
         case major
     }
     let store: StoreOf<SchoolSettingCore>
+    private let isNavigationPushed: Bool
     @ObservedObject var viewStore: ViewStoreOf<SchoolSettingCore>
     @FocusState private var focusField: FocusField?
+    @Environment(\.dismiss) var dismiss
     
-    public init(store: StoreOf<SchoolSettingCore>) {
+    public init(
+        store: StoreOf<SchoolSettingCore>,
+        isNavigationPushed: Bool = false
+    ) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
+        self.isNavigationPushed = isNavigationPushed
     }
 
     public var body: some View {
@@ -169,6 +176,9 @@ public struct SchoolSettingView: View {
                 SchoolMajorSheetView(store: store)
             }
             .frame(maxHeight: 400)
+        }
+        .if(isNavigationPushed) {
+            $0.twBackButton(dismiss: dismiss)
         }
     }
 

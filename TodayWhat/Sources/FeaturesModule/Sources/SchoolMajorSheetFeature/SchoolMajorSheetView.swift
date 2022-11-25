@@ -13,22 +13,20 @@ public struct SchoolMajorSheetView: View {
     }
 
     public var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             ScrollView(.vertical, showsIndicators: false) {
-                LazyVStack(spacing: 32) {
+                LazyVStack(spacing: 0) {
                     ForEach(viewStore.majorList, id: \.self) { major in
                         Button {
                             viewStore.send(.majorRowDidSelect(major), animation: .default)
                         } label: {
                             schoolMajorRowView(major: major)
-                                .padding(2)
                         }
+                        .padding(.horizontal, 32)
                     }
                 }
             }
-            .padding(.horizontal, 32)
         }
-        .padding(.top, 32)
     }
 
     @ViewBuilder
@@ -44,8 +42,6 @@ public struct SchoolMajorSheetView: View {
                 viewStore.send(.majorRowDidSelect(major), animation: .default)
             }
         }
-        .onTapGesture {
-            viewStore.send(.majorRowDidSelect(major), animation: .default)
-        }
+        .padding(.vertical, 16)
     }
 }

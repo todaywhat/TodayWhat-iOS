@@ -43,7 +43,8 @@ let package = Package(
         .package(path: "../../Clients/SchoolClient"),
         .package(path: "../../Clients/MealClient"),
         .package(path: "../../Clients/TimeTableClient"),
-        .package(path: "../DesignSystem")
+        .package(path: "../DesignSystem"),
+        .package(path: "../../Common/Utilities")
     ],
     targets: [
         .target(
@@ -80,7 +81,8 @@ let package = Package(
             dependencies: [
                 .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "TWRadioButton", package: "DesignSystem")
+                .product(name: "TWRadioButton", package: "DesignSystem"),
+                .product(name: "SwiftUIUtil", package: "Utilities"),
             ]
         ),
         .testTarget(name: "SchoolMajorSheetFeatureTests", dependencies: ["SchoolMajorSheetFeature"]),

@@ -142,7 +142,7 @@ public struct MainView: View {
                 store.scope(
                     state: \.schoolSettingCore, action: MainCore.Action.schoolSettingCore)
             ) { store in
-                SchoolSettingView(store: store)
+                SchoolSettingView(store: store, isNavigationPushed: true)
             }
         } label: {
             EmptyView()
