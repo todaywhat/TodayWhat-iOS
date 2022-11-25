@@ -12,7 +12,7 @@ let package = Package(
             targets: ["UserDefaultsClient"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.45.0"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.47.0"),
         .package(path: "../Common/Utilities")
     ],
     targets: [

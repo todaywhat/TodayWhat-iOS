@@ -37,7 +37,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.45.0"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.47.0"),
         .package(path: "../../Domains/Entity"),
         .package(path: "../../Clients/UserDefaultsClient"),
         .package(path: "../../Clients/SchoolClient"),

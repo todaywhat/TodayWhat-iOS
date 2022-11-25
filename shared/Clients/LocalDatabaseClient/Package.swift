@@ -13,7 +13,7 @@ let package = Package(
             targets: ["LocalDatabaseClient"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.45.0"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.47.0"),
         .package(url: "https://github.com/groue/GRDB.swift.git", exact: "6.3.1"),
         .package(path: "../Common/Utilities")
     ],

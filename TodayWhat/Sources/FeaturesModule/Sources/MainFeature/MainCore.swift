@@ -12,7 +12,8 @@ public struct MainCore: ReducerProtocol {
         public var currentTab = 0
         public var mealCore: MealCore.State? = MealCore.State()
         public var timeTableCore: TimeTableCore.State? = TimeTableCore.State()
-        
+        public var confirmationDialog: ConfirmationDialogState<Action>? = nil
+
         public init() {}
     }
 
@@ -21,6 +22,11 @@ public struct MainCore: ReducerProtocol {
         case tabChanged(Int)
         case mealCore(MealCore.Action)
         case timeTableCore(TimeTableCore.Action)
+        case settingButtonDidTap
+        case confirmationDialogDismissed
+        case skipWeekDidSelect
+        case allergySettingDidSelect
+        case schoolSettingDidSelect
     }
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
@@ -35,6 +41,21 @@ public struct MainCore: ReducerProtocol {
 
             case let .tabChanged(tab):
                 state.currentTab = tab
+
+            case .settingButtonDidTap:
+                state.confirmationDialog = .init {
+                    .init("")
+                } actions: {
+                    [
+                        .default(.init("학교 바꾸기"), action: .send(.schoolSettingDidSelect)),
+                        .default(.init("알레르기 설정"), action: .send(.allergySettingDidSelect)),
+                        .default(.init("주말 스킵하기"), action: .send(.skipWeekDidSelect)),
+                        .cancel(.init("취소"))
+                    ]
+                }
+
+            case .confirmationDialogDismissed:
+                state.confirmationDialog = nil
             
             default:
                 return .none

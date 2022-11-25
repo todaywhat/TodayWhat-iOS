@@ -63,7 +63,7 @@ public struct MainView: View {
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-
+                        viewStore.send(.settingButtonDidTap)
                     } label: {
                         Image.gear
                             .renderingMode(.original)
@@ -74,6 +74,10 @@ public struct MainView: View {
             .onAppear {
                 viewStore.send(.onAppear, animation: .default)
             }
+            .confirmationDialog(
+                store.scope(state: \.confirmationDialog),
+                dismiss: .confirmationDialogDismissed
+            )
         }
     }
 
