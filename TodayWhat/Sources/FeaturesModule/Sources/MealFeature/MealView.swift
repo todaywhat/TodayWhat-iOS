@@ -41,7 +41,7 @@ public struct MealView: View {
         LazyVStack {
             ForEach(subMeal.meals, id: \.hashValue) { meal in
                 HStack {
-                    Text(meal)
+                    Text(mealDisplay(meal: meal))
                         .font(.system(size: 16, weight: .bold))
 
                     Spacer()
@@ -57,5 +57,9 @@ public struct MealView: View {
             }
         }
         .padding(.bottom, 24)
+    }
+
+    private func mealDisplay(meal: String) -> String {
+        return meal.replacingOccurrences(of: "[0-9.() ]", with: "", options: [.regularExpression])
     }
 }
