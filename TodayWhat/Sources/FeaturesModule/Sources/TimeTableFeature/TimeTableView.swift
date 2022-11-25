@@ -16,6 +16,9 @@ public struct TimeTableView: View {
     public var body: some View {
         ScrollView {
             LazyVStack(spacing: 8) {
+                Spacer()
+                    .frame(height: 16)
+
                 ForEach(viewStore.timeTableList, id: \.self) { timeTable in
                     timeTableRow(timeTable: timeTable)
                         .padding(.horizontal, 16)
