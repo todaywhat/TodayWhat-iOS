@@ -10,7 +10,7 @@ public struct TimeTableView: View {
     public init(store: StoreOf<TimeTableCore>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
-        viewStore.send(.initialize)
+        viewStore.send(.initialize, animation: .default)
     }
 
     public var body: some View {
@@ -25,6 +25,9 @@ public struct TimeTableView: View {
                 }
             }
             .edgesIgnoringSafeArea(.bottom)
+        }
+        .refreshable {
+            viewStore.send(.refresh, animation: .default)
         }
     }
 

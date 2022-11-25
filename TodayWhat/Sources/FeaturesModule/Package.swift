@@ -94,7 +94,8 @@ let package = Package(
                 .product(name: "TWImage", package: "DesignSystem"),
                 "UserDefaultsClient",
                 "MealFeature",
-                "TimeTableFeature"
+                "TimeTableFeature",
+                "SchoolSettingFeature"
             ]
         ),
         .testTarget(name: "MainFeatureTests", dependencies: ["MainFeature"]),

@@ -4,6 +4,7 @@ import TWColor
 import TWImage
 import MealFeature
 import TimeTableFeature
+import SchoolSettingFeature
 
 public struct MainView: View {
     let store: StoreOf<MainCore>
@@ -123,6 +124,28 @@ public struct MainView: View {
         .background {
             Color.veryLightGray
         }
+        .background {
+            navigationLinks
+        }
         .cornerRadius(8)
+    }
+
+    @ViewBuilder
+    var navigationLinks: some View {
+        NavigationLink(
+            isActive: viewStore.binding(
+                get: \.isNavigateSchoolSetting,
+                send: MainCore.Action.schoolSettingDismissed
+            )
+        ) {
+            IfLetStore(
+                store.scope(
+                    state: \.schoolSettingCore, action: MainCore.Action.schoolSettingCore)
+            ) { store in
+                SchoolSettingView(store: store)
+            }
+        } label: {
+            EmptyView()
+        }
     }
 }

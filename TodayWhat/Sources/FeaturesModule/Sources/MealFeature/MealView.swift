@@ -25,6 +25,9 @@ public struct MealView: View {
                 }
             }
         }
+        .refreshable {
+            viewStore.send(.refresh, animation: .default)
+        }
         .edgesIgnoringSafeArea(.bottom)
     }
 

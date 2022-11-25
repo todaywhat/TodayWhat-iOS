@@ -130,7 +130,7 @@ public struct SchoolSettingCore: ReducerProtocol {
                         (.schoolCode, selectedSchool.schoolCode),
                         (.grade, Int(state.grade) ?? 1),
                         (.class, Int(state.class) ?? 1),
-                        (.major, state.major),
+                        (.major, state.major.isEmpty ? nil : state.major),
                         (.schoolType, selectedSchool.schoolType.rawValue)
                     ]
                     dict.forEach {

@@ -14,6 +14,7 @@ public struct TimeTableCore: ReducerProtocol {
 
     public enum Action: Equatable {
         case initialize
+        case refresh
         case timeTableResponse(TaskResult<[TimeTable]>)
     }
 
@@ -22,7 +23,7 @@ public struct TimeTableCore: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
-            case .initialize:
+            case .initialize, .refresh:
                 return .task {
                     .timeTableResponse(
                         await TaskResult {

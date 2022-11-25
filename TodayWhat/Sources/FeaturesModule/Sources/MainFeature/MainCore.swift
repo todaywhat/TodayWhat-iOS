@@ -2,6 +2,7 @@ import ComposableArchitecture
 import UserDefaultsClient
 import MealFeature
 import TimeTableFeature
+import SchoolSettingFeature
 
 public struct MainCore: ReducerProtocol {
     public init() {}
@@ -13,6 +14,8 @@ public struct MainCore: ReducerProtocol {
         public var mealCore: MealCore.State? = MealCore.State()
         public var timeTableCore: TimeTableCore.State? = TimeTableCore.State()
         public var confirmationDialog: ConfirmationDialogState<Action>? = nil
+        public var isNavigateSchoolSetting = false
+        public var schoolSettingCore: SchoolSettingCore.State?
 
         public init() {}
     }
@@ -27,6 +30,8 @@ public struct MainCore: ReducerProtocol {
         case skipWeekDidSelect
         case allergySettingDidSelect
         case schoolSettingDidSelect
+        case schoolSettingDismissed
+        case schoolSettingCore(SchoolSettingCore.Action)
     }
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
@@ -56,6 +61,21 @@ public struct MainCore: ReducerProtocol {
 
             case .confirmationDialogDismissed:
                 state.confirmationDialog = nil
+
+            case .schoolSettingDidSelect:
+                state.schoolSettingCore = .init()
+                state.isNavigateSchoolSetting = true
+
+            case .schoolSettingDismissed:
+                state.schoolSettingCore = nil
+                state.isNavigateSchoolSetting = false
+
+            case .schoolSettingCore(.schoolSettingFinished):
+                state.schoolSettingCore = nil
+                state.isNavigateSchoolSetting = false
+                return .run { send in
+                    await send(.onAppear)
+                }
             
             default:
                 return .none
@@ -67,6 +87,9 @@ public struct MainCore: ReducerProtocol {
         }
         .ifLet(\.timeTableCore, action: /Action.timeTableCore) {
             TimeTableCore()
+        }
+        .ifLet(\.schoolSettingCore, action: /Action.schoolSettingCore) {
+            SchoolSettingCore()
         }
     }
 }

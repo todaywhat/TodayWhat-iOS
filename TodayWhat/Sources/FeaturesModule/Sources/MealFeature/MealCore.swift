@@ -14,6 +14,7 @@ public struct MealCore: ReducerProtocol {
 
     public enum Action: Equatable {
         case initialize
+        case refresh
         case mealResponse(TaskResult<Meal>)
     }
 
@@ -22,7 +23,7 @@ public struct MealCore: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
-            case .initialize:
+            case .initialize, .refresh:
                 return .task {
                     .mealResponse(
                         await TaskResult {

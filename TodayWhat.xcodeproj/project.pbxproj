@@ -49,6 +49,10 @@
 		461C235C293070FD00B3A9CB /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 461C235B293070FD00B3A9CB /* Dependencies */; };
 		461C2360293071FD00B3A9CB /* LocalDatabaseClient in Frameworks */ = {isa = PBXBuildFile; productRef = 461C235F293071FD00B3A9CB /* LocalDatabaseClient */; };
 		461C23622930720400B3A9CB /* TimeTableClient in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23612930720400B3A9CB /* TimeTableClient */; };
+		461C23642930759A00B3A9CB /* NeisClient in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23632930759A00B3A9CB /* NeisClient */; };
+		461C23662930759C00B3A9CB /* UserDefaultsClient in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23652930759C00B3A9CB /* UserDefaultsClient */; };
+		461C23692930776700B3A9CB /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23682930776700B3A9CB /* SwiftUINavigation */; };
+		461C236B2930776700B3A9CB /* _SwiftUINavigationState in Frameworks */ = {isa = PBXBuildFile; productRef = 461C236A2930776700B3A9CB /* _SwiftUINavigationState */; };
 		4647B12328DC0AE700FAB81B /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */; };
 		4647B12428DC0AFF00FAB81B /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */; };
 		4647B12C28DC1CC800FAB81B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12A28DC1CC800FAB81B /* MainViewModel.swift */; };
@@ -67,10 +71,8 @@
 		4650237B292730B7008B015A /* MealPartTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46502379292730B7008B015A /* MealPartTime.swift */; };
 		4650237C29273179008B015A /* TodayWhatWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603114F2923DCE700A5CB09 /* TodayWhatWidget.swift */; };
 		4650237D292731F2008B015A /* MealWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46502372292719B8008B015A /* MealWidgetEntryView.swift */; };
-		465023AD292AFF37008B015A /* NeisClient in Frameworks */ = {isa = PBXBuildFile; productRef = 465023AC292AFF37008B015A /* NeisClient */; };
 		465023AF292AFF4E008B015A /* Entity in Frameworks */ = {isa = PBXBuildFile; productRef = 465023AE292AFF4E008B015A /* Entity */; };
 		465023B2292B049F008B015A /* Entity in Frameworks */ = {isa = PBXBuildFile; productRef = 465023B1292B049F008B015A /* Entity */; };
-		465023BC292B09D8008B015A /* UserDefaultsClient in Frameworks */ = {isa = PBXBuildFile; productRef = 465023BB292B09D8008B015A /* UserDefaultsClient */; };
 		465023BE292B1C3D008B015A /* DateUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 465023BD292B1C3D008B015A /* DateUtil */; };
 		467CD847292BC51100A9766A /* MealClient in Frameworks */ = {isa = PBXBuildFile; productRef = 467CD846292BC51100A9766A /* MealClient */; };
 /* End PBXBuildFile section */
@@ -204,11 +206,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				461C23662930759C00B3A9CB /* UserDefaultsClient in Frameworks */,
 				467CD847292BC51100A9766A /* MealClient in Frameworks */,
+				461C23642930759A00B3A9CB /* NeisClient in Frameworks */,
 				465023AF292AFF4E008B015A /* Entity in Frameworks */,
-				465023AD292AFF37008B015A /* NeisClient in Frameworks */,
 				465023BE292B1C3D008B015A /* DateUtil in Frameworks */,
-				465023BC292B09D8008B015A /* UserDefaultsClient in Frameworks */,
 				461C2350292DA89D00B3A9CB /* TWColor in Frameworks */,
 				4603114D2923DCE700A5CB09 /* SwiftUI.framework in Frameworks */,
 				4603114B2923DCE700A5CB09 /* WidgetKit.framework in Frameworks */,
@@ -227,6 +229,7 @@
 				465023572926F97C008B015A /* RequestDTO in Frameworks */,
 				461C2360293071FD00B3A9CB /* LocalDatabaseClient in Frameworks */,
 				465023662926FEBC008B015A /* UserDefaultsClient in Frameworks */,
+				461C236B2930776700B3A9CB /* _SwiftUINavigationState in Frameworks */,
 				4650234429267847008B015A /* ErrorModule in Frameworks */,
 				461C2339292C57AB00B3A9CB /* TWBottomSheet in Frameworks */,
 				461C2345292C57B300B3A9CB /* SchoolMajorSheetFeature in Frameworks */,
@@ -239,6 +242,7 @@
 				461C233D292C57AB00B3A9CB /* TWColor in Frameworks */,
 				465023632926FE1F008B015A /* SchoolClient in Frameworks */,
 				461C23622930720400B3A9CB /* TimeTableClient in Frameworks */,
+				461C23692930776700B3A9CB /* SwiftUINavigation in Frameworks */,
 				461C235C293070FD00B3A9CB /* Dependencies in Frameworks */,
 				461C233B292C57AB00B3A9CB /* TWButton in Frameworks */,
 				461C2343292C57B300B3A9CB /* RootFeature in Frameworks */,
@@ -600,12 +604,12 @@
 			);
 			name = TodayWhatWidgetExtension;
 			packageProductDependencies = (
-				465023AC292AFF37008B015A /* NeisClient */,
 				465023AE292AFF4E008B015A /* Entity */,
-				465023BB292B09D8008B015A /* UserDefaultsClient */,
 				465023BD292B1C3D008B015A /* DateUtil */,
 				467CD846292BC51100A9766A /* MealClient */,
 				461C234F292DA89D00B3A9CB /* TWColor */,
+				461C23632930759A00B3A9CB /* NeisClient */,
+				461C23652930759C00B3A9CB /* UserDefaultsClient */,
 			);
 			productName = TodayWhatWidgetExtension;
 			productReference = 460311482923DCE700A5CB09 /* TodayWhatWidgetExtension.appex */;
@@ -652,6 +656,8 @@
 				461C235B293070FD00B3A9CB /* Dependencies */,
 				461C235F293071FD00B3A9CB /* LocalDatabaseClient */,
 				461C23612930720400B3A9CB /* TimeTableClient */,
+				461C23682930776700B3A9CB /* SwiftUINavigation */,
+				461C236A2930776700B3A9CB /* _SwiftUINavigationState */,
 			);
 			productName = TodayWhat;
 			productReference = 460843D728DBFE2400D60E39 /* TodayWhat.app */;
@@ -801,6 +807,7 @@
 				460310A1291DD96900A5CB09 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				4603112429234F8100A5CB09 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 				461C2358293070FC00B3A9CB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				461C23672930776700B3A9CB /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
 			);
 			productRefGroup = 460843D828DBFE2400D60E39 /* Products */;
 			projectDirPath = "";
@@ -1557,6 +1564,14 @@
 				version = 0.47.0;
 			};
 		};
+		461C23672930776700B3A9CB /* XCRemoteSwiftPackageReference "swiftui-navigation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swiftui-navigation";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1632,6 +1647,24 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = TimeTableClient;
 		};
+		461C23632930759A00B3A9CB /* NeisClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NeisClient;
+		};
+		461C23652930759C00B3A9CB /* UserDefaultsClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UserDefaultsClient;
+		};
+		461C23682930776700B3A9CB /* SwiftUINavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 461C23672930776700B3A9CB /* XCRemoteSwiftPackageReference "swiftui-navigation" */;
+			productName = SwiftUINavigation;
+		};
+		461C236A2930776700B3A9CB /* _SwiftUINavigationState */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 461C23672930776700B3A9CB /* XCRemoteSwiftPackageReference "swiftui-navigation" */;
+			productName = _SwiftUINavigationState;
+		};
 		4650234329267847008B015A /* ErrorModule */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ErrorModule;
@@ -1668,10 +1701,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = UserDefaultsClient;
 		};
-		465023AC292AFF37008B015A /* NeisClient */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = NeisClient;
-		};
 		465023AE292AFF4E008B015A /* Entity */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Entity;
@@ -1679,10 +1708,6 @@
 		465023B1292B049F008B015A /* Entity */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Entity;
-		};
-		465023BB292B09D8008B015A /* UserDefaultsClient */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = UserDefaultsClient;
 		};
 		465023BD292B1C3D008B015A /* DateUtil */ = {
 			isa = XCSwiftPackageProductDependency;
