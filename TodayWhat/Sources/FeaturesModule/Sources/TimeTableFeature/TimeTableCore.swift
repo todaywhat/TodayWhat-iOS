@@ -7,13 +7,14 @@ public struct TimeTableCore: ReducerProtocol {
     public init() {}
     public struct State: Equatable {
         public var timeTableList: [TimeTable] = []
+        public var isLoading = false
         public var isError = false
         public var errorMessage = ""
         public init() {}
     }
 
     public enum Action: Equatable {
-        case initialize
+        case onAppear
         case refresh
         case timeTableResponse(TaskResult<[TimeTable]>)
     }
@@ -23,7 +24,8 @@ public struct TimeTableCore: ReducerProtocol {
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
-            case .initialize, .refresh:
+            case .onAppear, .refresh:
+                state.isLoading = true
                 return .task {
                     .timeTableResponse(
                         await TaskResult {
@@ -33,12 +35,14 @@ public struct TimeTableCore: ReducerProtocol {
                 }
 
             case let .timeTableResponse(.success(timeTableList)):
+                state.isLoading = false
                 state.timeTableList = timeTableList
 
             case let .timeTableResponse(.failure(error)):
                 state.isError = true
                 state.errorMessage = error.localizedDescription
-                
+                state.isLoading = false
+
             default:
                 return .none
             }

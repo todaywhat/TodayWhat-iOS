@@ -123,7 +123,8 @@ let package = Package(
                 .product(name: "EnumUtil", package: "Utilities"),
                 "Entity",
                 "MealClient",
-                "LocalDatabaseClient"
+                "LocalDatabaseClient",
+                "UserDefaultsClient"
             ]
         ),
         .testTarget(name: "MealFeatureTests", dependencies: ["MealFeature"]),

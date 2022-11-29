@@ -106,21 +106,25 @@ public struct SchoolSettingView: View {
                 if viewStore.isFocusedSchool {
                     if viewStore.isLoading {
                         ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
+                            .progressViewStyle(.automatic)
                     } else {
-                        ForEach(viewStore.schoolList, id: \.schoolCode) { school in
-                            HStack {
-                                schoolRowView(school: school)
+                        ScrollView {
+                            LazyVStack(spacing: 16) {
+                                ForEach(viewStore.schoolList, id: \.schoolCode) { school in
+                                    HStack {
+                                        schoolRowView(school: school)
 
-                                Spacer()
-                            }
-                            .frame(maxWidth: .infinity)
-                            .background {
-                                Color.background
-                            }
-                            .onTapGesture {
-                                viewStore.send(.schoolRowDidSelect(school), animation: .default)
-                                focusField = .grade
+                                        Spacer()
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                    .background {
+                                        Color.background
+                                    }
+                                    .onTapGesture {
+                                        viewStore.send(.schoolRowDidSelect(school), animation: .default)
+                                        focusField = .grade
+                                    }
+                                }
                             }
                         }
                     }

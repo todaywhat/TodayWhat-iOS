@@ -53,10 +53,22 @@
 		461C23662930759C00B3A9CB /* UserDefaultsClient in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23652930759C00B3A9CB /* UserDefaultsClient */; };
 		461C23692930776700B3A9CB /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23682930776700B3A9CB /* SwiftUINavigation */; };
 		461C236B2930776700B3A9CB /* _SwiftUINavigationState in Frameworks */ = {isa = PBXBuildFile; productRef = 461C236A2930776700B3A9CB /* _SwiftUINavigationState */; };
-		4647B12328DC0AE700FAB81B /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */; };
-		4647B12428DC0AFF00FAB81B /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */; };
+		461C239429343D9100B3A9CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C239329343D9100B3A9CB /* AppDelegate.swift */; };
+		461C23B62934411B00B3A9CB /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23B52934411B00B3A9CB /* Dependencies */; };
+		461C23B82934412900B3A9CB /* MealClient in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23B72934412900B3A9CB /* MealClient */; };
+		461C23BA2934413000B3A9CB /* TimeTableClient in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23B92934413000B3A9CB /* TimeTableClient */; };
+		461C23BC2934417000B3A9CB /* EnumUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23BB2934417000B3A9CB /* EnumUtil */; };
+		461C23BE293442E400B3A9CB /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C23BD293442E400B3A9CB /* DisplayInfoPart.swift */; };
+		461C23BF293442E400B3A9CB /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C23BD293442E400B3A9CB /* DisplayInfoPart.swift */; };
+		461C23C32934452200B3A9CB /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C23C12934452200B3A9CB /* RootView.swift */; };
+		461C23C72934456D00B3A9CB /* SceneFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C23C52934456D00B3A9CB /* SceneFlow.swift */; };
+		461C23CA2934458500B3A9CB /* SceneFlowState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C23C82934458500B3A9CB /* SceneFlowState.swift */; };
+		461C23CD293446B200B3A9CB /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C23CC293446B200B3A9CB /* SettingView.swift */; };
+		461C23D02934496E00B3A9CB /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C23CF2934496E00B3A9CB /* WatchSessionManager.swift */; };
+		461C23D329358FFD00B3A9CB /* LocalDatabaseClient in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23D229358FFD00B3A9CB /* LocalDatabaseClient */; };
+		461C23D52935908E00B3A9CB /* EnumUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23D42935908E00B3A9CB /* EnumUtil */; };
+		462BABA42935CE630063E0C8 /* SwiftUIUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 462BABA32935CE630063E0C8 /* SwiftUIUtil */; };
 		4647B12C28DC1CC800FAB81B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12A28DC1CC800FAB81B /* MainViewModel.swift */; };
-		4647B13328DC27CE00FAB81B /* PartSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B13228DC27CE00FAB81B /* PartSelectView.swift */; };
 		4647B13428DC27CE00FAB81B /* PartSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B13228DC27CE00FAB81B /* PartSelectView.swift */; };
 		4650234429267847008B015A /* ErrorModule in Frameworks */ = {isa = PBXBuildFile; productRef = 4650234329267847008B015A /* ErrorModule */; };
 		4650234B2926811C008B015A /* ConstantUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 4650234A2926811C008B015A /* ConstantUtil */; };
@@ -181,7 +193,15 @@
 		461C234E292CEF5F00B3A9CB /* TodayWhatWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayWhatWidgetExtension.entitlements; sourceTree = "<group>"; };
 		461C2351292DD50700B3A9CB /* Fraunces9pt-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces9pt-Black.ttf"; sourceTree = "<group>"; };
 		461C2355292E643A00B3A9CB /* TimeTableClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TimeTableClient; sourceTree = "<group>"; };
-		4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayInfoPart.swift; sourceTree = "<group>"; };
+		461C23912934318900B3A9CB /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		461C23922934319200B3A9CB /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		461C239329343D9100B3A9CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		461C23BD293442E400B3A9CB /* DisplayInfoPart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayInfoPart.swift; sourceTree = "<group>"; };
+		461C23C12934452200B3A9CB /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		461C23C52934456D00B3A9CB /* SceneFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFlow.swift; sourceTree = "<group>"; };
+		461C23C82934458500B3A9CB /* SceneFlowState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFlowState.swift; sourceTree = "<group>"; };
+		461C23CC293446B200B3A9CB /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		461C23CF2934496E00B3A9CB /* WatchSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
 		4647B12A28DC1CC800FAB81B /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		4647B13228DC27CE00FAB81B /* PartSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartSelectView.swift; sourceTree = "<group>"; };
 		465023422926783C008B015A /* ErrorModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ErrorModule; sourceTree = "<group>"; };
@@ -209,9 +229,12 @@
 				461C23662930759C00B3A9CB /* UserDefaultsClient in Frameworks */,
 				467CD847292BC51100A9766A /* MealClient in Frameworks */,
 				461C23642930759A00B3A9CB /* NeisClient in Frameworks */,
+				461C23D52935908E00B3A9CB /* EnumUtil in Frameworks */,
 				465023AF292AFF4E008B015A /* Entity in Frameworks */,
 				465023BE292B1C3D008B015A /* DateUtil in Frameworks */,
+				461C23D329358FFD00B3A9CB /* LocalDatabaseClient in Frameworks */,
 				461C2350292DA89D00B3A9CB /* TWColor in Frameworks */,
+				462BABA42935CE630063E0C8 /* SwiftUIUtil in Frameworks */,
 				4603114D2923DCE700A5CB09 /* SwiftUI.framework in Frameworks */,
 				4603114B2923DCE700A5CB09 /* WidgetKit.framework in Frameworks */,
 			);
@@ -267,9 +290,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				461C23BC2934417000B3A9CB /* EnumUtil in Frameworks */,
+				461C23B82934412900B3A9CB /* MealClient in Frameworks */,
+				461C23BA2934413000B3A9CB /* TimeTableClient in Frameworks */,
 				461C2337292C574100B3A9CB /* TWColor in Frameworks */,
 				461C2349292C58D600B3A9CB /* SwiftUIUtil in Frameworks */,
 				465023B2292B049F008B015A /* Entity in Frameworks */,
+				461C23B62934411B00B3A9CB /* Dependencies in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				460843DA28DBFE2400D60E39 /* TodayWhatApp.swift */,
+				461C239329343D9100B3A9CB /* AppDelegate.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -428,6 +456,7 @@
 		460843CE28DBFE2300D60E39 = {
 			isa = PBXGroup;
 			children = (
+				461C238E2934308A00B3A9CB /* XCConfig */,
 				461C234E292CEF5F00B3A9CB /* TodayWhatWidgetExtension.entitlements */,
 				4647B12028DC0A9000FAB81B /* shared */,
 				460843D928DBFE2400D60E39 /* TodayWhat */,
@@ -490,6 +519,7 @@
 		4608440128DBFE2500D60E39 /* TodayWhat Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				461C23CE2934496100B3A9CB /* Manager */,
 				4647B12D28DC1CCC00FAB81B /* Scenes */,
 				4608440228DBFE2500D60E39 /* TodayWhatApp.swift */,
 				4608440628DBFE2500D60E39 /* Assets.xcassets */,
@@ -523,15 +553,57 @@
 			path = "TodayWhat Watch AppUITests";
 			sourceTree = "<group>";
 		};
+		461C238E2934308A00B3A9CB /* XCConfig */ = {
+			isa = PBXGroup;
+			children = (
+				461C23912934318900B3A9CB /* Debug.xcconfig */,
+				461C23922934319200B3A9CB /* Release.xcconfig */,
+			);
+			path = XCConfig;
+			sourceTree = "<group>";
+		};
+		461C23C0293444CA00B3A9CB /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				461C23C12934452200B3A9CB /* RootView.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		461C23C42934456600B3A9CB /* SceneFlow */ = {
+			isa = PBXGroup;
+			children = (
+				461C23C52934456D00B3A9CB /* SceneFlow.swift */,
+				461C23C82934458500B3A9CB /* SceneFlowState.swift */,
+			);
+			path = SceneFlow;
+			sourceTree = "<group>";
+		};
+		461C23CB2934469B00B3A9CB /* SettingView */ = {
+			isa = PBXGroup;
+			children = (
+				461C23CC293446B200B3A9CB /* SettingView.swift */,
+			);
+			path = SettingView;
+			sourceTree = "<group>";
+		};
+		461C23CE2934496100B3A9CB /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				461C23CF2934496E00B3A9CB /* WatchSessionManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		4647B12028DC0A9000FAB81B /* shared */ = {
 			isa = PBXGroup;
 			children = (
+				461C23BD293442E400B3A9CB /* DisplayInfoPart.swift */,
 				465023412926780B008B015A /* Common */,
 				4603112A2923568C00A5CB09 /* DataSource */,
 				46031098291DC9D200A5CB09 /* DataMapping */,
 				46031095291DC95400A5CB09 /* Clients */,
 				4647B13C28DC415400FAB81B /* Domains */,
-				4647B12128DC0AE700FAB81B /* DisplayInfoPart.swift */,
 			);
 			path = shared;
 			sourceTree = "<group>";
@@ -539,6 +611,9 @@
 		4647B12D28DC1CCC00FAB81B /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				461C23CB2934469B00B3A9CB /* SettingView */,
+				461C23C42934456600B3A9CB /* SceneFlow */,
+				461C23C0293444CA00B3A9CB /* Root */,
 				4647B12E28DC1CD300FAB81B /* Main */,
 			);
 			path = Scenes;
@@ -610,6 +685,9 @@
 				461C234F292DA89D00B3A9CB /* TWColor */,
 				461C23632930759A00B3A9CB /* NeisClient */,
 				461C23652930759C00B3A9CB /* UserDefaultsClient */,
+				461C23D229358FFD00B3A9CB /* LocalDatabaseClient */,
+				461C23D42935908E00B3A9CB /* EnumUtil */,
+				462BABA32935CE630063E0C8 /* SwiftUIUtil */,
 			);
 			productName = TodayWhatWidgetExtension;
 			productReference = 460311482923DCE700A5CB09 /* TodayWhatWidgetExtension.appex */;
@@ -716,6 +794,10 @@
 				465023B1292B049F008B015A /* Entity */,
 				461C2336292C574100B3A9CB /* TWColor */,
 				461C2348292C58D600B3A9CB /* SwiftUIUtil */,
+				461C23B52934411B00B3A9CB /* Dependencies */,
+				461C23B72934412900B3A9CB /* MealClient */,
+				461C23B92934413000B3A9CB /* TimeTableClient */,
+				461C23BB2934417000B3A9CB /* EnumUtil */,
 			);
 			productName = "TodayWhat Watch App";
 			productReference = 460843FD28DBFE2500D60E39 /* TodayWhat Watch App.app */;
@@ -901,10 +983,10 @@
 			files = (
 				460311172923202500A5CB09 /* View+eraseToAnyView.swift in Sources */,
 				460311562923DCE800A5CB09 /* TodayWhatWidget.intentdefinition in Sources */,
+				461C23BE293442E400B3A9CB /* DisplayInfoPart.swift in Sources */,
 				4603112D292356F600A5CB09 /* BaseLocalDataSource.swift in Sources */,
 				460843DB28DBFE2400D60E39 /* TodayWhatApp.swift in Sources */,
-				4647B13328DC27CE00FAB81B /* PartSelectView.swift in Sources */,
-				4647B12428DC0AFF00FAB81B /* DisplayInfoPart.swift in Sources */,
+				461C239429343D9100B3A9CB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -931,10 +1013,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				461C23C72934456D00B3A9CB /* SceneFlow.swift in Sources */,
 				4608440528DBFE2500D60E39 /* MainView.swift in Sources */,
 				4647B13428DC27CE00FAB81B /* PartSelectView.swift in Sources */,
+				461C23CD293446B200B3A9CB /* SettingView.swift in Sources */,
+				461C23D02934496E00B3A9CB /* WatchSessionManager.swift in Sources */,
+				461C23C32934452200B3A9CB /* RootView.swift in Sources */,
 				4608440328DBFE2500D60E39 /* TodayWhatApp.swift in Sources */,
-				4647B12328DC0AE700FAB81B /* DisplayInfoPart.swift in Sources */,
+				461C23BF293442E400B3A9CB /* DisplayInfoPart.swift in Sources */,
+				461C23CA2934458500B3A9CB /* SceneFlowState.swift in Sources */,
 				4647B12C28DC1CC800FAB81B /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -994,6 +1081,7 @@
 /* Begin XCBuildConfiguration section */
 		4603115B2923DCE900A5CB09 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 461C23912934318900B3A9CB /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -1003,7 +1091,7 @@
 				DEVELOPMENT_TEAM = 235C2RVZ7L;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TodayWhatWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = TodayWhatWidget;
+				INFOPLIST_KEY_CFBundleDisplayName = "오늘 뭐임 위젯";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1024,6 +1112,7 @@
 		};
 		4603115C2923DCE900A5CB09 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 461C23922934319200B3A9CB /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -1033,7 +1122,7 @@
 				DEVELOPMENT_TEAM = 235C2RVZ7L;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TodayWhatWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = TodayWhatWidget;
+				INFOPLIST_KEY_CFBundleDisplayName = "오늘 뭐임 위젯";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1164,6 +1253,7 @@
 		};
 		4608442428DBFE2600D60E39 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 461C23912934318900B3A9CB /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1173,7 +1263,7 @@
 				DEVELOPMENT_TEAM = 235C2RVZ7L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = TodayWhat;
+				INFOPLIST_KEY_CFBundleDisplayName = "오늘 뭐임";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = baegteun.TodayWhat;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1194,6 +1284,7 @@
 		};
 		4608442528DBFE2600D60E39 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 461C23922934319200B3A9CB /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1203,7 +1294,7 @@
 				DEVELOPMENT_TEAM = 235C2RVZ7L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = TodayWhat;
+				INFOPLIST_KEY_CFBundleDisplayName = "오늘 뭐임";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = baegteun.TodayWhat;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1225,6 +1316,7 @@
 		};
 		4608442828DBFE2600D60E39 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 461C23912934318900B3A9CB /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1252,6 +1344,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = baegteun.TodayWhat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1260,6 +1355,7 @@
 		};
 		4608442928DBFE2600D60E39 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 461C23922934319200B3A9CB /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1287,6 +1383,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = baegteun.TodayWhat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1664,6 +1763,35 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 461C23672930776700B3A9CB /* XCRemoteSwiftPackageReference "swiftui-navigation" */;
 			productName = _SwiftUINavigationState;
+		};
+		461C23B52934411B00B3A9CB /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 461C2358293070FC00B3A9CB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = Dependencies;
+		};
+		461C23B72934412900B3A9CB /* MealClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MealClient;
+		};
+		461C23B92934413000B3A9CB /* TimeTableClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TimeTableClient;
+		};
+		461C23BB2934417000B3A9CB /* EnumUtil */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EnumUtil;
+		};
+		461C23D229358FFD00B3A9CB /* LocalDatabaseClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LocalDatabaseClient;
+		};
+		461C23D42935908E00B3A9CB /* EnumUtil */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EnumUtil;
+		};
+		462BABA32935CE630063E0C8 /* SwiftUIUtil */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftUIUtil;
 		};
 		4650234329267847008B015A /* ErrorModule */ = {
 			isa = XCSwiftPackageProductDependency;

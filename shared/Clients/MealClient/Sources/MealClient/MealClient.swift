@@ -16,6 +16,14 @@ extension MealClient: DependencyKey {
             var date = date
             @Dependency(\.userDefaultsClient) var userDefaultsClient: UserDefaultsClient
 
+            if userDefaultsClient.getValue(key: .isSkipWeekend, type: Bool.self) == true {
+                if date.weekday == 7 {
+                    date = date.adding(by: .day, value: 2)
+                } else if date.weekday == 1 {
+                    date = date.adding(by: .day, value: 1)
+                }
+            }
+
             guard
                 let orgCode = userDefaultsClient.getValue(key: .orgCode, type: String.self),
                 let code = userDefaultsClient.getValue(key: .schoolCode, type: String.self)
@@ -33,10 +41,11 @@ extension MealClient: DependencyKey {
             let day = date.day < 10 ? "0\(date.day)" : "\(date.day)"
             let reqDate = "\(date.year)\(month)\(day)"
 
+            let key = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String
             let response = try await neisClient.fetchDataOnNeis(
                 "mealServiceDietInfo",
                 queryItem: [
-                    .init(name: "KEY", value: ""),
+                    .init(name: "KEY", value: key),
                     .init(name: "Type", value: "json"),
                     .init(name: "pIndex", value: "1"),
                     .init(name: "pSize", value: "10"),

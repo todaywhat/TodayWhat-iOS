@@ -26,6 +26,7 @@ public struct SchoolMajorSheetView: View {
                     }
                 }
             }
+            .padding(.top, 32)
         }
     }
 

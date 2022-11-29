@@ -9,22 +9,37 @@ public struct TimeTableView: View {
     
     public init(store: StoreOf<TimeTableCore>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
-        viewStore.send(.initialize, animation: .default)
+        self.viewStore = ViewStore(store, observe: { $0 }, send: { _ in .onAppear })
     }
 
     public var body: some View {
         ScrollView {
-            LazyVStack(spacing: 8) {
-                Spacer()
-                    .frame(height: 16)
-
-                ForEach(viewStore.timeTableList, id: \.self) { timeTable in
-                    timeTableRow(timeTable: timeTable)
-                        .padding(.horizontal, 16)
-                }
+            if viewStore.timeTableList.isEmpty && !viewStore.isLoading {
+                Text("등록된 정보를 찾지 못했어요 😥")
+                    .padding(.top, 16)
             }
-            .edgesIgnoringSafeArea(.bottom)
+
+            ZStack {
+                if viewStore.isLoading {
+                    ProgressView()
+                        .progressViewStyle(.automatic)
+                        .padding(.top, 16)
+                }
+
+                LazyVStack(spacing: 8) {
+                    Spacer()
+                        .frame(height: 16)
+
+                    ForEach(viewStore.timeTableList, id: \.self) { timeTable in
+                        timeTableRow(timeTable: timeTable)
+                            .padding(.horizontal, 16)
+                    }
+                }
+                .edgesIgnoringSafeArea(.bottom)
+            }
+        }
+        .onAppear {
+            viewStore.send(.onAppear, animation: .default)
         }
         .refreshable {
             viewStore.send(.refresh, animation: .default)

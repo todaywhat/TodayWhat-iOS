@@ -4,6 +4,7 @@ import Intents
 import Dependencies
 import Entity
 import TWColor
+import SwiftUIUtil
 
 struct MealWidgetEntryView: View {
     @Environment(\.widgetFamily) var widgetFamily
@@ -62,15 +63,27 @@ private struct SmallMealWidgetView: View {
 
             ForEach(entry.meal.meals(mealPartTime: entry.mealPartTime).meals, id: \.hashValue) { meal in
                 HStack {
-                    Text(meal)
+                    Text(mealDisplay(meal: meal))
                         .frame(maxHeight: .infinity)
                         .font(.system(size: 12))
+                        .if(isMealContainsAllergy(meal: meal)) {
+                            $0.foregroundColor(.red)
+                        }
 
                     Spacer()
                 }
             }
         }
         .padding(12)
+    }
+
+    private func mealDisplay(meal: String) -> String {
+        return meal.replacingOccurrences(of: "[0-9.() ]", with: "", options: [.regularExpression])
+    }
+
+    private func isMealContainsAllergy(meal: String) -> Bool {
+        entry.allergyList
+            .first { meal.contains($0.number) } != nil
     }
 }
 
@@ -93,7 +106,7 @@ private struct MediumMealWidgetView: View {
 
                     Spacer()
 
-                    Text("\(calorie) kcal")
+                    Text("\(String(format: "%.1f", calorie)) kcal")
                         .font(.system(size: 12))
                         .foregroundColor(Color.extraGray)
                 }
@@ -102,13 +115,16 @@ private struct MediumMealWidgetView: View {
                 LazyHGrid(rows: rows, spacing: 0) {
                     ForEach(entry.meal.meals(mealPartTime: entry.mealPartTime).meals, id: \.hashValue) { meal in
                         HStack(spacing: 0) {
-                            Text(meal)
+                            Text(mealDisplay(meal: meal))
                                 .frame(maxHeight: .infinity)
                                 .font(.system(size: 12))
+                                .if(isMealContainsAllergy(meal: meal)) {
+                                    $0.foregroundColor(.red)
+                                }
 
                             Spacer()
                         }
-                        .frame(maxWidth: (proxy.size.width / 2) - 24)
+                        .frame(width: (proxy.size.width / 2) - 24)
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -122,6 +138,15 @@ private struct MediumMealWidgetView: View {
             .padding(12)
         }
     }
+
+    private func mealDisplay(meal: String) -> String {
+        return meal.replacingOccurrences(of: "[0-9.() ]", with: "", options: [.regularExpression])
+    }
+
+    private func isMealContainsAllergy(meal: String) -> Bool {
+        entry.allergyList
+            .first { meal.contains($0.number) } != nil
+    }
 }
 
 private struct LargeMealWidgetView: View {
@@ -132,37 +157,43 @@ private struct LargeMealWidgetView: View {
 
     var body: some View {
         VStack(spacing: 4) {
-            HStack(spacing: 4) {
-                Text("ONMI")
-                    .font(.custom("Fraunces72pt-Black", size: 16))
+            VStack(spacing: 4) {
+                HStack(spacing: 4) {
+                    Text("ONMI")
+                        .font(.custom("Fraunces9pt-Black", size: 16))
 
-                Text("[\(entry.mealPartTime.display)]")
-                    .font(.system(size: 12))
+                    Text("[\(entry.mealPartTime.display)]")
+                        .font(.system(size: 12))
 
-                Spacer()
+                    Spacer()
 
-                Text("\(calorie) Kcal")
-                    .font(.system(size: 12))
-                    .foregroundColor(Color.extraGray)
-            }
+                    Text("\(String(format: "%.1f", calorie)) Kcal")
+                        .font(.system(size: 12))
+                        .foregroundColor(Color.extraGray)
+                }
 
-            GeometryReader { proxy in
-                RoundedRectangle(cornerRadius: 2)
-                    .fill(Color.lightGray)
-                    .frame(height: 8)
-                    .overlay(alignment: .leading) {
-                        RoundedRectangle(cornerRadius: 2)
-                            .fill(Color.extraPrimary)
-                            .frame(width: proxy.size.width * calorie / 2350, height: 8)
-                    }
+                GeometryReader { proxy in
+                    RoundedRectangle(cornerRadius: 2)
+                        .fill(Color.lightGray)
+                        .frame(height: 8)
+                        .overlay(alignment: .leading) {
+                            RoundedRectangle(cornerRadius: 2)
+                                .fill(Color.extraPrimary)
+                                .frame(width: proxy.size.width * calorie / 2350, height: 8)
+                        }
+                }
+                .frame(height: 8)
             }
 
             VStack(alignment: .leading, spacing: 0) {
                 ForEach(entry.meal.meals(mealPartTime: entry.mealPartTime).meals, id: \.hashValue) { meal in
                     HStack {
-                        Text(meal)
-                            .frame(maxHeight: .infinity)
+                        Text(mealDisplay(meal: meal))
                             .font(.system(size: 16))
+                            .frame(maxHeight: .infinity)
+                            .if(isMealContainsAllergy(meal: meal)) {
+                                $0.foregroundColor(.red)
+                            }
 
                         Spacer()
                     }
@@ -177,6 +208,15 @@ private struct LargeMealWidgetView: View {
             .cornerRadius(8)
         }
         .padding(16)
+    }
+
+    private func mealDisplay(meal: String) -> String {
+        return meal.replacingOccurrences(of: "[0-9.() ]", with: "", options: [.regularExpression])
+    }
+
+    private func isMealContainsAllergy(meal: String) -> Bool {
+        entry.allergyList
+            .first { meal.contains($0.number) } != nil
     }
 }
 

@@ -12,8 +12,8 @@ public struct MainCore: ReducerProtocol {
         public var grade = ""
         public var `class` = ""
         public var currentTab = 0
-        public var mealCore: MealCore.State? = MealCore.State()
-        public var timeTableCore: TimeTableCore.State? = TimeTableCore.State()
+        public var mealCore: MealCore.State? = nil
+        public var timeTableCore: TimeTableCore.State? = nil
         public var confirmationDialog: ConfirmationDialogState<Action>? = nil
         public var isNavigateSchoolSetting = false
         public var schoolSettingCore: SchoolSettingCore.State? = nil
@@ -48,18 +48,25 @@ public struct MainCore: ReducerProtocol {
                 state.school = userDefaultsClient.getValue(key: .school, type: String.self) ?? ""
                 state.grade = "\(userDefaultsClient.getValue(key: .grade, type: Int.self) ?? 1)"
                 state.class = "\(userDefaultsClient.getValue(key: .class, type: Int.self) ?? 1)"
+                if state.mealCore == nil {
+                    state.mealCore = .init()
+                }
+                if state.timeTableCore == nil {
+                    state.timeTableCore = .init()
+                }
 
             case let .tabChanged(tab):
                 state.currentTab = tab
 
             case .settingButtonDidTap:
+                let isSkipWeekend = userDefaultsClient.getValue(key: .isSkipWeekend, type: Bool.self) ?? false
                 state.confirmationDialog = .init {
                     .init("")
                 } actions: {
                     [
                         .default(.init("학교 바꾸기"), action: .send(.schoolSettingDidSelect)),
                         .default(.init("알레르기 설정"), action: .send(.allergySettingDidSelect)),
-                        .default(.init("주말 스킵하기"), action: .send(.skipWeekDidSelect)),
+                        .default(.init(isSkipWeekend ? "주말 스킵하지 않기" : "주말 스킵하기"), action: .send(.skipWeekDidSelect)),
                         .cancel(.init("취소"))
                     ]
                 }
@@ -86,6 +93,12 @@ public struct MainCore: ReducerProtocol {
             case .allergySettingDismissed:
                 state.allergySettingCore = nil
                 state.isNavigateAllergySetting = false
+
+            case .skipWeekDidSelect:
+                userDefaultsClient.setValue(
+                    .isSkipWeekend,
+                    !(userDefaultsClient.getValue(key: .isSkipWeekend, type: Bool.self) ?? false)
+                )
             
             default:
                 return .none

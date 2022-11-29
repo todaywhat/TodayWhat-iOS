@@ -19,10 +19,10 @@ public struct MainView: View {
 
     public var body: some View {
         NavigationView {
-            VStack {
+            VStack(spacing: 0) {
                 schoolInfoCardView()
                     .padding(.horizontal, 16)
-                    .padding(.top, 12)
+                    .padding(.vertical, 12)
 
                 TopTabbarView(
                     currentTab: viewStore.binding(

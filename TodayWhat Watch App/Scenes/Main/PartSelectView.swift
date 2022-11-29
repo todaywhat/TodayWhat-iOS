@@ -1,11 +1,12 @@
 import SwiftUI
-import TWColor
 import SwiftUIUtil
+import EnumUtil
 
 struct PartSelectView: View {
     var selectedPart: DisplayInfoPart
     var action: (DisplayInfoPart) -> Void
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var sceneFlowState: SceneFlowState
     
     init(
         selectedPart: DisplayInfoPart,
@@ -16,19 +17,21 @@ struct PartSelectView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            optionView(DisplayInfoPart.breakfast, corners: [.topLeft, .topRight])
-            
-            Divider()
-            
-            optionView(DisplayInfoPart.lunch, corners: [])
-            
-            Divider()
-            
-            optionView(DisplayInfoPart.dinner, corners: [.bottomLeft, .bottomRight])
-            
-            optionView(DisplayInfoPart.timeTable)
-                .padding(.top, 8)
+        ScrollView {
+            VStack(spacing: 0) {
+                optionView(.breakfast, corners: [.topLeft, .topRight])
+                
+                Divider()
+                
+                optionView(.lunch, corners: [])
+                
+                Divider()
+                
+                optionView(.dinner, corners: [.bottomLeft, .bottomRight])
+                
+                optionView(DisplayInfoPart.timeTable)
+                    .padding(.top, 8)
+            }
         }
     }
     
@@ -50,7 +53,7 @@ struct PartSelectView: View {
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.extraPrimary)
+        .background(Color("Main"))
         .cornerRadius(8, corners: corners)
         .onTapGesture {
             dismiss()

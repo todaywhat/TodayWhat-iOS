@@ -17,4 +17,17 @@ public enum MealType: String, Decodable {
             return "저녁"
         }
     }
+
+    public var watchDisplay: String {
+        switch self {
+        case .breakfast:
+            return "🥞 아침"
+
+        case .lunch:
+            return "🍱 점심"
+
+        case .dinner:
+            return "🍛 저녁"
+        }
+    }
 }

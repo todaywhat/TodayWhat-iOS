@@ -11,8 +11,7 @@ public struct MealView: View {
     
     public init(store: StoreOf<MealCore>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 })
-        viewStore.send(.initialize)
+        self.viewStore = ViewStore(store, observe: { $0 }, send: { _ in .onAppear })
     }
 
     public var body: some View {
@@ -23,7 +22,17 @@ public struct MealView: View {
                         mealListView(type: type, subMeal: meal.mealByType(type: type))
                     }
                 }
+            } else if viewStore.isLoading {
+                ProgressView()
+                    .progressViewStyle(.automatic)
+                    .padding(.top, 16)
+            } else {
+                Text("등록된 정보를 찾지 못했어요 😥")
+                    .padding(.top, 16)
             }
+        }
+        .onAppear {
+            viewStore.send(.onAppear, animation: .default)
         }
         .refreshable {
             viewStore.send(.refresh, animation: .default)
@@ -45,6 +54,11 @@ public struct MealView: View {
                         .font(.system(size: 16, weight: .bold))
 
                     Spacer()
+
+                    if isMealContainsAllergy(meal: meal) {
+                        Image("Allergy")
+                            .renderingMode(.original)
+                    }
                 }
                 .padding(.horizontal, 12)
                 .padding(.vertical, 16)
@@ -61,5 +75,10 @@ public struct MealView: View {
 
     private func mealDisplay(meal: String) -> String {
         return meal.replacingOccurrences(of: "[0-9.() ]", with: "", options: [.regularExpression])
+    }
+
+    private func isMealContainsAllergy(meal: String) -> Bool {
+        viewStore.allergyList
+            .first { meal.contains($0.number) } != nil
     }
 }

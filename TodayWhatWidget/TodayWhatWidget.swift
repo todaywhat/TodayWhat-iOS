@@ -4,11 +4,14 @@ import SwiftUI
 import Intents
 import Entity
 import MealClient
+import LocalDatabaseClient
+import EnumUtil
 
 struct Provider: IntentTimelineProvider {
     typealias Entry = SimpleEntry
 
     @Dependency(\.mealClient) var mealClient
+    @Dependency(\.localDatabaseClient) var localDatabaseClient
 
     func placeholder(in context: Context) -> SimpleEntry {
         return SimpleEntry.empty(configuration: ConfigurationIntent())
@@ -23,11 +26,14 @@ struct Provider: IntentTimelineProvider {
         Task {
             do {
                 let meal = try await mealClient.fetchMeal(currentDate)
+                let allergy = try localDatabaseClient.readRecords(as: AllergyLocalEntity.self)
+                    .compactMap { AllergyType(rawValue: $0.allergy) }
                 let entry = SimpleEntry(
                     date: currentDate,
                     configuration: configuration,
                     meal: meal,
-                    mealPartTime: MealPartTime(hour: currentDate)
+                    mealPartTime: MealPartTime(hour: currentDate),
+                    allergyList: allergy
                 )
                 completion(entry)
             } catch {
@@ -47,11 +53,14 @@ struct Provider: IntentTimelineProvider {
         Task {
             do {
                 let meal = try await mealClient.fetchMeal(currentDate)
+                let allergy = try localDatabaseClient.readRecords(as: AllergyLocalEntity.self)
+                    .compactMap { AllergyType(rawValue: $0.allergy) }
                 let entry = SimpleEntry(
                     date: currentDate,
                     configuration: configuration,
                     meal: meal,
-                    mealPartTime: MealPartTime(hour: currentDate)
+                    mealPartTime: MealPartTime(hour: currentDate),
+                    allergyList: allergy
                 )
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
@@ -69,6 +78,7 @@ struct SimpleEntry: TimelineEntry {
     let configuration: ConfigurationIntent
     let meal: Meal
     let mealPartTime: MealPartTime
+    let allergyList: [AllergyType]
 
     static func empty(configuration: ConfigurationIntent) -> SimpleEntry {
         SimpleEntry(
@@ -79,7 +89,8 @@ struct SimpleEntry: TimelineEntry {
                 lunch: .init(meals: [], cal: 0),
                 dinner: .init(meals: [], cal: 0)
             ),
-            mealPartTime: .breakfast
+            mealPartTime: .breakfast,
+            allergyList: []
         )
     }
 }

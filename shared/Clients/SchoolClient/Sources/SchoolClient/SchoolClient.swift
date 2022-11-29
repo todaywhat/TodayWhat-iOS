@@ -15,13 +15,14 @@ extension SchoolClient: DependencyKey {
         fetchSchoolList: { keyword in
             @Dependency(\.neisClient) var neisClient
             
+            let key = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String
             let response = try await neisClient.fetchDataOnNeis(
                 "schoolInfo",
                 queryItem: [
-                    .init(name: "KEY", value: ""),
+                    .init(name: "KEY", value: key),
                     .init(name: "Type", value: "json"),
                     .init(name: "pIndex", value: "1"),
-                    .init(name: "pSize", value: "10"),
+                    .init(name: "pSize", value: "5"),
                     .init(name: "SCHUL_NM", value: keyword)
                 ],
                 key: "schoolInfo",
