@@ -14,8 +14,14 @@ public struct TimeTableView: View {
 
     public var body: some View {
         ScrollView {
-            if viewStore.timeTableList.isEmpty && !viewStore.isLoading {
+            if viewStore.timeTableList.isEmpty && !viewStore.isLoading && !viewStore.isError {
                 Text("등록된 정보를 찾지 못했어요 😥")
+                    .padding(.top, 16)
+            }
+
+            if viewStore.isError {
+                Text("시간표를 가져오는 중 오류가 발생했어요 😥")
+                    .foregroundColor(.red)
                     .padding(.top, 16)
             }
 
@@ -70,5 +76,6 @@ public struct TimeTableView: View {
         .background {
             Color.veryLightGray
         }
+        .cornerRadius(4)
     }
 }

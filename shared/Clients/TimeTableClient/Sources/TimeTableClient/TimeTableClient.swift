@@ -45,24 +45,46 @@ extension TimeTableClient: DependencyKey {
             @Dependency(\.neisClient) var neisClient
 
             let key = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String
-            let response = try await neisClient.fetchDataOnNeis(
-                type.toSubURL(),
-                queryItem: [
-                    .init(name: "KEY", value: key),
-                    .init(name: "Type", value: "json"),
-                    .init(name: "pIndex", value: "1"),
-                    .init(name: "pSize", value: "30"),
-                    .init(name: "ATPT_OFCDC_SC_CODE", value: orgCode),
-                    .init(name: "SD_SCHUL_CODE", value: code),
-                    .init(name: "DDDEP_NM", value: major),
-                    .init(name: "GRADE", value: "\(grade)"),
-                    .init(name: "CLASS_NM", value: "\(`class`)"),
-                    .init(name: "TI_FROM_YMD", value: reqDate),
-                    .init(name: "TI_TO_YMD", value: reqDate)
-                ],
-                key: type.toSubURL(),
-                type: [SingleTimeTableResponseDTO].self
-            )
+            let response: [SingleTimeTableResponseDTO]
+            do {
+                response = try await neisClient.fetchDataOnNeis(
+                    type.toSubURL(),
+                    queryItem: [
+                        .init(name: "KEY", value: key),
+                        .init(name: "Type", value: "json"),
+                        .init(name: "pIndex", value: "1"),
+                        .init(name: "pSize", value: "30"),
+                        .init(name: "ATPT_OFCDC_SC_CODE", value: orgCode),
+                        .init(name: "SD_SCHUL_CODE", value: code),
+                        .init(name: "DDDEP_NM", value: major),
+                        .init(name: "GRADE", value: "\(grade)"),
+                        .init(name: "CLASS_NM", value: "\(`class`)"),
+                        .init(name: "TI_FROM_YMD", value: reqDate),
+                        .init(name: "TI_TO_YMD", value: reqDate)
+                    ],
+                    key: type.toSubURL(),
+                    type: [SingleTimeTableResponseDTO].self
+                )
+            } catch {
+                response = try await neisClient.fetchDataOnNeis(
+                    type.toSubURL(),
+                    queryItem: [
+                        .init(name: "KEY", value: key),
+                        .init(name: "Type", value: "json"),
+                        .init(name: "pIndex", value: "1"),
+                        .init(name: "pSize", value: "30"),
+                        .init(name: "ATPT_OFCDC_SC_CODE", value: orgCode),
+                        .init(name: "SD_SCHUL_CODE", value: code),
+                        .init(name: "GRADE", value: "\(grade)"),
+                        .init(name: "CLASS_NM", value: "\(`class`)"),
+                        .init(name: "TI_FROM_YMD", value: reqDate),
+                        .init(name: "TI_TO_YMD", value: reqDate)
+                    ],
+                    key: type.toSubURL(),
+                    type: [SingleTimeTableResponseDTO].self
+                )
+            }
+            
             return response.map { $0.toDomain() }
         }
     )

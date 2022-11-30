@@ -55,6 +55,7 @@ public struct SchoolSettingCore: ReducerProtocol {
         case schoolMajorListResponse(TaskResult<[String]>)
         case schoolRowDidSelect(School)
         case nextButtonDidTap
+        case skipMajorButtonDidTap
         case majorTextFieldDidTap
         case majorSheetDismissed
         case schoolMajorSheetCore(SchoolMajorSheetCore.Action)
@@ -125,7 +126,7 @@ public struct SchoolSettingCore: ReducerProtocol {
                     state.isPresentedMajorSheet = true
                 } else {
                     guard let selectedSchool = state.selectedSchool else { return .none }
-                    let dict: [(UserDefaultsKeys, Any)] = [
+                    let dict: [(UserDefaultsKeys, Any?)] = [
                         (UserDefaultsKeys.school, state.school),
                         (.orgCode, selectedSchool.orgCode),
                         (.schoolCode, selectedSchool.schoolCode),
@@ -142,12 +143,30 @@ public struct SchoolSettingCore: ReducerProtocol {
                     }
                 }
 
+            case .skipMajorButtonDidTap:
+                guard let selectedSchool = state.selectedSchool else { return .none }
+                let dict: [(UserDefaultsKeys, Any?)] = [
+                    (UserDefaultsKeys.school, state.school),
+                    (.orgCode, selectedSchool.orgCode),
+                    (.schoolCode, selectedSchool.schoolCode),
+                    (.grade, Int(state.grade) ?? 1),
+                    (.class, Int(state.class) ?? 1),
+                    (.major, nil),
+                    (.schoolType, selectedSchool.schoolType.rawValue)
+                ]
+                dict.forEach {
+                    userDefaultsClient.setValue($0.0, $0.1)
+                }
+                return .run { send in
+                    await send(.schoolSettingFinished, animation: .default)
+                }
+
             case .majorTextFieldDidTap:
                 state.schoolMajorSheetCore = .init(majorList: state.schoolMajorList, selectedMajor: state.major)
                 state.isPresentedMajorSheet = true
 
             case let .schoolMajorSheetCore(.majorRowDidSelect(major)):
-                state.major = major
+                state.major = String(major)
                 state.schoolMajorSheetCore = nil
                 state.isPresentedMajorSheet = false
 

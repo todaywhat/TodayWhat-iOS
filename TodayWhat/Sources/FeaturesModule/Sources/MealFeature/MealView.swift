@@ -26,6 +26,10 @@ public struct MealView: View {
                 ProgressView()
                     .progressViewStyle(.automatic)
                     .padding(.top, 16)
+            } else if viewStore.isError {
+                Text("시간표를 가져오는 중 오류가 발생했어요 😥")
+                    .foregroundColor(.red)
+                    .padding(.top, 16)
             } else {
                 Text("등록된 정보를 찾지 못했어요 😥")
                     .padding(.top, 16)

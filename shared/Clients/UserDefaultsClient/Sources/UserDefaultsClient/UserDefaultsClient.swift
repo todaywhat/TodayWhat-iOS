@@ -22,7 +22,11 @@ public struct UserDefaultsClient {
 extension UserDefaultsClient: DependencyKey {
     public static var liveValue: UserDefaultsClient = UserDefaultsClient(
         setValue: { key, value in
-            UserDefaults.app.set(value, forKey: key.rawValue)
+            if let value {
+                UserDefaults.app.set(value, forKey: key.rawValue)
+            } else {
+                UserDefaults.app.removeObject(forKey: key.rawValue)
+            }
         }
     )
 

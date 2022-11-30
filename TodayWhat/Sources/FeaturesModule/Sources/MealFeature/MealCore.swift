@@ -53,6 +53,7 @@ public struct MealCore: ReducerProtocol {
                 }
 
             case let .mealResponse(.success(meal)):
+                state.isError = false
                 state.meal = meal
                 state.isLoading = false
 

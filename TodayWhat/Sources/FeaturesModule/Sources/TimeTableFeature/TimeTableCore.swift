@@ -35,6 +35,7 @@ public struct TimeTableCore: ReducerProtocol {
                 }
 
             case let .timeTableResponse(.success(timeTableList)):
+                state.isError = false
                 state.isLoading = false
                 state.timeTableList = timeTableList
 

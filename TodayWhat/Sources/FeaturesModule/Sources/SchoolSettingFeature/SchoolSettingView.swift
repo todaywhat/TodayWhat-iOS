@@ -153,6 +153,15 @@ public struct SchoolSettingView: View {
                     !viewStore.grade.isEmpty &&
                     !viewStore.isFocusedSchool &&
                     !viewStore.school.isEmpty {
+                    Button {
+                        viewStore.send(.skipMajorButtonDidTap, animation: .default)
+                    } label: {
+                        Text("학과 설정 없이")
+                            .underline()
+                            .font(.system(size: 12))
+                            .foregroundColor(.extraGray)
+                    }
+
                     TWButton(title: viewStore.nextButtonTitle, style: .wide) {
                         viewStore.send(.nextButtonDidTap, animation: .default)
                         focusField = nil
