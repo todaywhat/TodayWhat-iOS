@@ -9,9 +9,9 @@ import SwiftUIUtil
 struct MealWidgetEntryView: View {
     @Environment(\.widgetFamily) var widgetFamily
 
-    private let entry: Provider.Entry
+    let entry: MealProvider.Entry
 
-    public init(entry: Provider.Entry) {
+    public init(entry: MealProvider.Entry) {
         self.entry = entry
     }
 
@@ -53,7 +53,7 @@ private extension Meal {
 }
 
 private struct SmallMealWidgetView: View {
-    var entry: Provider.Entry
+    var entry: MealProvider.Entry
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -88,7 +88,7 @@ private struct SmallMealWidgetView: View {
 }
 
 private struct MediumMealWidgetView: View {
-    var entry: Provider.Entry
+    var entry: MealProvider.Entry
     private let rows = Array(repeating: GridItem(.flexible(), spacing: nil), count: 4)
     private var calorie: CGFloat {
         CGFloat(entry.meal.meals(mealPartTime: entry.mealPartTime).cal)
@@ -150,7 +150,7 @@ private struct MediumMealWidgetView: View {
 }
 
 private struct LargeMealWidgetView: View {
-    var entry: Provider.Entry
+    var entry: MealProvider.Entry
     private var calorie: CGFloat {
         CGFloat(entry.meal.meals(mealPartTime: entry.mealPartTime).cal)
     }
@@ -188,10 +188,11 @@ private struct LargeMealWidgetView: View {
             VStack(alignment: .leading, spacing: 0) {
                 ForEach(entry.meal.meals(mealPartTime: entry.mealPartTime).meals, id: \.hashValue) { meal in
                     HStack {
+                        let isAllergy = isMealContainsAllergy(meal: meal)
                         Text(mealDisplay(meal: meal))
-                            .font(.system(size: 16))
+                            .font(.system(size: 16, weight: isAllergy ? .bold : .regular))
                             .frame(maxHeight: .infinity)
-                            .if(isMealContainsAllergy(meal: meal)) {
+                            .if(isAllergy) {
                                 $0.foregroundColor(.red)
                             }
 

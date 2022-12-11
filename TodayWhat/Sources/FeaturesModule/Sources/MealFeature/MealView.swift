@@ -82,7 +82,7 @@ public struct MealView: View {
     }
 
     private func isMealContainsAllergy(meal: String) -> Bool {
-        viewStore.allergyList
-            .first { meal.contains($0.number) } != nil
+        return viewStore.allergyList
+            .first { meal.contains("(\($0.number)") || meal.contains(".\($0.number)") } != nil
     }
 }

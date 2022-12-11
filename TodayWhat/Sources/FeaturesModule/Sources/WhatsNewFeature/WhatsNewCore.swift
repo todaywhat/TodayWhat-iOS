@@ -2,7 +2,7 @@ import ComposableArchitecture
 
 public struct WhatsNewCore: ReducerProtocol {
     public init() {}
-    public enum State: Equatable {
+    public struct State: Equatable {
         
         public init() {}
     }

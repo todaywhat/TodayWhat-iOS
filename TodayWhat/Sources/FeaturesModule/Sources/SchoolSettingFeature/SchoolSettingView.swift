@@ -35,8 +35,16 @@ public struct SchoolSettingView: View {
             VStack(spacing: 16) {
                 if !viewStore.isFocusedSchool {
                     HStack {
-                        Text(viewStore.titleMessage)
-                            .font(.system(size: 20, weight: .medium))
+                        VStack(alignment: .leading, spacing: 4){
+                            Text(viewStore.titleMessage)
+                                .font(.system(size: 20, weight: .medium))
+
+                            if !viewStore.class.isEmpty && !viewStore.schoolMajorList.isEmpty {
+                                Text("없으면 안해도 괜찮아요!")
+                                    .font(.system(size: 16, weight: .medium))
+                                    .foregroundColor(.darkGray)
+                            }
+                        }
 
                         Spacer()
                     }
@@ -145,7 +153,6 @@ public struct SchoolSettingView: View {
                     focusField = .class
                 }
             }
-
             VStack {
                 Spacer()
 
@@ -153,15 +160,6 @@ public struct SchoolSettingView: View {
                     !viewStore.grade.isEmpty &&
                     !viewStore.isFocusedSchool &&
                     !viewStore.school.isEmpty {
-                    Button {
-                        viewStore.send(.skipMajorButtonDidTap, animation: .default)
-                    } label: {
-                        Text("학과 설정 없이")
-                            .underline()
-                            .font(.system(size: 12))
-                            .foregroundColor(.extraGray)
-                    }
-
                     TWButton(title: viewStore.nextButtonTitle, style: .wide) {
                         viewStore.send(.nextButtonDidTap, animation: .default)
                         focusField = nil

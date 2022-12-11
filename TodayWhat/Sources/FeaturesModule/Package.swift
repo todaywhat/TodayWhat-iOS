@@ -99,7 +99,8 @@ let package = Package(
                 "MealFeature",
                 "TimeTableFeature",
                 "SchoolSettingFeature",
-                "AllergySettingFeature"
+                "AllergySettingFeature",
+                "WhatsNewFeature"
             ]
         ),
         .testTarget(name: "MainFeatureTests", dependencies: ["MainFeature"]),
@@ -153,6 +154,17 @@ let package = Package(
                 "Entity"
             ]
         ),
-        .testTarget(name: "AllergySettingFeatureTests", dependencies: ["AllergySettingFeature"])
+        .testTarget(name: "AllergySettingFeatureTests", dependencies: ["AllergySettingFeature"]),
+        
+        .target(
+            name: "WhatsNewFeature",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-composable-architecture"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "TWColor", package: "DesignSystem"),
+                .product(name: "TWButton", package: "DesignSystem"),
+                "UserDefaultsClient"
+            ]
+        )
     ]
 )

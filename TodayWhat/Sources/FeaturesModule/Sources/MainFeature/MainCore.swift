@@ -4,6 +4,7 @@ import MealFeature
 import TimeTableFeature
 import SchoolSettingFeature
 import AllergySettingFeature
+import UIKit
 
 public struct MainCore: ReducerProtocol {
     public init() {}
@@ -15,6 +16,7 @@ public struct MainCore: ReducerProtocol {
         public var mealCore: MealCore.State? = nil
         public var timeTableCore: TimeTableCore.State? = nil
         public var confirmationDialog: ConfirmationDialogState<Action>? = nil
+        public var alert: AlertState<Action>? = nil
         public var isNavigateSchoolSetting = false
         public var schoolSettingCore: SchoolSettingCore.State? = nil
         public var isNavigateAllergySetting = false
@@ -30,6 +32,7 @@ public struct MainCore: ReducerProtocol {
         case timeTableCore(TimeTableCore.Action)
         case settingButtonDidTap
         case confirmationDialogDismissed
+        case alertDismissed
         case skipWeekDidSelect
         case allergySettingDidSelect
         case schoolSettingDidSelect
@@ -60,19 +63,31 @@ public struct MainCore: ReducerProtocol {
 
             case .settingButtonDidTap:
                 let isSkipWeekend = userDefaultsClient.getValue(key: .isSkipWeekend, type: Bool.self) ?? false
-                state.confirmationDialog = .init {
-                    .init("")
-                } actions: {
-                    [
-                        .default(.init("학교 바꾸기"), action: .send(.schoolSettingDidSelect)),
-                        .default(.init("알레르기 설정"), action: .send(.allergySettingDidSelect)),
-                        .default(.init(isSkipWeekend ? "주말 스킵하지 않기" : "주말 스킵하기"), action: .send(.skipWeekDidSelect)),
-                        .cancel(.init("취소"))
-                    ]
+                if UIDevice.current.userInterfaceIdiom != .phone {
+                    state.alert = AlertState {
+                        .init("오늘 뭐임")
+                    } actions: {
+                        ButtonState.default(.init("학교 바꾸기"), action: .send(.schoolSettingDidSelect))
+                        ButtonState.default(.init("알레르기설정"), action: .send(.allergySettingDidSelect))
+                        ButtonState.default(.init(isSkipWeekend ? "주말 스킵하지 않기" : "주말 스킵하기"), action: .send(.skipWeekDidSelect))
+                        ButtonState.cancel(.init("취소"))
+                    }
+                } else {
+                    state.confirmationDialog = ConfirmationDialogState {
+                        .init("")
+                    } actions: {
+                        ButtonState.default(.init("학교 바꾸기"), action: .send(.schoolSettingDidSelect))
+                        ButtonState.default(.init("알레르기설정"), action: .send(.allergySettingDidSelect))
+                        ButtonState.default(.init(isSkipWeekend ? "주말 스킵하지 않기" : "주말 스킵하기"), action: .send(.skipWeekDidSelect))
+                        ButtonState.cancel(.init("취소"))
+                    }
                 }
 
             case .confirmationDialogDismissed:
                 state.confirmationDialog = nil
+
+            case .alertDismissed:
+                state.alert = nil
 
             case .schoolSettingDidSelect:
                 state.schoolSettingCore = .init()

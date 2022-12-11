@@ -16,8 +16,6 @@
 		4603114B2923DCE700A5CB09 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4603114A2923DCE700A5CB09 /* WidgetKit.framework */; };
 		4603114D2923DCE700A5CB09 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4603114C2923DCE700A5CB09 /* SwiftUI.framework */; };
 		460311532923DCE800A5CB09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460311522923DCE800A5CB09 /* Assets.xcassets */; };
-		460311552923DCE800A5CB09 /* TodayWhatWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 460311512923DCE700A5CB09 /* TodayWhatWidget.intentdefinition */; };
-		460311562923DCE800A5CB09 /* TodayWhatWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 460311512923DCE700A5CB09 /* TodayWhatWidget.intentdefinition */; };
 		460311592923DCE800A5CB09 /* TodayWhatWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 460311482923DCE700A5CB09 /* TodayWhatWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		460843DB28DBFE2400D60E39 /* TodayWhatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460843DA28DBFE2400D60E39 /* TodayWhatApp.swift */; };
 		460843DF28DBFE2500D60E39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460843DE28DBFE2500D60E39 /* Assets.xcassets */; };
@@ -87,6 +85,8 @@
 		465023B2292B049F008B015A /* Entity in Frameworks */ = {isa = PBXBuildFile; productRef = 465023B1292B049F008B015A /* Entity */; };
 		465023BE292B1C3D008B015A /* DateUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 465023BD292B1C3D008B015A /* DateUtil */; };
 		467CD847292BC51100A9766A /* MealClient in Frameworks */ = {isa = PBXBuildFile; productRef = 467CD846292BC51100A9766A /* MealClient */; };
+		46BFE0C329459A100023443A /* TimeTableWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BFE0C229459A100023443A /* TimeTableWidgetEntryView.swift */; };
+		46BFE0FE2945A7A20023443A /* TimeTableClient in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE0FD2945A7A20023443A /* TimeTableClient */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,7 +168,6 @@
 		4603114A2923DCE700A5CB09 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		4603114C2923DCE700A5CB09 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		4603114F2923DCE700A5CB09 /* TodayWhatWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhatWidget.swift; sourceTree = "<group>"; };
-		460311512923DCE700A5CB09 /* TodayWhatWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = TodayWhatWidget.intentdefinition; sourceTree = "<group>"; };
 		460311522923DCE800A5CB09 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		460311542923DCE800A5CB09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		460311612924505B00A5CB09 /* TodayWhat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayWhat.entitlements; sourceTree = "<group>"; };
@@ -219,6 +218,7 @@
 		465023B0292AFF7E008B015A /* MealClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MealClient; sourceTree = "<group>"; };
 		467CD849292C4D1A00A9766A /* FeaturesModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FeaturesModule; sourceTree = "<group>"; };
 		467CD84A292C512400A9766A /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignSystem; sourceTree = "<group>"; };
+		46BFE0C229459A100023443A /* TimeTableWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableWidgetEntryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				461C23662930759C00B3A9CB /* UserDefaultsClient in Frameworks */,
+				46BFE0FE2945A7A20023443A /* TimeTableClient in Frameworks */,
 				467CD847292BC51100A9766A /* MealClient in Frameworks */,
 				461C23642930759A00B3A9CB /* NeisClient in Frameworks */,
 				461C23D52935908E00B3A9CB /* EnumUtil in Frameworks */,
@@ -446,7 +447,7 @@
 				46502379292730B7008B015A /* MealPartTime.swift */,
 				4603114F2923DCE700A5CB09 /* TodayWhatWidget.swift */,
 				46502372292719B8008B015A /* MealWidgetEntryView.swift */,
-				460311512923DCE700A5CB09 /* TodayWhatWidget.intentdefinition */,
+				46BFE0C229459A100023443A /* TimeTableWidgetEntryView.swift */,
 				460311522923DCE800A5CB09 /* Assets.xcassets */,
 				460311542923DCE800A5CB09 /* Info.plist */,
 			);
@@ -688,6 +689,7 @@
 				461C23D229358FFD00B3A9CB /* LocalDatabaseClient */,
 				461C23D42935908E00B3A9CB /* EnumUtil */,
 				462BABA32935CE630063E0C8 /* SwiftUIUtil */,
+				46BFE0FD2945A7A20023443A /* TimeTableClient */,
 			);
 			productName = TodayWhatWidgetExtension;
 			productReference = 460311482923DCE700A5CB09 /* TodayWhatWidgetExtension.appex */;
@@ -970,9 +972,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46BFE0C329459A100023443A /* TimeTableWidgetEntryView.swift in Sources */,
 				4650237D292731F2008B015A /* MealWidgetEntryView.swift in Sources */,
 				4650237C29273179008B015A /* TodayWhatWidget.swift in Sources */,
-				460311552923DCE800A5CB09 /* TodayWhatWidget.intentdefinition in Sources */,
 				4650237B292730B7008B015A /* MealPartTime.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -982,7 +984,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				460311172923202500A5CB09 /* View+eraseToAnyView.swift in Sources */,
-				460311562923DCE800A5CB09 /* TodayWhatWidget.intentdefinition in Sources */,
 				461C23BE293442E400B3A9CB /* DisplayInfoPart.swift in Sources */,
 				4603112D292356F600A5CB09 /* BaseLocalDataSource.swift in Sources */,
 				460843DB28DBFE2400D60E39 /* TodayWhatApp.swift in Sources */,
@@ -1335,6 +1336,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1374,6 +1376,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1844,6 +1847,10 @@
 		467CD846292BC51100A9766A /* MealClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MealClient;
+		};
+		46BFE0FD2945A7A20023443A /* TimeTableClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TimeTableClient;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

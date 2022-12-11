@@ -28,13 +28,13 @@ struct SettingView: View {
         WatchSessionManager.shared.sendMessage(
             message: [:]
         ) { items in
-            print(items)
             guard
                 let code = items["code"] as? String,
                 let orgCode = items["orgCode"] as? String,
                 let grade = items["grade"] as? Int,
                 let `class` = items["class"] as? Int,
-                let type = items["type"]
+                let type = items["type"] as? String,
+                let major = items["major"] as? String
             else {
                 return
             }
@@ -43,7 +43,8 @@ struct SettingView: View {
                 .class: `class`,
                 .schoolType: type,
                 .orgCode: orgCode,
-                .schoolCode: code
+                .schoolCode: code,
+                .major: major
             ]
             dict.forEach { key, value in
                 userDefaultsClient.setValue(key, value)

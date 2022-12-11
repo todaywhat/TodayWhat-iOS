@@ -20,6 +20,10 @@ enum MealPartTime {
     }
 
     init(hour: Date) {
+        if hour.weekday == 7 || hour.weekday == 1 {
+            self = .breakfast
+            return
+        }
         switch hour.hour {
         case 0..<8:
             self = .breakfast

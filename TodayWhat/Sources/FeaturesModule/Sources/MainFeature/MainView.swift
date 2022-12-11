@@ -80,7 +80,12 @@ public struct MainView: View {
                 store.scope(state: \.confirmationDialog),
                 dismiss: .confirmationDialogDismissed
             )
+            .alert(
+                store.scope(state: \.alert),
+                dismiss: .alertDismissed
+            )
         }
+        .navigationViewStyle(.stack)
     }
 
     @ViewBuilder

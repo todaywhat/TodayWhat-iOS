@@ -79,4 +79,62 @@ public extension AllergyType {
             return "18."
         }
     }
+
+    var image: String {
+        switch self {
+        case .turbulence:
+            return "turbulence"
+
+        case .milk:
+            return "milk"
+
+        case .buckwheat:
+            return "buckwheat"
+
+        case .peanut:
+            return "peanut"
+
+        case .soybean:
+            return "soybean"
+
+        case .wheat:
+            return "wheat"
+
+        case .mackerel:
+            return "mackerel"
+
+        case .crab:
+            return "crab"
+
+        case .shrimp:
+            return "shrimp"
+
+        case .pork:
+            return "pork"
+
+        case .peach:
+            return "peach"
+
+        case .tomato:
+            return "tomato"
+
+        case .sulphite:
+            return "sulphite"
+
+        case .walnut:
+            return "walnut"
+
+        case .chicken:
+            return "chicken"
+
+        case .beef:
+            return "beef"
+
+        case .squid:
+            return "squid"
+
+        case .shellfish:
+            return "shellfish"
+        }
+    }
 }

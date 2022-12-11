@@ -1,26 +1,25 @@
 import Dependencies
 import WidgetKit
 import SwiftUI
-import Intents
 import Entity
 import MealClient
 import LocalDatabaseClient
 import EnumUtil
+import TimeTableClient
 
-struct Provider: IntentTimelineProvider {
-    typealias Entry = SimpleEntry
+struct MealProvider: TimelineProvider {
+    typealias Entry = MealEntry
 
     @Dependency(\.mealClient) var mealClient
     @Dependency(\.localDatabaseClient) var localDatabaseClient
 
-    func placeholder(in context: Context) -> SimpleEntry {
-        return SimpleEntry.empty(configuration: ConfigurationIntent())
+    func placeholder(in context: Context) -> MealEntry {
+        return MealEntry.empty()
     }
 
     func getSnapshot(
-        for configuration: ConfigurationIntent,
         in context: Context,
-        completion: @escaping (SimpleEntry) -> ()
+        completion: @escaping (MealEntry) -> ()
     ) {
         let currentDate = Date()
         Task {
@@ -28,23 +27,21 @@ struct Provider: IntentTimelineProvider {
                 let meal = try await mealClient.fetchMeal(currentDate)
                 let allergy = try localDatabaseClient.readRecords(as: AllergyLocalEntity.self)
                     .compactMap { AllergyType(rawValue: $0.allergy) }
-                let entry = SimpleEntry(
+                let entry = MealEntry(
                     date: currentDate,
-                    configuration: configuration,
                     meal: meal,
                     mealPartTime: MealPartTime(hour: currentDate),
                     allergyList: allergy
                 )
                 completion(entry)
             } catch {
-                let entry = SimpleEntry.empty(configuration: configuration)
+                let entry = MealEntry.empty()
                 completion(entry)
             }
         }
     }
 
     func getTimeline(
-        for configuration: ConfigurationIntent,
         in context: Context,
         completion: @escaping (Timeline<Entry>) -> ()
     ) {
@@ -55,9 +52,8 @@ struct Provider: IntentTimelineProvider {
                 let meal = try await mealClient.fetchMeal(currentDate)
                 let allergy = try localDatabaseClient.readRecords(as: AllergyLocalEntity.self)
                     .compactMap { AllergyType(rawValue: $0.allergy) }
-                let entry = SimpleEntry(
+                let entry = MealEntry(
                     date: currentDate,
-                    configuration: configuration,
                     meal: meal,
                     mealPartTime: MealPartTime(hour: currentDate),
                     allergyList: allergy
@@ -65,7 +61,7 @@ struct Provider: IntentTimelineProvider {
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
             } catch {
-                let entry = SimpleEntry.empty(configuration: configuration)
+                let entry = MealEntry.empty()
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
             }
@@ -73,17 +69,56 @@ struct Provider: IntentTimelineProvider {
     }
 }
 
-struct SimpleEntry: TimelineEntry {
+struct TimeTableProvider: TimelineProvider {
+    typealias Entry = TimeTableEntry
+
+    @Dependency(\.timeTableClient) var timeTableClient
+
+    func placeholder(in context: Context) -> TimeTableEntry {
+        .empty()
+    }
+
+    func getSnapshot(in context: Context, completion: @escaping (TimeTableEntry) -> Void) {
+        let currentDate = Date()
+        Task {
+            do {
+                let timeTable = try await timeTableClient.fetchTimeTable(currentDate).prefix(7)
+                let entry = TimeTableEntry(date: currentDate, timeTable: Array(timeTable))
+                completion(entry)
+            } catch {
+                let entry = TimeTableEntry.empty()
+                completion(entry)
+            }
+        }
+    }
+
+    func getTimeline(in context: Context, completion: @escaping (Timeline<TimeTableEntry>) -> Void) {
+        let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? .init()
+        let currentDate = Date()
+        Task {
+            do {
+                let timeTable = try await timeTableClient.fetchTimeTable(currentDate).prefix(7)
+                let entry = TimeTableEntry(date: currentDate, timeTable: Array(timeTable))
+                let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+                completion(timeline)
+            } catch {
+                let entry = TimeTableEntry.empty()
+                let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+                completion(timeline)
+            }
+        }
+    }
+}
+
+struct MealEntry: TimelineEntry {
     let date: Date
-    let configuration: ConfigurationIntent
     let meal: Meal
     let mealPartTime: MealPartTime
     let allergyList: [AllergyType]
 
-    static func empty(configuration: ConfigurationIntent) -> SimpleEntry {
-        SimpleEntry(
+    static func empty() -> MealEntry {
+        MealEntry(
             date: Date(),
-            configuration: configuration,
             meal: .init(
                 breakfast: .init(meals: [], cal: 0),
                 lunch: .init(meals: [], cal: 0),
@@ -95,17 +130,49 @@ struct SimpleEntry: TimelineEntry {
     }
 }
 
+struct TimeTableEntry: TimelineEntry {
+    let date: Date
+    let timeTable: [TimeTable]
+
+    static func empty() -> TimeTableEntry {
+        TimeTableEntry(
+            date: Date(),
+            timeTable: []
+        )
+    }
+}
+
 @main
-struct TodayWhatWidget: Widget {
-    let kind: String = "TodayWhatWidget"
+struct TodayWhatWidget: WidgetBundle {
+    var body: some Widget {
+        TodayWhatMealWidget()
+        TodayWhatTimeTableWidget()
+    }
+}
+
+struct TodayWhatMealWidget: Widget {
+    let kind: String = "TodayWhatMealWidget"
 
     var body: some WidgetConfiguration {
-        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
+        StaticConfiguration(kind: kind, provider: MealProvider()) { entry in
             MealWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("오늘 급식 뭐임")
+        .description("시간에 따라 아침, 점심, 저녁 급식을 확인해요!")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+    }
+}
+
+struct TodayWhatTimeTableWidget: Widget {
+    let kind: String = "TodayWhatTimeTableWidget"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: TimeTableProvider()) { entry in
+            TimeTableWidgetEntryView(entry: entry)
+        }
+        .configurationDisplayName("오늘 시간표 뭐임")
+        .description("오늘 시간표를 확인해요!")
+        .supportedFamilies([.systemSmall])
     }
 }
 
@@ -114,7 +181,7 @@ struct TodayWhatWidget: Widget {
 struct TodayWhatWidget_Previews: PreviewProvider {
     static var previews: some View {
         MealWidgetEntryView(
-            entry: .empty(configuration: ConfigurationIntent())
+            entry: .empty()
         )
         .previewContext(WidgetPreviewContext(family: .systemLarge))
     }

@@ -5,6 +5,7 @@ import Entity
 import ResponseDTO
 import UserDefaultsClient
 import DateUtil
+import EnumUtil
 
 public struct MealClient: Sendable {
     public var fetchMeal: @Sendable (_ date: Date) async throws -> Meal
@@ -42,56 +43,42 @@ extension MealClient: DependencyKey {
             let reqDate = "\(date.year)\(month)\(day)"
 
             let key = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String
-            let response = try await neisClient.fetchDataOnNeis(
-                "mealServiceDietInfo",
-                queryItem: [
-                    .init(name: "KEY", value: key),
-                    .init(name: "Type", value: "json"),
-                    .init(name: "pIndex", value: "1"),
-                    .init(name: "pSize", value: "10"),
-                    .init(name: "ATPT_OFCDC_SC_CODE", value: orgCode),
-                    .init(name: "SD_SCHUL_CODE", value: code),
-                    .init(name: "MLSV_FROM_YMD", value: reqDate),
-                    .init(name: "MLSV_TO_YMD", value: reqDate)
-                ],
-                key: "mealServiceDietInfo",
-                type: [SingleMealResponseDTO].self
-            )
-
-            let breakfast = response.first { $0.type == .breakfast }
-                .map { dto in
-                    Meal.SubMeal(
-                        meals: dto.info.replacingOccurrences(of: " ", with: "").components(separatedBy: "<br/>"),
-                        cal: Double(dto.calInfo.components(separatedBy: " ").first ?? "0") ?? 0
-                    )
-                }
-            let lunch = response.first { $0.type == .lunch }
-                .map { dto in
-                    Meal.SubMeal(
-                        meals: dto.info.replacingOccurrences(of: " ", with: "").components(separatedBy: "<br/>"),
-                        cal: Double(dto.calInfo.components(separatedBy: " ").first ?? "0") ?? 0
-                    )
-                }
-            let dinner = response.first { $0.type == .dinner }
-                .map { dto in
-                    Meal.SubMeal(
-                        meals: dto.info.replacingOccurrences(of: " ", with: "").components(separatedBy: "<br/>"),
-                        cal: Double(dto.calInfo.components(separatedBy: " ").first ?? "0") ?? 0
-                    )
-                }
-            guard
-                let breakfast,
-                let lunch,
-                let dinner
-            else {
-                return Meal(
-                    breakfast: .init(meals: [], cal: 0),
-                    lunch: .init(meals: [], cal: 0),
-                    dinner: .init(meals: [], cal: 0)
+            let response: [SingleMealResponseDTO]
+            do {
+                response = try await neisClient.fetchDataOnNeis(
+                    "mealServiceDietInfo",
+                    queryItem: [
+                        .init(name: "KEY", value: key),
+                        .init(name: "Type", value: "json"),
+                        .init(name: "pIndex", value: "1"),
+                        .init(name: "pSize", value: "10"),
+                        .init(name: "ATPT_OFCDC_SC_CODE", value: orgCode),
+                        .init(name: "SD_SCHUL_CODE", value: code),
+                        .init(name: "MLSV_FROM_YMD", value: reqDate),
+                        .init(name: "MLSV_TO_YMD", value: reqDate)
+                    ],
+                    key: "mealServiceDietInfo",
+                    type: [SingleMealResponseDTO].self
                 )
+            } catch {
+                response = []
             }
 
+            let breakfast = parseMeal(type: .breakfast)
+            let lunch = parseMeal(type: .lunch)
+            let dinner = parseMeal(type: .dinner)
+
             return Meal(breakfast: breakfast, lunch: lunch, dinner: dinner)
+
+            func parseMeal(type: MealType) -> Meal.SubMeal {
+                return response.first { $0.type == type }
+                    .map { dto in
+                        Meal.SubMeal(
+                            meals: dto.info.replacingOccurrences(of: " ", with: "").components(separatedBy: "<br/>"),
+                            cal: Double(dto.calInfo.components(separatedBy: " ").first ?? "0") ?? 0
+                        )
+                    } ?? .init(meals: [], cal: 0)
+            }
         }
     )
 }

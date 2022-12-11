@@ -30,13 +30,15 @@ public struct SchoolSettingCore: ReducerProtocol {
             } else if `class`.isEmpty {
                 return "몇반 이신가요?"
             } else if major.isEmpty && !schoolMajorList.isEmpty {
-                return "학과를 선택해주세요!"
+                return "특정 학과에 다니시나요?"
             } else {
                 return "입력하신 정보가 정확한가요?"
             }
         }
         public var nextButtonTitle: String {
-            if !major.isEmpty || schoolMajorList.isEmpty {
+            if major.isEmpty || schoolMajorList.isEmpty {
+                return "이대로하기"
+            } else if !major.isEmpty || schoolMajorList.isEmpty {
                 return "확인"
             }
             return "다음"
@@ -55,7 +57,6 @@ public struct SchoolSettingCore: ReducerProtocol {
         case schoolMajorListResponse(TaskResult<[String]>)
         case schoolRowDidSelect(School)
         case nextButtonDidTap
-        case skipMajorButtonDidTap
         case majorTextFieldDidTap
         case majorSheetDismissed
         case schoolMajorSheetCore(SchoolMajorSheetCore.Action)
@@ -121,29 +122,6 @@ public struct SchoolSettingCore: ReducerProtocol {
                 }
 
             case .nextButtonDidTap:
-                if state.major.isEmpty && !state.schoolMajorList.isEmpty {
-                    state.schoolMajorSheetCore = .init(majorList: state.schoolMajorList, selectedMajor: state.major)
-                    state.isPresentedMajorSheet = true
-                } else {
-                    guard let selectedSchool = state.selectedSchool else { return .none }
-                    let dict: [(UserDefaultsKeys, Any?)] = [
-                        (UserDefaultsKeys.school, state.school),
-                        (.orgCode, selectedSchool.orgCode),
-                        (.schoolCode, selectedSchool.schoolCode),
-                        (.grade, Int(state.grade) ?? 1),
-                        (.class, Int(state.class) ?? 1),
-                        (.major, state.major.isEmpty ? nil : state.major),
-                        (.schoolType, selectedSchool.schoolType.rawValue)
-                    ]
-                    dict.forEach {
-                        userDefaultsClient.setValue($0.0, $0.1)
-                    }
-                    return .run { send in
-                        await send(.schoolSettingFinished, animation: .default)
-                    }
-                }
-
-            case .skipMajorButtonDidTap:
                 guard let selectedSchool = state.selectedSchool else { return .none }
                 let dict: [(UserDefaultsKeys, Any?)] = [
                     (UserDefaultsKeys.school, state.school),
@@ -151,7 +129,7 @@ public struct SchoolSettingCore: ReducerProtocol {
                     (.schoolCode, selectedSchool.schoolCode),
                     (.grade, Int(state.grade) ?? 1),
                     (.class, Int(state.class) ?? 1),
-                    (.major, nil),
+                    (.major, state.major.isEmpty ? nil : state.major),
                     (.schoolType, selectedSchool.schoolType.rawValue)
                 ]
                 dict.forEach {

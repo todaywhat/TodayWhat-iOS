@@ -26,7 +26,8 @@ let package = Package(
                 "Entity",
                 "NeisClient",
                 "UserDefaultsClient",
-                .product(name: "DateUtil", package: "Utilities")
+                .product(name: "DateUtil", package: "Utilities"),
+                .product(name: "EnumUtil", package: "Utilities")
             ]
         ),
         .testTarget(

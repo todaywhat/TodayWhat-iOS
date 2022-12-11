@@ -6,7 +6,7 @@ import SwiftUIUtil
 
 public struct AllergySettingView: View {
     private let store: StoreOf<AllergySettingCore>
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: 9), count: 2)
+    private let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 3)
     @Environment(\.dismiss) var dismiss
     @ObservedObject private var viewStore: ViewStoreOf<AllergySettingCore>
     
@@ -22,75 +22,62 @@ public struct AllergySettingView: View {
 
             LazyVGrid(columns: columns) {
                 ForEach(AllergyType.allCases, id: \.hashValue) { allergy in
-                    ZStack {
-                        if viewStore.selectedAllergyList.contains(allergy) {
-                            Color.extraPrimary
-                                .cornerRadius(8)
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .strokeBorder(Color.background, lineWidth: 3)
-                                        .padding(1)
-                                }
-                        } else {
-                            Color.lightGray
-                                .cornerRadius(8)
+                    allergyColumnView(allergy: allergy)
+                        .onTapGesture {
+                            viewStore.send(.allergyDidSelect(allergy), animation: .default)
                         }
-
-                        Text(allergy.rawValue)
-                            .font(.system(size: 15, weight: .bold))
-                            .foregroundColor(.extraGray)
-                    }
-                    .frame(height: 88)
-                    .onTapGesture {
-                        viewStore.send(.allergyDidSelect(allergy), animation: .default)
-                    }
                 }
             }
             .padding(.horizontal, 16)
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    viewStore.send(.saveButtonDidTap, animation: .default)
+                } label: {
+                    Text("저장")
+                        .font(.system(size: 14))
+                        .foregroundColor(.black)
+                }
+            }
         }
         .navigationTitle("알레르기 설정")
         .onAppear {
             viewStore.send(.onAppear, animation: .default)
         }
-        .onWillDisappear {
-            viewStore.send(.onWillDisappear, animation: .default)
+        .onChange(of: viewStore.isSaved) { newValue in
+            if newValue {
+                dismiss()
+            }
         }
         .twBackButton(dismiss: dismiss)
     }
-}
 
-private struct WillDisappearHandler: UIViewControllerRepresentable {
-    
-    let onWillDisappear: () -> Void
+    @ViewBuilder
+    func allergyColumnView(allergy: AllergyType) -> some View {
+        let allergyForeground: Color = viewStore.selectedAllergyList.contains(allergy) ?
+            .extraPrimary :
+            .extraGray
 
-    func makeUIViewController(context: Context) -> UIViewController {
-        ViewWillDisappearViewController(onWillDisappear: onWillDisappear)
-    }
+        VStack(spacing: 16) {
+            Image(allergy.image)
+                .renderingMode(.template)
+                .frame(width: 71, height: 71, alignment: .center)
+                .padding([.top, .horizontal], 16)
 
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
-
-    private class ViewWillDisappearViewController: UIViewController {
-        let onWillDisappear: () -> Void
-
-        init(onWillDisappear: @escaping () -> Void) {
-            self.onWillDisappear = onWillDisappear
-            super.init(nibName: nil, bundle: nil)
+            Text(allergy.rawValue)
+                .padding(.bottom, 16)
+                .font(.system(size: 14, weight: .medium))
         }
-
-        @available(*, unavailable)
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
+        .foregroundColor(allergyForeground)
+        .frame(height: 136)
+        .background {
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.veryLightGray)
         }
-
-        override func viewWillDisappear(_ animated: Bool) {
-            super.viewWillDisappear(animated)
-            onWillDisappear()
+        .overlay {
+            RoundedRectangle(cornerRadius: 8)
+                .strokeBorder(allergyForeground, lineWidth: 1)
         }
-    }
-}
-
-private extension View {
-    func onWillDisappear(_ perform: @escaping () -> Void) -> some View {
-        background(WillDisappearHandler(onWillDisappear: perform))
     }
 }
