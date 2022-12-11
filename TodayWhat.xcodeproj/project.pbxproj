@@ -87,6 +87,10 @@
 		467CD847292BC51100A9766A /* MealClient in Frameworks */ = {isa = PBXBuildFile; productRef = 467CD846292BC51100A9766A /* MealClient */; };
 		46BFE0C329459A100023443A /* TimeTableWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BFE0C229459A100023443A /* TimeTableWidgetEntryView.swift */; };
 		46BFE0FE2945A7A20023443A /* TimeTableClient in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE0FD2945A7A20023443A /* TimeTableClient */; };
+		46BFE1002945BA1E0023443A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46BFE0FF2945BA1E0023443A /* GoogleService-Info.plist */; };
+		46BFE1032945BB510023443A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE1022945BB510023443A /* FirebaseAnalytics */; };
+		46BFE1052945BB510023443A /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE1042945BB510023443A /* FirebaseAnalyticsSwift */; };
+		46BFE1072945BB520023443A /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE1062945BB520023443A /* FirebaseCrashlytics */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -219,6 +223,7 @@
 		467CD849292C4D1A00A9766A /* FeaturesModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FeaturesModule; sourceTree = "<group>"; };
 		467CD84A292C512400A9766A /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignSystem; sourceTree = "<group>"; };
 		46BFE0C229459A100023443A /* TimeTableWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableWidgetEntryView.swift; sourceTree = "<group>"; };
+		46BFE0FF2945BA1E0023443A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +254,7 @@
 				465023592926F97C008B015A /* ResponseDTO in Frameworks */,
 				461C235A293070FC00B3A9CB /* ComposableArchitecture in Frameworks */,
 				4650234D29268217008B015A /* NeisClient in Frameworks */,
+				46BFE1032945BB510023443A /* FirebaseAnalytics in Frameworks */,
 				461C2341292C57AB00B3A9CB /* TWTextField in Frameworks */,
 				465023572926F97C008B015A /* RequestDTO in Frameworks */,
 				461C2360293071FD00B3A9CB /* LocalDatabaseClient in Frameworks */,
@@ -261,7 +267,9 @@
 				4650235F2926FC19008B015A /* Entity in Frameworks */,
 				461C233F292C57AB00B3A9CB /* TWRadioButton in Frameworks */,
 				461C2347292C57B300B3A9CB /* SchoolSettingFeature in Frameworks */,
+				46BFE1072945BB520023443A /* FirebaseCrashlytics in Frameworks */,
 				4603112629234F8100A5CB09 /* GRDB in Frameworks */,
+				46BFE1052945BB510023443A /* FirebaseAnalyticsSwift in Frameworks */,
 				4650235D2926F984008B015A /* EnumUtil in Frameworks */,
 				461C233D292C57AB00B3A9CB /* TWColor in Frameworks */,
 				465023632926FE1F008B015A /* SchoolClient in Frameworks */,
@@ -489,6 +497,7 @@
 		460843D928DBFE2400D60E39 /* TodayWhat */ = {
 			isa = PBXGroup;
 			children = (
+				46BFE0FF2945BA1E0023443A /* GoogleService-Info.plist */,
 				4650237829272E4F008B015A /* Info.plist */,
 				460311612924505B00A5CB09 /* TodayWhat.entitlements */,
 				46031055291B614100A5CB09 /* Application */,
@@ -704,6 +713,7 @@
 				460843D528DBFE2400D60E39 /* Resources */,
 				4608442628DBFE2600D60E39 /* Embed Watch Content */,
 				4603115D2923DCE900A5CB09 /* Embed Foundation Extensions */,
+				46BFE1082945BCCA0023443A /* Firebase Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -738,6 +748,9 @@
 				461C23612930720400B3A9CB /* TimeTableClient */,
 				461C23682930776700B3A9CB /* SwiftUINavigation */,
 				461C236A2930776700B3A9CB /* _SwiftUINavigationState */,
+				46BFE1022945BB510023443A /* FirebaseAnalytics */,
+				46BFE1042945BB510023443A /* FirebaseAnalyticsSwift */,
+				46BFE1062945BB520023443A /* FirebaseCrashlytics */,
 			);
 			productName = TodayWhat;
 			productReference = 460843D728DBFE2400D60E39 /* TodayWhat.app */;
@@ -892,6 +905,7 @@
 				4603112429234F8100A5CB09 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 				461C2358293070FC00B3A9CB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				461C23672930776700B3A9CB /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
+				46BFE1012945BB510023443A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 460843D828DBFE2400D60E39 /* Products */;
 			projectDirPath = "";
@@ -923,6 +937,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4650236C29270791008B015A /* Preview Assets.xcassets in Resources */,
+				46BFE1002945BA1E0023443A /* GoogleService-Info.plist in Resources */,
 				460843DF28DBFE2500D60E39 /* Assets.xcassets in Resources */,
 				461C2352292DD50800B3A9CB /* Fraunces9pt-Black.ttf in Resources */,
 			);
@@ -966,6 +981,29 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		46BFE1082945BCCA0023443A /* Firebase Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Firebase Crashlytics";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${BUILD_DIR% Build/*} SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		460311442923DCE700A5CB09 /* Sources */ = {
@@ -1325,6 +1363,7 @@
 				CODE_SIGN_ENTITLEMENTS = TodayWhat/TodayWhat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"TodayWhat/Preview Content\"";
 				DEVELOPMENT_TEAM = 235C2RVZ7L;
 				ENABLE_PREVIEWS = YES;
@@ -1674,6 +1713,14 @@
 				minimumVersion = 0.4.2;
 			};
 		};
+		46BFE1012945BB510023443A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 10.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1851,6 +1898,21 @@
 		46BFE0FD2945A7A20023443A /* TimeTableClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TimeTableClient;
+		};
+		46BFE1022945BB510023443A /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46BFE1012945BB510023443A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		46BFE1042945BB510023443A /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46BFE1012945BB510023443A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
+		};
+		46BFE1062945BB520023443A /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46BFE1012945BB510023443A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

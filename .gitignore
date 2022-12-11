@@ -9,7 +9,7 @@
 #           - Also handy if you have a large number of dependant pods
 #           - AS PER https://guides.cocoapods.org/using/using-cocoapods.html NEVER IGNORE THE LOCK FILE
 Pods/
-
+GoogleService-Info.plist
 ### fastlane ###
 # fastlane - A streamlined workflow tool for Cocoa deployment
 #
