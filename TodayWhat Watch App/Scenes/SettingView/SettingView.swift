@@ -4,16 +4,26 @@ import UserDefaultsClient
 
 struct SettingView: View {
     @EnvironmentObject var sceneFlowState: SceneFlowState
+    @StateObject var watchSessionManager = WatchSessionManager.shared
     @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     var body: some View {
         VStack {
             Text("아이폰에서 먼저 학교 설정을 마치고 와주세요!")
+                .font(.system(size: 14))
 
             Button {
                 receiveIPhoneSetting()
             } label: {
                 Text("데이터 가져오기")
+            }
+
+            HStack {
+                Text("아이폰과 연결 상태")
+                    .font(.system(size: 12))
+
+                Text(watchSessionManager.isRechable ? "ON" : "OFF")
+                    .font(.system(size: 12))
             }
         }
         .onAppear {
@@ -22,7 +32,7 @@ struct SettingView: View {
     }
 
     private func receiveIPhoneSetting() {
-        guard WatchSessionManager.shared.isRechable() else {
+        guard WatchSessionManager.shared.isRechable else {
             return
         }
         WatchSessionManager.shared.sendMessage(
@@ -33,11 +43,11 @@ struct SettingView: View {
                 let orgCode = items["orgCode"] as? String,
                 let grade = items["grade"] as? Int,
                 let `class` = items["class"] as? Int,
-                let type = items["type"] as? String,
-                let major = items["major"] as? String
+                let type = items["type"] as? String
             else {
                 return
             }
+            let major = items["major"] as Any
             let dict: [UserDefaultsKeys: Any] = [
                 .grade: grade,
                 .class: `class`,

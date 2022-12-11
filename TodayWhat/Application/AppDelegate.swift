@@ -41,12 +41,12 @@ extension AppDelegate: WCSessionDelegate {
             let type = userDefaultsClient.getValue(key: .schoolType, type: String.self),
             let code = userDefaultsClient.getValue(key: .schoolCode, type: String.self),
             let orgCode = userDefaultsClient.getValue(key: .orgCode, type: String.self),
-            let major = userDefaultsClient.getValue(key: .major, type: String.self),
             let grade = userDefaultsClient.getValue(key: .grade, type: Int.self),
             let `class` = userDefaultsClient.getValue(key: .class, type: Int.self)
         else {
             return
         }
+        let major = userDefaultsClient.getValue(key: .major, type: String.self) as Any
         replyHandler(
             [
                 "type": type,
