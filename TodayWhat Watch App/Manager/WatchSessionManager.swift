@@ -2,8 +2,11 @@ import WatchConnectivity
 import Dependencies
 import UserDefaultsClient
 
-final class WatchSessionManager: NSObject, WCSessionDelegate {
+final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
+    var isRechable: Bool {
+        session.isReachable
+    }
 
     func session(
         _ session: WCSession,
@@ -17,11 +20,11 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
                 let orgCode = items["orgCode"] as? String,
                 let grade = items["grade"] as? Int,
                 let `class` = items["class"] as? Int,
-                let type = items["type"] as? String,
-                let major = items["major"] as? String
+                let type = items["type"] as? String
             else {
                 return
             }
+            let major = items["major"] as Any
             let dict: [UserDefaultsKeys: Any] = [
                 .grade: grade,
                 .class: `class`,
@@ -47,10 +50,6 @@ final class WatchSessionManager: NSObject, WCSessionDelegate {
     }
 
     private let session: WCSession
-
-    func isRechable() -> Bool {
-        session.isReachable
-    }
 
 #if os(iOS)
     func sessionDidBecomeInactive(_ session: WCSession) {}
