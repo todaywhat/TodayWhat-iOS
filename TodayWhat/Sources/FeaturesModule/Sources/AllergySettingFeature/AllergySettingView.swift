@@ -6,7 +6,7 @@ import SwiftUIUtil
 
 public struct AllergySettingView: View {
     private let store: StoreOf<AllergySettingCore>
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 3)
+    private let columns = Array(repeating: GridItem(.flexible(), spacing: 17), count: 3)
     @Environment(\.dismiss) var dismiss
     @ObservedObject private var viewStore: ViewStoreOf<AllergySettingCore>
     
@@ -20,11 +20,11 @@ public struct AllergySettingView: View {
             Spacer()
                 .frame(height: 20)
 
-            LazyVGrid(columns: columns) {
+            LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(AllergyType.allCases, id: \.hashValue) { allergy in
                     allergyColumnView(allergy: allergy)
                         .onTapGesture {
-                            viewStore.send(.allergyDidSelect(allergy), animation: .default)
+                            viewStore.send(.allergyDidSelect(allergy))
                         }
                 }
             }
@@ -55,7 +55,8 @@ public struct AllergySettingView: View {
 
     @ViewBuilder
     func allergyColumnView(allergy: AllergyType) -> some View {
-        let allergyForeground: Color = viewStore.selectedAllergyList.contains(allergy) ?
+        let isAllergyContains = viewStore.selectedAllergyList.contains(allergy)
+        let allergyForeground: Color = isAllergyContains ?
             .extraPrimary :
             .extraGray
 
@@ -71,13 +72,14 @@ public struct AllergySettingView: View {
         }
         .foregroundColor(allergyForeground)
         .frame(height: 136)
+        .frame(maxWidth: .infinity)
         .background {
             RoundedRectangle(cornerRadius: 8)
                 .fill(Color.veryLightGray)
         }
         .overlay {
             RoundedRectangle(cornerRadius: 8)
-                .strokeBorder(allergyForeground, lineWidth: 1)
+                .strokeBorder(allergyForeground, lineWidth: isAllergyContains ? 2 : 1)
         }
     }
 }
