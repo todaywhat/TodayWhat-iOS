@@ -21,8 +21,11 @@ struct MealProvider: TimelineProvider {
         in context: Context,
         completion: @escaping (MealEntry) -> ()
     ) {
-        let currentDate = Date()
         Task {
+            var currentDate = Date()
+            if currentDate.hour >= 20 {
+                currentDate = currentDate.adding(by: .day, value: 1)
+            }
             do {
                 let meal = try await mealClient.fetchMeal(currentDate)
                 let allergy = try localDatabaseClient.readRecords(as: AllergyLocalEntity.self)
@@ -46,8 +49,11 @@ struct MealProvider: TimelineProvider {
         completion: @escaping (Timeline<Entry>) -> ()
     ) {
         let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? .init()
-        let currentDate = Date()
         Task {
+            var currentDate = Date()
+            if currentDate.hour >= 20 {
+                currentDate = currentDate.adding(by: .day, value: 1)
+            }
             do {
                 let meal = try await mealClient.fetchMeal(currentDate)
                 let allergy = try localDatabaseClient.readRecords(as: AllergyLocalEntity.self)
@@ -79,8 +85,11 @@ struct TimeTableProvider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (TimeTableEntry) -> Void) {
-        let currentDate = Date()
         Task {
+            var currentDate = Date()
+            if currentDate.hour >= 20 {
+                currentDate = currentDate.adding(by: .day, value: 1)
+            }
             do {
                 let timeTable = try await timeTableClient.fetchTimeTable(currentDate).prefix(7)
                 let entry = TimeTableEntry(date: currentDate, timeTable: Array(timeTable))
@@ -94,8 +103,11 @@ struct TimeTableProvider: TimelineProvider {
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<TimeTableEntry>) -> Void) {
         let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? .init()
-        let currentDate = Date()
         Task {
+            var currentDate = Date()
+            if currentDate.hour >= 20 {
+                currentDate = currentDate.adding(by: .day, value: 1)
+            }
             do {
                 let timeTable = try await timeTableClient.fetchTimeTable(currentDate).prefix(7)
                 let entry = TimeTableEntry(date: currentDate, timeTable: Array(timeTable))
