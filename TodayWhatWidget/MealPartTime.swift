@@ -1,5 +1,6 @@
 import DateUtil
 import Foundation
+import UserDefaultsClient
 
 enum MealPartTime {
     case breakfast
@@ -20,7 +21,8 @@ enum MealPartTime {
     }
 
     init(hour: Date) {
-        if hour.weekday == 7 || hour.weekday == 1 {
+        if !UserDefaults.app.bool(forKey: UserDefaultsKeys.isSkipWeekend.rawValue) &&
+            (hour.weekday == 7 || hour.weekday == 1) {
             self = .breakfast
             return
         }
