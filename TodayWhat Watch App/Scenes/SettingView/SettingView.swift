@@ -5,11 +5,13 @@ import UserDefaultsClient
 struct SettingView: View {
     @EnvironmentObject var sceneFlowState: SceneFlowState
     @StateObject var watchSessionManager = WatchSessionManager.shared
+    @State var isReachable = false
+    @State var loadingStateText = "아이폰에서 먼저 학교 설정을 마치고 와주세요!"
     @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     var body: some View {
         VStack {
-            Text("아이폰에서 먼저 학교 설정을 마치고 와주세요!")
+            Text(loadingStateText)
                 .font(.system(size: 14))
 
             Button {
@@ -22,7 +24,7 @@ struct SettingView: View {
                 Text("아이폰과 연결 상태")
                     .font(.system(size: 12))
 
-                Text(watchSessionManager.isRechable ? "ON" : "OFF")
+                Text(isReachable ? "ON" : "OFF")
                     .font(.system(size: 12))
             }
         }
@@ -32,9 +34,11 @@ struct SettingView: View {
     }
 
     private func receiveIPhoneSetting() {
-        guard WatchSessionManager.shared.isRechable else {
+        isReachable = watchSessionManager.isReachable
+        guard WatchSessionManager.shared.isReachable else {
             return
         }
+        loadingStateText = "아이폰과 연결중이에요..."
         WatchSessionManager.shared.sendMessage(
             message: [:]
         ) { items in
@@ -62,6 +66,8 @@ struct SettingView: View {
             DispatchQueue.main.async {
                 sceneFlowState.sceneFlow = .root
             }
+        } error: { error in
+            loadingStateText = "아이폰과 연결이 실패했어요..."
         }
     }
 }

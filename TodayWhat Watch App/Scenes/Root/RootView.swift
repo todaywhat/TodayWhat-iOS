@@ -14,6 +14,7 @@ struct RootView: View {
 
             case .main:
                 MainView()
+                    .environmentObject(sceneFlowState)
 
             case .setting:
                 SettingView()
