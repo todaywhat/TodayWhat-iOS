@@ -40,7 +40,7 @@ struct TopTabbarView: View {
                 }
             }
 
-            LinearGradient(colors: [.white, Color(.sRGB, white: 0.92, opacity: 1)], startPoint: .bottom, endPoint: .top)
+            LinearGradient(colors: [.background, .background.opacity(92)], startPoint: .bottom, endPoint: .top)
                    .frame(height: 8)
                    .opacity(0.8)
         }

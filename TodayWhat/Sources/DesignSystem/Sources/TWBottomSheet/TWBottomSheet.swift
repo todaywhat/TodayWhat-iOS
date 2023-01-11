@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftUIUtil
+import TWColor
 
 struct TWBottomSheet<T: View>: ViewModifier {
     @Binding var isShowing: Bool
@@ -54,7 +55,7 @@ struct TWBottomSheet<T: View>: ViewModifier {
                         .transition(.opacity)
 
                     ZStack {
-                        Color.white
+                        Color.background
                             .cornerRadius(16, corners: [.topLeft, .topRight])
                             .padding(.top, -dragHeight)
                             .gesture(sheetDragging)
