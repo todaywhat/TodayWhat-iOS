@@ -4,7 +4,7 @@ import UserDefaultsClient
 
 final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
-    var isRechable: Bool {
+    var isReachable: Bool {
         session.isReachable
     }
 
@@ -13,7 +13,6 @@ final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
         activationDidCompleteWith activationState: WCSessionActivationState,
         error: Error?
     ) {
-        guard session.isReachable else { return }
         sendMessage(message: [:]) { items in
             guard
                 let code = items["code"] as? String,
@@ -76,6 +75,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
             return
         }
         #endif
+        print(session.isReachable)
         session.sendMessage(message, replyHandler: reply, errorHandler: error)
     }
 }
