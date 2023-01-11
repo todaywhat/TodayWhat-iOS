@@ -173,7 +173,7 @@ public struct SchoolSettingView: View {
             }
         }
         .background {
-            Color.background
+            Color.background.ignoresSafeArea()
         }
         .twBottomSheet(
             isShowing: viewStore.binding(

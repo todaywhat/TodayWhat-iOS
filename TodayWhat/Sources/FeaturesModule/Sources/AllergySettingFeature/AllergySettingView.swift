@@ -37,10 +37,11 @@ public struct AllergySettingView: View {
                 } label: {
                     Text("저장")
                         .font(.system(size: 14))
-                        .foregroundColor(.black)
+                        .foregroundColor(.darkGray)
                 }
             }
         }
+        .background(Color.background.ignoresSafeArea())
         .navigationTitle("알레르기 설정")
         .onAppear {
             viewStore.send(.onAppear, animation: .default)
