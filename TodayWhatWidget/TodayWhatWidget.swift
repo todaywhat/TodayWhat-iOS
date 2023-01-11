@@ -106,7 +106,7 @@ struct TimeTableProvider: TimelineProvider {
         Task {
             var currentDate = Date()
             if currentDate.hour >= 20 {
-                currentDate = currentDate.adding(by: .day, value: 1)
+                currentDate = currentDate.adding(by: .hour, value: 5)
             }
             do {
                 let timeTable = try await timeTableClient.fetchTimeTable(currentDate).prefix(7)
