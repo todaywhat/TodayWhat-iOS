@@ -23,6 +23,17 @@ AppStore - https://apps.apple.com/app/id1629567018
 
 <br>
 
+## 📚 Tech Stack
+- SwiftUI
+- The Composable Architecture
+- Swift Concurrency (Async/Await)
+- GRDB.swift
+- Swift Package Manager
+- WidgetKit
+- Watch Connectivity
+
+<br>
+
 ## ⭐️ Key Functions
 
 ### 위젯
