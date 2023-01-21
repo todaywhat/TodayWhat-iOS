@@ -34,6 +34,14 @@ AppStore - https://apps.apple.com/app/id1629567018
 
 <br>
 
+## 🏃‍♀️ Run Project
+- 프로젝트 루트에 XCConfig 폴더를 생성
+- Debug.xcconfig, Release.xcconfig 파일을 생성
+- xcconfig파일들 안에 `API_KEY = \(Nesi API Key Here)`
+- TodayWhat.xcodeproj 실행
+
+<br>
+
 ## ⭐️ Key Functions
 
 ### 위젯
