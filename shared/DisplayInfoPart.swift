@@ -1,6 +1,6 @@
 import Foundation
 
-enum DisplayInfoPart: Equatable, CaseIterable {
+public enum DisplayInfoPart: Equatable, CaseIterable {
     case breakfast
     case lunch
     case dinner

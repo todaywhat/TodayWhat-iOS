@@ -1,5 +1,7 @@
 import SwiftUI
 
+#if os(iOS)
+
 @available(watchOS, unavailable)
 public extension View {
     func twBackButton(willDismiss: @escaping () -> Void = {}, dismiss: DismissAction) -> some View {
@@ -20,3 +22,5 @@ public extension View {
             .navigationBarBackButtonHidden(true)
     }
 }
+
+#endif

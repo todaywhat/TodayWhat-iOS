@@ -1,10 +1,10 @@
 import SwiftUI
 
 public extension Color {
-    static let extraPrimary = Color("Primary")
-    static let veryLightGray = Color("VeryLightGray")
-    static let lightGray = Color("LightGray")
-    static let extraGray = Color("Gray")
-    static let darkGray = Color("DarkGray")
-    static let background = Color("BG")
+    static let extraPrimary = Color("Primary", bundle: .module)
+    static let veryLightGray = Color("VeryLightGray", bundle: .module)
+    static let lightGray = Color("LightGray", bundle: .module)
+    static let extraGray = Color("Gray", bundle: .module)
+    static let darkGray = Color("DarkGray", bundle: .module)
+    static let background = Color("BG", bundle: .module)
 }
