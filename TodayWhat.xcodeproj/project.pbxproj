@@ -69,6 +69,9 @@
 		461D17F92986D9250055F0F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461D17F82986D9250055F0F5 /* ContentView.swift */; };
 		461D17FB2986D9260055F0F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 461D17FA2986D9260055F0F5 /* Assets.xcassets */; };
 		461D17FE2986D9260055F0F5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 461D17FD2986D9260055F0F5 /* Preview Assets.xcassets */; };
+		461D180629896A390055F0F5 /* ContentCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461D180529896A390055F0F5 /* ContentCore.swift */; };
+		461D180829896A570055F0F5 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 461D180729896A570055F0F5 /* ComposableArchitecture */; };
+		461D180A29896A5D0055F0F5 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 461D180929896A5D0055F0F5 /* Dependencies */; };
 		462BABA42935CE630063E0C8 /* SwiftUIUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 462BABA32935CE630063E0C8 /* SwiftUIUtil */; };
 		4647B12C28DC1CC800FAB81B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12A28DC1CC800FAB81B /* MainViewModel.swift */; };
 		4647B13428DC27CE00FAB81B /* PartSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B13228DC27CE00FAB81B /* PartSelectView.swift */; };
@@ -95,6 +98,9 @@
 		46BFE1032945BB510023443A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE1022945BB510023443A /* FirebaseAnalytics */; };
 		46BFE1052945BB510023443A /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE1042945BB510023443A /* FirebaseAnalyticsSwift */; };
 		46BFE1072945BB520023443A /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE1062945BB520023443A /* FirebaseCrashlytics */; };
+		46E4D6D029896CF2005FB823 /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C23BD293442E400B3A9CB /* DisplayInfoPart.swift */; };
+		46E4D6D229896D69005FB823 /* SwiftUIUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D129896D69005FB823 /* SwiftUIUtil */; };
+		46E4D6D429897352005FB823 /* TWColor in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D329897352005FB823 /* TWColor */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -215,6 +221,7 @@
 		461D17FA2986D9260055F0F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		461D17FD2986D9260055F0F5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		461D17FF2986D9260055F0F5 /* TodayWhat_Mac_App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayWhat_Mac_App.entitlements; sourceTree = "<group>"; };
+		461D180529896A390055F0F5 /* ContentCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCore.swift; sourceTree = "<group>"; };
 		4647B12A28DC1CC800FAB81B /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		4647B13228DC27CE00FAB81B /* PartSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartSelectView.swift; sourceTree = "<group>"; };
 		465023422926783C008B015A /* ErrorModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ErrorModule; sourceTree = "<group>"; };
@@ -337,6 +344,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				461D180829896A570055F0F5 /* ComposableArchitecture in Frameworks */,
+				46E4D6D429897352005FB823 /* TWColor in Frameworks */,
+				46E4D6D229896D69005FB823 /* SwiftUIUtil in Frameworks */,
+				461D180A29896A5D0055F0F5 /* Dependencies in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -627,8 +638,8 @@
 		461D17F52986D9250055F0F5 /* TodayWhat Mac App */ = {
 			isa = PBXGroup;
 			children = (
+				461D180B29896A700055F0F5 /* Content */,
 				461D17F62986D9250055F0F5 /* TodayWhat_Mac_AppApp.swift */,
-				461D17F82986D9250055F0F5 /* ContentView.swift */,
 				461D17FA2986D9260055F0F5 /* Assets.xcassets */,
 				461D17FF2986D9260055F0F5 /* TodayWhat_Mac_App.entitlements */,
 				461D17FC2986D9260055F0F5 /* Preview Content */,
@@ -642,6 +653,15 @@
 				461D17FD2986D9260055F0F5 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		461D180B29896A700055F0F5 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				461D17F82986D9250055F0F5 /* ContentView.swift */,
+				461D180529896A390055F0F5 /* ContentCore.swift */,
+			);
+			path = Content;
 			sourceTree = "<group>";
 		};
 		4647B12028DC0A9000FAB81B /* shared */ = {
@@ -906,6 +926,12 @@
 			dependencies = (
 			);
 			name = "TodayWhat Mac App";
+			packageProductDependencies = (
+				461D180729896A570055F0F5 /* ComposableArchitecture */,
+				461D180929896A5D0055F0F5 /* Dependencies */,
+				46E4D6D129896D69005FB823 /* SwiftUIUtil */,
+				46E4D6D329897352005FB823 /* TWColor */,
+			);
 			productName = "TodayWhat Mac App";
 			productReference = 461D17F42986D9250055F0F5 /* TodayWhat Mac App.app */;
 			productType = "com.apple.product-type.application";
@@ -1155,6 +1181,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				461D180629896A390055F0F5 /* ContentCore.swift in Sources */,
+				46E4D6D029896CF2005FB823 /* DisplayInfoPart.swift in Sources */,
 				461D17F92986D9250055F0F5 /* ContentView.swift in Sources */,
 				461D17F72986D9250055F0F5 /* TodayWhat_Mac_AppApp.swift in Sources */,
 			);
@@ -1698,7 +1726,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "baegteun.TodayWhat-Mac-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1727,7 +1755,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "baegteun.TodayWhat-Mac-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1982,6 +2010,16 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = EnumUtil;
 		};
+		461D180729896A570055F0F5 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 461C2358293070FC00B3A9CB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+		461D180929896A5D0055F0F5 /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 461C2358293070FC00B3A9CB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = Dependencies;
+		};
 		462BABA32935CE630063E0C8 /* SwiftUIUtil */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftUIUtil;
@@ -2056,6 +2094,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 46BFE1012945BB510023443A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
+		};
+		46E4D6D129896D69005FB823 /* SwiftUIUtil */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftUIUtil;
+		};
+		46E4D6D329897352005FB823 /* TWColor */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TWColor;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
