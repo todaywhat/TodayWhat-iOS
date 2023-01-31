@@ -65,6 +65,10 @@
 		461C23D02934496E00B3A9CB /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C23CF2934496E00B3A9CB /* WatchSessionManager.swift */; };
 		461C23D329358FFD00B3A9CB /* LocalDatabaseClient in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23D229358FFD00B3A9CB /* LocalDatabaseClient */; };
 		461C23D52935908E00B3A9CB /* EnumUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23D42935908E00B3A9CB /* EnumUtil */; };
+		461D17F72986D9250055F0F5 /* TodayWhat_Mac_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461D17F62986D9250055F0F5 /* TodayWhat_Mac_AppApp.swift */; };
+		461D17F92986D9250055F0F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461D17F82986D9250055F0F5 /* ContentView.swift */; };
+		461D17FB2986D9260055F0F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 461D17FA2986D9260055F0F5 /* Assets.xcassets */; };
+		461D17FE2986D9260055F0F5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 461D17FD2986D9260055F0F5 /* Preview Assets.xcassets */; };
 		462BABA42935CE630063E0C8 /* SwiftUIUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 462BABA32935CE630063E0C8 /* SwiftUIUtil */; };
 		4647B12C28DC1CC800FAB81B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12A28DC1CC800FAB81B /* MainViewModel.swift */; };
 		4647B13428DC27CE00FAB81B /* PartSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B13228DC27CE00FAB81B /* PartSelectView.swift */; };
@@ -205,6 +209,12 @@
 		461C23C82934458500B3A9CB /* SceneFlowState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFlowState.swift; sourceTree = "<group>"; };
 		461C23CC293446B200B3A9CB /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		461C23CF2934496E00B3A9CB /* WatchSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
+		461D17F42986D9250055F0F5 /* TodayWhat Mac App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TodayWhat Mac App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		461D17F62986D9250055F0F5 /* TodayWhat_Mac_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhat_Mac_AppApp.swift; sourceTree = "<group>"; };
+		461D17F82986D9250055F0F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		461D17FA2986D9260055F0F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		461D17FD2986D9260055F0F5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		461D17FF2986D9260055F0F5 /* TodayWhat_Mac_App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayWhat_Mac_App.entitlements; sourceTree = "<group>"; };
 		4647B12A28DC1CC800FAB81B /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		4647B13228DC27CE00FAB81B /* PartSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartSelectView.swift; sourceTree = "<group>"; };
 		465023422926783C008B015A /* ErrorModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ErrorModule; sourceTree = "<group>"; };
@@ -317,6 +327,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4608441628DBFE2600D60E39 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		461D17F12986D9250055F0F5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -475,6 +492,7 @@
 				4608441228DBFE2600D60E39 /* TodayWhat Watch AppTests */,
 				4608441C28DBFE2600D60E39 /* TodayWhat Watch AppUITests */,
 				4603114E2923DCE700A5CB09 /* TodayWhatWidget */,
+				461D17F52986D9250055F0F5 /* TodayWhat Mac App */,
 				460311492923DCE700A5CB09 /* Frameworks */,
 				460843D828DBFE2400D60E39 /* Products */,
 			);
@@ -490,6 +508,7 @@
 				4608440F28DBFE2600D60E39 /* TodayWhat Watch AppTests.xctest */,
 				4608441928DBFE2600D60E39 /* TodayWhat Watch AppUITests.xctest */,
 				460311482923DCE700A5CB09 /* TodayWhatWidgetExtension.appex */,
+				461D17F42986D9250055F0F5 /* TodayWhat Mac App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -603,6 +622,26 @@
 				461C23CF2934496E00B3A9CB /* WatchSessionManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		461D17F52986D9250055F0F5 /* TodayWhat Mac App */ = {
+			isa = PBXGroup;
+			children = (
+				461D17F62986D9250055F0F5 /* TodayWhat_Mac_AppApp.swift */,
+				461D17F82986D9250055F0F5 /* ContentView.swift */,
+				461D17FA2986D9260055F0F5 /* Assets.xcassets */,
+				461D17FF2986D9260055F0F5 /* TodayWhat_Mac_App.entitlements */,
+				461D17FC2986D9260055F0F5 /* Preview Content */,
+			);
+			path = "TodayWhat Mac App";
+			sourceTree = "<group>";
+		};
+		461D17FC2986D9260055F0F5 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				461D17FD2986D9260055F0F5 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		4647B12028DC0A9000FAB81B /* shared */ = {
@@ -854,6 +893,23 @@
 			productReference = 4608441928DBFE2600D60E39 /* TodayWhat Watch AppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		461D17F32986D9250055F0F5 /* TodayWhat Mac App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 461D18022986D9260055F0F5 /* Build configuration list for PBXNativeTarget "TodayWhat Mac App" */;
+			buildPhases = (
+				461D17F02986D9250055F0F5 /* Sources */,
+				461D17F12986D9250055F0F5 /* Frameworks */,
+				461D17F22986D9250055F0F5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TodayWhat Mac App";
+			productName = "TodayWhat Mac App";
+			productReference = 461D17F42986D9250055F0F5 /* TodayWhat Mac App.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -861,7 +917,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1400;
+				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					460311472923DCE700A5CB09 = {
@@ -889,6 +945,9 @@
 						CreatedOnToolsVersion = 14.0;
 						TestTargetID = 460843FC28DBFE2500D60E39;
 					};
+					461D17F32986D9250055F0F5 = {
+						CreatedOnToolsVersion = 14.1;
+					};
 				};
 			};
 			buildConfigurationList = 460843D228DBFE2300D60E39 /* Build configuration list for PBXProject "TodayWhat" */;
@@ -911,6 +970,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				461D17F32986D9250055F0F5 /* TodayWhat Mac App */,
 				460843D628DBFE2400D60E39 /* TodayWhat */,
 				460843E628DBFE2500D60E39 /* TodayWhatTests */,
 				460843F028DBFE2500D60E39 /* TodayWhatUITests */,
@@ -977,6 +1037,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		461D17F22986D9250055F0F5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				461D17FE2986D9260055F0F5 /* Preview Assets.xcassets in Resources */,
+				461D17FB2986D9260055F0F5 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1079,6 +1148,15 @@
 			files = (
 				4608442028DBFE2600D60E39 /* TodayWhat_Watch_AppUITestsLaunchTests.swift in Sources */,
 				4608441E28DBFE2600D60E39 /* TodayWhat_Watch_AppUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		461D17F02986D9250055F0F5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				461D17F92986D9250055F0F5 /* ContentView.swift in Sources */,
+				461D17F72986D9250055F0F5 /* TodayWhat_Mac_AppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1601,6 +1679,64 @@
 			};
 			name = Release;
 		};
+		461D18002986D9260055F0F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TodayWhat Mac App/TodayWhat_Mac_App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TodayWhat Mac App/Preview Content\"";
+				DEVELOPMENT_TEAM = 235C2RVZ7L;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "baegteun.TodayWhat-Mac-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		461D18012986D9260055F0F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TodayWhat Mac App/TodayWhat_Mac_App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TodayWhat Mac App/Preview Content\"";
+				DEVELOPMENT_TEAM = 235C2RVZ7L;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "baegteun.TodayWhat-Mac-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1672,6 +1808,15 @@
 			buildConfigurations = (
 				4608443428DBFE2600D60E39 /* Debug */,
 				4608443528DBFE2600D60E39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		461D18022986D9260055F0F5 /* Build configuration list for PBXNativeTarget "TodayWhat Mac App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				461D18002986D9260055F0F5 /* Debug */,
+				461D18012986D9260055F0F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
