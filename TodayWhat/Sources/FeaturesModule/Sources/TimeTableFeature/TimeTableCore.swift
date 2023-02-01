@@ -43,9 +43,6 @@ public struct TimeTableCore: ReducerProtocol {
                 state.isError = true
                 state.errorMessage = error.localizedDescription
                 state.isLoading = false
-
-            default:
-                return .none
             }
             return .none
         }
