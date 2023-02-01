@@ -30,6 +30,7 @@
 		4608441428DBFE2600D60E39 /* TodayWhat_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608441328DBFE2600D60E39 /* TodayWhat_Watch_AppTests.swift */; };
 		4608441E28DBFE2600D60E39 /* TodayWhat_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608441D28DBFE2600D60E39 /* TodayWhat_Watch_AppUITests.swift */; };
 		4608442028DBFE2600D60E39 /* TodayWhat_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608441F28DBFE2600D60E39 /* TodayWhat_Watch_AppUITestsLaunchTests.swift */; };
+		4616628D298A225C00E24818 /* TimeTableClient in Frameworks */ = {isa = PBXBuildFile; productRef = 4616628C298A225C00E24818 /* TimeTableClient */; };
 		461C2337292C574100B3A9CB /* TWColor in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2336292C574100B3A9CB /* TWColor */; };
 		461C2339292C57AB00B3A9CB /* TWBottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2338292C57AB00B3A9CB /* TWBottomSheet */; };
 		461C233B292C57AB00B3A9CB /* TWButton in Frameworks */ = {isa = PBXBuildFile; productRef = 461C233A292C57AB00B3A9CB /* TWButton */; };
@@ -347,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46E4D6D829897B10005FB823 /* MealClient in Frameworks */,
+				4616628D298A225C00E24818 /* TimeTableClient in Frameworks */,
 				46E4D6D629897ACC005FB823 /* Entity in Frameworks */,
 				461D180829896A570055F0F5 /* ComposableArchitecture in Frameworks */,
 				46E4D6D429897352005FB823 /* TWColor in Frameworks */,
@@ -937,6 +939,7 @@
 				46E4D6D329897352005FB823 /* TWColor */,
 				46E4D6D529897ACC005FB823 /* Entity */,
 				46E4D6D729897B10005FB823 /* MealClient */,
+				4616628C298A225C00E24818 /* TimeTableClient */,
 			);
 			productName = "TodayWhat Mac App";
 			productReference = 461D17F42986D9250055F0F5 /* TodayWhat Mac App.app */;
@@ -1910,6 +1913,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4603112429234F8100A5CB09 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
 			productName = GRDB;
+		};
+		4616628C298A225C00E24818 /* TimeTableClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TimeTableClient;
 		};
 		461C2336292C574100B3A9CB /* TWColor */ = {
 			isa = XCSwiftPackageProductDependency;
