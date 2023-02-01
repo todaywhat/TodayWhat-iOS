@@ -101,6 +101,8 @@
 		46E4D6D029896CF2005FB823 /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C23BD293442E400B3A9CB /* DisplayInfoPart.swift */; };
 		46E4D6D229896D69005FB823 /* SwiftUIUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D129896D69005FB823 /* SwiftUIUtil */; };
 		46E4D6D429897352005FB823 /* TWColor in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D329897352005FB823 /* TWColor */; };
+		46E4D6D629897ACC005FB823 /* Entity in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D529897ACC005FB823 /* Entity */; };
+		46E4D6D829897B10005FB823 /* MealClient in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D729897B10005FB823 /* MealClient */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -344,6 +346,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46E4D6D829897B10005FB823 /* MealClient in Frameworks */,
+				46E4D6D629897ACC005FB823 /* Entity in Frameworks */,
 				461D180829896A570055F0F5 /* ComposableArchitecture in Frameworks */,
 				46E4D6D429897352005FB823 /* TWColor in Frameworks */,
 				46E4D6D229896D69005FB823 /* SwiftUIUtil in Frameworks */,
@@ -931,6 +935,8 @@
 				461D180929896A5D0055F0F5 /* Dependencies */,
 				46E4D6D129896D69005FB823 /* SwiftUIUtil */,
 				46E4D6D329897352005FB823 /* TWColor */,
+				46E4D6D529897ACC005FB823 /* Entity */,
+				46E4D6D729897B10005FB823 /* MealClient */,
 			);
 			productName = "TodayWhat Mac App";
 			productReference = 461D17F42986D9250055F0F5 /* TodayWhat Mac App.app */;
@@ -2102,6 +2108,14 @@
 		46E4D6D329897352005FB823 /* TWColor */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TWColor;
+		};
+		46E4D6D529897ACC005FB823 /* Entity */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Entity;
+		};
+		46E4D6D729897B10005FB823 /* MealClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MealClient;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
