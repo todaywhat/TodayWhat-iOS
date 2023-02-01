@@ -62,6 +62,7 @@ struct ContentView: View {
             ForEach(DisplayInfoType.allCases.indices, id: \.self) { index in
                 let item = DisplayInfoType.allCases[index]
                 let isSelected: Bool = item == viewStore.selectedInfoType
+                let textForeground = isSelected ? Color.black : .primary
                 Button {
                     viewStore.send(.displayInfoTypeDidSelect(item), animation: .default)
                 } label: {
@@ -71,11 +72,26 @@ struct ContentView: View {
                         .overlay(
                             HStack {
                                 Text(item.display)
-                                    .foregroundColor(isSelected ? Color.black : .primary)
+                                    .foregroundColor(textForeground)
 
                                 Spacer()
                             }
                             .padding(8)
+                        )
+                        .overlay(
+                            HStack {
+                                Spacer()
+
+                                VStack {
+                                    Spacer()
+
+                                    Text("cmd + \(index + 1)")
+                                        .font(.caption)
+                                        .foregroundColor(textForeground)
+                                }
+                                .padding(.bottom, 4)
+                                .padding(.trailing, 8)
+                            }
                         )
                 }
                 .buttonStyle(.borderless)
