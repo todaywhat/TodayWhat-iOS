@@ -31,6 +31,13 @@
 		4608441E28DBFE2600D60E39 /* TodayWhat_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608441D28DBFE2600D60E39 /* TodayWhat_Watch_AppUITests.swift */; };
 		4608442028DBFE2600D60E39 /* TodayWhat_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608441F28DBFE2600D60E39 /* TodayWhat_Watch_AppUITestsLaunchTests.swift */; };
 		4616628D298A225C00E24818 /* TimeTableClient in Frameworks */ = {isa = PBXBuildFile; productRef = 4616628C298A225C00E24818 /* TimeTableClient */; };
+		46166290298A2B6800E24818 /* MealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4616628F298A2B6800E24818 /* MealView.swift */; };
+		46166293298A328E00E24818 /* TimeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46166292298A328E00E24818 /* TimeTableView.swift */; };
+		4616629B298A599900E24818 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4616629A298A599900E24818 /* SettingsView.swift */; };
+		4616629D298A59F300E24818 /* SettingsCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4616629C298A59F300E24818 /* SettingsCore.swift */; };
+		4616629F298A608700E24818 /* DisplayInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4616629E298A608700E24818 /* DisplayInfoType.swift */; };
+		461662A1298AA1A300E24818 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461662A0298AA1A300E24818 /* main.swift */; };
+		461662A4298AA2A900E24818 /* EventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461662A3298AA2A900E24818 /* EventMonitor.swift */; };
 		461C2337292C574100B3A9CB /* TWColor in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2336292C574100B3A9CB /* TWColor */; };
 		461C2339292C57AB00B3A9CB /* TWBottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2338292C57AB00B3A9CB /* TWBottomSheet */; };
 		461C233B292C57AB00B3A9CB /* TWButton in Frameworks */ = {isa = PBXBuildFile; productRef = 461C233A292C57AB00B3A9CB /* TWButton */; };
@@ -206,6 +213,13 @@
 		4608441928DBFE2600D60E39 /* TodayWhat Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TodayWhat Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4608441D28DBFE2600D60E39 /* TodayWhat_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhat_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		4608441F28DBFE2600D60E39 /* TodayWhat_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhat_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		4616628F298A2B6800E24818 /* MealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealView.swift; sourceTree = "<group>"; };
+		46166292298A328E00E24818 /* TimeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableView.swift; sourceTree = "<group>"; };
+		4616629A298A599900E24818 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		4616629C298A59F300E24818 /* SettingsCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCore.swift; sourceTree = "<group>"; };
+		4616629E298A608700E24818 /* DisplayInfoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayInfoType.swift; sourceTree = "<group>"; };
+		461662A0298AA1A300E24818 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		461662A3298AA2A900E24818 /* EventMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMonitor.swift; sourceTree = "<group>"; };
 		461C234E292CEF5F00B3A9CB /* TodayWhatWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayWhatWidgetExtension.entitlements; sourceTree = "<group>"; };
 		461C2351292DD50700B3A9CB /* Fraunces9pt-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces9pt-Black.ttf"; sourceTree = "<group>"; };
 		461C2355292E643A00B3A9CB /* TimeTableClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TimeTableClient; sourceTree = "<group>"; };
@@ -599,6 +613,48 @@
 			path = "TodayWhat Watch AppUITests";
 			sourceTree = "<group>";
 		};
+		4616628E298A2B5E00E24818 /* Meal */ = {
+			isa = PBXGroup;
+			children = (
+				4616628F298A2B6800E24818 /* MealView.swift */,
+			);
+			path = Meal;
+			sourceTree = "<group>";
+		};
+		46166291298A328800E24818 /* TimeTable */ = {
+			isa = PBXGroup;
+			children = (
+				46166292298A328E00E24818 /* TimeTableView.swift */,
+			);
+			path = TimeTable;
+			sourceTree = "<group>";
+		};
+		46166298298A58E000E24818 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				461D17F62986D9250055F0F5 /* TodayWhat_Mac_AppApp.swift */,
+				461662A0298AA1A300E24818 /* main.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		46166299298A595300E24818 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				4616629A298A599900E24818 /* SettingsView.swift */,
+				4616629C298A59F300E24818 /* SettingsCore.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		461662A2298AA2A300E24818 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				461662A3298AA2A900E24818 /* EventMonitor.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		461C238E2934308A00B3A9CB /* XCConfig */ = {
 			isa = PBXGroup;
 			children = (
@@ -644,8 +700,12 @@
 		461D17F52986D9250055F0F5 /* TodayWhat Mac App */ = {
 			isa = PBXGroup;
 			children = (
+				461662A2298AA2A300E24818 /* Util */,
+				46166299298A595300E24818 /* Settings */,
+				46166298298A58E000E24818 /* App */,
+				46166291298A328800E24818 /* TimeTable */,
+				4616628E298A2B5E00E24818 /* Meal */,
 				461D180B29896A700055F0F5 /* Content */,
-				461D17F62986D9250055F0F5 /* TodayWhat_Mac_AppApp.swift */,
 				461D17FA2986D9260055F0F5 /* Assets.xcassets */,
 				461D17FF2986D9260055F0F5 /* TodayWhat_Mac_App.entitlements */,
 				461D17FC2986D9260055F0F5 /* Preview Content */,
@@ -666,6 +726,7 @@
 			children = (
 				461D17F82986D9250055F0F5 /* ContentView.swift */,
 				461D180529896A390055F0F5 /* ContentCore.swift */,
+				4616629E298A608700E24818 /* DisplayInfoType.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -1191,9 +1252,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				461D180629896A390055F0F5 /* ContentCore.swift in Sources */,
+				4616629B298A599900E24818 /* SettingsView.swift in Sources */,
+				4616629F298A608700E24818 /* DisplayInfoType.swift in Sources */,
+				461662A4298AA2A900E24818 /* EventMonitor.swift in Sources */,
+				4616629D298A59F300E24818 /* SettingsCore.swift in Sources */,
 				46E4D6D029896CF2005FB823 /* DisplayInfoPart.swift in Sources */,
+				46166293298A328E00E24818 /* TimeTableView.swift in Sources */,
+				461662A1298AA1A300E24818 /* main.swift in Sources */,
 				461D17F92986D9250055F0F5 /* ContentView.swift in Sources */,
 				461D17F72986D9250055F0F5 /* TodayWhat_Mac_AppApp.swift in Sources */,
+				46166290298A2B6800E24818 /* MealView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1730,7 +1798,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© Hyeongwoo Choi 2023";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1759,7 +1828,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© Hyeongwoo Choi 2023";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

@@ -15,44 +15,73 @@ struct ContentView: View {
     var body: some View {
         VStack {
             HStack {
-                infoListView()
+                infoView()
 
                 optionPanelView()
             }
             .padding(20)
             .frame(maxHeight: .infinity)
         }
-        .frame(width: 500, height: 400)
+        .frame(width: 400, height: 350)
+        .onAppear {
+            viewStore.send(.onAppear)
+        }
     }
 
     @ViewBuilder
-    func infoListView() -> some View {
+    func infoView() -> some View {
         VStack {
-            
+            switch viewStore.selectedInfoType {
+            case .breakfast, .lunch, .dinner:
+                let meal = viewStore.selectedPartMeal ?? .init(meals: [], cal: 0)
+                MealView(meal: meal.meals, calorie: meal.cal)
+
+            case .timetable:
+                TimeTableView(timetables: viewStore.timetables)
+
+            case .settings:
+                IfLetStore(
+                    store.scope(
+                        state: \.settingsCore,
+                        action: ContentCore.Action.settingsCore
+                    )
+                ) { store in
+                    SettingsView(store: store)
+                } else: {
+                    Text("Else")
+                }
+            }
+
+            Spacer()
         }
+        .frame(maxHeight: .infinity)
         .frame(maxWidth: .infinity)
     }
 
     @ViewBuilder
     func optionPanelView() -> some View {
         VStack {
-            ForEach(DisplayInfoPart.allCases, id: \.self) { item in
-                let isSelected: Bool = item == viewStore.selectedPart
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(isSelected ? Color.extraPrimary : .extraGray)
-                    .frame(maxHeight: .infinity)
-                    .overlay(
-                        HStack {
-                            Text(item.display)
-                                .foregroundColor(isSelected ? Color.black : .primary)
+            ForEach(DisplayInfoType.allCases.indices, id: \.self) { index in
+                let item = DisplayInfoType.allCases[index]
+                let isSelected: Bool = item == viewStore.selectedInfoType
+                Button {
+                    viewStore.send(.displayInfoTypeDidSelect(item), animation: .default)
+                } label: {
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(isSelected ? Color.extraPrimary : .extraGray)
+                        .frame(maxHeight: .infinity)
+                        .overlay(
+                            HStack {
+                                Text(item.display)
+                                    .foregroundColor(isSelected ? Color.black : .primary)
 
-                            Spacer()
-                        }
-                        .padding(8)
-                    )
-                    .onTapGesture {
-                        viewStore.send(.partDidSelect(item), animation: .default)
-                    }
+                                Spacer()
+                            }
+                            .padding(8)
+                        )
+                }
+                .buttonStyle(.borderless)
+                .keyboardShortcut(.init("\(index + 1)".first ?? "1"), modifiers: .command)
             }
             .frame(maxHeight: .infinity)
         }
