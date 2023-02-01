@@ -47,8 +47,6 @@ struct ContentView: View {
                     )
                 ) { store in
                     SettingsView(store: store)
-                } else: {
-                    Text("Else")
                 }
             }
 
