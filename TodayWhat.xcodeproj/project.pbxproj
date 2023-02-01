@@ -73,7 +73,7 @@
 		461C23D02934496E00B3A9CB /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C23CF2934496E00B3A9CB /* WatchSessionManager.swift */; };
 		461C23D329358FFD00B3A9CB /* LocalDatabaseClient in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23D229358FFD00B3A9CB /* LocalDatabaseClient */; };
 		461C23D52935908E00B3A9CB /* EnumUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23D42935908E00B3A9CB /* EnumUtil */; };
-		461D17F72986D9250055F0F5 /* TodayWhat_Mac_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461D17F62986D9250055F0F5 /* TodayWhat_Mac_AppApp.swift */; };
+		461D17F72986D9250055F0F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461D17F62986D9250055F0F5 /* AppDelegate.swift */; };
 		461D17F92986D9250055F0F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461D17F82986D9250055F0F5 /* ContentView.swift */; };
 		461D17FB2986D9260055F0F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 461D17FA2986D9260055F0F5 /* Assets.xcassets */; };
 		461D17FE2986D9260055F0F5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 461D17FD2986D9260055F0F5 /* Preview Assets.xcassets */; };
@@ -220,6 +220,7 @@
 		4616629E298A608700E24818 /* DisplayInfoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayInfoType.swift; sourceTree = "<group>"; };
 		461662A0298AA1A300E24818 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		461662A3298AA2A900E24818 /* EventMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMonitor.swift; sourceTree = "<group>"; };
+		461662A5298AADEA00E24818 /* TodayWhat-Mac-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TodayWhat-Mac-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		461C234E292CEF5F00B3A9CB /* TodayWhatWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayWhatWidgetExtension.entitlements; sourceTree = "<group>"; };
 		461C2351292DD50700B3A9CB /* Fraunces9pt-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces9pt-Black.ttf"; sourceTree = "<group>"; };
 		461C2355292E643A00B3A9CB /* TimeTableClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TimeTableClient; sourceTree = "<group>"; };
@@ -233,7 +234,7 @@
 		461C23CC293446B200B3A9CB /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		461C23CF2934496E00B3A9CB /* WatchSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
 		461D17F42986D9250055F0F5 /* TodayWhat Mac App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TodayWhat Mac App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		461D17F62986D9250055F0F5 /* TodayWhat_Mac_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhat_Mac_AppApp.swift; sourceTree = "<group>"; };
+		461D17F62986D9250055F0F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		461D17F82986D9250055F0F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		461D17FA2986D9260055F0F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		461D17FD2986D9260055F0F5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -632,7 +633,7 @@
 		46166298298A58E000E24818 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				461D17F62986D9250055F0F5 /* TodayWhat_Mac_AppApp.swift */,
+				461D17F62986D9250055F0F5 /* AppDelegate.swift */,
 				461662A0298AA1A300E24818 /* main.swift */,
 			);
 			path = App;
@@ -700,6 +701,7 @@
 		461D17F52986D9250055F0F5 /* TodayWhat Mac App */ = {
 			isa = PBXGroup;
 			children = (
+				461662A5298AADEA00E24818 /* TodayWhat-Mac-App-Info.plist */,
 				461662A2298AA2A300E24818 /* Util */,
 				46166299298A595300E24818 /* Settings */,
 				46166298298A58E000E24818 /* App */,
@@ -1260,7 +1262,7 @@
 				46166293298A328E00E24818 /* TimeTableView.swift in Sources */,
 				461662A1298AA1A300E24818 /* main.swift in Sources */,
 				461D17F92986D9250055F0F5 /* ContentView.swift in Sources */,
-				461D17F72986D9250055F0F5 /* TodayWhat_Mac_AppApp.swift in Sources */,
+				461D17F72986D9250055F0F5 /* AppDelegate.swift in Sources */,
 				46166290298A2B6800E24818 /* MealView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1786,6 +1788,7 @@
 		};
 		461D18002986D9260055F0F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 461C23912934318900B3A9CB /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1798,6 +1801,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "TodayWhat-Mac-App-Info.plist";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© Hyeongwoo Choi 2023";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1816,6 +1820,7 @@
 		};
 		461D18012986D9260055F0F5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 461C23922934319200B3A9CB /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1828,6 +1833,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "TodayWhat-Mac-App-Info.plist";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© Hyeongwoo Choi 2023";
 				LD_RUNPATH_SEARCH_PATHS = (
