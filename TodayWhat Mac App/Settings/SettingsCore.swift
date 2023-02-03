@@ -45,14 +45,14 @@ struct SettingsCore: ReducerProtocol {
         case .onAppear:
             guard
                 let school = userDefaultsClient.getValue(key: .school, type: String.self),
-                let grade = userDefaultsClient.getValue(key: .grade, type: String.self),
-                let `class` = userDefaultsClient.getValue(key: .class, type: String.self)
+                let grade = userDefaultsClient.getValue(key: .grade, type: Int.self),
+                let `class` = userDefaultsClient.getValue(key: .class, type: Int.self)
             else {
                 break
             }
             state.schoolText = school
-            state.gradeText = grade
-            state.classText = `class`
+            state.gradeText = "\(grade)"
+            state.classText = "\(`class`)"
             state.isSkipWeekend = userDefaultsClient.getValue(key: .isSkipWeekend, type: Bool.self) ?? false
             state.majorText = userDefaultsClient.getValue(key: .major, type: String.self) ?? ""
             let majorList = try? localDatabaseClient.readRecords(as: SchoolMajorLocalEntity.self)
@@ -112,7 +112,7 @@ struct SettingsCore: ReducerProtocol {
             state.majorText = ""
             state.focusState = nil
             userDefaultsClient.setValue(.orgCode, school.orgCode)
-            userDefaultsClient.setValue(.schoolType, school.schoolType)
+            userDefaultsClient.setValue(.schoolType, school.schoolType.rawValue)
             userDefaultsClient.setValue(.schoolCode, school.schoolCode)
             userDefaultsClient.setValue(.school, school.name)
             return .task { [orgCode = school.orgCode, schoolCode = school.schoolCode] in

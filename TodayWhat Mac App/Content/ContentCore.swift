@@ -3,6 +3,7 @@ import Entity
 import Foundation
 import TimeTableClient
 import MealClient
+import UserDefaultsClient
 
 struct ContentCore: ReducerProtocol {
     struct State: Equatable {
@@ -10,6 +11,7 @@ struct ContentCore: ReducerProtocol {
         var meal: Meal?
         var timetables: [TimeTable] = []
         var settingsCore: SettingsCore.State?
+        var isNotSetSchool = false
         var selectedPartMeal: Meal.SubMeal? {
             meal?.mealByPart(part: selectedInfoType)
         }
@@ -17,6 +19,7 @@ struct ContentCore: ReducerProtocol {
 
     enum Action: Equatable {
         case onAppear
+        case refresh
         case displayInfoTypeDidSelect(DisplayInfoType)
         case mealResponse(TaskResult<Meal>)
         case timetableResponse(TaskResult<[TimeTable]>)
@@ -25,36 +28,44 @@ struct ContentCore: ReducerProtocol {
 
     @Dependency(\.mealClient) var mealClient
     @Dependency(\.timeTableClient) var timeTableClient
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     var body: some ReducerProtocolOf<ContentCore> {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                state.meal = .init(
-                    breakfast: .init(meals: ["볶음밥", "아무튼 밥", "대충 밥"], cal: 478),
-                    lunch: .init(meals: [], cal: 0),
-                    dinner: .init(meals: [], cal: 0)
+                guard
+                    let school = userDefaultsClient.getValue(key: .school, type: String.self),
+                    !school.isEmpty
+                else {
+                    state.isNotSetSchool = true
+                    return .none
+                }
+                state.isNotSetSchool = false
+
+                return .merge(
+                    .task {
+                        .mealResponse(await TaskResult { try await mealClient.fetchMeal(Date()) })
+                    },
+                    .task {
+                        .timetableResponse(await TaskResult { try await timeTableClient.fetchTimeTable(Date()) })
+                    }
                 )
-                state.timetables = [
-                    .init(perio: 1, content: "앱 프로그래밍"),
-                    .init(perio: 2, content: "앱 프로그래밍"),
-                    .init(perio: 3, content: "앱 프로그래밍"),
-                    .init(perio: 4, content: "겨울방학"),
-                    .init(perio: 5, content: "겨울방학"),
-                    .init(perio: 6, content: "겨울방학"),
-                    .init(perio: 7, content: "겨울방학")
-                ]
-    //            return .merge(
-    //                .task {
-    //                    .mealResponse(await TaskResult { try await mealClient.fetchMeal(Date()) })
-    //                },
-    //                .task {
-    //                    .timetableResponse(await TaskResult { try await timeTableClient.fetchTimeTable(Date()) })
-    //                }
-    //            )
+
+            case .refresh:
+                return .run { send in
+                    await send(.onAppear)
+                }
                 
             case let .displayInfoTypeDidSelect(part):
                 switch part {
+                case .breakfast, .lunch, .dinner, .timetable:
+                    state.settingsCore = nil
+                    state.selectedInfoType = part
+                    return .run { send in
+                        await send(.onAppear)
+                    }
+
                 case .settings:
                     state.settingsCore = .init()
 
