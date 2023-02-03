@@ -92,9 +92,6 @@ public extension LocalDatabaseClient {
                "unprotected",
                isDirectory: true
            )
-        #else
-        url = AppGroup.group.containerURL
-        #endif
 
         try? FileManager.default.createDirectory(
             at: url,
@@ -103,6 +100,9 @@ public extension LocalDatabaseClient {
                 FileAttributeKey.protectionKey: URLFileProtection.none
             ]
         )
+        #else
+        url = AppGroup.group.containerURL
+        #endif        
 
         if #available(iOS 16, macOS 13.0, *) {
             url.append(path: "TodayWhat")
@@ -137,11 +137,12 @@ public extension LocalDatabaseClient {
             dir = dir.replacingOccurrences(of: "%20", with: " ")
         }
 
-        do {
-            dbQueue = try DatabaseQueue(path: dir)
-        } catch {
-            fatalError()
-        }
+//        do {
+//            dbQueue = try DatabaseQueue(path: dir)
+//        } catch {
+//            fatalError()
+//        }
+        dbQueue = try! DatabaseQueue(path: dir)
         migrate(&migrator)
         try? migrator.migrate(dbQueue)
     }

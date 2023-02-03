@@ -86,6 +86,24 @@
 		463490B2298BD9FB007EBF26 /* TWTextField in Frameworks */ = {isa = PBXBuildFile; productRef = 463490B1298BD9FB007EBF26 /* TWTextField */; };
 		463490B4298BF3EE007EBF26 /* SchoolClient in Frameworks */ = {isa = PBXBuildFile; productRef = 463490B3298BF3EE007EBF26 /* SchoolClient */; };
 		463490B7298CDA16007EBF26 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 463490B6298CDA16007EBF26 /* LaunchAtLogin */; };
+		463490BE298D19B8007EBF26 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4603114A2923DCE700A5CB09 /* WidgetKit.framework */; };
+		463490BF298D19B8007EBF26 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4603114C2923DCE700A5CB09 /* SwiftUI.framework */; };
+		463490C4298D19B9007EBF26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 463490C3298D19B9007EBF26 /* Assets.xcassets */; };
+		463490C9298D19B9007EBF26 /* TodayWhatMacWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 463490BD298D19B8007EBF26 /* TodayWhatMacWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		463490CF298D19E1007EBF26 /* DateUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 463490CE298D19E1007EBF26 /* DateUtil */; };
+		463490D1298D19E5007EBF26 /* EnumUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 463490D0298D19E5007EBF26 /* EnumUtil */; };
+		463490D3298D19EB007EBF26 /* LocalDatabaseClient in Frameworks */ = {isa = PBXBuildFile; productRef = 463490D2298D19EB007EBF26 /* LocalDatabaseClient */; };
+		463490D5298D19F2007EBF26 /* MealClient in Frameworks */ = {isa = PBXBuildFile; productRef = 463490D4298D19F2007EBF26 /* MealClient */; };
+		463490D7298D1A78007EBF26 /* NeisClient in Frameworks */ = {isa = PBXBuildFile; productRef = 463490D6298D1A78007EBF26 /* NeisClient */; };
+		463490D9298D1A7F007EBF26 /* SwiftUIUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 463490D8298D1A7F007EBF26 /* SwiftUIUtil */; };
+		463490DB298D1A86007EBF26 /* TimeTableClient in Frameworks */ = {isa = PBXBuildFile; productRef = 463490DA298D1A86007EBF26 /* TimeTableClient */; };
+		463490DD298D1A8C007EBF26 /* TWColor in Frameworks */ = {isa = PBXBuildFile; productRef = 463490DC298D1A8C007EBF26 /* TWColor */; };
+		463490DF298D1A91007EBF26 /* UserDefaultsClient in Frameworks */ = {isa = PBXBuildFile; productRef = 463490DE298D1A91007EBF26 /* UserDefaultsClient */; };
+		463490E1298D1AAB007EBF26 /* MealPartTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463490E0298D1AAB007EBF26 /* MealPartTime.swift */; };
+		463490E3298D1AB9007EBF26 /* TodayWhatMacWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463490E2298D1AB9007EBF26 /* TodayWhatMacWidget.swift */; };
+		463490E5298D1AC6007EBF26 /* MealWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463490E4298D1AC6007EBF26 /* MealWidgetEntryView.swift */; };
+		463490E7298D1AD4007EBF26 /* TimeTableWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463490E6298D1AD4007EBF26 /* TimeTableWidgetEntryView.swift */; };
+		463490E8298D1AD4007EBF26 /* Fraunces9pt-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 461C2351292DD50700B3A9CB /* Fraunces9pt-Black.ttf */; };
 		4647B12C28DC1CC800FAB81B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12A28DC1CC800FAB81B /* MainViewModel.swift */; };
 		4647B13428DC27CE00FAB81B /* PartSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B13228DC27CE00FAB81B /* PartSelectView.swift */; };
 		4650234429267847008B015A /* ErrorModule in Frameworks */ = {isa = PBXBuildFile; productRef = 4650234329267847008B015A /* ErrorModule */; };
@@ -161,6 +179,13 @@
 			remoteGlobalIDString = 460843FC28DBFE2500D60E39;
 			remoteInfo = "TodayWhat Watch App";
 		};
+		463490C7298D19B9007EBF26 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 460843CF28DBFE2300D60E39 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 463490BC298D19B7007EBF26;
+			remoteInfo = TodayWhatMacWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -184,6 +209,17 @@
 				460843FE28DBFE2500D60E39 /* TodayWhat Watch App.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		463490CD298D19BA007EBF26 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				463490C9298D19B9007EBF26 /* TodayWhatMacWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -245,6 +281,14 @@
 		461D17FD2986D9260055F0F5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		461D17FF2986D9260055F0F5 /* TodayWhat_Mac_App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayWhat_Mac_App.entitlements; sourceTree = "<group>"; };
 		461D180529896A390055F0F5 /* ContentCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCore.swift; sourceTree = "<group>"; };
+		463490BD298D19B8007EBF26 /* TodayWhatMacWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TodayWhatMacWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		463490C3298D19B9007EBF26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		463490C5298D19B9007EBF26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		463490C6298D19B9007EBF26 /* TodayWhatMacWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayWhatMacWidget.entitlements; sourceTree = "<group>"; };
+		463490E0298D1AAB007EBF26 /* MealPartTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPartTime.swift; sourceTree = "<group>"; };
+		463490E2298D1AB9007EBF26 /* TodayWhatMacWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhatMacWidget.swift; sourceTree = "<group>"; };
+		463490E4298D1AC6007EBF26 /* MealWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealWidgetEntryView.swift; sourceTree = "<group>"; };
+		463490E6298D1AD4007EBF26 /* TimeTableWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableWidgetEntryView.swift; sourceTree = "<group>"; };
 		4647B12A28DC1CC800FAB81B /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		4647B13228DC27CE00FAB81B /* PartSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartSelectView.swift; sourceTree = "<group>"; };
 		465023422926783C008B015A /* ErrorModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ErrorModule; sourceTree = "<group>"; };
@@ -379,6 +423,24 @@
 				461D180A29896A5D0055F0F5 /* Dependencies in Frameworks */,
 				463490B2298BD9FB007EBF26 /* TWTextField in Frameworks */,
 				463490B4298BF3EE007EBF26 /* SchoolClient in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		463490BA298D19B7007EBF26 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				463490D5298D19F2007EBF26 /* MealClient in Frameworks */,
+				463490D7298D1A78007EBF26 /* NeisClient in Frameworks */,
+				463490BF298D19B8007EBF26 /* SwiftUI.framework in Frameworks */,
+				463490CF298D19E1007EBF26 /* DateUtil in Frameworks */,
+				463490DB298D1A86007EBF26 /* TimeTableClient in Frameworks */,
+				463490D9298D1A7F007EBF26 /* SwiftUIUtil in Frameworks */,
+				463490BE298D19B8007EBF26 /* WidgetKit.framework in Frameworks */,
+				463490DD298D1A8C007EBF26 /* TWColor in Frameworks */,
+				463490D1298D19E5007EBF26 /* EnumUtil in Frameworks */,
+				463490DF298D1A91007EBF26 /* UserDefaultsClient in Frameworks */,
+				463490D3298D19EB007EBF26 /* LocalDatabaseClient in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,6 +597,7 @@
 				4608441C28DBFE2600D60E39 /* TodayWhat Watch AppUITests */,
 				4603114E2923DCE700A5CB09 /* TodayWhatWidget */,
 				461D17F52986D9250055F0F5 /* TodayWhat Mac App */,
+				463490C0298D19B8007EBF26 /* TodayWhatMacWidget */,
 				460311492923DCE700A5CB09 /* Frameworks */,
 				460843D828DBFE2400D60E39 /* Products */,
 			);
@@ -551,6 +614,7 @@
 				4608441928DBFE2600D60E39 /* TodayWhat Watch AppUITests.xctest */,
 				460311482923DCE700A5CB09 /* TodayWhatWidgetExtension.appex */,
 				461D17F42986D9250055F0F5 /* TodayWhat Mac App.app */,
+				463490BD298D19B8007EBF26 /* TodayWhatMacWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -741,6 +805,20 @@
 				4616629E298A608700E24818 /* DisplayInfoType.swift */,
 			);
 			path = Content;
+			sourceTree = "<group>";
+		};
+		463490C0298D19B8007EBF26 /* TodayWhatMacWidget */ = {
+			isa = PBXGroup;
+			children = (
+				463490C3298D19B9007EBF26 /* Assets.xcassets */,
+				463490C5298D19B9007EBF26 /* Info.plist */,
+				463490C6298D19B9007EBF26 /* TodayWhatMacWidget.entitlements */,
+				463490E0298D1AAB007EBF26 /* MealPartTime.swift */,
+				463490E2298D1AB9007EBF26 /* TodayWhatMacWidget.swift */,
+				463490E4298D1AC6007EBF26 /* MealWidgetEntryView.swift */,
+				463490E6298D1AD4007EBF26 /* TimeTableWidgetEntryView.swift */,
+			);
+			path = TodayWhatMacWidget;
 			sourceTree = "<group>";
 		};
 		4647B12028DC0A9000FAB81B /* shared */ = {
@@ -1000,10 +1078,12 @@
 				461D17F12986D9250055F0F5 /* Frameworks */,
 				461D17F22986D9250055F0F5 /* Resources */,
 				463490B8298CDA5E007EBF26 /* Launch At Login Helper */,
+				463490CD298D19BA007EBF26 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				463490C8298D19B9007EBF26 /* PBXTargetDependency */,
 			);
 			name = "TodayWhat Mac App";
 			packageProductDependencies = (
@@ -1023,6 +1103,34 @@
 			productName = "TodayWhat Mac App";
 			productReference = 461D17F42986D9250055F0F5 /* TodayWhat Mac App.app */;
 			productType = "com.apple.product-type.application";
+		};
+		463490BC298D19B7007EBF26 /* TodayWhatMacWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 463490CA298D19BA007EBF26 /* Build configuration list for PBXNativeTarget "TodayWhatMacWidgetExtension" */;
+			buildPhases = (
+				463490B9298D19B7007EBF26 /* Sources */,
+				463490BA298D19B7007EBF26 /* Frameworks */,
+				463490BB298D19B7007EBF26 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TodayWhatMacWidgetExtension;
+			packageProductDependencies = (
+				463490CE298D19E1007EBF26 /* DateUtil */,
+				463490D0298D19E5007EBF26 /* EnumUtil */,
+				463490D2298D19EB007EBF26 /* LocalDatabaseClient */,
+				463490D4298D19F2007EBF26 /* MealClient */,
+				463490D6298D1A78007EBF26 /* NeisClient */,
+				463490D8298D1A7F007EBF26 /* SwiftUIUtil */,
+				463490DA298D1A86007EBF26 /* TimeTableClient */,
+				463490DC298D1A8C007EBF26 /* TWColor */,
+				463490DE298D1A91007EBF26 /* UserDefaultsClient */,
+			);
+			productName = TodayWhatMacWidgetExtension;
+			productReference = 463490BD298D19B8007EBF26 /* TodayWhatMacWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -1062,6 +1170,9 @@
 					461D17F32986D9250055F0F5 = {
 						CreatedOnToolsVersion = 14.1;
 					};
+					463490BC298D19B7007EBF26 = {
+						CreatedOnToolsVersion = 14.1;
+					};
 				};
 			};
 			buildConfigurationList = 460843D228DBFE2300D60E39 /* Build configuration list for PBXProject "TodayWhat" */;
@@ -1093,6 +1204,7 @@
 				4608440E28DBFE2600D60E39 /* TodayWhat Watch AppTests */,
 				4608441828DBFE2600D60E39 /* TodayWhat Watch AppUITests */,
 				460311472923DCE700A5CB09 /* TodayWhatWidgetExtension */,
+				463490BC298D19B7007EBF26 /* TodayWhatMacWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1161,6 +1273,15 @@
 			files = (
 				461D17FE2986D9260055F0F5 /* Preview Assets.xcassets in Resources */,
 				461D17FB2986D9260055F0F5 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		463490BB298D19B7007EBF26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				463490C4298D19B9007EBF26 /* Assets.xcassets in Resources */,
+				463490E8298D1AD4007EBF26 /* Fraunces9pt-Black.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1303,6 +1424,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		463490B9298D19B7007EBF26 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				463490E7298D1AD4007EBF26 /* TimeTableWidgetEntryView.swift in Sources */,
+				463490E5298D1AC6007EBF26 /* MealWidgetEntryView.swift in Sources */,
+				463490E1298D1AAB007EBF26 /* MealPartTime.swift in Sources */,
+				463490E3298D1AB9007EBF26 /* TodayWhatMacWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1335,6 +1467,11 @@
 			isa = PBXTargetDependency;
 			target = 460843FC28DBFE2500D60E39 /* TodayWhat Watch App */;
 			targetProxy = 4608441A28DBFE2600D60E39 /* PBXContainerItemProxy */;
+		};
+		463490C8298D19B9007EBF26 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 463490BC298D19B7007EBF26 /* TodayWhatMacWidgetExtension */;
+			targetProxy = 463490C7298D19B9007EBF26 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1826,6 +1963,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 461C23912934318900B3A9CB /* Debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "TodayWhat Mac App/TodayWhat_Mac_App.entitlements";
@@ -1860,6 +1998,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 461C23922934319200B3A9CB /* Release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "TodayWhat Mac App/TodayWhat_Mac_App.entitlements";
@@ -1885,6 +2024,66 @@
 				PRODUCT_BUNDLE_IDENTIFIER = baegteun.TodayWhat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		463490CB298D19BA007EBF26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = TodayWhatMacWidget/TodayWhatMacWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 235C2RVZ7L;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TodayWhatMacWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TodayWhatMacWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = baegteun.TodayWhat.TodayWhatMacWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		463490CC298D19BA007EBF26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = TodayWhatMacWidget/TodayWhatMacWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 235C2RVZ7L;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TodayWhatMacWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TodayWhatMacWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = baegteun.TodayWhat.TodayWhatMacWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -1970,6 +2169,15 @@
 			buildConfigurations = (
 				461D18002986D9260055F0F5 /* Debug */,
 				461D18012986D9260055F0F5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		463490CA298D19BA007EBF26 /* Build configuration list for PBXNativeTarget "TodayWhatMacWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				463490CB298D19BA007EBF26 /* Debug */,
+				463490CC298D19BA007EBF26 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2181,6 +2389,42 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 463490B5298CDA15007EBF26 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */;
 			productName = LaunchAtLogin;
+		};
+		463490CE298D19E1007EBF26 /* DateUtil */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DateUtil;
+		};
+		463490D0298D19E5007EBF26 /* EnumUtil */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EnumUtil;
+		};
+		463490D2298D19EB007EBF26 /* LocalDatabaseClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LocalDatabaseClient;
+		};
+		463490D4298D19F2007EBF26 /* MealClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MealClient;
+		};
+		463490D6298D1A78007EBF26 /* NeisClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NeisClient;
+		};
+		463490D8298D1A7F007EBF26 /* SwiftUIUtil */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftUIUtil;
+		};
+		463490DA298D1A86007EBF26 /* TimeTableClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TimeTableClient;
+		};
+		463490DC298D1A8C007EBF26 /* TWColor */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TWColor;
+		};
+		463490DE298D1A91007EBF26 /* UserDefaultsClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UserDefaultsClient;
 		};
 		4650234329267847008B015A /* ErrorModule */ = {
 			isa = XCSwiftPackageProductDependency;

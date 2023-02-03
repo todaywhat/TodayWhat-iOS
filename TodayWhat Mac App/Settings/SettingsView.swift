@@ -91,7 +91,7 @@ struct SettingsView: View {
                             }
                         }
                     } label: {
-                        Text(viewStore.majorText)
+                        Text(viewStore.majorText ?? "x")
                     }
                 }
 

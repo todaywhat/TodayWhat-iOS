@@ -36,7 +36,12 @@ let package = Package(
         .target(name: "EnumUtil"),
         .testTarget(name: "EnumUtilTests"),
         
-        .target(name: "FoundationUtil"),
+        .target(
+            name: "FoundationUtil",
+            dependencies: [
+                "ConstantUtil"
+            ]
+        ),
         .testTarget(name: "FoundationUtilTests"),
 
         .target(name: "DateUtil"),
