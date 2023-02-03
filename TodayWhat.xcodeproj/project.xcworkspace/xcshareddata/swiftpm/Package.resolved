@@ -91,6 +91,15 @@
       }
     },
     {
+      "identity" : "launchatlogin",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sindresorhus/LaunchAtLogin.git",
+      "state" : {
+        "revision" : "7ad6331f9c38953eb1ce8737758e18f7607e984a",
+        "version" : "5.0.0"
+      }
+    },
+    {
       "identity" : "leveldb",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/leveldb.git",
