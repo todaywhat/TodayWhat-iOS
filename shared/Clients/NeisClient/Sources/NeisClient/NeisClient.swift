@@ -20,8 +20,10 @@ public struct NeisClient {
 
         urlComponents.queryItems = queryItem
         guard let url = urlComponents.url else { throw TodayWhatError.failedToFetch }
+        let detail = url.absoluteString
         let (data, _) = try await URLSession.shared.data(from: url)
         let json = try JSON(data: data)
+        print(json)
         guard let _ = json["RESULT"].null else {
             throw TodayWhatError.failedToFetch
         }

@@ -75,7 +75,6 @@ final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
             return
         }
         #endif
-        print(session.isReachable)
         session.sendMessage(message, replyHandler: reply, errorHandler: error)
     }
 }

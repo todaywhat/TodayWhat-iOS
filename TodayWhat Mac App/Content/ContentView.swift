@@ -85,7 +85,7 @@ struct ContentView: View {
                     foregroundColor: textForeground,
                     shortcut: "\(index + 1)"
                 ) {
-                    viewStore.send(.displayInfoTypeDidSelect(item), animation: .default)
+                    viewStore.send(.displayInfoTypeDidSelect(item))
                 }
             }
             .frame(maxHeight: .infinity)

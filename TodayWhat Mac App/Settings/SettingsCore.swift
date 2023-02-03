@@ -16,7 +16,7 @@ struct SettingsCore: ReducerProtocol {
         var schoolText = ""
         var gradeText = ""
         var classText = ""
-        var majorText = ""
+        var majorText: String? = ""
         var schoolList: [School] = []
         var schoolMajorList: [String] = []
         var isLoading = false
@@ -124,7 +124,7 @@ struct SettingsCore: ReducerProtocol {
             }
 
         case let .majorDidSelect(major):
-            state.majorText = major
+            state.majorText = major.isEmpty ? nil : major
             userDefaultsClient.setValue(.major, major)
 
         default:
