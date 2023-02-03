@@ -6,7 +6,7 @@ import Entity
 import ResponseDTO
 
 public struct SchoolClient: Sendable {
-    public var fetchSchoolList: @Sendable (String) async throws -> [School]
+    public var fetchSchoolList: @Sendable (_ keyword: String) async throws -> [School]
     public var fetchSchoolsMajorList: @Sendable (_ orgCode: String, _ schoolCode: String) async throws -> [String]
 }
 

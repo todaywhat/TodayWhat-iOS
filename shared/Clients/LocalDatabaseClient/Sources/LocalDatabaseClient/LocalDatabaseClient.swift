@@ -83,7 +83,7 @@ public extension LocalDatabaseClient {
     init(migrate: (inout DatabaseMigrator) -> Void) {
         var url = AppGroup.group.containerURL
 
-        if #available(iOS 16, *) {
+        if #available(iOS 16, macOS 13.0, *) {
             url.append(path: "TodayWhat")
         } else {
             url.appendPathComponent("TodayWhat")
@@ -91,20 +91,20 @@ public extension LocalDatabaseClient {
 
         try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
 
-        if #available(iOS 16, *) {
+        if #available(iOS 16.0, macOS 13.0, *) {
             url.append(path: "TodayWhat.sqlite")
         } else {
             url.appendPathComponent("TodayWhat.sqlite")
         }
         var dir = ""
 
-        if #available(iOS 16, *) {
+        if #available(iOS 16.0, macOS 13.0, *) {
             dir = url.path()
         } else {
             dir = url.path
         }
 
-        if #available(iOS 16, *) {
+        if #available(iOS 16.0, macOS 13.0, *) {
             dir.replace("%20", with: " ")
         } else {
             dir = dir.replacingOccurrences(of: "%20", with: " ")
@@ -130,6 +130,11 @@ extension LocalDatabaseClient: DependencyKey {
             try db.create(table: "allergyLocalEntity") { t in
                 t.column("id", .text).primaryKey(onConflict: .replace).notNull()
                 t.column("allergy", .text).notNull()
+            }
+
+            try db.create(table: "schoolMajorLocalEntity") { t in
+                t.column("id", .text).primaryKey(onConflict: .replace).notNull()
+                t.column("major", .text).notNull()
             }
         }
     }
