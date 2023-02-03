@@ -84,7 +84,11 @@ struct SettingsView: View {
 
                     Menu {
                         ForEach(viewStore.schoolMajorList, id: \.self) { major in
-                            Text(major)
+                            Button {
+                                viewStore.send(.majorDidSelect(major))
+                            } label: {
+                                Text(major)
+                            }
                         }
                     } label: {
                         Text(viewStore.majorText)

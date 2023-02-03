@@ -13,40 +13,56 @@ struct ContentView: View {
     }
     
     var body: some View {
-        VStack {
-            HStack {
-                infoView()
-
-                optionPanelView()
+        ZStack {
+            Button {
+                viewStore.send(.refresh)
+            } label: {
+                EmptyView()
             }
-            .padding(20)
-            .frame(maxHeight: .infinity)
-        }
-        .frame(width: 400, height: 350)
-        .onAppear {
-            viewStore.send(.onAppear)
+            .hidden()
+
+            VStack {
+                HStack {
+                    infoView()
+
+                    optionPanelView()
+                }
+                .padding(20)
+                .frame(maxHeight: .infinity)
+            }
+            .frame(width: 400, height: 350)
+            .onAppear {
+                viewStore.send(.onAppear)
+            }
         }
     }
 
     @ViewBuilder
     func infoView() -> some View {
         VStack {
-            switch viewStore.selectedInfoType {
-            case .breakfast, .lunch, .dinner:
-                let meal = viewStore.selectedPartMeal ?? .init(meals: [], cal: 0)
-                MealView(meal: meal.meals, calorie: meal.cal)
+            if viewStore.isNotSetSchool, viewStore.selectedInfoType != .settings {
+                Text("설정에서 학교 설정을 하고 와주세요!")
+            } else {
+                switch viewStore.selectedInfoType {
+                case .breakfast, .lunch, .dinner:
+                    let meal = viewStore.selectedPartMeal ?? .init(meals: [], cal: 0)
+                    MealView(meal: meal.meals, calorie: meal.cal)
 
-            case .timetable:
-                TimeTableView(timetables: viewStore.timetables)
+                case .timetable:
+                    TimeTableView(timetables: viewStore.timetables)
 
-            case .settings:
-                IfLetStore(
-                    store.scope(
-                        state: \.settingsCore,
-                        action: ContentCore.Action.settingsCore
-                    )
-                ) { store in
-                    SettingsView(store: store)
+                case .settings:
+                    IfLetStore(
+                        store.scope(
+                            state: \.settingsCore,
+                            action: ContentCore.Action.settingsCore
+                        )
+                    ) { store in
+                        SettingsView(store: store)
+                    }
+
+                default:
+                    EmptyView()
                 }
             }
 
@@ -63,44 +79,71 @@ struct ContentView: View {
                 let item = DisplayInfoType.allCases[index]
                 let isSelected: Bool = item == viewStore.selectedInfoType
                 let textForeground = isSelected ? Color.black : .primary
-                Button {
+                panelButtonView(
+                    selectedColor: isSelected ? Color.extraPrimary : .extraGray,
+                    text: item.display,
+                    foregroundColor: textForeground,
+                    shortcut: "\(index + 1)"
+                ) {
                     viewStore.send(.displayInfoTypeDidSelect(item), animation: .default)
-                } label: {
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(isSelected ? Color.extraPrimary : .extraGray)
-                        .frame(maxHeight: .infinity)
-                        .overlay(
-                            HStack {
-                                Text(item.display)
-                                    .foregroundColor(textForeground)
-
-                                Spacer()
-                            }
-                            .padding(8)
-                        )
-                        .overlay(
-                            HStack {
-                                Spacer()
-
-                                VStack {
-                                    Spacer()
-
-                                    Text("cmd + \(index + 1)")
-                                        .font(.caption)
-                                        .foregroundColor(textForeground)
-                                }
-                                .padding(.bottom, 4)
-                                .padding(.trailing, 8)
-                            }
-                        )
                 }
-                .buttonStyle(.borderless)
-                .keyboardShortcut(.init("\(index + 1)".first ?? "1"), modifiers: .command)
             }
             .frame(maxHeight: .infinity)
+
+            panelButtonView(
+                selectedColor: .extraGray,
+                text: "새로고침",
+                foregroundColor: .primary,
+                shortcut: "r"
+            ) {
+                viewStore.send(.refresh)
+            }
         }
         .frame(width: 120)
         .frame(maxHeight: .infinity)
+    }
+
+    @ViewBuilder
+    func panelButtonView(
+        selectedColor: Color,
+        text: String,
+        foregroundColor: Color,
+        shortcut: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button {
+            action()
+        } label: {
+            RoundedRectangle(cornerRadius: 8)
+                .fill(selectedColor)
+                .frame(maxHeight: .infinity)
+                .overlay(
+                    HStack {
+                        Text(text)
+                            .foregroundColor(foregroundColor)
+
+                        Spacer()
+                    }
+                    .padding(8)
+                )
+                .overlay(
+                    HStack {
+                        Spacer()
+
+                        VStack {
+                            Spacer()
+
+                            Text("cmd + \(shortcut)")
+                                .font(.caption)
+                                .foregroundColor(foregroundColor)
+                        }
+                        .padding(.bottom, 4)
+                        .padding(.trailing, 8)
+                    }
+                )
+        }
+        .buttonStyle(.borderless)
+        .keyboardShortcut(.init("\(shortcut)".first ?? "1"), modifiers: .command)
     }
 }
 

@@ -81,7 +81,28 @@ public struct LocalDatabaseClient {
 
 public extension LocalDatabaseClient {
     init(migrate: (inout DatabaseMigrator) -> Void) {
-        var url = AppGroup.group.containerURL
+        var url: URL
+        #if os(macOS)
+        url = try! FileManager.default.url(
+               for: .applicationSupportDirectory,
+               in: .userDomainMask,
+               appropriateFor: nil,
+               create: true
+           ).appendingPathComponent(
+               "unprotected",
+               isDirectory: true
+           )
+        #else
+        url = AppGroup.group.containerURL
+        #endif
+
+        try? FileManager.default.createDirectory(
+            at: url,
+            withIntermediateDirectories: false,
+            attributes: [
+                FileAttributeKey.protectionKey: URLFileProtection.none
+            ]
+        )
 
         if #available(iOS 16, macOS 13.0, *) {
             url.append(path: "TodayWhat")
@@ -89,7 +110,13 @@ public extension LocalDatabaseClient {
             url.appendPathComponent("TodayWhat")
         }
 
-        try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+        try? FileManager.default.createDirectory(
+            at: url,
+            withIntermediateDirectories: false,
+            attributes: [
+                FileAttributeKey.protectionKey: URLFileProtection.none
+            ]
+        )
 
         if #available(iOS 16.0, macOS 13.0, *) {
             url.append(path: "TodayWhat.sqlite")
@@ -110,14 +137,35 @@ public extension LocalDatabaseClient {
             dir = dir.replacingOccurrences(of: "%20", with: " ")
         }
 
-//        do {
-//            dbQueue = try DatabaseQueue(path: dir)
-//        } catch {
-//            fatalError()
-//        }
-        dbQueue = try! DatabaseQueue(path: dir)
+        do {
+            dbQueue = try DatabaseQueue(path: dir)
+        } catch {
+            fatalError()
+        }
         migrate(&migrator)
         try? migrator.migrate(dbQueue)
+    }
+
+    private func unprotectedDirectory() throws -> URL {
+        let url = try FileManager.default.url(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true
+        ).appendingPathComponent(
+            "unprotected",
+            isDirectory: true
+        )
+        if !FileManager.default.fileExists(atPath: url.path) {
+            try FileManager.default.createDirectory(
+                at: url,
+                withIntermediateDirectories: false,
+                attributes: [
+                    FileAttributeKey.protectionKey: URLFileProtection.none
+                ]
+            )
+        }
+        return url
     }
 }
 

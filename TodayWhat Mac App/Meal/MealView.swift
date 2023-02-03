@@ -8,16 +8,17 @@ struct MealView: View {
     var body: some View {
         VStack(alignment: .leading) {
             ZStack(alignment: .topLeading) {
-                VStack(alignment: .leading, spacing: 20) {
-                    ForEach(meal, id: \.self) { meal in
-                        Text(meal)
+                HStack {
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("\(String(format: "%.1f", calorie)) kcal")
+                            .bold()
+
+                        ForEach(meal, id: \.self) { meal in
+                            Text(meal)
+                        }
                     }
-                }
 
-                HStack(alignment: .top) {
                     Spacer()
-
-                    Text("\(String(format: "%.1f", calorie)) kcal")
                 }
             }
             .padding(8)
