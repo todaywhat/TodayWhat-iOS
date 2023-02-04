@@ -17,7 +17,7 @@ extension MealClient: DependencyKey {
             var date = date
             @Dependency(\.userDefaultsClient) var userDefaultsClient: UserDefaultsClient
 
-            if userDefaultsClient.getValue(key: .isSkipWeekend, type: Bool.self) == true {
+            if userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true {
                 if date.weekday == 7 {
                     date = date.adding(by: .day, value: 2)
                 } else if date.weekday == 1 {
@@ -26,8 +26,8 @@ extension MealClient: DependencyKey {
             }
 
             guard
-                let orgCode = userDefaultsClient.getValue(key: .orgCode, type: String.self),
-                let code = userDefaultsClient.getValue(key: .schoolCode, type: String.self)
+                let orgCode = userDefaultsClient.getValue(.orgCode) as? String,
+                let code = userDefaultsClient.getValue(.schoolCode) as? String
             else {
                 return Meal(
                     breakfast: .init(meals: [], cal: 0),

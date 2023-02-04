@@ -33,15 +33,15 @@ extension AppDelegate: WCSessionDelegate {
         error: Error?
     ) {
         guard
-            let type = userDefaultsClient.getValue(key: .schoolType, type: String.self),
-            let code = userDefaultsClient.getValue(key: .schoolCode, type: String.self),
-            let orgCode = userDefaultsClient.getValue(key: .orgCode, type: String.self),
-            let grade = userDefaultsClient.getValue(key: .grade, type: Int.self),
-            let `class` = userDefaultsClient.getValue(key: .class, type: Int.self)
+            let type = userDefaultsClient.getValue(.schoolType) as? String,
+            let code = userDefaultsClient.getValue(.schoolCode) as? String,
+            let orgCode = userDefaultsClient.getValue(.orgCode) as? String,
+            let grade = userDefaultsClient.getValue(.grade) as? Int,
+            let `class` = userDefaultsClient.getValue(.class) as? Int
         else {
             return
         }
-        let major = userDefaultsClient.getValue(key: .major, type: String.self) as Any
+        let major = userDefaultsClient.getValue(.major) as Any
         let dict = [
             "type": type,
             "code": code,
@@ -59,15 +59,15 @@ extension AppDelegate: WCSessionDelegate {
         replyHandler: @escaping ([String: Any]) -> Void
     ) {
         guard
-            let type = userDefaultsClient.getValue(key: .schoolType, type: String.self),
-            let code = userDefaultsClient.getValue(key: .schoolCode, type: String.self),
-            let orgCode = userDefaultsClient.getValue(key: .orgCode, type: String.self),
-            let grade = userDefaultsClient.getValue(key: .grade, type: Int.self),
-            let `class` = userDefaultsClient.getValue(key: .class, type: Int.self)
+            let type = userDefaultsClient.getValue(.schoolType) as? String,
+            let code = userDefaultsClient.getValue(.schoolCode) as? String,
+            let orgCode = userDefaultsClient.getValue(.orgCode) as? String,
+            let grade = userDefaultsClient.getValue(.grade) as? Int,
+            let `class` = userDefaultsClient.getValue(.class) as? Int
         else {
             return
         }
-        let major = userDefaultsClient.getValue(key: .major, type: String.self) as Any
+        let major = userDefaultsClient.getValue(.major) as Any
         replyHandler(
             [
                 "type": type,

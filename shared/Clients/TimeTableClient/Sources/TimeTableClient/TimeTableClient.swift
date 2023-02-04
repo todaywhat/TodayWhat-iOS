@@ -18,7 +18,7 @@ extension TimeTableClient: DependencyKey {
             var date = date
             @Dependency(\.userDefaultsClient) var userDefaultsClient: UserDefaultsClient
 
-            if userDefaultsClient.getValue(key: .isSkipWeekend, type: Bool.self) == true {
+            if userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true {
                 if date.weekday == 7 {
                     date = date.adding(by: .day, value: 2)
                 } else if date.weekday == 1 {
@@ -27,16 +27,16 @@ extension TimeTableClient: DependencyKey {
             }
 
             guard
-                let typeRaw = userDefaultsClient.getValue(key: .schoolType, type: String.self),
+                let typeRaw = userDefaultsClient.getValue(.schoolType) as? String,
                 let type = SchoolType(rawValue: typeRaw),
-                let code = userDefaultsClient.getValue(key: .schoolCode, type: String.self),
-                let orgCode = userDefaultsClient.getValue(key: .orgCode, type: String.self),
-                let grade = userDefaultsClient.getValue(key: .grade, type: Int.self),
-                let `class` = userDefaultsClient.getValue(key: .class, type: Int.self)
+                let code = userDefaultsClient.getValue(.schoolCode) as? String,
+                let orgCode = userDefaultsClient.getValue(.orgCode) as? String,
+                let grade = userDefaultsClient.getValue(.grade) as? Int,
+                let `class` = userDefaultsClient.getValue(.class) as? Int
             else {
                 return []
             }
-            let major = userDefaultsClient.getValue(key: .major, type: String.self)
+            let major = userDefaultsClient.getValue(.major) as? String
 
             let month = date.month < 10 ? "0\(date.month)" : "\(date.month)"
             let day = date.day < 10 ? "0\(date.day)" : "\(date.day)"

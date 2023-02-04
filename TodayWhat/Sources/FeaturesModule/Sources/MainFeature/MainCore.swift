@@ -48,9 +48,9 @@ public struct MainCore: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                state.school = userDefaultsClient.getValue(key: .school, type: String.self) ?? ""
-                state.grade = "\(userDefaultsClient.getValue(key: .grade, type: Int.self) ?? 1)"
-                state.class = "\(userDefaultsClient.getValue(key: .class, type: Int.self) ?? 1)"
+                state.school = userDefaultsClient.getValue(.school) as? String ?? ""
+                state.grade = "\(userDefaultsClient.getValue(.grade) as? Int ?? 1)"
+                state.class = "\(userDefaultsClient.getValue(.class) as? Int ?? 1)"
                 if state.mealCore == nil {
                     state.mealCore = .init()
                 }
@@ -62,7 +62,7 @@ public struct MainCore: ReducerProtocol {
                 state.currentTab = tab
 
             case .settingButtonDidTap:
-                let isSkipWeekend = userDefaultsClient.getValue(key: .isSkipWeekend, type: Bool.self) ?? false
+                let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
                 if UIDevice.current.userInterfaceIdiom != .phone {
                     state.alert = AlertState {
                         .init("오늘 뭐임")
@@ -112,7 +112,7 @@ public struct MainCore: ReducerProtocol {
             case .skipWeekDidSelect:
                 userDefaultsClient.setValue(
                     .isSkipWeekend,
-                    !(userDefaultsClient.getValue(key: .isSkipWeekend, type: Bool.self) ?? false)
+                    !(userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false)
                 )
             
             default:

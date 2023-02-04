@@ -23,13 +23,13 @@ struct RootView: View {
         }
         .onAppear {
             guard
-                let code = userDefaultsClient.getValue(key: .schoolCode, type: String.self),
+                let code = userDefaultsClient.getValue(.schoolCode) as? String,
                 !code.isEmpty,
-                let orgCode = userDefaultsClient.getValue(key: .orgCode, type: String.self),
+                let orgCode = userDefaultsClient.getValue(.orgCode) as? String,
                 !orgCode.isEmpty,
-                userDefaultsClient.getValue(key: .grade, type: Int.self) != nil,
-                userDefaultsClient.getValue(key: .class, type: Int.self) != nil,
-                let type = userDefaultsClient.getValue(key: .schoolType, type: String.self),
+                userDefaultsClient.getValue(.grade) as? Int != nil,
+                userDefaultsClient.getValue(.class) as? Int != nil,
+                let type = userDefaultsClient.getValue(.schoolType) as? String,
                 !type.isEmpty
             else {
                 sceneFlowState.sceneFlow = .setting
