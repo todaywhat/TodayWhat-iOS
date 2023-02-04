@@ -17,6 +17,7 @@ public enum UserDefaultsKeys: String {
 
 public struct UserDefaultsClient {
     public let setValue: (UserDefaultsKeys, Any?) -> Void
+    public let getValue: (UserDefaultsKeys) -> Any?
 }
 
 extension UserDefaultsClient: DependencyKey {
@@ -27,17 +28,17 @@ extension UserDefaultsClient: DependencyKey {
             } else {
                 UserDefaults.app.removeObject(forKey: key.rawValue)
             }
+        },
+        getValue: { key in
+            UserDefaults.app.value(forKey: key.rawValue)
         }
     )
-
-    public func getValue<T: Codable>(key: UserDefaultsKeys, type: T.Type) -> T? {
-        UserDefaults.app.value(forKey: key.rawValue) as? T
-    }
 }
 
 extension UserDefaultsClient: TestDependencyKey {
     public static var testValue: UserDefaultsClient = UserDefaultsClient(
-        setValue: { _, _ in }
+        setValue: { _, _ in },
+        getValue: { _ in "" }
     )
 }
 
