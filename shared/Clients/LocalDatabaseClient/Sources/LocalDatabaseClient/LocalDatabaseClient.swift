@@ -137,12 +137,11 @@ public extension LocalDatabaseClient {
             dir = dir.replacingOccurrences(of: "%20", with: " ")
         }
 
-//        do {
-//            dbQueue = try DatabaseQueue(path: dir)
-//        } catch {
-//            fatalError()
-//        }
-        dbQueue = try! DatabaseQueue(path: dir)
+        do {
+            dbQueue = try DatabaseQueue(path: dir)
+        } catch {
+            fatalError()
+        }
         migrate(&migrator)
         try? migrator.migrate(dbQueue)
     }
