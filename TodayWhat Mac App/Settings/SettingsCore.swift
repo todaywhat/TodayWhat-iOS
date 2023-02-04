@@ -44,17 +44,17 @@ struct SettingsCore: ReducerProtocol {
         switch action {
         case .onAppear:
             guard
-                let school = userDefaultsClient.getValue(key: .school, type: String.self),
-                let grade = userDefaultsClient.getValue(key: .grade, type: Int.self),
-                let `class` = userDefaultsClient.getValue(key: .class, type: Int.self)
+                let school = userDefaultsClient.getValue(.school) as? String,
+                let grade = userDefaultsClient.getValue(.grade) as? Int,
+                let `class` = userDefaultsClient.getValue(.class) as? Int
             else {
                 break
             }
             state.schoolText = school
             state.gradeText = "\(grade)"
             state.classText = "\(`class`)"
-            state.isSkipWeekend = userDefaultsClient.getValue(key: .isSkipWeekend, type: Bool.self) ?? false
-            state.majorText = userDefaultsClient.getValue(key: .major, type: String.self) ?? ""
+            state.isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
+            state.majorText = userDefaultsClient.getValue(.major) as? String ?? ""
             let majorList = try? localDatabaseClient.readRecords(as: SchoolMajorLocalEntity.self)
                 .map { $0.major }
             state.schoolMajorList = majorList ?? []

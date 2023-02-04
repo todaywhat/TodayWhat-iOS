@@ -35,7 +35,7 @@ struct ContentCore: ReducerProtocol {
             switch action {
             case .onAppear:
                 guard
-                    let school = userDefaultsClient.getValue(key: .school, type: String.self),
+                    let school = userDefaultsClient.getValue(.school) as? String,
                     !school.isEmpty
                 else {
                     state.isNotSetSchool = true
