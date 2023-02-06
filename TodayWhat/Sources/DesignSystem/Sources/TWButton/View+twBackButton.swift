@@ -1,4 +1,5 @@
 import SwiftUI
+import TWColor
 
 #if os(iOS)
 
@@ -15,7 +16,7 @@ public extension View {
                         Image(systemName: "chevron.left")
                             .resizable()
                             .frame(width: 9, height: 16)
-                            .foregroundColor(Color.primary)
+                            .foregroundColor(Color.extraPrimary)
                     }
                 }
             }
