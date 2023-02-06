@@ -4,6 +4,8 @@ import Entity
 import SchoolClient
 import UserDefaultsClient
 import SchoolMajorSheetFeature
+import EnumUtil
+import LocalDatabaseClient
 
 public struct SchoolSettingCore: ReducerProtocol {
     public init() {}
@@ -48,6 +50,7 @@ public struct SchoolSettingCore: ReducerProtocol {
     }
 
     public enum Action: Equatable {
+        case onLoad
         case schoolChanged(String)
         case schoolFocusedChanged(Bool)
         case gradeChanged(String)
@@ -65,12 +68,40 @@ public struct SchoolSettingCore: ReducerProtocol {
 
     @Dependency(\.schoolClient) var schoolClient
     @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.localDatabaseClient) var localDatabaseClient
 
     struct SchoolDebounceID: Hashable {}
 
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
+            case .onLoad:
+                guard
+                    let school = userDefaultsClient.getValue(.school) as? String,
+                    let orgCode = userDefaultsClient.getValue(.orgCode) as? String,
+                    let schoolCode = userDefaultsClient.getValue(.schoolCode) as? String,
+                    let grade = userDefaultsClient.getValue(.grade) as? Int,
+                    let `class` = userDefaultsClient.getValue(.class) as? Int,
+                    let schoolTypeRaw = userDefaultsClient.getValue(.schoolType) as? String,
+                    let schoolType = SchoolType(rawValue: schoolTypeRaw)
+                else {
+                    return .none
+                }
+                let schoolEntity = School(
+                    orgCode: orgCode,
+                    schoolCode: schoolCode,
+                    name: school,
+                    location: "",
+                    schoolType: schoolType
+                )
+                state.selectedSchool = schoolEntity
+                state.school = school
+                state.grade = "\(grade)"
+                state.class = "\(`class`)"
+                state.major = userDefaultsClient.getValue(.major) as? String ?? ""
+                let majorList = try? localDatabaseClient.readRecords(as: SchoolMajorLocalEntity.self)
+                state.schoolMajorList = majorList?.map(\.major) ?? []
+
             case let .schoolChanged(school):
                 state.school = school
                 state.isLoading = true
@@ -103,6 +134,10 @@ public struct SchoolSettingCore: ReducerProtocol {
 
             case let .schoolMajorListResponse(.success(majorList)):
                 state.schoolMajorList = majorList
+                try? localDatabaseClient.deleteAll(record: SchoolMajorLocalEntity.self)
+                try? localDatabaseClient.save(
+                    records: majorList.map { SchoolMajorLocalEntity(major: $0) }
+                )
 
             case let .schoolMajorListResponse(.failure(error)):
                 state.isError = true

@@ -83,7 +83,8 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "TWRadioButton", package: "DesignSystem"),
-                .product(name: "SwiftUIUtil", package: "Utilities")
+                .product(name: "SwiftUIUtil", package: "Utilities"),
+                "LocalDatabaseClient"
             ]
         ),
         .testTarget(name: "SchoolMajorSheetFeatureTests", dependencies: ["SchoolMajorSheetFeature"]),
@@ -95,6 +96,7 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "TWColor", package: "DesignSystem"),
                 .product(name: "TWImage", package: "DesignSystem"),
+                .product(name: "TWButton", package: "DesignSystem"),
                 "UserDefaultsClient",
                 "MealFeature",
                 "TimeTableFeature",

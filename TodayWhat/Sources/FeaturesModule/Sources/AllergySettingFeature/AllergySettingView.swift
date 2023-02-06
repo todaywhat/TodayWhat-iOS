@@ -3,6 +3,7 @@ import SwiftUI
 import EnumUtil
 import TWColor
 import SwiftUIUtil
+import TWButton
 
 public struct AllergySettingView: View {
     private let store: StoreOf<AllergySettingCore>
