@@ -97,7 +97,7 @@ public struct SchoolSettingCore: ReducerProtocol {
                 state.schoolList = list
 
             case let .schoolListResponse(.failure(error)):
-                state.isLoading = true
+                state.isLoading = false
                 state.isError = true
                 state.errorMessage = error.localizedDescription
 
