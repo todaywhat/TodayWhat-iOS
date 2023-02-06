@@ -167,6 +167,9 @@ public struct SchoolSettingView: View {
                 }
             }
         }
+        .onLoad {
+            viewStore.send(.onLoad)
+        }
         .onAppear {
             withAnimation {
                 focusField = .school
