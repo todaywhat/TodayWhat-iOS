@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4603108D291CD76F00A5CB09 /* SchoolSettingCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603108C291CD76F00A5CB09 /* SchoolSettingCoreTests.swift */; };
 		460310A3291DD96900A5CB09 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 460310A2291DD96900A5CB09 /* SwiftyJSON */; };
-		460310E72921BED700A5CB09 /* SchoolMajorSheetCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460310E62921BED700A5CB09 /* SchoolMajorSheetCoreTests.swift */; };
 		460311172923202500A5CB09 /* View+eraseToAnyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460311162923202500A5CB09 /* View+eraseToAnyView.swift */; };
 		4603112629234F8100A5CB09 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 4603112529234F8100A5CB09 /* GRDB */; };
 		4603112D292356F600A5CB09 /* BaseLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603112C292356F600A5CB09 /* BaseLocalDataSource.swift */; };
@@ -19,7 +17,6 @@
 		460311592923DCE800A5CB09 /* TodayWhatWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 460311482923DCE700A5CB09 /* TodayWhatWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		460843DB28DBFE2400D60E39 /* TodayWhatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460843DA28DBFE2400D60E39 /* TodayWhatApp.swift */; };
 		460843DF28DBFE2500D60E39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460843DE28DBFE2500D60E39 /* Assets.xcassets */; };
-		460843EC28DBFE2500D60E39 /* TodayWhatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460843EB28DBFE2500D60E39 /* TodayWhatTests.swift */; };
 		460843F628DBFE2500D60E39 /* TodayWhatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460843F528DBFE2500D60E39 /* TodayWhatUITests.swift */; };
 		460843F828DBFE2500D60E39 /* TodayWhatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460843F728DBFE2500D60E39 /* TodayWhatUITestsLaunchTests.swift */; };
 		460843FE28DBFE2500D60E39 /* TodayWhat Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 460843FD28DBFE2500D60E39 /* TodayWhat Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -123,6 +120,7 @@
 		465023B2292B049F008B015A /* Entity in Frameworks */ = {isa = PBXBuildFile; productRef = 465023B1292B049F008B015A /* Entity */; };
 		465023BE292B1C3D008B015A /* DateUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 465023BD292B1C3D008B015A /* DateUtil */; };
 		467CD847292BC51100A9766A /* MealClient in Frameworks */ = {isa = PBXBuildFile; productRef = 467CD846292BC51100A9766A /* MealClient */; };
+		46AFD9A92991329C00BA5762 /* AllergyCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AFD9A82991329C00BA5762 /* AllergyCore.swift */; };
 		46BFE0C329459A100023443A /* TimeTableWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BFE0C229459A100023443A /* TimeTableWidgetEntryView.swift */; };
 		46BFE0FE2945A7A20023443A /* TimeTableClient in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE0FD2945A7A20023443A /* TimeTableClient */; };
 		46BFE1002945BA1E0023443A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46BFE0FF2945BA1E0023443A /* GoogleService-Info.plist */; };
@@ -143,13 +141,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 460311472923DCE700A5CB09;
 			remoteInfo = TodayWhatWidgetExtension;
-		};
-		460843E828DBFE2500D60E39 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 460843CF28DBFE2300D60E39 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 460843D628DBFE2400D60E39;
-			remoteInfo = TodayWhat;
 		};
 		460843F228DBFE2500D60E39 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -225,8 +216,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4603108C291CD76F00A5CB09 /* SchoolSettingCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolSettingCoreTests.swift; sourceTree = "<group>"; };
-		460310E62921BED700A5CB09 /* SchoolMajorSheetCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolMajorSheetCoreTests.swift; sourceTree = "<group>"; };
 		460311162923202500A5CB09 /* View+eraseToAnyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+eraseToAnyView.swift"; sourceTree = "<group>"; };
 		4603112C292356F600A5CB09 /* BaseLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLocalDataSource.swift; sourceTree = "<group>"; };
 		460311482923DCE700A5CB09 /* TodayWhatWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TodayWhatWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -239,8 +228,6 @@
 		460843D728DBFE2400D60E39 /* TodayWhat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodayWhat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		460843DA28DBFE2400D60E39 /* TodayWhatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhatApp.swift; sourceTree = "<group>"; };
 		460843DE28DBFE2500D60E39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		460843E728DBFE2500D60E39 /* TodayWhatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TodayWhatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		460843EB28DBFE2500D60E39 /* TodayWhatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhatTests.swift; sourceTree = "<group>"; };
 		460843F128DBFE2500D60E39 /* TodayWhatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TodayWhatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		460843F528DBFE2500D60E39 /* TodayWhatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhatUITests.swift; sourceTree = "<group>"; };
 		460843F728DBFE2500D60E39 /* TodayWhatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhatUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -306,6 +293,7 @@
 		465023B0292AFF7E008B015A /* MealClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MealClient; sourceTree = "<group>"; };
 		467CD849292C4D1A00A9766A /* FeaturesModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FeaturesModule; sourceTree = "<group>"; };
 		467CD84A292C512400A9766A /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignSystem; sourceTree = "<group>"; };
+		46AFD9A82991329C00BA5762 /* AllergyCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergyCore.swift; sourceTree = "<group>"; };
 		46BFE0C229459A100023443A /* TimeTableWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableWidgetEntryView.swift; sourceTree = "<group>"; };
 		46BFE0FF2945BA1E0023443A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -362,13 +350,6 @@
 				461C235C293070FD00B3A9CB /* Dependencies in Frameworks */,
 				461C233B292C57AB00B3A9CB /* TWButton in Frameworks */,
 				461C2343292C57B300B3A9CB /* RootFeature in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		460843E428DBFE2500D60E39 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,23 +456,6 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		4603108A291CD74600A5CB09 /* Features */ = {
-			isa = PBXGroup;
-			children = (
-				460310E52921BEC900A5CB09 /* SchoolMajorSheet */,
-				4603108B291CD74B00A5CB09 /* SchoolSetting */,
-			);
-			path = Features;
-			sourceTree = "<group>";
-		};
-		4603108B291CD74B00A5CB09 /* SchoolSetting */ = {
-			isa = PBXGroup;
-			children = (
-				4603108C291CD76F00A5CB09 /* SchoolSettingCoreTests.swift */,
-			);
-			path = SchoolSetting;
-			sourceTree = "<group>";
-		};
 		46031095291DC95400A5CB09 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
@@ -511,14 +475,6 @@
 				4650234F2926F5F9008B015A /* DataMapping */,
 			);
 			path = DataMapping;
-			sourceTree = "<group>";
-		};
-		460310E52921BEC900A5CB09 /* SchoolMajorSheet */ = {
-			isa = PBXGroup;
-			children = (
-				460310E62921BED700A5CB09 /* SchoolMajorSheetCoreTests.swift */,
-			);
-			path = SchoolMajorSheet;
 			sourceTree = "<group>";
 		};
 		460310ED2921C30200A5CB09 /* Utils */ = {
@@ -590,7 +546,6 @@
 				461C234E292CEF5F00B3A9CB /* TodayWhatWidgetExtension.entitlements */,
 				4647B12028DC0A9000FAB81B /* shared */,
 				460843D928DBFE2400D60E39 /* TodayWhat */,
-				460843EA28DBFE2500D60E39 /* TodayWhatTests */,
 				460843F428DBFE2500D60E39 /* TodayWhatUITests */,
 				4608440128DBFE2500D60E39 /* TodayWhat Watch App */,
 				4608441228DBFE2600D60E39 /* TodayWhat Watch AppTests */,
@@ -607,7 +562,6 @@
 			isa = PBXGroup;
 			children = (
 				460843D728DBFE2400D60E39 /* TodayWhat.app */,
-				460843E728DBFE2500D60E39 /* TodayWhatTests.xctest */,
 				460843F128DBFE2500D60E39 /* TodayWhatUITests.xctest */,
 				460843FD28DBFE2500D60E39 /* TodayWhat Watch App.app */,
 				4608440F28DBFE2600D60E39 /* TodayWhat Watch AppTests.xctest */,
@@ -631,15 +585,6 @@
 				4650236A29270789008B015A /* Preview Content */,
 			);
 			path = TodayWhat;
-			sourceTree = "<group>";
-		};
-		460843EA28DBFE2500D60E39 /* TodayWhatTests */ = {
-			isa = PBXGroup;
-			children = (
-				4603108A291CD74600A5CB09 /* Features */,
-				460843EB28DBFE2500D60E39 /* TodayWhatTests.swift */,
-			);
-			path = TodayWhatTests;
 			sourceTree = "<group>";
 		};
 		460843F428DBFE2500D60E39 /* TodayWhatUITests */ = {
@@ -776,6 +721,7 @@
 			isa = PBXGroup;
 			children = (
 				461662A5298AADEA00E24818 /* TodayWhat-Mac-App-Info.plist */,
+				46AFD9A72991327D00BA5762 /* Allergy */,
 				461662A2298AA2A300E24818 /* Util */,
 				46166299298A595300E24818 /* Settings */,
 				46166298298A58E000E24818 /* App */,
@@ -888,6 +834,14 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
+		46AFD9A72991327D00BA5762 /* Allergy */ = {
+			isa = PBXGroup;
+			children = (
+				46AFD9A82991329C00BA5762 /* AllergyCore.swift */,
+			);
+			path = Allergy;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -971,24 +925,6 @@
 			productName = TodayWhat;
 			productReference = 460843D728DBFE2400D60E39 /* TodayWhat.app */;
 			productType = "com.apple.product-type.application";
-		};
-		460843E628DBFE2500D60E39 /* TodayWhatTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4608442A28DBFE2600D60E39 /* Build configuration list for PBXNativeTarget "TodayWhatTests" */;
-			buildPhases = (
-				460843E328DBFE2500D60E39 /* Sources */,
-				460843E428DBFE2500D60E39 /* Frameworks */,
-				460843E528DBFE2500D60E39 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				460843E928DBFE2500D60E39 /* PBXTargetDependency */,
-			);
-			name = TodayWhatTests;
-			productName = TodayWhatTests;
-			productReference = 460843E728DBFE2500D60E39 /* TodayWhatTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		460843F028DBFE2500D60E39 /* TodayWhatUITests */ = {
 			isa = PBXNativeTarget;
@@ -1148,10 +1084,6 @@
 					460843D628DBFE2400D60E39 = {
 						CreatedOnToolsVersion = 14.0;
 					};
-					460843E628DBFE2500D60E39 = {
-						CreatedOnToolsVersion = 14.0;
-						TestTargetID = 460843D628DBFE2400D60E39;
-					};
 					460843F028DBFE2500D60E39 = {
 						CreatedOnToolsVersion = 14.0;
 						TestTargetID = 460843D628DBFE2400D60E39;
@@ -1198,7 +1130,6 @@
 			targets = (
 				461D17F32986D9250055F0F5 /* TodayWhat Mac App */,
 				460843D628DBFE2400D60E39 /* TodayWhat */,
-				460843E628DBFE2500D60E39 /* TodayWhatTests */,
 				460843F028DBFE2500D60E39 /* TodayWhatUITests */,
 				460843FC28DBFE2500D60E39 /* TodayWhat Watch App */,
 				4608440E28DBFE2600D60E39 /* TodayWhat Watch AppTests */,
@@ -1227,13 +1158,6 @@
 				46BFE1002945BA1E0023443A /* GoogleService-Info.plist in Resources */,
 				460843DF28DBFE2500D60E39 /* Assets.xcassets in Resources */,
 				461C2352292DD50800B3A9CB /* Fraunces9pt-Black.ttf in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		460843E528DBFE2500D60E39 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1353,16 +1277,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		460843E328DBFE2500D60E39 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				460843EC28DBFE2500D60E39 /* TodayWhatTests.swift in Sources */,
-				4603108D291CD76F00A5CB09 /* SchoolSettingCoreTests.swift in Sources */,
-				460310E72921BED700A5CB09 /* SchoolMajorSheetCoreTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		460843ED28DBFE2500D60E39 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1419,6 +1333,7 @@
 				46166293298A328E00E24818 /* TimeTableView.swift in Sources */,
 				461662A1298AA1A300E24818 /* main.swift in Sources */,
 				461D17F92986D9250055F0F5 /* ContentView.swift in Sources */,
+				46AFD9A92991329C00BA5762 /* AllergyCore.swift in Sources */,
 				461D17F72986D9250055F0F5 /* AppDelegate.swift in Sources */,
 				46166290298A2B6800E24818 /* MealView.swift in Sources */,
 			);
@@ -1442,11 +1357,6 @@
 			isa = PBXTargetDependency;
 			target = 460311472923DCE700A5CB09 /* TodayWhatWidgetExtension */;
 			targetProxy = 460311572923DCE800A5CB09 /* PBXContainerItemProxy */;
-		};
-		460843E928DBFE2500D60E39 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 460843D628DBFE2400D60E39 /* TodayWhat */;
-			targetProxy = 460843E828DBFE2500D60E39 /* PBXContainerItemProxy */;
 		};
 		460843F328DBFE2500D60E39 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1791,49 +1701,6 @@
 			};
 			name = Release;
 		};
-		4608442B28DBFE2600D60E39 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 235C2RVZ7L;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = baegteun.TodayWhatTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TodayWhat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TodayWhat";
-			};
-			name = Debug;
-		};
-		4608442C28DBFE2600D60E39 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 235C2RVZ7L;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = baegteun.TodayWhatTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TodayWhat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TodayWhat";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 		4608442E28DBFE2600D60E39 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2124,15 +1991,6 @@
 			buildConfigurations = (
 				4608442828DBFE2600D60E39 /* Debug */,
 				4608442928DBFE2600D60E39 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4608442A28DBFE2600D60E39 /* Build configuration list for PBXNativeTarget "TodayWhatTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4608442B28DBFE2600D60E39 /* Debug */,
-				4608442C28DBFE2600D60E39 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

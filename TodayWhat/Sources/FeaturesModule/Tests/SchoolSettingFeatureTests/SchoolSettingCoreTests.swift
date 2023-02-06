@@ -11,6 +11,7 @@ final class SchoolSettingCoreTests: XCTestCase {
             initialState: SchoolSettingCore.State(),
             reducer: SchoolSettingCore()
         )
+        store.timeout = 5_000_000_000
         
         let dummySchool = School(orgCode: "3", schoolCode: "2", name: "광소마고", location: "미궁", schoolType: .high)
         store.dependencies.schoolClient.fetchSchoolList = { keyword in
@@ -22,18 +23,23 @@ final class SchoolSettingCoreTests: XCTestCase {
 
         await store.send(.schoolChanged("광주소")) {
             $0.school = "광주소"
-        }.finish(timeout: 1000)
+            $0.isLoading = true
+        }
 
         await store.receive(.schoolListResponse(.success([dummySchool]))) {
             $0.schoolList = [dummySchool]
+            $0.isLoading = false
         }
 
         await store.send(.schoolChanged("error")) {
             $0.school = "error"
-        }.finish(timeout: 1000)
+            $0.isLoading = true
+            $0.schoolList = [dummySchool]
+        }
 
         await store.receive(.schoolListResponse(.failure(TodayWhatError.failedToFetch))) {
             $0.isError = true
+            $0.isLoading = false
             $0.errorMessage = TodayWhatError.failedToFetch.localizedDescription
         }
 
