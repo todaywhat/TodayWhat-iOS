@@ -23,14 +23,16 @@ public struct UserDefaultsClient {
 extension UserDefaultsClient: DependencyKey {
     public static var liveValue: UserDefaultsClient = UserDefaultsClient(
         setValue: { key, value in
+            @Dependency(\.userDefaults) var userDefaults
             if let value {
-                UserDefaults.app.set(value, forKey: key.rawValue)
+                userDefaults.set(value, forKey: key.rawValue)
             } else {
-                UserDefaults.app.removeObject(forKey: key.rawValue)
+                userDefaults.removeObject(forKey: key.rawValue)
             }
         },
         getValue: { key in
-            UserDefaults.app.value(forKey: key.rawValue)
+            @Dependency(\.userDefaults) var userDefaults
+            return userDefaults.value(forKey: key.rawValue)
         }
     )
 }
@@ -46,5 +48,18 @@ extension DependencyValues {
     public var userDefaultsClient: UserDefaultsClient {
         get { self[UserDefaultsClient.self] }
         set { self[UserDefaultsClient.self] = newValue }
+    }
+}
+
+extension UserDefaults: DependencyKey {
+    public static var liveValue: UserDefaults = UserDefaults.app
+}
+
+extension UserDefaults: @unchecked Sendable {}
+
+extension DependencyValues {
+    public var userDefaults: UserDefaults {
+        get { self[UserDefaults.self] }
+        set { self[UserDefaults.self] = newValue }
     }
 }
