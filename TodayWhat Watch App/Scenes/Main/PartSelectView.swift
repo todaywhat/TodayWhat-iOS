@@ -31,6 +31,12 @@ struct PartSelectView: View {
                 
                 optionView(DisplayInfoPart.timeTable)
                     .padding(.top, 8)
+
+                Text("학교 재설정하기")
+                    .padding(.top, 8)
+                    .onTapGesture {
+                        sceneFlowState.sceneFlow = .setting
+                    }
             }
         }
     }

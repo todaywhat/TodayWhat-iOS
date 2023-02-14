@@ -1,6 +1,7 @@
 import SwiftUI
 import Dependencies
 import UserDefaultsClient
+import SwiftUIUtil
 
 struct RootView: View {
     @EnvironmentObject var sceneFlowState: SceneFlowState
@@ -21,7 +22,7 @@ struct RootView: View {
                     .environmentObject(sceneFlowState)
             }
         }
-        .onAppear {
+        .onLoad {
             guard
                 let code = userDefaultsClient.getValue(.schoolCode) as? String,
                 !code.isEmpty,

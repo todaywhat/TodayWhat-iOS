@@ -7,6 +7,7 @@ struct SettingView: View {
     @StateObject var watchSessionManager = WatchSessionManager.shared
     @State var isReachable = false
     @State var loadingStateText = "아이폰에서 먼저 학교 설정을 마치고 와주세요!"
+    @State var isLoading = false
     @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     var body: some View {
@@ -27,10 +28,16 @@ struct SettingView: View {
                 Text(isReachable ? "ON" : "OFF")
                     .font(.system(size: 12))
             }
+
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(.circular)
+            }
         }
         .onAppear {
             receiveIPhoneSetting()
         }
+        .navigationBarTitleDisplayMode(.large)
     }
 
     private func receiveIPhoneSetting() {
@@ -39,9 +46,11 @@ struct SettingView: View {
             return
         }
         loadingStateText = "아이폰과 연결중이에요..."
+        isLoading = true
         WatchSessionManager.shared.sendMessage(
             message: [:]
         ) { items in
+            isLoading = false
             guard
                 let code = items["code"] as? String,
                 let orgCode = items["orgCode"] as? String,
@@ -67,6 +76,7 @@ struct SettingView: View {
                 sceneFlowState.sceneFlow = .root
             }
         } error: { error in
+            isLoading = false
             loadingStateText = "아이폰과 연결이 실패했어요..."
         }
     }
