@@ -5,7 +5,7 @@ import UserDefaultsClient
 final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
     var isReachable: Bool {
-        session.isReachable
+        session.activationState == .activated
     }
 
     func session(
