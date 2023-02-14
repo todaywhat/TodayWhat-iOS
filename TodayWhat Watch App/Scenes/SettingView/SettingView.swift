@@ -14,6 +14,8 @@ struct SettingView: View {
         VStack {
             Text(loadingStateText)
                 .font(.system(size: 14))
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
 
             Button {
                 receiveIPhoneSetting()
@@ -45,7 +47,7 @@ struct SettingView: View {
         guard WatchSessionManager.shared.isReachable else {
             return
         }
-        loadingStateText = "아이폰과 연결중이에요..."
+        loadingStateText = "아이폰과 연결중이에요... \n시간이 좀 걸릴 수도 있어요!"
         isLoading = true
         WatchSessionManager.shared.sendMessage(
             message: [:]
