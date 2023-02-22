@@ -11,6 +11,7 @@ struct ContentCore: ReducerProtocol {
         var meal: Meal?
         var timetables: [TimeTable] = []
         var settingsCore: SettingsCore.State?
+        var allergyCore: AllergyCore.State?
         var isNotSetSchool = false
         var selectedPartMeal: Meal.SubMeal? {
             meal?.mealByPart(part: selectedInfoType)
@@ -24,6 +25,7 @@ struct ContentCore: ReducerProtocol {
         case mealResponse(TaskResult<Meal>)
         case timetableResponse(TaskResult<[TimeTable]>)
         case settingsCore(SettingsCore.Action)
+        case alleryCore(AllergyCore.Action)
     }
 
     @Dependency(\.mealClient) var mealClient
@@ -61,16 +63,21 @@ struct ContentCore: ReducerProtocol {
                 switch part {
                 case .breakfast, .lunch, .dinner, .timetable:
                     state.settingsCore = nil
+                    state.allergyCore = nil
                     state.selectedInfoType = part
                     return .run { send in
                         await send(.onAppear)
                     }
+
+                case .allergy:
+                    state.allergyCore = .init()
 
                 case .settings:
                     state.settingsCore = .init()
 
                 default:
                     state.settingsCore = nil
+                    state.allergyCore = nil
                 }
                 state.selectedInfoType = part
 
@@ -98,6 +105,9 @@ struct ContentCore: ReducerProtocol {
         }
         .ifLet(\.settingsCore, action: /Action.settingsCore) {
             SettingsCore()
+        }
+        .ifLet(\.allergyCore, action: /Action.alleryCore) {
+            AllergyCore()
         }
     }
 }

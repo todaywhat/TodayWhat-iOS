@@ -5,6 +5,7 @@ enum DisplayInfoType: CaseIterable {
     case lunch
     case dinner
     case timetable
+    case allergy
     case settings
 }
 
@@ -22,6 +23,9 @@ extension DisplayInfoType {
 
         case .timetable:
             return "⏰ 시간표"
+
+        case .allergy:
+            return "🙅‍♂️ 알레르기"
 
         case .settings:
             return "⚙️ 설정"
