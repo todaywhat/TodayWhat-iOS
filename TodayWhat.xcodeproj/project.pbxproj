@@ -103,6 +103,8 @@
 		463490E8298D1AD4007EBF26 /* Fraunces9pt-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 461C2351292DD50700B3A9CB /* Fraunces9pt-Black.ttf */; };
 		4647B12C28DC1CC800FAB81B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B12A28DC1CC800FAB81B /* MainViewModel.swift */; };
 		4647B13428DC27CE00FAB81B /* PartSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B13228DC27CE00FAB81B /* PartSelectView.swift */; };
+		464DED3A29A5DBCF00D9899C /* AllergyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464DED3929A5DBCF00D9899C /* AllergyView.swift */; };
+		464DED3C29A5DE6D00D9899C /* EnumUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 464DED3B29A5DE6D00D9899C /* EnumUtil */; };
 		4650234429267847008B015A /* ErrorModule in Frameworks */ = {isa = PBXBuildFile; productRef = 4650234329267847008B015A /* ErrorModule */; };
 		4650234B2926811C008B015A /* ConstantUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 4650234A2926811C008B015A /* ConstantUtil */; };
 		4650234D29268217008B015A /* NeisClient in Frameworks */ = {isa = PBXBuildFile; productRef = 4650234C29268217008B015A /* NeisClient */; };
@@ -278,6 +280,7 @@
 		463490E6298D1AD4007EBF26 /* TimeTableWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableWidgetEntryView.swift; sourceTree = "<group>"; };
 		4647B12A28DC1CC800FAB81B /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		4647B13228DC27CE00FAB81B /* PartSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartSelectView.swift; sourceTree = "<group>"; };
+		464DED3929A5DBCF00D9899C /* AllergyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergyView.swift; sourceTree = "<group>"; };
 		465023422926783C008B015A /* ErrorModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ErrorModule; sourceTree = "<group>"; };
 		465023452926798F008B015A /* NeisClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NeisClient; sourceTree = "<group>"; };
 		4650234729268003008B015A /* Utilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utilities; sourceTree = "<group>"; };
@@ -404,6 +407,7 @@
 				461D180A29896A5D0055F0F5 /* Dependencies in Frameworks */,
 				463490B2298BD9FB007EBF26 /* TWTextField in Frameworks */,
 				463490B4298BF3EE007EBF26 /* SchoolClient in Frameworks */,
+				464DED3C29A5DE6D00D9899C /* EnumUtil in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -838,6 +842,7 @@
 			isa = PBXGroup;
 			children = (
 				46AFD9A82991329C00BA5762 /* AllergyCore.swift */,
+				464DED3929A5DBCF00D9899C /* AllergyView.swift */,
 			);
 			path = Allergy;
 			sourceTree = "<group>";
@@ -1035,6 +1040,7 @@
 				463490B1298BD9FB007EBF26 /* TWTextField */,
 				463490B3298BF3EE007EBF26 /* SchoolClient */,
 				463490B6298CDA16007EBF26 /* LaunchAtLogin */,
+				464DED3B29A5DE6D00D9899C /* EnumUtil */,
 			);
 			productName = "TodayWhat Mac App";
 			productReference = 461D17F42986D9250055F0F5 /* TodayWhat Mac App.app */;
@@ -1336,6 +1342,7 @@
 				46AFD9A92991329C00BA5762 /* AllergyCore.swift in Sources */,
 				461D17F72986D9250055F0F5 /* AppDelegate.swift in Sources */,
 				46166290298A2B6800E24818 /* MealView.swift in Sources */,
+				464DED3A29A5DBCF00D9899C /* AllergyView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2283,6 +2290,10 @@
 		463490DE298D1A91007EBF26 /* UserDefaultsClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UserDefaultsClient;
+		};
+		464DED3B29A5DE6D00D9899C /* EnumUtil */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EnumUtil;
 		};
 		4650234329267847008B015A /* ErrorModule */ = {
 			isa = XCSwiftPackageProductDependency;

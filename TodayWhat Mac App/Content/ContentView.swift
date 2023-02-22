@@ -51,6 +51,15 @@ struct ContentView: View {
                 case .timetable:
                     TimeTableView(timetables: viewStore.timetables)
 
+                case .allergy:
+                    IfLetStore(
+                        store.scope(
+                            state: \.allergyCore,
+                            action: ContentCore.Action.alleryCore)
+                    ) { store in
+                        AllergyView(store: store)
+                    }
+                    
                 case .settings:
                     IfLetStore(
                         store.scope(
@@ -117,7 +126,7 @@ struct ContentView: View {
             RoundedRectangle(cornerRadius: 8)
                 .fill(selectedColor)
                 .frame(maxHeight: .infinity)
-                .overlay(
+                .overlay(alignment: .top) {
                     HStack {
                         Text(text)
                             .foregroundColor(foregroundColor)
@@ -125,7 +134,7 @@ struct ContentView: View {
                         Spacer()
                     }
                     .padding(8)
-                )
+                }
                 .overlay(
                     HStack {
                         Spacer()
@@ -134,7 +143,7 @@ struct ContentView: View {
                             Spacer()
 
                             Text("cmd + \(shortcut)")
-                                .font(.caption)
+                                .font(.caption2)
                                 .foregroundColor(foregroundColor)
                         }
                         .padding(.bottom, 4)
