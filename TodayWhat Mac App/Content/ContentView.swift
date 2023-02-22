@@ -41,7 +41,13 @@ struct ContentView: View {
     func infoView() -> some View {
         VStack {
             if viewStore.isNotSetSchool, viewStore.selectedInfoType != .settings {
-                Text("설정에서 학교 설정을 하고 와주세요!")
+                VStack {
+                    Text("설정에서 학교 설정을 하고 와주세요!")
+
+                    Button("설정하러가기") {
+                        viewStore.send(.displayInfoTypeDidSelect(.settings))
+                    }
+                }
             } else {
                 switch viewStore.selectedInfoType {
                 case .breakfast, .lunch, .dinner:
