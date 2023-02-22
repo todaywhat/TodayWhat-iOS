@@ -1,8 +1,10 @@
 import ComposableArchitecture
 import Entity
+import Foundation
 import LocalDatabaseClient
 import SchoolClient
 import UserDefaultsClient
+import ITunesClient
 
 struct SettingsCore: ReducerProtocol {
     enum FocusState: Hashable{
@@ -21,6 +23,7 @@ struct SettingsCore: ReducerProtocol {
         var schoolMajorList: [String] = []
         var isLoading = false
         var isSkipWeekend = false
+        var isNewVersionExist = false
     }
 
     enum Action: Equatable {
@@ -32,6 +35,7 @@ struct SettingsCore: ReducerProtocol {
         case setIsSkipWeekend(Bool)
         case schoolListResponse(TaskResult<[School]>)
         case schoolMajorListResponse(TaskResult<[String]>)
+        case versionCheck(TaskResult<String>)
         case schoolDidSelect(School)
         case majorDidSelect(String)
     }
@@ -39,6 +43,7 @@ struct SettingsCore: ReducerProtocol {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
     @Dependency(\.schoolClient) var schoolClient
     @Dependency(\.localDatabaseClient) var localDatabaseClient
+    @Dependency(\.iTunesClient) var iTunesClient
 
     func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         switch action {
@@ -58,6 +63,13 @@ struct SettingsCore: ReducerProtocol {
             let majorList = try? localDatabaseClient.readRecords(as: SchoolMajorLocalEntity.self)
                 .map { $0.major }
             state.schoolMajorList = majorList ?? []
+            return .task {
+                await .versionCheck(
+                    TaskResult {
+                        try await iTunesClient.fetchCurrentVersion(.macos)
+                    }
+                )
+            }
 
         case let .setFocusState(focusState):
             state.focusState = focusState
@@ -106,6 +118,11 @@ struct SettingsCore: ReducerProtocol {
 
         case .schoolMajorListResponse(.failure(_)):
             state.isLoading = false
+
+        case let .versionCheck(.success(latestVersion)):
+            guard !latestVersion.isEmpty else { break }
+            let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+            state.isNewVersionExist = latestVersion != currentVersion
 
         case let .schoolDidSelect(school):
             state.schoolText = school.name

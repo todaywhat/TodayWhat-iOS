@@ -8,6 +8,7 @@ struct SettingsView: View {
     let store: StoreOf<SettingsCore>
     @ObservedObject var viewStore: ViewStoreOf<SettingsCore>
     @FocusState var focusState: SettingsCore.FocusState?
+    @Environment(\.openURL) var openURL
 
     init(store: StoreOf<SettingsCore>) {
         self.store = store
@@ -122,6 +123,16 @@ struct SettingsView: View {
 
                 LaunchAtLogin.Toggle {
                     Text("시작 시 자동실행")
+                }
+
+                if viewStore.isNewVersionExist {
+                    Button {
+                        let url = URL(string: "https://apps.apple.com/kr/app/%EC%98%A4%EB%8A%98-%EB%AD%90%EC%9E%84/id1629567018?mt=12") ?? URL(string: "https://google.com")!
+                        openURL(url)
+                    } label: {
+                        Text("오늘 뭐임 New 버전이 있어요!")
+                    }
+                    .padding(.top, 16)
                 }
             }
         }
