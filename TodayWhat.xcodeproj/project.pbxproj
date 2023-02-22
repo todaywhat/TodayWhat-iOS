@@ -730,6 +730,7 @@
 		461D17F52986D9250055F0F5 /* TodayWhat Mac App */ = {
 			isa = PBXGroup;
 			children = (
+				4624469029A64D6200D4BE32 /* Resources */,
 				461662A5298AADEA00E24818 /* TodayWhat-Mac-App-Info.plist */,
 				46AFD9A72991327D00BA5762 /* Allergy */,
 				461662A2298AA2A300E24818 /* Util */,
@@ -738,7 +739,6 @@
 				46166291298A328800E24818 /* TimeTable */,
 				4616628E298A2B5E00E24818 /* Meal */,
 				461D180B29896A700055F0F5 /* Content */,
-				461D17FA2986D9260055F0F5 /* Assets.xcassets */,
 				461D17FF2986D9260055F0F5 /* TodayWhat_Mac_App.entitlements */,
 				461D17FC2986D9260055F0F5 /* Preview Content */,
 			);
@@ -761,6 +761,14 @@
 				4616629E298A608700E24818 /* DisplayInfoType.swift */,
 			);
 			path = Content;
+			sourceTree = "<group>";
+		};
+		4624469029A64D6200D4BE32 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				461D17FA2986D9260055F0F5 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		463490C0298D19B8007EBF26 /* TodayWhatMacWidget */ = {
