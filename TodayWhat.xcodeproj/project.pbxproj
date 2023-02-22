@@ -105,6 +105,8 @@
 		4647B13428DC27CE00FAB81B /* PartSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647B13228DC27CE00FAB81B /* PartSelectView.swift */; };
 		464DED3A29A5DBCF00D9899C /* AllergyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464DED3929A5DBCF00D9899C /* AllergyView.swift */; };
 		464DED3C29A5DE6D00D9899C /* EnumUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 464DED3B29A5DE6D00D9899C /* EnumUtil */; };
+		464DED4029A626B500D9899C /* ITunesClient in Frameworks */ = {isa = PBXBuildFile; productRef = 464DED3F29A626B500D9899C /* ITunesClient */; };
+		464DED4229A62C9F00D9899C /* ITunesClient in Frameworks */ = {isa = PBXBuildFile; productRef = 464DED4129A62C9F00D9899C /* ITunesClient */; };
 		4650234429267847008B015A /* ErrorModule in Frameworks */ = {isa = PBXBuildFile; productRef = 4650234329267847008B015A /* ErrorModule */; };
 		4650234B2926811C008B015A /* ConstantUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 4650234A2926811C008B015A /* ConstantUtil */; };
 		4650234D29268217008B015A /* NeisClient in Frameworks */ = {isa = PBXBuildFile; productRef = 4650234C29268217008B015A /* NeisClient */; };
@@ -281,6 +283,7 @@
 		4647B12A28DC1CC800FAB81B /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		4647B13228DC27CE00FAB81B /* PartSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartSelectView.swift; sourceTree = "<group>"; };
 		464DED3929A5DBCF00D9899C /* AllergyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergyView.swift; sourceTree = "<group>"; };
+		464DED3E29A61E6300D9899C /* ITunesClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ITunesClient; sourceTree = "<group>"; };
 		465023422926783C008B015A /* ErrorModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ErrorModule; sourceTree = "<group>"; };
 		465023452926798F008B015A /* NeisClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NeisClient; sourceTree = "<group>"; };
 		4650234729268003008B015A /* Utilities */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utilities; sourceTree = "<group>"; };
@@ -333,6 +336,7 @@
 				461C2341292C57AB00B3A9CB /* TWTextField in Frameworks */,
 				465023572926F97C008B015A /* RequestDTO in Frameworks */,
 				461C2360293071FD00B3A9CB /* LocalDatabaseClient in Frameworks */,
+				464DED4029A626B500D9899C /* ITunesClient in Frameworks */,
 				465023662926FEBC008B015A /* UserDefaultsClient in Frameworks */,
 				461C236B2930776700B3A9CB /* _SwiftUINavigationState in Frameworks */,
 				4650234429267847008B015A /* ErrorModule in Frameworks */,
@@ -396,6 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46E4D6D829897B10005FB823 /* MealClient in Frameworks */,
+				464DED4229A62C9F00D9899C /* ITunesClient in Frameworks */,
 				4616628D298A225C00E24818 /* TimeTableClient in Frameworks */,
 				463490AE298BC61D007EBF26 /* LocalDatabaseClient in Frameworks */,
 				46E4D6D629897ACC005FB823 /* Entity in Frameworks */,
@@ -463,6 +468,7 @@
 		46031095291DC95400A5CB09 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
+				464DED3E29A61E6300D9899C /* ITunesClient */,
 				461C2355292E643A00B3A9CB /* TimeTableClient */,
 				465023B0292AFF7E008B015A /* MealClient */,
 				4650236D2927092B008B015A /* LocalDatabaseClient */,
@@ -926,6 +932,7 @@
 				46BFE1022945BB510023443A /* FirebaseAnalytics */,
 				46BFE1042945BB510023443A /* FirebaseAnalyticsSwift */,
 				46BFE1062945BB520023443A /* FirebaseCrashlytics */,
+				464DED3F29A626B500D9899C /* ITunesClient */,
 			);
 			productName = TodayWhat;
 			productReference = 460843D728DBFE2400D60E39 /* TodayWhat.app */;
@@ -1041,6 +1048,7 @@
 				463490B3298BF3EE007EBF26 /* SchoolClient */,
 				463490B6298CDA16007EBF26 /* LaunchAtLogin */,
 				464DED3B29A5DE6D00D9899C /* EnumUtil */,
+				464DED4129A62C9F00D9899C /* ITunesClient */,
 			);
 			productName = "TodayWhat Mac App";
 			productReference = 461D17F42986D9250055F0F5 /* TodayWhat Mac App.app */;
@@ -2296,6 +2304,14 @@
 		464DED3B29A5DE6D00D9899C /* EnumUtil */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = EnumUtil;
+		};
+		464DED3F29A626B500D9899C /* ITunesClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ITunesClient;
+		};
+		464DED4129A62C9F00D9899C /* ITunesClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ITunesClient;
 		};
 		4650234329267847008B015A /* ErrorModule */ = {
 			isa = XCSwiftPackageProductDependency;
