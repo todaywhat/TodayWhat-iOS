@@ -19,6 +19,15 @@ struct TimeTableView: View {
                         Text(timetable.content)
                     }
                 }
+
+                Spacer()
+
+                HStack {
+                    Spacer()
+
+                    Text("🔄 새로고침 cmd + r")
+                        .font(.caption2)
+                }
             }
             .padding(8)
 

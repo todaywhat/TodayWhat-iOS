@@ -20,6 +20,7 @@ struct ContentView: View {
                 EmptyView()
             }
             .hidden()
+            .keyboardShortcut("r", modifiers: .command)
 
             VStack {
                 HStack {
@@ -107,11 +108,11 @@ struct ContentView: View {
 
             panelButtonView(
                 selectedColor: .extraGray,
-                text: "새로고침",
+                text: "🚪 종료",
                 foregroundColor: .primary,
-                shortcut: "r"
+                shortcut: "q"
             ) {
-                viewStore.send(.refresh)
+                viewStore.send(.exit)
             }
         }
         .frame(width: 120)
