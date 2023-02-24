@@ -4,6 +4,7 @@ import TWColor
 import TWImage
 import MealFeature
 import TimeTableFeature
+import SettingsFeature
 import SchoolSettingFeature
 import AllergySettingFeature
 
@@ -76,14 +77,6 @@ public struct MainView: View {
             .onAppear {
                 viewStore.send(.onAppear, animation: .default)
             }
-            .confirmationDialog(
-                store.scope(state: \.confirmationDialog),
-                dismiss: .confirmationDialogDismissed
-            )
-            .alert(
-                store.scope(state: \.alert),
-                dismiss: .alertDismissed
-            )
         }
         .navigationViewStyle(.stack)
     }
@@ -140,30 +133,17 @@ public struct MainView: View {
     var navigationLinks: some View {
         NavigationLink(
             isActive: viewStore.binding(
-                get: \.isNavigateSchoolSetting,
-                send: MainCore.Action.schoolSettingDismissed
+                get: \.isNavigateSettings,
+                send: MainCore.Action.settingsDismissed
             )
         ) {
             IfLetStore(
                 store.scope(
-                    state: \.schoolSettingCore, action: MainCore.Action.schoolSettingCore)
+                    state: \.settingsCore,
+                    action: MainCore.Action.settingsCore
+                )
             ) { store in
-                SchoolSettingView(store: store, isNavigationPushed: true)
-            }
-        } label: {
-            EmptyView()
-        }
-
-        NavigationLink(
-            isActive: viewStore.binding(
-                get: \.isNavigateAllergySetting,
-                send: MainCore.Action.allergySettingDismissed
-            )
-        ) {
-            IfLetStore(
-                store.scope(state: \.allergySettingCore, action: MainCore.Action.allergySettingCore)
-            ) { store in
-                AllergySettingView(store: store)
+                SettingsView(store: store)
             }
         } label: {
             EmptyView()

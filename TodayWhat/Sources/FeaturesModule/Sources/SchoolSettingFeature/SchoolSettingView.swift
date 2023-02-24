@@ -40,7 +40,7 @@ public struct SchoolSettingView: View {
                                 .font(.system(size: 20, weight: .medium))
 
                             if !viewStore.class.isEmpty && !viewStore.schoolMajorList.isEmpty {
-                                Text("없으면 안해도 괜찮아요!")
+                                Text("학과는 없으면 안해도 괜찮아요!")
                                     .font(.system(size: 16, weight: .medium))
                                     .foregroundColor(.darkGray)
                             }
@@ -194,6 +194,7 @@ public struct SchoolSettingView: View {
         .if(isNavigationPushed) {
             $0.twBackButton(dismiss: dismiss)
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     @ViewBuilder
