@@ -81,18 +81,18 @@ struct SettingsView: View {
                 }
 
                 HStack {
-                    Text("전공")
+                    Text("학과")
 
                     Menu {
                         ForEach(viewStore.schoolMajorList, id: \.self) { major in
                             Button {
                                 viewStore.send(.majorDidSelect(major))
                             } label: {
-                                Text(major)
+                                Text(major.isEmpty ? "선택안함" : major)
                             }
                         }
                     } label: {
-                        Text(viewStore.majorText ?? "x")
+                        Text(viewStore.majorText.isEmpty ? "선택안함" : viewStore.majorText)
                     }
                 }
 
