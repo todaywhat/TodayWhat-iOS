@@ -95,8 +95,6 @@ public struct SettingsView: View {
             }
 
             Spacer()
-
-            Text("A")
         }
         .onAppear {
             viewStore.send(.onAppear)
@@ -112,6 +110,8 @@ public struct SettingsView: View {
             navigationLinks()
         }
         .twBackButton(dismiss: dismiss)
+        .confirmationDialog(store.scope(state: \.confirmationDialog), dismiss: .confirmationDialogDismissed)
+        .alert(store.scope(state: \.alert), dismiss: .alertDismissed)
     }
 
     @ViewBuilder
