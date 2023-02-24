@@ -15,6 +15,8 @@ public struct SettingsCore: ReducerProtocol {
         public var isNavigateSchoolSetting: Bool = false
         public var allergySettingCore: AllergySettingCore.State? = nil
         public var isNavigateAllergySetting: Bool = false
+        public var confirmationDialog: ConfirmationDialogState<Action>? = nil
+        public var alert: AlertState<Action>? = nil
 
         public init() {}
     }
