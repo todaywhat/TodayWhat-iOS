@@ -265,7 +265,7 @@
 		461C23C82934458500B3A9CB /* SceneFlowState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFlowState.swift; sourceTree = "<group>"; };
 		461C23CC293446B200B3A9CB /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		461C23CF2934496E00B3A9CB /* WatchSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
-		461D17F42986D9250055F0F5 /* TodayWhat Mac App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TodayWhat Mac App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		461D17F42986D9250055F0F5 /* TodayWhat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodayWhat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		461D17F62986D9250055F0F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		461D17F82986D9250055F0F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		461D17FA2986D9260055F0F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -577,7 +577,7 @@
 				4608440F28DBFE2600D60E39 /* TodayWhat Watch AppTests.xctest */,
 				4608441928DBFE2600D60E39 /* TodayWhat Watch AppUITests.xctest */,
 				460311482923DCE700A5CB09 /* TodayWhatWidgetExtension.appex */,
-				461D17F42986D9250055F0F5 /* TodayWhat Mac App.app */,
+				461D17F42986D9250055F0F5 /* TodayWhat.app */,
 				463490BD298D19B8007EBF26 /* TodayWhatMacWidgetExtension.appex */,
 			);
 			name = Products;
@@ -1026,9 +1026,9 @@
 			productReference = 4608441928DBFE2600D60E39 /* TodayWhat Watch AppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		461D17F32986D9250055F0F5 /* TodayWhat Mac App */ = {
+		461D17F32986D9250055F0F5 /* TodayWhat Map App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 461D18022986D9260055F0F5 /* Build configuration list for PBXNativeTarget "TodayWhat Mac App" */;
+			buildConfigurationList = 461D18022986D9260055F0F5 /* Build configuration list for PBXNativeTarget "TodayWhat Map App" */;
 			buildPhases = (
 				461D17F02986D9250055F0F5 /* Sources */,
 				461D17F12986D9250055F0F5 /* Frameworks */,
@@ -1041,7 +1041,7 @@
 			dependencies = (
 				463490C8298D19B9007EBF26 /* PBXTargetDependency */,
 			);
-			name = "TodayWhat Mac App";
+			name = "TodayWhat Map App";
 			packageProductDependencies = (
 				461D180729896A570055F0F5 /* ComposableArchitecture */,
 				461D180929896A5D0055F0F5 /* Dependencies */,
@@ -1059,7 +1059,7 @@
 				464DED4129A62C9F00D9899C /* ITunesClient */,
 			);
 			productName = "TodayWhat Mac App";
-			productReference = 461D17F42986D9250055F0F5 /* TodayWhat Mac App.app */;
+			productReference = 461D17F42986D9250055F0F5 /* TodayWhat.app */;
 			productType = "com.apple.product-type.application";
 		};
 		463490BC298D19B7007EBF26 /* TodayWhatMacWidgetExtension */ = {
@@ -1136,6 +1136,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 460843CE28DBFE2300D60E39;
 			packageReferences = (
@@ -1150,7 +1151,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				461D17F32986D9250055F0F5 /* TodayWhat Mac App */,
+				461D17F32986D9250055F0F5 /* TodayWhat Map App */,
 				460843D628DBFE2400D60E39 /* TodayWhat */,
 				460843F028DBFE2500D60E39 /* TodayWhatUITests */,
 				460843FC28DBFE2500D60E39 /* TodayWhat Watch App */,
@@ -1476,6 +1477,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1534,6 +1536,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1878,7 +1881,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = baegteun.TodayWhat;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
+				PRODUCT_NAME = TodayWhat;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1914,7 +1918,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = baegteun.TodayWhat;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
+				PRODUCT_NAME = TodayWhat;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -2047,7 +2052,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		461D18022986D9260055F0F5 /* Build configuration list for PBXNativeTarget "TodayWhat Mac App" */ = {
+		461D18022986D9260055F0F5 /* Build configuration list for PBXNativeTarget "TodayWhat Map App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				461D18002986D9260055F0F5 /* Debug */,
