@@ -48,6 +48,7 @@ let package = Package(
         .package(path: "../../Clients/MealClient"),
         .package(path: "../../Clients/TimeTableClient"),
         .package(path: "../../Clients/LocalDatabaseClient"),
+        .package(path: "../../Clients/ITunesClient"),
         .package(path: "../DesignSystem"),
         .package(path: "../../Common/Utilities")
     ],
@@ -156,6 +157,7 @@ let package = Package(
                 .product(name: "EnumUtil", package: "Utilities"),
                 .product(name: "SwiftUIUtil", package: "Utilities"),
                 .product(name: "TWColor", package: "DesignSystem"),
+                .product(name: "TWButton", package: "DesignSystem"),
                 "LocalDatabaseClient",
                 "Entity"
             ]
@@ -171,6 +173,7 @@ let package = Package(
                 .product(name: "TWButton", package: "DesignSystem"),
                 .product(name: "SwiftUIUtil", package: "Utilities"),
                 "UserDefaultsClient",
+                "ITunesClient",
                 "SchoolSettingFeature",
                 "AllergySettingFeature"
             ]

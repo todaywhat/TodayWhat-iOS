@@ -17,29 +17,30 @@ public struct AllergySettingView: View {
     }
 
     public var body: some View {
-        ScrollView {
-            Spacer()
-                .frame(height: 20)
+        VStack {
+            ScrollView {
+                Spacer()
+                    .frame(height: 20)
 
-            LazyVGrid(columns: columns, spacing: 16) {
-                ForEach(AllergyType.allCases, id: \.hashValue) { allergy in
-                    allergyColumnView(allergy: allergy)
-                        .onTapGesture {
-                            viewStore.send(.allergyDidSelect(allergy))
-                        }
+                LazyVGrid(columns: columns, spacing: 16) {
+                    ForEach(AllergyType.allCases, id: \.hashValue) { allergy in
+                        allergyColumnView(allergy: allergy)
+                            .onTapGesture {
+                                viewStore.send(.allergyDidSelect(allergy), animation: .default)
+                            }
+                            .animation(nil, value: viewStore.selectedAllergyList)
+                    }
                 }
+                .padding(.horizontal, 16)
             }
-            .padding(.horizontal, 16)
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    viewStore.send(.saveButtonDidTap, animation: .default)
-                } label: {
-                    Text("저장")
-                        .font(.system(size: 14))
-                        .foregroundColor(.darkGray)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            if viewStore.allergyDidTap {
+                TWButton(title: "저장") {
+                    viewStore.send(.saveButtonDidTap)
                 }
+                .padding(.horizontal, 16)
+                .padding(.bottom, 8)
             }
         }
         .background(Color.background.ignoresSafeArea())

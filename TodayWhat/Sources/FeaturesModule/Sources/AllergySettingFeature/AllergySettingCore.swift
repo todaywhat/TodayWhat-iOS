@@ -8,6 +8,7 @@ public struct AllergySettingCore: ReducerProtocol {
     public struct State: Equatable {
         public var selectedAllergyList: [AllergyType] = []
         public var isSaved = false
+        public var allergyDidTap = false
         public init() {}
     }
 
@@ -36,6 +37,7 @@ public struct AllergySettingCore: ReducerProtocol {
             } else {
                 state.selectedAllergyList.append(allergy)
             }
+            state.allergyDidTap = true
 
         case .saveButtonDidTap:
             do {

@@ -59,6 +59,10 @@ public struct MainCore: ReducerProtocol {
                 state.settingsCore = nil
                 state.isNavigateSettings = false
 
+            case .settingsCore(.allergySettingCore(.saveButtonDidTap)):
+                state.settingsCore = nil
+                state.isNavigateSettings = false
+
             default:
                 return .none
             }
