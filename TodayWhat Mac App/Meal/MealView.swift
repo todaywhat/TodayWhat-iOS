@@ -16,6 +16,15 @@ struct MealView: View {
                         ForEach(meal, id: \.self) { meal in
                             Text(meal)
                         }
+
+                        Spacer()
+
+                        HStack {
+                            Spacer()
+
+                            Text("🔄 새로고침 cmd + r")
+                                .font(.caption2)
+                        }
                     }
 
                     Spacer()

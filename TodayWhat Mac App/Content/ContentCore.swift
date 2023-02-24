@@ -1,4 +1,6 @@
+import AppKit.NSApplication
 import ComposableArchitecture
+import Dispatch
 import Entity
 import Foundation
 import TimeTableClient
@@ -21,6 +23,7 @@ struct ContentCore: ReducerProtocol {
     enum Action: Equatable {
         case onAppear
         case refresh
+        case exit
         case displayInfoTypeDidSelect(DisplayInfoType)
         case mealResponse(TaskResult<Meal>)
         case timetableResponse(TaskResult<[TimeTable]>)
@@ -57,6 +60,12 @@ struct ContentCore: ReducerProtocol {
             case .refresh:
                 return .run { send in
                     await send(.onAppear)
+                }
+
+            case .exit:
+                NotificationCenter.default.addObserver(forName: NSApplication.willTerminateNotification, object: nil, queue: .main) { _ in }
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    exit(0)
                 }
                 
             case let .displayInfoTypeDidSelect(part):
