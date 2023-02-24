@@ -303,6 +303,7 @@
 		46AFD9A82991329C00BA5762 /* AllergyCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergyCore.swift; sourceTree = "<group>"; };
 		46BFE0C229459A100023443A /* TimeTableWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableWidgetEntryView.swift; sourceTree = "<group>"; };
 		46BFE0FF2945BA1E0023443A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		46C2BEA129A8DAD200674B64 /* DeviceClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DeviceClient; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -470,6 +471,7 @@
 		46031095291DC95400A5CB09 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
+				46C2BEA129A8DAD200674B64 /* DeviceClient */,
 				464DED3E29A61E6300D9899C /* ITunesClient */,
 				461C2355292E643A00B3A9CB /* TimeTableClient */,
 				465023B0292AFF7E008B015A /* MealClient */,
