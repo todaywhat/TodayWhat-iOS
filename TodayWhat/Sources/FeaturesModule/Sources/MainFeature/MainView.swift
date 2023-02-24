@@ -60,7 +60,7 @@ public struct MainView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Text("ONMI")
                         .font(.custom("Fraunces9pt-Black", size: 32))
-                        .foregroundColor(.extraGray)
+                        .foregroundColor(.extraPrimary)
                 }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
