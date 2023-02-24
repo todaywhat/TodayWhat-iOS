@@ -48,6 +48,7 @@ let package = Package(
         .package(path: "../../Clients/MealClient"),
         .package(path: "../../Clients/TimeTableClient"),
         .package(path: "../../Clients/LocalDatabaseClient"),
+        .package(path: "../../Clients/DeviceClient"),
         .package(path: "../../Clients/ITunesClient"),
         .package(path: "../DesignSystem"),
         .package(path: "../../Common/Utilities")
@@ -174,6 +175,7 @@ let package = Package(
                 .product(name: "SwiftUIUtil", package: "Utilities"),
                 "UserDefaultsClient",
                 "ITunesClient",
+                "DeviceClient",
                 "SchoolSettingFeature",
                 "AllergySettingFeature"
             ]

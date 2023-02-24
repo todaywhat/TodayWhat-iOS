@@ -1,7 +1,9 @@
 import AllergySettingFeature
 import ComposableArchitecture
+import DeviceClient
 import SchoolSettingFeature
 import UserDefaultsClient
+import UIKit.UIApplication
 
 public struct SettingsCore: ReducerProtocol {
     public init() {}
@@ -31,9 +33,14 @@ public struct SettingsCore: ReducerProtocol {
         case allergySettingDismissed
         case allergySettingCore(AllergySettingCore.Action)
         case consultingButtonDidTap
+        case githubIssueButtonDidTap
+        case mailIssueButtonDidTap
+        case alertDismissed
+        case confirmationDialogDismissed
     }
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.deviceClient) var deviceClient
 
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
@@ -65,12 +72,42 @@ public struct SettingsCore: ReducerProtocol {
                 state.isNavigateAllergySetting = false
 
             case .consultingButtonDidTap:
-                break
+                if deviceClient.isPad() {
+                    state.alert = AlertState {
+                        .init("오늘 뭐임")
+                    } actions: {
+                        ButtonState.default(.init("깃허브"), action: .send(.githubIssueButtonDidTap))
+                        ButtonState.default(.init("메일"), action: .send(.mailIssueButtonDidTap))
+                        ButtonState.cancel(.init("취소"))
+                    }
+                } else {
+                    state.confirmationDialog = ConfirmationDialogState {
+                        .init("문의하기")
+                    } actions: {
+                        ButtonState.default(.init("깃허브"), action: .send(.githubIssueButtonDidTap))
+                        ButtonState.default(.init("메일"), action: .send(.mailIssueButtonDidTap))
+                        ButtonState.cancel(.init("취소"))
+                    }
+                }
+ 
+            case .githubIssueButtonDidTap:
+                guard let url = URL(string: "https://github.com/baekteun/TodayWhat-new/issues") else { break }
+                UIApplication.shared.open(url)
+
+            case .mailIssueButtonDidTap:
+                guard let url = URL(string: "mailto:baegteun@gmail.com") else { break }
+                UIApplication.shared.open(url)
+
+            case .alertDismissed:
+                state.alert = nil
+
+            case .confirmationDialogDismissed:
+                state.confirmationDialog = nil
 
             default:
                 return .none
             }
-            
+
             return .none
         }
         .ifLet(\.schoolSettingCore, action: /Action.schoolSettingCore) {
