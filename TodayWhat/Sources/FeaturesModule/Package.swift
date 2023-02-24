@@ -34,6 +34,10 @@ let package = Package(
         .library(
             name: "TimeTableFeature",
             targets: ["TimeTableFeature"]
+        ),
+        .library(
+            name: "SettingsFeature",
+            targets: ["SettingsFeature"]
         )
     ],
     dependencies: [
@@ -102,7 +106,7 @@ let package = Package(
                 "TimeTableFeature",
                 "SchoolSettingFeature",
                 "AllergySettingFeature",
-                "WhatsNewFeature"
+                "SettingsFeature"
             ]
         ),
         .testTarget(name: "MainFeatureTests", dependencies: ["MainFeature"]),
@@ -159,14 +163,17 @@ let package = Package(
         .testTarget(name: "AllergySettingFeatureTests", dependencies: ["AllergySettingFeature"]),
         
         .target(
-            name: "WhatsNewFeature",
+            name: "SettingsFeature",
             dependencies: [
                 .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "TWColor", package: "DesignSystem"),
                 .product(name: "TWButton", package: "DesignSystem"),
-                "UserDefaultsClient"
+                .product(name: "SwiftUIUtil", package: "Utilities"),
+                "UserDefaultsClient",
+                "SchoolSettingFeature",
+                "AllergySettingFeature"
             ]
-        )
+        ),
     ]
 )

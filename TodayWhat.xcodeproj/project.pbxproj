@@ -131,6 +131,7 @@
 		46BFE1032945BB510023443A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE1022945BB510023443A /* FirebaseAnalytics */; };
 		46BFE1052945BB510023443A /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE1042945BB510023443A /* FirebaseAnalyticsSwift */; };
 		46BFE1072945BB520023443A /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE1062945BB520023443A /* FirebaseCrashlytics */; };
+		46C2BEA029A897F000674B64 /* SettingsFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 46C2BE9F29A897F000674B64 /* SettingsFeature */; };
 		46E4D6D029896CF2005FB823 /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C23BD293442E400B3A9CB /* DisplayInfoPart.swift */; };
 		46E4D6D229896D69005FB823 /* SwiftUIUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D129896D69005FB823 /* SwiftUIUtil */; };
 		46E4D6D429897352005FB823 /* TWColor in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D329897352005FB823 /* TWColor */; };
@@ -338,6 +339,7 @@
 				461C2360293071FD00B3A9CB /* LocalDatabaseClient in Frameworks */,
 				464DED4029A626B500D9899C /* ITunesClient in Frameworks */,
 				465023662926FEBC008B015A /* UserDefaultsClient in Frameworks */,
+				46C2BEA029A897F000674B64 /* SettingsFeature in Frameworks */,
 				461C236B2930776700B3A9CB /* _SwiftUINavigationState in Frameworks */,
 				4650234429267847008B015A /* ErrorModule in Frameworks */,
 				461C2339292C57AB00B3A9CB /* TWBottomSheet in Frameworks */,
@@ -941,6 +943,7 @@
 				46BFE1042945BB510023443A /* FirebaseAnalyticsSwift */,
 				46BFE1062945BB520023443A /* FirebaseCrashlytics */,
 				464DED3F29A626B500D9899C /* ITunesClient */,
+				46C2BE9F29A897F000674B64 /* SettingsFeature */,
 			);
 			productName = TodayWhat;
 			productReference = 460843D728DBFE2400D60E39 /* TodayWhat.app */;
@@ -2396,6 +2399,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 46BFE1012945BB510023443A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
+		};
+		46C2BE9F29A897F000674B64 /* SettingsFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SettingsFeature;
 		};
 		46E4D6D129896D69005FB823 /* SwiftUIUtil */ = {
 			isa = XCSwiftPackageProductDependency;
