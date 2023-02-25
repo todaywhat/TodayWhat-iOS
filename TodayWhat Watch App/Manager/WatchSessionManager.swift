@@ -23,17 +23,19 @@ final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
             else {
                 return
             }
-            let major = items["major"] as Any
+            
             let dict: [UserDefaultsKeys: Any] = [
                 .grade: grade,
                 .class: `class`,
                 .schoolType: type,
                 .orgCode: orgCode,
-                .schoolCode: code,
-                .major: major
+                .schoolCode: code
             ]
             dict.forEach { key, value in
                 self.userDefaultsClient.setValue(key, value)
+            }
+            if let major = items["major"] as? String {
+                self.userDefaultsClient.setValue(.major, major)
             }
         }
     }
@@ -58,9 +60,32 @@ final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
 #endif
     func session(
         _ session: WCSession,
-        didReceiveMessage message: [String : Any],
-        replyHandler: @escaping ([String : Any]) -> Void
-    ) {}
+        didReceiveMessage message: [String: Any],
+        replyHandler: @escaping ([String: Any]) -> Void
+    ) {
+        guard
+            let code = message["code"] as? String,
+            let orgCode = message["orgCode"] as? String,
+            let grade = message["grade"] as? Int,
+            let `class` = message["class"] as? Int,
+            let type = message["type"] as? String
+        else {
+            return
+        }
+        let dict: [UserDefaultsKeys: Any] = [
+            .grade: grade,
+            .class: `class`,
+            .schoolType: type,
+            .orgCode: orgCode,
+            .schoolCode: code
+        ]
+        dict.forEach { key, value in
+            self.userDefaultsClient.setValue(key, value)
+        }
+        if let major = message["major"] as? String {
+            self.userDefaultsClient.setValue(.major, major)
+        }
+    }
 
     func sendMessage(
         message: [String: Any],

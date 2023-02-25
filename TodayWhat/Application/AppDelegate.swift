@@ -10,7 +10,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(
         _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         session = WCSession.default
         if WCSession.isSupported() {
@@ -41,15 +41,17 @@ extension AppDelegate: WCSessionDelegate {
         else {
             return
         }
-        let major = userDefaultsClient.getValue(.major) as Any
-        let dict = [
+        var dict: [String: Any] = [
             "type": type,
             "code": code,
             "orgCode": orgCode,
-            "major": major,
             "grade": grade,
             "class": `class`
         ]
+        if let major = userDefaultsClient.getValue(.major) as? String {
+            dict["major"] = major
+        }
+        
         session.sendMessage(dict, replyHandler: nil)
     }
 
@@ -67,16 +69,17 @@ extension AppDelegate: WCSessionDelegate {
         else {
             return
         }
-        let major = userDefaultsClient.getValue(.major) as Any
-        replyHandler(
-            [
-                "type": type,
-                "code": code,
-                "orgCode": orgCode,
-                "major": major,
-                "grade": grade,
-                "class": `class`
-            ]
-        )
+        var reply: [String: Any] = [
+            "type": type,
+            "code": code,
+            "orgCode": orgCode,
+            "grade": grade,
+            "class": `class`
+        ]
+        if let major = userDefaultsClient.getValue(.major) as? String {
+            reply["major"] = major
+        }
+         
+        replyHandler(reply)
     }
 }

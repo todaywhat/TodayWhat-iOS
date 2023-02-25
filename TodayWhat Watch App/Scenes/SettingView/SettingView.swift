@@ -62,24 +62,26 @@ struct SettingView: View {
             else {
                 return
             }
-            let major = items["major"] as Any
+
             let dict: [UserDefaultsKeys: Any] = [
                 .grade: grade,
                 .class: `class`,
                 .schoolType: type,
                 .orgCode: orgCode,
-                .schoolCode: code,
-                .major: major
+                .schoolCode: code
             ]
             dict.forEach { key, value in
                 userDefaultsClient.setValue(key, value)
             }
+            if let major = items["major"] as? String {
+                userDefaultsClient.setValue(.major, major)
+            }
             DispatchQueue.main.async {
-                sceneFlowState.sceneFlow = .root
+                sceneFlowState.sceneFlow = .main
             }
         } error: { error in
             isLoading = false
-            loadingStateText = "아이폰과 연결이 실패했어요..."
+            loadingStateText = "아이폰의 오늘 뭐임을 켠 상태로 다시 시도해주세요!"
         }
     }
 }
