@@ -9,8 +9,6 @@ public struct MealCore: ReducerProtocol {
     public init() {}
     public struct State: Equatable {
         public var meal: Meal?
-        public var isError = false
-        public var errorMessage = ""
         public var isLoading = false
         public var allergyList: [AllergyType] = []
         public init() {}
@@ -53,17 +51,16 @@ public struct MealCore: ReducerProtocol {
                 }
 
             case let .mealResponse(.success(meal)):
-                state.isError = false
                 state.meal = meal
                 state.isLoading = false
 
-            case let .mealResponse(.failure(error)):
-                state.isError = true
-                state.errorMessage = error.localizedDescription
+            case .mealResponse(.failure(_)):
+                state.meal = Meal(
+                    breakfast: .init(meals: [], cal: 0),
+                    lunch: .init(meals: [], cal: 0),
+                    dinner: .init(meals: [], cal: 0)
+                )
                 state.isLoading = false
-
-            default:
-                return .none
             }
             return .none
         }
