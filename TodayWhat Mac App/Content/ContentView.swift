@@ -53,7 +53,11 @@ struct ContentView: View {
                 switch viewStore.selectedInfoType {
                 case .breakfast, .lunch, .dinner:
                     let meal = viewStore.selectedPartMeal ?? .init(meals: [], cal: 0)
-                    MealView(meal: meal.meals, calorie: meal.cal)
+                    MealView(
+                        meal: meal.meals,
+                        allergyList: viewStore.allergyList,
+                        calorie: meal.cal
+                    )
 
                 case .timetable:
                     TimeTableView(timetables: viewStore.timetables)
@@ -84,8 +88,8 @@ struct ContentView: View {
 
             Spacer()
         }
-        .frame(maxHeight: .infinity)
-        .frame(maxWidth: .infinity)
+        .frame(height: 310)
+        .frame(maxWidth: .infinity, maxHeight: 310)
     }
 
     @ViewBuilder
@@ -94,9 +98,9 @@ struct ContentView: View {
             ForEach(DisplayInfoType.allCases.indices, id: \.self) { index in
                 let item = DisplayInfoType.allCases[index]
                 let isSelected: Bool = item == viewStore.selectedInfoType
-                let textForeground = isSelected ? Color.black : .primary
+                let textForeground = isSelected ? Color.veryLightGray : .primary
                 panelButtonView(
-                    selectedColor: isSelected ? Color.extraPrimary : .extraGray,
+                    selectedColor: isSelected ? Color.darkGray : .extraGray,
                     text: item.display,
                     foregroundColor: textForeground,
                     shortcut: "\(index + 1)"
