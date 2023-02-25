@@ -8,8 +8,6 @@ public struct TimeTableCore: ReducerProtocol {
     public struct State: Equatable {
         public var timeTableList: [TimeTable] = []
         public var isLoading = false
-        public var isError = false
-        public var errorMessage = ""
         public init() {}
     }
 
@@ -35,13 +33,11 @@ public struct TimeTableCore: ReducerProtocol {
                 }
 
             case let .timeTableResponse(.success(timeTableList)):
-                state.isError = false
                 state.isLoading = false
                 state.timeTableList = timeTableList
 
-            case let .timeTableResponse(.failure(error)):
-                state.isError = true
-                state.errorMessage = error.localizedDescription
+            case .timeTableResponse(.failure(_)):
+                state.timeTableList = []
                 state.isLoading = false
             }
             return .none

@@ -63,6 +63,10 @@ public struct MainCore: ReducerProtocol {
                 state.settingsCore = nil
                 state.isNavigateSettings = false
 
+            case .settingsCore(.schoolSettingCore(.schoolSettingFinished)):
+                state.settingsCore = nil
+                state.isNavigateSettings = false
+
             default:
                 return .none
             }
