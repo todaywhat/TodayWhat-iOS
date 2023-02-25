@@ -1,9 +1,7 @@
-import AllergySettingFeature
 import ComposableArchitecture
 import UserDefaultsClient
 import MealFeature
 import TimeTableFeature
-import SchoolSettingFeature
 import SettingsFeature
 import UIKit
 

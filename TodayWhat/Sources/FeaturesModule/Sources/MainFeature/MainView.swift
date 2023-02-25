@@ -5,8 +5,6 @@ import TWImage
 import MealFeature
 import TimeTableFeature
 import SettingsFeature
-import SchoolSettingFeature
-import AllergySettingFeature
 
 public struct MainView: View {
     let store: StoreOf<MainCore>
