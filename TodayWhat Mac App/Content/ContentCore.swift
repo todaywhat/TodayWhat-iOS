@@ -2,16 +2,19 @@ import AppKit.NSApplication
 import ComposableArchitecture
 import Dispatch
 import Entity
+import EnumUtil
 import Foundation
 import TimeTableClient
 import MealClient
 import UserDefaultsClient
+import LocalDatabaseClient
 
 struct ContentCore: ReducerProtocol {
     struct State: Equatable {
         var selectedInfoType: DisplayInfoType = .breakfast
         var meal: Meal?
         var timetables: [TimeTable] = []
+        var allergyList: [AllergyType] = []
         var settingsCore: SettingsCore.State?
         var allergyCore: AllergyCore.State?
         var isNotSetSchool = false
@@ -34,6 +37,7 @@ struct ContentCore: ReducerProtocol {
     @Dependency(\.mealClient) var mealClient
     @Dependency(\.timeTableClient) var timeTableClient
     @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.localDatabaseClient) var localDatabaseClient
 
     var body: some ReducerProtocolOf<ContentCore> {
         Reduce { state, action in
@@ -47,6 +51,9 @@ struct ContentCore: ReducerProtocol {
                     return .none
                 }
                 state.isNotSetSchool = false
+                let allergyList = try? localDatabaseClient.readRecords(as: AllergyLocalEntity.self)
+                    .compactMap { AllergyType(rawValue: $0.allergy) ?? nil }
+                state.allergyList = allergyList ?? []
 
                 return .merge(
                     .task {
@@ -69,6 +76,7 @@ struct ContentCore: ReducerProtocol {
                 }
                 
             case let .displayInfoTypeDidSelect(part):
+                guard state.selectedInfoType != part else { break }
                 switch part {
                 case .breakfast, .lunch, .dinner, .timetable:
                     state.settingsCore = nil
