@@ -106,8 +106,6 @@ let package = Package(
                 "UserDefaultsClient",
                 "MealFeature",
                 "TimeTableFeature",
-                "SchoolSettingFeature",
-                "AllergySettingFeature",
                 "SettingsFeature"
             ]
         ),
