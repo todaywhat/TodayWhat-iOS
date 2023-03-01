@@ -6,9 +6,11 @@ import MealClient
 import LocalDatabaseClient
 import EnumUtil
 import TimeTableClient
+import IntentsUI
 
-struct MealProvider: TimelineProvider {
+struct MealProvider: IntentTimelineProvider {
     typealias Entry = MealEntry
+    typealias Intent = DisplayMealIntent
 
     @Dependency(\.mealClient) var mealClient
     @Dependency(\.localDatabaseClient) var localDatabaseClient
@@ -16,11 +18,14 @@ struct MealProvider: TimelineProvider {
     func placeholder(in context: Context) -> MealEntry {
         return MealEntry.empty()
     }
+    
 
     func getSnapshot(
+        for configuration: Intent,
         in context: Context,
-        completion: @escaping (MealEntry) -> ()
+        completion: @escaping (MealEntry) -> Void
     ) {
+        
         Task {
             var currentDate = Date()
             if currentDate.hour >= 20 {
@@ -45,6 +50,7 @@ struct MealProvider: TimelineProvider {
     }
 
     func getTimeline(
+        for configuration: Intent,
         in context: Context,
         completion: @escaping (Timeline<Entry>) -> ()
     ) {
@@ -54,6 +60,13 @@ struct MealProvider: TimelineProvider {
             if currentDate.hour >= 20 {
                 currentDate = currentDate.adding(by: .day, value: 1)
             }
+            let mealPartTime: MealPartTime
+            if configuration.displayMeal == .auto {
+                mealPartTime = MealPartTime(hour: currentDate)
+            } else {
+                mealPartTime = configuration.displayMeal.toMealPartTime()
+            }
+
             do {
                 let meal = try await mealClient.fetchMeal(currentDate)
                 let allergy = try localDatabaseClient.readRecords(as: AllergyLocalEntity.self)
@@ -61,7 +74,7 @@ struct MealProvider: TimelineProvider {
                 let entry = MealEntry(
                     date: currentDate,
                     meal: meal,
-                    mealPartTime: MealPartTime(hour: currentDate),
+                    mealPartTime: mealPartTime,
                     allergyList: allergy
                 )
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
@@ -166,7 +179,11 @@ struct TodayWhatMealWidget: Widget {
     let kind: String = "TodayWhatMealWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: MealProvider()) { entry in
+        IntentConfiguration(
+            kind: kind,
+            intent: DisplayMealIntent.self,
+            provider: MealProvider()
+        ) { entry in
             MealWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("오늘 급식 뭐임")
@@ -179,7 +196,10 @@ struct TodayWhatTimeTableWidget: Widget {
     let kind: String = "TodayWhatTimeTableWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: TimeTableProvider()) { entry in
+        StaticConfiguration(
+            kind: kind,
+            provider: TimeTableProvider()
+        ) { entry in
             TimeTableWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("오늘 시간표 뭐임")
@@ -188,7 +208,23 @@ struct TodayWhatTimeTableWidget: Widget {
     }
 }
 
+private extension DisplayMeal {
+    func toMealPartTime() -> MealPartTime {
+        switch self {
+        case .breakfast:
+            return .breakfast
 
+        case .lunch:
+            return .lunch
+
+        case .dinner:
+            return .dinner
+
+        default:
+            return .breakfast
+        }
+    }
+}
 
 struct TodayWhatWidget_Previews: PreviewProvider {
     static var previews: some View {

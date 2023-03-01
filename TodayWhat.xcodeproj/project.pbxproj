@@ -27,6 +27,9 @@
 		4608441428DBFE2600D60E39 /* TodayWhat_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608441328DBFE2600D60E39 /* TodayWhat_Watch_AppTests.swift */; };
 		4608441E28DBFE2600D60E39 /* TodayWhat_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608441D28DBFE2600D60E39 /* TodayWhat_Watch_AppUITests.swift */; };
 		4608442028DBFE2600D60E39 /* TodayWhat_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608441F28DBFE2600D60E39 /* TodayWhat_Watch_AppUITestsLaunchTests.swift */; };
+		4611F4AD29AFA22B00F13A86 /* TodayWhatWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603114F2923DCE700A5CB09 /* TodayWhatWidget.swift */; };
+		4611F4B529AFAECD00F13A86 /* DisplayMeal.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4611F4B429AFAECD00F13A86 /* DisplayMeal.intentdefinition */; };
+		4611F4B629AFB18C00F13A86 /* DisplayMeal.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4611F4B429AFAECD00F13A86 /* DisplayMeal.intentdefinition */; };
 		4616628D298A225C00E24818 /* TimeTableClient in Frameworks */ = {isa = PBXBuildFile; productRef = 4616628C298A225C00E24818 /* TimeTableClient */; };
 		46166290298A2B6800E24818 /* MealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4616628F298A2B6800E24818 /* MealView.swift */; };
 		46166293298A328E00E24818 /* TimeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46166292298A328E00E24818 /* TimeTableView.swift */; };
@@ -118,7 +121,6 @@
 		465023662926FEBC008B015A /* UserDefaultsClient in Frameworks */ = {isa = PBXBuildFile; productRef = 465023652926FEBC008B015A /* UserDefaultsClient */; };
 		4650236C29270791008B015A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4650236B29270791008B015A /* Preview Assets.xcassets */; };
 		4650237B292730B7008B015A /* MealPartTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46502379292730B7008B015A /* MealPartTime.swift */; };
-		4650237C29273179008B015A /* TodayWhatWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603114F2923DCE700A5CB09 /* TodayWhatWidget.swift */; };
 		4650237D292731F2008B015A /* MealWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46502372292719B8008B015A /* MealWidgetEntryView.swift */; };
 		465023AF292AFF4E008B015A /* Entity in Frameworks */ = {isa = PBXBuildFile; productRef = 465023AE292AFF4E008B015A /* Entity */; };
 		465023B2292B049F008B015A /* Entity in Frameworks */ = {isa = PBXBuildFile; productRef = 465023B1292B049F008B015A /* Entity */; };
@@ -246,6 +248,7 @@
 		4608441928DBFE2600D60E39 /* TodayWhat Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TodayWhat Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4608441D28DBFE2600D60E39 /* TodayWhat_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhat_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		4608441F28DBFE2600D60E39 /* TodayWhat_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWhat_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		4611F4B429AFAECD00F13A86 /* DisplayMeal.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = DisplayMeal.intentdefinition; sourceTree = "<group>"; };
 		4616628F298A2B6800E24818 /* MealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealView.swift; sourceTree = "<group>"; };
 		46166292298A328E00E24818 /* TimeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableView.swift; sourceTree = "<group>"; };
 		4616629A298A599900E24818 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -549,6 +552,7 @@
 				46BFE0C229459A100023443A /* TimeTableWidgetEntryView.swift */,
 				460311522923DCE800A5CB09 /* Assets.xcassets */,
 				460311542923DCE800A5CB09 /* Info.plist */,
+				4611F4B429AFAECD00F13A86 /* DisplayMeal.intentdefinition */,
 			);
 			path = TodayWhatWidget;
 			sourceTree = "<group>";
@@ -1288,8 +1292,9 @@
 			files = (
 				46BFE0C329459A100023443A /* TimeTableWidgetEntryView.swift in Sources */,
 				4650237D292731F2008B015A /* MealWidgetEntryView.swift in Sources */,
-				4650237C29273179008B015A /* TodayWhatWidget.swift in Sources */,
+				4611F4B529AFAECD00F13A86 /* DisplayMeal.intentdefinition in Sources */,
 				4650237B292730B7008B015A /* MealPartTime.swift in Sources */,
+				4611F4AD29AFA22B00F13A86 /* TodayWhatWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1299,6 +1304,7 @@
 			files = (
 				460311172923202500A5CB09 /* View+eraseToAnyView.swift in Sources */,
 				461C23BE293442E400B3A9CB /* DisplayInfoPart.swift in Sources */,
+				4611F4B629AFB18C00F13A86 /* DisplayMeal.intentdefinition in Sources */,
 				4603112D292356F600A5CB09 /* BaseLocalDataSource.swift in Sources */,
 				460843DB28DBFE2400D60E39 /* TodayWhatApp.swift in Sources */,
 				461C239429343D9100B3A9CB /* AppDelegate.swift in Sources */,
