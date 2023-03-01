@@ -1031,9 +1031,9 @@
 			productReference = 4608441928DBFE2600D60E39 /* TodayWhat Watch AppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		461D17F32986D9250055F0F5 /* TodayWhat Map App */ = {
+		461D17F32986D9250055F0F5 /* TodayWhat Mac App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 461D18022986D9260055F0F5 /* Build configuration list for PBXNativeTarget "TodayWhat Map App" */;
+			buildConfigurationList = 461D18022986D9260055F0F5 /* Build configuration list for PBXNativeTarget "TodayWhat Mac App" */;
 			buildPhases = (
 				461D17F02986D9250055F0F5 /* Sources */,
 				461D17F12986D9250055F0F5 /* Frameworks */,
@@ -1046,7 +1046,7 @@
 			dependencies = (
 				463490C8298D19B9007EBF26 /* PBXTargetDependency */,
 			);
-			name = "TodayWhat Map App";
+			name = "TodayWhat Mac App";
 			packageProductDependencies = (
 				461D180729896A570055F0F5 /* ComposableArchitecture */,
 				461D180929896A5D0055F0F5 /* Dependencies */,
@@ -1156,7 +1156,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				461D17F32986D9250055F0F5 /* TodayWhat Map App */,
+				461D17F32986D9250055F0F5 /* TodayWhat Mac App */,
 				460843D628DBFE2400D60E39 /* TodayWhat */,
 				460843F028DBFE2500D60E39 /* TodayWhatUITests */,
 				460843FC28DBFE2500D60E39 /* TodayWhat Watch App */,
@@ -1661,7 +1661,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TodayWhat/TodayWhat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 10;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"TodayWhat/Preview Content\"";
 				DEVELOPMENT_TEAM = 235C2RVZ7L;
@@ -1701,7 +1701,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TodayWhat/TodayWhat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"TodayWhat/Preview Content\"";
 				DEVELOPMENT_TEAM = 235C2RVZ7L;
 				ENABLE_PREVIEWS = YES;
@@ -2057,7 +2057,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		461D18022986D9260055F0F5 /* Build configuration list for PBXNativeTarget "TodayWhat Map App" */ = {
+		461D18022986D9260055F0F5 /* Build configuration list for PBXNativeTarget "TodayWhat Mac App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				461D18002986D9260055F0F5 /* Debug */,
