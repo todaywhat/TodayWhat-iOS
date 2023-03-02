@@ -6,5 +6,9 @@
 	<string>$(API_KEY)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>DisplayMealIntent</string>
+	</array>
 </dict>
 </plist>

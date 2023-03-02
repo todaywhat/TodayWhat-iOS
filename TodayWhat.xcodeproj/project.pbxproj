@@ -139,6 +139,8 @@
 		46E4D6D429897352005FB823 /* TWColor in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D329897352005FB823 /* TWColor */; };
 		46E4D6D629897ACC005FB823 /* Entity in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D529897ACC005FB823 /* Entity */; };
 		46E4D6D829897B10005FB823 /* MealClient in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D729897B10005FB823 /* MealClient */; };
+		46FE681A29B02A0100152293 /* DisplayMeal.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 46FE681929B02A0100152293 /* DisplayMeal.intentdefinition */; };
+		46FE681B29B02BEC00152293 /* DisplayMeal.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 46FE681929B02A0100152293 /* DisplayMeal.intentdefinition */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -307,6 +309,7 @@
 		46BFE0C229459A100023443A /* TimeTableWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableWidgetEntryView.swift; sourceTree = "<group>"; };
 		46BFE0FF2945BA1E0023443A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		46C2BEA129A8DAD200674B64 /* DeviceClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DeviceClient; sourceTree = "<group>"; };
+		46FE681929B02A0100152293 /* DisplayMeal.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = DisplayMeal.intentdefinition; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -789,6 +792,7 @@
 				463490E2298D1AB9007EBF26 /* TodayWhatMacWidget.swift */,
 				463490E4298D1AC6007EBF26 /* MealWidgetEntryView.swift */,
 				463490E6298D1AD4007EBF26 /* TimeTableWidgetEntryView.swift */,
+				46FE681929B02A0100152293 /* DisplayMeal.intentdefinition */,
 			);
 			path = TodayWhatMacWidget;
 			sourceTree = "<group>";
@@ -1370,6 +1374,7 @@
 				46AFD9A92991329C00BA5762 /* AllergyCore.swift in Sources */,
 				461D17F72986D9250055F0F5 /* AppDelegate.swift in Sources */,
 				46166290298A2B6800E24818 /* MealView.swift in Sources */,
+				46FE681B29B02BEC00152293 /* DisplayMeal.intentdefinition in Sources */,
 				464DED3A29A5DBCF00D9899C /* AllergyView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1378,6 +1383,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46FE681A29B02A0100152293 /* DisplayMeal.intentdefinition in Sources */,
 				463490E7298D1AD4007EBF26 /* TimeTableWidgetEntryView.swift in Sources */,
 				463490E5298D1AC6007EBF26 /* MealWidgetEntryView.swift in Sources */,
 				463490E1298D1AAB007EBF26 /* MealPartTime.swift in Sources */,
@@ -1685,7 +1691,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = baegteun.TodayWhat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1724,7 +1730,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = baegteun.TodayWhat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
