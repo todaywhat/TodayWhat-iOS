@@ -29,7 +29,6 @@
 		4608442028DBFE2600D60E39 /* TodayWhat_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608441F28DBFE2600D60E39 /* TodayWhat_Watch_AppUITestsLaunchTests.swift */; };
 		4611F4AD29AFA22B00F13A86 /* TodayWhatWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4603114F2923DCE700A5CB09 /* TodayWhatWidget.swift */; };
 		4611F4B529AFAECD00F13A86 /* DisplayMeal.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4611F4B429AFAECD00F13A86 /* DisplayMeal.intentdefinition */; };
-		4611F4B629AFB18C00F13A86 /* DisplayMeal.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4611F4B429AFAECD00F13A86 /* DisplayMeal.intentdefinition */; };
 		4616628D298A225C00E24818 /* TimeTableClient in Frameworks */ = {isa = PBXBuildFile; productRef = 4616628C298A225C00E24818 /* TimeTableClient */; };
 		46166290298A2B6800E24818 /* MealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4616628F298A2B6800E24818 /* MealView.swift */; };
 		46166293298A328E00E24818 /* TimeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46166292298A328E00E24818 /* TimeTableView.swift */; };
@@ -141,6 +140,8 @@
 		46E4D6D829897B10005FB823 /* MealClient in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D729897B10005FB823 /* MealClient */; };
 		46FE681A29B02A0100152293 /* DisplayMeal.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 46FE681929B02A0100152293 /* DisplayMeal.intentdefinition */; };
 		46FE681B29B02BEC00152293 /* DisplayMeal.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 46FE681929B02A0100152293 /* DisplayMeal.intentdefinition */; };
+		46FE681D29B054D100152293 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 46FE681C29B054D100152293 /* Dependencies */; };
+		46FE681E29B055E600152293 /* DisplayMeal.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4611F4B429AFAECD00F13A86 /* DisplayMeal.intentdefinition */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -432,6 +433,7 @@
 				463490D5298D19F2007EBF26 /* MealClient in Frameworks */,
 				463490D7298D1A78007EBF26 /* NeisClient in Frameworks */,
 				463490BF298D19B8007EBF26 /* SwiftUI.framework in Frameworks */,
+				46FE681D29B054D100152293 /* Dependencies in Frameworks */,
 				463490CF298D19E1007EBF26 /* DateUtil in Frameworks */,
 				463490DB298D1A86007EBF26 /* TimeTableClient in Frameworks */,
 				463490D9298D1A7F007EBF26 /* SwiftUIUtil in Frameworks */,
@@ -1098,6 +1100,7 @@
 				463490DA298D1A86007EBF26 /* TimeTableClient */,
 				463490DC298D1A8C007EBF26 /* TWColor */,
 				463490DE298D1A91007EBF26 /* UserDefaultsClient */,
+				46FE681C29B054D100152293 /* Dependencies */,
 			);
 			productName = TodayWhatMacWidgetExtension;
 			productReference = 463490BD298D19B8007EBF26 /* TodayWhatMacWidgetExtension.appex */;
@@ -1308,7 +1311,7 @@
 			files = (
 				460311172923202500A5CB09 /* View+eraseToAnyView.swift in Sources */,
 				461C23BE293442E400B3A9CB /* DisplayInfoPart.swift in Sources */,
-				4611F4B629AFB18C00F13A86 /* DisplayMeal.intentdefinition in Sources */,
+				46FE681E29B055E600152293 /* DisplayMeal.intentdefinition in Sources */,
 				4603112D292356F600A5CB09 /* BaseLocalDataSource.swift in Sources */,
 				460843DB28DBFE2400D60E39 /* TodayWhatApp.swift in Sources */,
 				461C239429343D9100B3A9CB /* AppDelegate.swift in Sources */,
@@ -2433,6 +2436,11 @@
 		46E4D6D729897B10005FB823 /* MealClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MealClient;
+		};
+		46FE681C29B054D100152293 /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 461C2358293070FC00B3A9CB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = Dependencies;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
