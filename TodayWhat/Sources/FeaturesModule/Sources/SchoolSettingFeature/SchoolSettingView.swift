@@ -175,6 +175,7 @@ public struct SchoolSettingView: View {
                 focusField = .school
             }
         }
+        .hideKeyboardWhenTap()
         .background {
             Color.background.ignoresSafeArea()
         }
