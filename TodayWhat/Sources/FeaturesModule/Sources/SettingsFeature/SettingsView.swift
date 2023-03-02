@@ -43,10 +43,9 @@ public struct SettingsView: View {
                 blockView(spacing: 24) {
                     viewStore.send(.allergyBlockButtonDidTap)
                 } label: {
-                    Image("Allergy")
-                        .resizable()
+                    Image("AllergySetting")
                         .renderingMode(.template)
-                        .frame(width: 24, height: 24)
+                        .frame(width: 32, height: 32)
                         .foregroundColor(.extraPrimary)
 
                     Text("알레르기 설정")
