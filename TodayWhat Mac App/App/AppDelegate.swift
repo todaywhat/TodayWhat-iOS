@@ -10,8 +10,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         if let statusButton = statusItem.button {
-            statusButton.image = NSImage(named: "TodayWhat")
-            statusButton.image?.size = .init(width: 22, height: 22)
+            statusButton.image = NSImage(named: "BAG")
             statusButton.action = #selector(togglePopover)
             statusButton.target = self
         }
