@@ -25,7 +25,7 @@ public struct SchoolSettingCore: ReducerProtocol {
         public var isLoading = false
 
         public var titleMessage: String {
-            if school.isEmpty {
+            if selectedSchool == nil {
                 return "학교 이름을 입력해주세요!"
             } else if grade.isEmpty {
                 return "몇학년 이신가요?"
