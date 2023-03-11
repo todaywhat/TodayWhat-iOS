@@ -89,7 +89,7 @@ public struct MainView: View {
                         .foregroundColor(.darkGray)
 
                     let gradeClassString = "\(viewStore.grade)학년 \(viewStore.class)반"
-                    let dateString = "\(Date().toString())"
+                    let dateString = "\(viewStore.displayDate.toString())"
                     Text("\(gradeClassString) • \(dateString)")
                         .font(.system(size: 14))
                         .foregroundColor(.extraGray)
