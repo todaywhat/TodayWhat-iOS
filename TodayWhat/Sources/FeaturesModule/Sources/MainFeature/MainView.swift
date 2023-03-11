@@ -88,7 +88,9 @@ public struct MainView: View {
                         .font(.system(size: 16, weight: .bold))
                         .foregroundColor(.darkGray)
 
-                    Text("\(viewStore.grade)학년 \(viewStore.class)반")
+                    let gradeClassString = "\(viewStore.grade)학년 \(viewStore.class)반"
+                    let dateString = "\(Date().toString())"
+                    Text("\(gradeClassString) • \(dateString)")
                         .font(.system(size: 14))
                         .foregroundColor(.extraGray)
                 }
@@ -146,5 +148,14 @@ public struct MainView: View {
         } label: {
             EmptyView()
         }
+    }
+}
+
+private extension Date {
+    func toString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM월 dd일 EEEE"
+        formatter.locale = Locale(identifier: "ko_kr")
+        return formatter.string(from: self)
     }
 }
