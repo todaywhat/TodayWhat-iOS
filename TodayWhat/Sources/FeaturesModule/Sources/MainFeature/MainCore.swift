@@ -11,6 +11,7 @@ public struct MainCore: ReducerProtocol {
         public var school = ""
         public var grade = ""
         public var `class` = ""
+        public var displayDate = Date()
         public var currentTab = 0
         public var mealCore: MealCore.State? = nil
         public var timeTableCore: TimeTableCore.State? = nil
@@ -36,6 +37,13 @@ public struct MainCore: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                if userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true {
+                    if state.displayDate.weekday == 7 {
+                        state.displayDate = state.displayDate.adding(by: .day, value: 2)
+                    } else if state.displayDate.weekday == 1 {
+                        state.displayDate = state.displayDate.adding(by: .day, value: 1)
+                    }
+                }
                 state.school = userDefaultsClient.getValue(.school) as? String ?? ""
                 state.grade = "\(userDefaultsClient.getValue(.grade) as? Int ?? 1)"
                 state.class = "\(userDefaultsClient.getValue(.class) as? Int ?? 1)"
