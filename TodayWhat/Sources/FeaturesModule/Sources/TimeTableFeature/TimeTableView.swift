@@ -20,10 +20,10 @@ public struct TimeTableView: View {
                     .foregroundColor(.darkGray)
 
                 if Date().month == 3 {
-                    Text("3월 초중반에는 neis에 정규시간표가\n 등록되어있지 않을 수도 있어요!")
+                    Text("3월 초중반에는 neis에 정규시간표가\n 등록되어있지 않을 수도 있어요.")
                         .multilineTextAlignment(.center)
-                        .padding(.top, 16)
-                        .foregroundColor(.darkGray)
+                        .padding(.top, 14)
+                        .foregroundColor(.extraGray)
                 }
             }
 
