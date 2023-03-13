@@ -27,7 +27,12 @@ struct MainView: View {
             if viewModel.part != .timeTable && viewModel.meal == nil {
                 Text("등록된 정보를 찾지 못했어요 😥")
             } else if viewModel.part == .timeTable && viewModel.timeTables.isEmpty {
-                Text("등록된 정보를 찾지 못했어요 😥")
+                let date = Date()
+                if date.weekday == 7 || date.weekday == 1 {
+                    Text("오늘은 주말이에요! 🛏️")
+                } else {
+                    Text("등록된 정보를 찾지 못했어요 😥")
+                }
             }
             
             LazyVStack(spacing: 4) {
