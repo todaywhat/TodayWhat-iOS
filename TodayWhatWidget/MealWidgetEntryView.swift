@@ -31,6 +31,12 @@ struct MealWidgetEntryView: View {
         case .systemLarge:
             LargeMealWidgetView(entry: entry)
 
+        case .accessoryRectangular:
+            RectangularWidgetView(entry: entry)
+
+        case .accessoryCircular:
+            CircularWidgetView()
+
         default:
             EmptyView()
         }
@@ -221,3 +227,27 @@ private struct LargeMealWidgetView: View {
     }
 }
 
+
+private struct RectangularWidgetView: View {
+    var entry: MealProvider.Entry
+
+    var body: some View {
+        let fullMeal = entry.meal.meals(mealPartTime: entry.mealPartTime).meals.joined(separator: ", ")
+        Text("\(entry.mealPartTime.display) - \(mealDisplay(meal: fullMeal))")
+            .lineLimit(nil)
+    }
+
+    private func mealDisplay(meal: String) -> String {
+        return meal.replacingOccurrences(of: "[0-9.() ]", with: "", options: [.regularExpression])
+    }
+}
+
+private struct CircularWidgetView: View {
+    var body: some View {
+        Image("CircularMeal")
+            .resizable()
+            .frame(width: 66, height: 66)
+            .clipShape(Circle())
+            .foregroundColor(.gray)
+    }
+}
