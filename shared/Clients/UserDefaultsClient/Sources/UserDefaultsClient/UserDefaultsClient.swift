@@ -13,6 +13,7 @@ public enum UserDefaultsKeys: String {
     case `class` = "CLASS"
     case major = "MAJOR"
     case isSkipWeekend = "IS-SKIP-WEEKEND"
+    case isSkipAfterDinner = "IS-SKIP-AFTER-DINNER"
 }
 
 public struct UserDefaultsClient {

@@ -121,13 +121,22 @@ struct SettingsView: View {
                     Text("주말 스킵하기")
                 }
 
+                Toggle(
+                    isOn: viewStore.binding(
+                        get: \.isSkipAfterDinner,
+                        send: { .setIsSkipAfterDinner($0) }
+                    )
+                ) {
+                    Text("저녁(7시) 이후에는 내일 급식 표시")
+                }
+
                 LaunchAtLogin.Toggle {
                     Text("시작 시 자동실행")
                 }
 
                 if viewStore.isNewVersionExist {
                     Button {
-                        let url = URL(string: "https://apps.apple.com/kr/app/%EC%98%A4%EB%8A%98-%EB%AD%90%EC%9E%84/id1629567018?mt=12") ?? URL(string: "https://google.com")!
+                        let url = URL(string: "https://apps.apple.com/app/id1629567018") ?? URL(string: "https://google.com")!
                         openURL(url)
                     } label: {
                         Text("오늘 뭐임 New 버전이 있어요!")

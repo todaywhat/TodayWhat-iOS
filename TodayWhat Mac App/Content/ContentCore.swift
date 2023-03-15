@@ -57,10 +57,22 @@ struct ContentCore: ReducerProtocol {
 
                 return .merge(
                     .task {
-                        .mealResponse(await TaskResult { try await mealClient.fetchMeal(Date()) })
+                        .mealResponse(await TaskResult {
+                            var targetDate = Date()
+                            if targetDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
+                                targetDate = targetDate.adding(by: .day, value: 1)
+                            }
+                            return try await mealClient.fetchMeal(targetDate)
+                        })
                     },
                     .task {
-                        .timetableResponse(await TaskResult { try await timeTableClient.fetchTimeTable(Date()) })
+                        .timetableResponse(await TaskResult {
+                            var targetDate = Date()
+                            if targetDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
+                                targetDate = targetDate.adding(by: .day, value: 1)
+                            }
+                            return try await timeTableClient.fetchTimeTable(targetDate)
+                        })
                     }
                 )
 
