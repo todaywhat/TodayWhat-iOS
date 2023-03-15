@@ -23,6 +23,7 @@ struct SettingsCore: ReducerProtocol {
         var schoolMajorList: [String] = []
         var isLoading = false
         var isSkipWeekend = false
+        var isSkipAfterDinner = true
         var isNewVersionExist = false
     }
 
@@ -33,6 +34,7 @@ struct SettingsCore: ReducerProtocol {
         case setGradeText(String)
         case setClassText(String)
         case setIsSkipWeekend(Bool)
+        case setIsSkipAfterDinner(Bool)
         case schoolListResponse(TaskResult<[School]>)
         case schoolMajorListResponse(TaskResult<[String]>)
         case versionCheck(TaskResult<String>)
@@ -59,6 +61,7 @@ struct SettingsCore: ReducerProtocol {
             state.gradeText = "\(grade)"
             state.classText = "\(`class`)"
             state.isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
+            state.isSkipAfterDinner = userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true
             state.majorText = userDefaultsClient.getValue(.major) as? String ?? ""
             let majorList = try? localDatabaseClient.readRecords(as: SchoolMajorLocalEntity.self)
                 .map { $0.major }
@@ -100,6 +103,10 @@ struct SettingsCore: ReducerProtocol {
         case let .setIsSkipWeekend(isSkipWeekend):
             state.isSkipWeekend = isSkipWeekend
             userDefaultsClient.setValue(.isSkipWeekend, isSkipWeekend)
+
+        case let .setIsSkipAfterDinner(isSkipAfterDinner):
+            state.isSkipAfterDinner = isSkipAfterDinner
+            userDefaultsClient.setValue(.isSkipAfterDinner, isSkipAfterDinner)
 
         case let .schoolListResponse(.success(schoolList)):
             state.schoolList = schoolList
