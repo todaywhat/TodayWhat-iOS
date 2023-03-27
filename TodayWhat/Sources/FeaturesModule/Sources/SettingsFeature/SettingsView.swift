@@ -96,16 +96,6 @@ public struct SettingsView: View {
             }
 
             Spacer()
-
-            if viewStore.isExistNewVersion {
-                TWButton(title: "오늘 뭐임의 새로운 버전이 있어요!") {
-                    let url = URL(string: "https://apps.apple.com/kr/app/%EC%98%A4%EB%8A%98-%EB%AD%90%EC%9E%84/id1629567018?mt=12") ?? URL(string: "https://google.com")!
-                    openURL(url)
-                }
-                .font(.system(size: 16, weight: .bold))
-                .padding(.bottom, 16)
-                .animation(.default, value: viewStore.isExistNewVersion)
-            }
         }
         .onAppear {
             viewStore.send(.onAppear)
