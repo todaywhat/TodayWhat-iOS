@@ -85,9 +85,18 @@ extension TimeTableClient: DependencyKey {
                 )
             }
             
-            return response.map { $0.toDomain() }
+            return response
+                .map { $0.toDomain() }
+                .uniqued()
         }
     )
+}
+
+private extension Sequence where Element: Hashable {
+    func uniqued() -> [Element] {
+        var set = Set<Element>()
+        return filter { set.insert($0).inserted }
+    }
 }
 
 extension TimeTableClient: TestDependencyKey {

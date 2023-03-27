@@ -17,6 +17,7 @@ public struct MainCore: ReducerProtocol {
         public var timeTableCore: TimeTableCore.State? = nil
         public var settingsCore: SettingsCore.State? = nil
         public var isNavigateSettings = false
+        public var isExistNewVersion: Bool = false
 
         public init() {}
     }
@@ -29,9 +30,11 @@ public struct MainCore: ReducerProtocol {
         case settingButtonDidTap
         case settingsCore(SettingsCore.Action)
         case settingsDismissed
+        case checkVersion(TaskResult<String>)
     }
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.iTunesClient) var iTunesClient
 
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
@@ -53,6 +56,13 @@ public struct MainCore: ReducerProtocol {
                 if state.timeTableCore == nil {
                     state.timeTableCore = .init()
                 }
+                return .task {
+                    await .checkVersion(
+                        TaskResult {
+                            try await iTunesClient.fetchCurrentVersion(.ios)
+                        }
+                    )
+                }
 
             case let .tabChanged(tab):
                 state.currentTab = tab
@@ -72,6 +82,11 @@ public struct MainCore: ReducerProtocol {
             case .settingsCore(.schoolSettingCore(.schoolSettingFinished)):
                 state.settingsCore = nil
                 state.isNavigateSettings = false
+
+            case let .checkVersion(.success(latestVersion)):
+                guard !latestVersion.isEmpty else { break }
+                let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+                state.isExistNewVersion = currentVersion != latestVersion
 
             default:
                 return .none

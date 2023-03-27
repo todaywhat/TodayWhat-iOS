@@ -105,6 +105,7 @@ let package = Package(
                 .product(name: "TWButton", package: "DesignSystem"),
                 "UserDefaultsClient",
                 "MealFeature",
+                "ITunesClient",
                 "TimeTableFeature",
                 "SettingsFeature"
             ]

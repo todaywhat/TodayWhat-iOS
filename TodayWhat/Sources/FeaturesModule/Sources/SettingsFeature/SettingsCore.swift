@@ -20,7 +20,6 @@ public struct SettingsCore: ReducerProtocol {
         public var isNavigateAllergySetting: Bool = false
         public var confirmationDialog: ConfirmationDialogState<Action>? = nil
         public var alert: AlertState<Action>? = nil
-        public var isExistNewVersion: Bool = false
 
         public init() {}
     }
@@ -39,7 +38,6 @@ public struct SettingsCore: ReducerProtocol {
         case mailIssueButtonDidTap
         case alertDismissed
         case confirmationDialogDismissed
-        case checkVersion(TaskResult<String>)
     }
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
@@ -54,13 +52,6 @@ public struct SettingsCore: ReducerProtocol {
                 state.grade = userDefaultsClient.getValue(.grade) as? Int ?? 0
                 state.class = userDefaultsClient.getValue(.class) as? Int ?? 0
                 state.isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
-                return .task {
-                    await .checkVersion(
-                        TaskResult {
-                            try await iTunesClient.fetchCurrentVersion(.ios)
-                        }
-                    )
-                }
 
             case let .isSkipWeekendChanged(isSkipWeekend):
                 state.isSkipWeekend = isSkipWeekend
@@ -114,11 +105,6 @@ public struct SettingsCore: ReducerProtocol {
 
             case .confirmationDialogDismissed:
                 state.confirmationDialog = nil
-
-            case let .checkVersion(.success(latestVersion)):
-                guard !latestVersion.isEmpty else { break }
-                let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-                state.isExistNewVersion = currentVersion != latestVersion
 
             default:
                 return .none
