@@ -144,7 +144,8 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "TWColor", package: "DesignSystem"),
                 "Entity",
-                "TimeTableClient"
+                "TimeTableClient",
+                "UserDefaultsClient"
             ]
         ),
         .testTarget(name: "TimeTableFeatureTests", dependencies: ["TimeTableFeature"]),

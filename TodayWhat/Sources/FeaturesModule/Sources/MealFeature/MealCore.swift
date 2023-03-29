@@ -2,6 +2,7 @@ import ComposableArchitecture
 import Entity
 import MealClient
 import LocalDatabaseClient
+import UserDefaultsClient
 import Foundation
 import EnumUtil
 
@@ -22,6 +23,7 @@ public struct MealCore: ReducerProtocol {
 
     @Dependency(\.mealClient) var mealClient
     @Dependency(\.localDatabaseClient) var localDatabaseClient
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
@@ -32,10 +34,15 @@ public struct MealCore: ReducerProtocol {
                         .compactMap { AllergyType(rawValue: $0.allergy) ?? nil }
                 } catch { }
                 state.isLoading = true
+
                 return .task {
                     .mealResponse(
                         await TaskResult {
-                            try await mealClient.fetchMeal(Date())
+                            var targetDate = Date()
+                            if targetDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
+                                targetDate = targetDate.adding(by: .day, value: 1)
+                            }
+                            return try await mealClient.fetchMeal(targetDate)
                         }
                     )
                 }

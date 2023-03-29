@@ -17,85 +17,112 @@ public struct SettingsView: View {
     }
 
     public var body: some View {
-        VStack(alignment: .center, spacing: 9) {
-            blockView(spacing: 8) {
-                viewStore.send(.schoolBlockButtonDidTap)
-            } label: {
-                Image("School")
-                    .renderingMode(.template)
-                    .frame(width: 32, height: 32)
-                    .foregroundColor(.extraPrimary)
-
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("\(viewStore.grade)학년 \(viewStore.class)반")
-                        .font(.system(size: 14, weight: .regular))
-                        .foregroundColor(.extraGray)
-
-                    Text("\(viewStore.schoolName)")
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(.darkGray)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-            }
-
-
-            HStack(spacing: 9) {
-                blockView(spacing: 24) {
-                    viewStore.send(.allergyBlockButtonDidTap)
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .center, spacing: 9) {
+                blockView(spacing: 8) {
+                    viewStore.send(.schoolBlockButtonDidTap)
                 } label: {
-                    Image("AllergySetting")
+                    Image("School")
                         .renderingMode(.template)
                         .frame(width: 32, height: 32)
                         .foregroundColor(.extraPrimary)
 
-                    Text("알레르기 설정")
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.extraGray)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("\(viewStore.grade)학년 \(viewStore.class)반")
+                            .font(.system(size: 14, weight: .regular))
+                            .foregroundColor(.extraGray)
+
+                        Text("\(viewStore.schoolName)")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(.darkGray)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
 
-                blockView(spacing: 24) {
-                    viewStore.send(.consultingButtonDidTap)
-                } label: {
-                    Image("Consulting")
-                        .renderingMode(.template)
-                        .frame(width: 32, height: 32)
-                        .foregroundColor(.extraPrimary)
 
-                    Text("문의하기")
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.extraGray)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-            }
-            .frame(maxWidth: .infinity)
+                HStack(spacing: 9) {
+                    blockView(spacing: 24) {
+                        viewStore.send(.allergyBlockButtonDidTap)
+                    } label: {
+                        Image("AllergySetting")
+                            .renderingMode(.template)
+                            .frame(width: 32, height: 32)
+                            .foregroundColor(.extraPrimary)
 
-            blockView(spacing: 24) {
-                Image("Calendar")
-                    .renderingMode(.template)
-                    .frame(width: 32, height: 32)
-                    .foregroundColor(.extraPrimary)
+                        Text("알레르기 설정")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.extraGray)
+                    }
 
-                HStack {
-                    Text("주말 스킵하기")
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.extraGray)
+                    blockView(spacing: 24) {
+                        viewStore.send(.consultingButtonDidTap)
+                    } label: {
+                        Image("Consulting")
+                            .renderingMode(.template)
+                            .frame(width: 32, height: 32)
+                            .foregroundColor(.extraPrimary)
 
-                    Spacer()
-
-                    Toggle(
-                        "",
-                        isOn: viewStore.binding(
-                            get: \.isSkipWeekend,
-                            send: SettingsCore.Action.isSkipWeekendChanged
-                        )
-                    )
-                    .labelsHidden()
-                    .tint(.extraPrimary)
+                        Text("문의하기")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.extraGray)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
                 }
                 .frame(maxWidth: .infinity)
-            }
 
-            Spacer()
+                blockView(spacing: 24) {
+                    Image("Calendar")
+                        .renderingMode(.template)
+                        .frame(width: 32, height: 32)
+                        .foregroundColor(.extraPrimary)
+
+                    HStack {
+                        Text("주말 스킵하기")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.extraGray)
+
+                        Spacer()
+
+                        Toggle(
+                            "",
+                            isOn: viewStore.binding(
+                                get: \.isSkipWeekend,
+                                send: SettingsCore.Action.isSkipWeekendChanged
+                            )
+                        )
+                        .labelsHidden()
+                        .tint(.extraPrimary)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+
+                blockView(spacing: 24) {
+                    Image("SmallMeal")
+                        .renderingMode(.template)
+                        .frame(width: 32, height: 32)
+                        .foregroundColor(.extraPrimary)
+
+                    HStack {
+                        Text("저녁(7시) 이후에는 내일 급식 표시")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.extraGray)
+
+                        Spacer()
+
+                        Toggle(
+                            "",
+                            isOn: viewStore.binding(
+                                get: \.isSkipAfterDinner,
+                                send: SettingsCore.Action.isSkipWeekendChanged
+                            )
+                        )
+                        .labelsHidden()
+                        .tint(.extraPrimary)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+                .padding(.bottom, 32)
+            }
         }
         .onAppear {
             viewStore.send(.onAppear)
