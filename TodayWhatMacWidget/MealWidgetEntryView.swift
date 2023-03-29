@@ -145,7 +145,7 @@ private struct MediumMealWidgetView: View {
 
     private func isMealContainsAllergy(meal: String) -> Bool {
         entry.allergyList
-            .first { meal.contains($0.number) } != nil
+            .first { meal.contains("(\($0.number)") || meal.contains(".\($0.number)") } != nil
     }
 }
 
