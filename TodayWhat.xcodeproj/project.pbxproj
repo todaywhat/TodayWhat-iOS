@@ -307,6 +307,7 @@
 		467CD849292C4D1A00A9766A /* FeaturesModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FeaturesModule; sourceTree = "<group>"; };
 		467CD84A292C512400A9766A /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignSystem; sourceTree = "<group>"; };
 		46AFD9A82991329C00BA5762 /* AllergyCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergyCore.swift; sourceTree = "<group>"; };
+		46BF593E29D42534000C3EAE /* TodayWhat-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TodayWhat-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		46BFE0C229459A100023443A /* TimeTableWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableWidgetEntryView.swift; sourceTree = "<group>"; };
 		46BFE0FF2945BA1E0023443A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		46C2BEA129A8DAD200674B64 /* DeviceClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DeviceClient; sourceTree = "<group>"; };
@@ -622,6 +623,7 @@
 		4608440128DBFE2500D60E39 /* TodayWhat Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				46BF593E29D42534000C3EAE /* TodayWhat-Watch-App-Info.plist */,
 				461C23CE2934496100B3A9CB /* Manager */,
 				4647B12D28DC1CCC00FAB81B /* Scenes */,
 				4608440228DBFE2500D60E39 /* TodayWhatApp.swift */,
@@ -1616,6 +1618,7 @@
 				DEVELOPMENT_TEAM = 235C2RVZ7L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "TodayWhat-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "오늘 뭐임";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = baegteun.TodayWhat;
@@ -1647,6 +1650,7 @@
 				DEVELOPMENT_TEAM = 235C2RVZ7L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "TodayWhat-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "오늘 뭐임";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = baegteun.TodayWhat;
