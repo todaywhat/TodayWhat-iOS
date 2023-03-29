@@ -14,6 +14,7 @@ public struct SettingsCore: ReducerProtocol {
         public var grade: Int = 0
         public var `class`: Int = 0
         public var isSkipWeekend: Bool = false
+        public var isSkipAfterDinner: Bool = false
         public var schoolSettingCore: SchoolSettingCore.State? = nil
         public var isNavigateSchoolSetting: Bool = false
         public var allergySettingCore: AllergySettingCore.State? = nil
@@ -27,6 +28,7 @@ public struct SettingsCore: ReducerProtocol {
     public enum Action: Equatable {
         case onAppear
         case isSkipWeekendChanged(Bool)
+        case isSkipAfterDinnerChanged(Bool)
         case schoolBlockButtonDidTap
         case schoolSettingDismissed
         case schoolSettingCore(SchoolSettingCore.Action)
@@ -52,10 +54,15 @@ public struct SettingsCore: ReducerProtocol {
                 state.grade = userDefaultsClient.getValue(.grade) as? Int ?? 0
                 state.class = userDefaultsClient.getValue(.class) as? Int ?? 0
                 state.isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
+                state.isSkipAfterDinner = userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true
 
             case let .isSkipWeekendChanged(isSkipWeekend):
                 state.isSkipWeekend = isSkipWeekend
                 userDefaultsClient.setValue(.isSkipWeekend, isSkipWeekend)
+
+            case let .isSkipAfterDinnerChanged(isSkipAfterDinner):
+                state.isSkipAfterDinner = isSkipAfterDinner
+                userDefaultsClient.setValue(.isSkipAfterDinner, isSkipAfterDinner)
 
             case .schoolBlockButtonDidTap:
                 state.schoolSettingCore = .init()

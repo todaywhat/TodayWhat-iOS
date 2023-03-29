@@ -2,6 +2,7 @@ import ComposableArchitecture
 import Entity
 import Foundation
 import TimeTableClient
+import UserDefaultsClient
 
 public struct TimeTableCore: ReducerProtocol {
     public init() {}
@@ -18,6 +19,7 @@ public struct TimeTableCore: ReducerProtocol {
     }
 
     @Dependency(\.timeTableClient) var timeTableClient
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
@@ -27,7 +29,11 @@ public struct TimeTableCore: ReducerProtocol {
                 return .task {
                     .timeTableResponse(
                         await TaskResult {
-                            try await timeTableClient.fetchTimeTable(Date())
+                            var targetDate = Date()
+                            if targetDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
+                                targetDate = targetDate.adding(by: .day, value: 1)
+                            }
+                            return try await timeTableClient.fetchTimeTable(targetDate)
                         }
                     )
                 }
