@@ -10,6 +10,7 @@ public struct MainView: View {
     let store: StoreOf<MainCore>
     @State var tab = 0
     @ObservedObject var viewStore: ViewStoreOf<MainCore>
+    @Environment(\.openURL) var openURL
     
     public init(store: StoreOf<MainCore>) {
         self.store = store
@@ -32,27 +33,47 @@ public struct MainView: View {
                 )
                 .padding(.top, 32)
 
-                TabView(
-                    selection: viewStore.binding(
-                        get: \.currentTab,
-                        send: MainCore.Action.tabChanged
-                    ).animation(.default)
-                ) {
-                    IfLetStore(
-                        store.scope(state: \.mealCore, action: MainCore.Action.mealCore)
-                    ) { store in
-                        MealView(store: store)
-                    }
-                    .tag(0)
+                ZStack(alignment: .bottomTrailing) {
+                    TabView(
+                        selection: viewStore.binding(
+                            get: \.currentTab,
+                            send: MainCore.Action.tabChanged
+                        ).animation(.default)
+                    ) {
+                        IfLetStore(
+                            store.scope(state: \.mealCore, action: MainCore.Action.mealCore)
+                        ) { store in
+                            MealView(store: store)
+                        }
+                        .tag(0)
 
-                    IfLetStore(
-                        store.scope(state: \.timeTableCore, action: MainCore.Action.timeTableCore)
-                    ) { store in
-                        TimeTableView(store: store)
+                        IfLetStore(
+                            store.scope(state: \.timeTableCore, action: MainCore.Action.timeTableCore)
+                        ) { store in
+                            TimeTableView(store: store)
+                        }
+                        .tag(1)
                     }
-                    .tag(1)
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+
+                    if viewStore.isExistNewVersion {
+                        Button {
+                            let url = URL(
+                                string: "https://apps.apple.com/app/id1629567018"
+                            ) ?? URL(string: "https://google.com")!
+                            openURL(url)
+                        } label: {
+                            Circle()
+                                .frame(width: 56, height: 56)
+                                .foregroundColor(.extraPrimary)
+                                .overlay {
+                                    Image(systemName: "arrow.down.to.line")
+                                        .foregroundColor(.background)
+                                }
+                        }
+                        .padding([.bottom, .trailing], 16)
+                    }
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
             }
             .background(Color.background)
             .toolbar {
