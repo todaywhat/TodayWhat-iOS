@@ -84,7 +84,7 @@ public struct SchoolSettingView: View {
                         .padding(.bottom, 16)
                     }
 
-                    if !viewStore.school.isEmpty {
+                    if viewStore.selectedSchool != nil {
                         TWTextField(
                             "학년",
                             text: viewStore.binding(
