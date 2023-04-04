@@ -211,7 +211,7 @@ struct TodayWhatTimeTableWidget: Widget {
         }
         .configurationDisplayName("오늘 시간표 뭐임")
         .description("오늘 시간표를 확인해요!")
-        .supportedFamilies([.systemSmall])
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }
 
