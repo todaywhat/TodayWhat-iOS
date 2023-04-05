@@ -10,18 +10,19 @@ struct TimeTableView: View {
 
     var body: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 8) {
-                ForEach(timetables, id: \.hashValue) { timetable in
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text("\(timetable.perio)교시")
-                            .bold()
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 8) {
+                    ForEach(timetables, id: \.hashValue) { timetable in
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text("\(timetable.perio)교시")
+                                .bold()
 
-                        Text(timetable.content)
+                            Text(timetable.content)
+                        }
                     }
                 }
             }
-
-            Spacer()
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .overlay(alignment: .topTrailing) {
             Text("🔄 새로고침 cmd + r")
