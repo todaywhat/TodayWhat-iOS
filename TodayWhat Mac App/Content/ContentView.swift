@@ -33,6 +33,7 @@ struct ContentView: View {
             }
             .frame(width: 400, height: 350)
             .onAppear {
+                viewStore.send(.fetchData)
                 viewStore.send(.onAppear)
             }
         }
