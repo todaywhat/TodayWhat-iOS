@@ -25,6 +25,7 @@ struct ContentCore: ReducerProtocol {
 
     enum Action: Equatable {
         case onAppear
+        case fetchData
         case refresh
         case exit
         case displayInfoTypeDidSelect(DisplayInfoType)
@@ -43,6 +44,22 @@ struct ContentCore: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                let date = Date()
+                switch date.hour {
+                case 0..<8:
+                    state.selectedInfoType = .breakfast
+
+                case 8..<13:
+                    state.selectedInfoType = .lunch
+
+                case 13..<20:
+                    state.selectedInfoType = .dinner
+
+                default:
+                    state.selectedInfoType = .breakfast
+                }
+                
+            case .fetchData:
                 guard
                     let school = userDefaultsClient.getValue(.school) as? String,
                     !school.isEmpty
@@ -78,7 +95,7 @@ struct ContentCore: ReducerProtocol {
 
             case .refresh:
                 return .run { send in
-                    await send(.onAppear)
+                    await send(.fetchData)
                 }
 
             case .exit:
@@ -95,7 +112,7 @@ struct ContentCore: ReducerProtocol {
                     state.allergyCore = nil
                     state.selectedInfoType = part
                     return .run { send in
-                        await send(.onAppear)
+                        await send(.fetchData)
                     }
 
                 case .allergy:
