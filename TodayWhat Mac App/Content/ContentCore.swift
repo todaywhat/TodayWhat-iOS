@@ -24,7 +24,7 @@ struct ContentCore: ReducerProtocol {
     }
 
     enum Action: Equatable {
-        case onAppear
+        case popoverOpen
         case fetchData
         case refresh
         case exit
@@ -43,7 +43,7 @@ struct ContentCore: ReducerProtocol {
     var body: some ReducerProtocolOf<ContentCore> {
         Reduce { state, action in
             switch action {
-            case .onAppear:
+            case .popoverOpen:
                 let date = Date()
                 switch date.hour {
                 case 0..<8:

@@ -6,6 +6,7 @@ import TWColor
 struct ContentView: View {
     let store: StoreOf<ContentCore>
     @ObservedObject var viewStore: ViewStoreOf<ContentCore>
+    @Environment(\.popoverOpen) var popoverOpenPublisher
 
     init(store: StoreOf<ContentCore>) {
         self.store = store
@@ -34,8 +35,10 @@ struct ContentView: View {
             .frame(width: 400, height: 350)
             .onAppear {
                 viewStore.send(.fetchData)
-                viewStore.send(.onAppear)
             }
+        }
+        .onReceive(popoverOpenPublisher) { output in
+            viewStore.send(.popoverOpen)
         }
     }
 

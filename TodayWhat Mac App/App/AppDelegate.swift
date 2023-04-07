@@ -1,4 +1,5 @@
 import Cocoa
+import Combine
 import ComposableArchitecture
 import SwiftUI
 
@@ -6,14 +7,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
     private var popover: NSPopover!
     private var eventMonitor: EventMonitor!
+    private let popoverSubject = CurrentValueSubject<Void, Never>(())
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        if let statusButton = statusItem.button {
-            statusButton.image = NSImage(named: "BAG")
-            statusButton.action = #selector(togglePopover)
-            statusButton.target = self
+        guard let statusButton = statusItem.button else {
+            return
         }
+        statusButton.image = NSImage(named: "BAG")
+        statusButton.action = #selector(togglePopover)
+        statusButton.target = self
 
         let popover = NSPopover()
         popover.contentSize = NSSize(width: 400, height: 350)
@@ -23,7 +26,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 initialState: .init(),
                 reducer: ContentCore()
             )
+        ).environment(
+            \.popoverOpen,
+             popoverSubject
+                .eraseToAnyPublisher()
         )
+        
         popover.contentViewController = NSHostingController(rootView: contentViw)
         
         self.popover = popover
@@ -42,6 +50,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func openPopover(_ sender: AnyObject) {
+        popoverSubject.send(())
         if let statusButton = statusItem.button {
             popover.show(relativeTo: statusButton.bounds, of: statusButton, preferredEdge: .maxY)
             popover.contentViewController?.view.window?.becomeKey()
