@@ -71,6 +71,10 @@ public struct MainCore: ReducerProtocol {
                 state.settingsCore = .init()
                 state.isNavigateSettings = true
 
+            case .mealCore(.settingsButtonDidTap):
+                state.settingsCore = .init()
+                state.isNavigateSettings = true
+
             case .settingsDismissed:
                 state.settingsCore = nil
                 state.isNavigateSettings = false

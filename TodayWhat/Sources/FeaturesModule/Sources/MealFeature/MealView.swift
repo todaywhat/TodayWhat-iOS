@@ -4,6 +4,8 @@ import EnumUtil
 import Entity
 import LabelledDivider
 import TWColor
+import TWButton
+import UserDefaultsClient
 
 public struct MealView: View {
     let store: StoreOf<MealCore>
@@ -11,11 +13,14 @@ public struct MealView: View {
     
     public init(store: StoreOf<MealCore>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 }, send: { _ in .onAppear })
+        self.viewStore = ViewStore(store, observe: { $0 })
     }
+
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     public var body: some View {
         ScrollView {
+            let date = Date()
             if let meal = viewStore.meal {
                 LazyVStack(spacing: 8) {
                     ForEach([MealType.breakfast, .lunch, .dinner], id: \.hashValue) { type in
@@ -26,7 +31,17 @@ public struct MealView: View {
                 ProgressView()
                     .progressViewStyle(.automatic)
                     .padding(.top, 16)
-            } else {
+            } else if viewStore.meal?.isEmpty ?? true,
+                      (date.weekday == 7 || date.weekday == 1),
+                      userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false {
+                Text("주말에도 월요일 급식을 보고 싶다면?")
+                    .foregroundColor(.extraGray)
+
+                TWButton(title: "설정하러가기", style: .cta) {
+                    viewStore.send(.settingsButtonDidTap)
+                }
+            }
+            else {
                 Text("등록된 정보를 찾지 못했어요 😥")
                     .padding(.top, 16)
             }
@@ -80,5 +95,13 @@ public struct MealView: View {
     private func isMealContainsAllergy(meal: String) -> Bool {
         return viewStore.allergyList
             .first { meal.contains("(\($0.number)") || meal.contains(".\($0.number)") } != nil
+    }
+}
+
+private extension Meal {
+    var isEmpty: Bool {
+        return self.breakfast.meals.isEmpty &&
+        self.lunch.meals.isEmpty &&
+        self.dinner.meals.isEmpty
     }
 }

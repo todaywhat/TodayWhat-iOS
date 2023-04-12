@@ -9,7 +9,7 @@ public struct TimeTableView: View {
     
     public init(store: StoreOf<TimeTableCore>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: { $0 }, send: { _ in .onAppear })
+        self.viewStore = ViewStore(store, observe: { $0 })
     }
 
     public var body: some View {
