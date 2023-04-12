@@ -18,6 +18,7 @@ public struct MealCore: ReducerProtocol {
     public enum Action: Equatable {
         case onAppear
         case refresh
+        case settingsButtonDidTap
         case mealResponse(TaskResult<Meal>)
     }
 
@@ -68,6 +69,9 @@ public struct MealCore: ReducerProtocol {
                     dinner: .init(meals: [], cal: 0)
                 )
                 state.isLoading = false
+
+            default:
+                break
             }
             return .none
         }

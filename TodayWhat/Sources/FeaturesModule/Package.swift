@@ -128,6 +128,7 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "LabelledDivider", package: "DesignSystem"),
+                .product(name: "TWButton", package: "DesignSystem"),
                 .product(name: "EnumUtil", package: "Utilities"),
                 "Entity",
                 "MealClient",
