@@ -1,5 +1,5 @@
 git clone https://github.com/baekteun/TodayWhat-XCConfig.git
-mv TodayWhat-XCConfig/ .
+mv todaywhat-xcconfig/XCConfig .
 
-mv TodayWhat-XCConfig/GoogleService-Info.plist ./TodayWhat 
+mv TodayWhat-XCConfig/GoogleService-Info.plist ./TodayWhat/GoogleService-Info.plist 
 
