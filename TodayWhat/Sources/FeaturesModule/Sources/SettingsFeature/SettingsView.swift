@@ -113,7 +113,7 @@ public struct SettingsView: View {
                             "",
                             isOn: viewStore.binding(
                                 get: \.isSkipAfterDinner,
-                                send: SettingsCore.Action.isSkipWeekendChanged
+                                send: SettingsCore.Action.isSkipAfterDinnerChanged
                             )
                         )
                         .labelsHidden()
