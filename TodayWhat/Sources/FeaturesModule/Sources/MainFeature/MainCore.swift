@@ -64,6 +64,16 @@ public struct MainCore: ReducerProtocol {
                     )
                 }
 
+            case .mealCore(.refresh), .timeTableCore(.refresh):
+                state.displayDate = Date()
+                if userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true {
+                    if state.displayDate.weekday == 7 {
+                        state.displayDate = state.displayDate.adding(by: .day, value: 2)
+                    } else if state.displayDate.weekday == 1 {
+                        state.displayDate = state.displayDate.adding(by: .day, value: 1)
+                    }
+                }
+
             case let .tabChanged(tab):
                 state.currentTab = tab
 
