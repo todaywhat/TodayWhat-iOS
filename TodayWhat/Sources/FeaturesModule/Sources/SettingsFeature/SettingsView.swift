@@ -25,6 +25,8 @@ public struct SettingsView: View {
                     allergySettingsView()
 
                     consultingSettingsView()
+
+                    clockSettingsView()
                 }
 
                 VStack(spacing: 0) {
@@ -88,6 +90,15 @@ public struct SettingsView: View {
             viewStore.send(.consultingButtonDidTap)
         } label: {
             settingsOptionChevronView(icon: "Consulting", text: "문의하기")
+        }
+    }
+
+    @ViewBuilder
+    func clockSettingsView() -> some View {
+        blockView(corners: [.bottomLeft, .bottomRight]) {
+            
+        } label: {
+            settingsOptionChevronView(icon: "WritingPencil", text: "시간표 수정")
         }
     }
 
