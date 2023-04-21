@@ -32,9 +32,9 @@ public struct SettingsView: View {
                 VStack(spacing: 0) {
                     skipAfterDinnerView()
 
-                    skipWeekendView()
-
                     onModifiedTimeTable()
+
+                    skipWeekendView()
                 }
                 .padding(.bottom, 32)
             }
@@ -77,6 +77,7 @@ public struct SettingsView: View {
         }
     }
 
+    // MARK: - Settings Chevron
     @ViewBuilder
     func allergySettingsView() -> some View {
         blockView(corners: [.topLeft, .topRight]) {
@@ -104,9 +105,10 @@ public struct SettingsView: View {
         }
     }
 
+    // MARK: - Settings Toggle
     @ViewBuilder
     func skipAfterDinnerView() -> some View {
-        blockView(corners: [.bottomLeft, .bottomRight]) {
+        blockView(corners: [.topLeft, .topRight]) {
             settingsOptionToggleView(
                 icon: "SmallMeal",
                 text: "오후 7시 이후 내일 급식 표시",
@@ -119,22 +121,8 @@ public struct SettingsView: View {
     }
 
     @ViewBuilder
-    func skipWeekendView() -> some View {
-        blockView(corners: [.topLeft, .topRight]) {
-            settingsOptionToggleView(
-                icon: "Calendar",
-                text: "주말 건너뛰기",
-                isOn: viewStore.binding(
-                    get: \.isSkipWeekend,
-                    send: SettingsCore.Action.isSkipWeekendChanged
-                )
-            )
-        }
-    }
-
-    @ViewBuilder
     func onModifiedTimeTable() -> some View {
-        blockView(corners: [.bottomLeft, .bottomRight]) {
+        blockView(corners: []) {
             settingsOptionToggleView(
                 icon: "Clock",
                 text: "커스텀 시간표 표시",
@@ -146,6 +134,21 @@ public struct SettingsView: View {
         }
     }
 
+    @ViewBuilder
+    func skipWeekendView() -> some View {
+        blockView(corners: [.bottomLeft, .bottomRight]) {
+            settingsOptionToggleView(
+                icon: "Calendar",
+                text: "주말 건너뛰기",
+                isOn: viewStore.binding(
+                    get: \.isSkipWeekend,
+                    send: SettingsCore.Action.isSkipWeekendChanged
+                )
+            )
+        }
+    }
+
+    // MARK: - Reusable View
     @ViewBuilder
     func blockView(
         spacing: CGFloat = 16,
@@ -218,8 +221,8 @@ public struct SettingsView: View {
     @ViewBuilder
     func growText(text: String) -> some View {
         Text(text)
-            .font(.system(size: 16, weight: .bold))
-            .foregroundColor(.extraGray)
+            .font(.system(size: 14))
+            .foregroundColor(.extraPrimary)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 
@@ -234,12 +237,13 @@ public struct SettingsView: View {
 
     @ViewBuilder
     func chevronRightIconView() -> some View {
-        Image(systemName: "chevron.right")
+        Image("ChevronRight")
             .resizable()
-            .frame(width: 6, height: 12)
+            .frame(width: 24, height: 24)
             .foregroundColor(.extraGray)
     }
 
+    // MARK: - Navigation Links
     @ViewBuilder
     func navigationLinks() -> some View {
         NavigationLink(
