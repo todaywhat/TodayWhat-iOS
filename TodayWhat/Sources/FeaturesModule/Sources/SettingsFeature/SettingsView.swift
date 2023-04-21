@@ -18,108 +18,19 @@ public struct SettingsView: View {
 
     public var body: some View {
         ScrollView(showsIndicators: false) {
-            VStack(alignment: .center, spacing: 9) {
-                blockView(spacing: 8) {
-                    viewStore.send(.schoolBlockButtonDidTap)
-                } label: {
-                    Image("School")
-                        .renderingMode(.template)
-                        .frame(width: 32, height: 32)
-                        .foregroundColor(.extraPrimary)
+            VStack(alignment: .center, spacing: 12) {
+                schoolSettingsView()
 
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("\(viewStore.grade)학년 \(viewStore.class)반")
-                            .font(.system(size: 14, weight: .regular))
-                            .foregroundColor(.extraGray)
+                VStack(spacing: 0) {
+                    allergySettingsView()
 
-                        Text("\(viewStore.schoolName)")
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(.darkGray)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    consultingSettingsView()
                 }
 
+                VStack(spacing: 0) {
+                    skipWeekendView()
 
-                HStack(spacing: 9) {
-                    blockView(spacing: 24) {
-                        viewStore.send(.allergyBlockButtonDidTap)
-                    } label: {
-                        Image("AllergySetting")
-                            .renderingMode(.template)
-                            .frame(width: 32, height: 32)
-                            .foregroundColor(.extraPrimary)
-
-                        Text("알레르기 설정")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.extraGray)
-                    }
-
-                    blockView(spacing: 24) {
-                        viewStore.send(.consultingButtonDidTap)
-                    } label: {
-                        Image("Consulting")
-                            .renderingMode(.template)
-                            .frame(width: 32, height: 32)
-                            .foregroundColor(.extraPrimary)
-
-                        Text("문의하기")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.extraGray)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                }
-                .frame(maxWidth: .infinity)
-
-                blockView(spacing: 24) {
-                    Image("Calendar")
-                        .renderingMode(.template)
-                        .frame(width: 32, height: 32)
-                        .foregroundColor(.extraPrimary)
-
-                    HStack {
-                        Text("주말 스킵하기")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.extraGray)
-
-                        Spacer()
-
-                        Toggle(
-                            "",
-                            isOn: viewStore.binding(
-                                get: \.isSkipWeekend,
-                                send: SettingsCore.Action.isSkipWeekendChanged
-                            )
-                        )
-                        .labelsHidden()
-                        .tint(.extraPrimary)
-                    }
-                    .frame(maxWidth: .infinity)
-                }
-
-                blockView(spacing: 24) {
-                    Image("SmallMeal")
-                        .renderingMode(.template)
-                        .frame(width: 32, height: 32)
-                        .foregroundColor(.extraPrimary)
-
-                    HStack {
-                        Text("저녁(7시) 이후에는 내일 급식 표시")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.extraGray)
-
-                        Spacer()
-
-                        Toggle(
-                            "",
-                            isOn: viewStore.binding(
-                                get: \.isSkipAfterDinner,
-                                send: SettingsCore.Action.isSkipAfterDinnerChanged
-                            )
-                        )
-                        .labelsHidden()
-                        .tint(.extraPrimary)
-                    }
-                    .frame(maxWidth: .infinity)
+                    skipAfterDinnerView()
                 }
                 .padding(.bottom, 32)
             }
@@ -143,8 +54,75 @@ public struct SettingsView: View {
     }
 
     @ViewBuilder
+    func schoolSettingsView() -> some View {
+        blockView(spacing: 12) {
+            viewStore.send(.schoolBlockButtonDidTap)
+        } label: {
+            settingsOptionsIconView("School")
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text("\(viewStore.grade)학년 \(viewStore.class)반")
+                    .font(.system(size: 14, weight: .regular))
+                    .foregroundColor(.extraGray)
+
+                Text("\(viewStore.schoolName)")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(.darkGray)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+
+    @ViewBuilder
+    func allergySettingsView() -> some View {
+        blockView(corners: [.topLeft, .topRight]) {
+            viewStore.send(.allergyBlockButtonDidTap)
+        } label: {
+            settingsOptionChevronView(icon: "AllergySetting", text: "알레르기 설정")
+        }
+    }
+
+    @ViewBuilder
+    func consultingSettingsView() -> some View {
+        blockView(corners: []) {
+            viewStore.send(.consultingButtonDidTap)
+        } label: {
+            settingsOptionChevronView(icon: "Consulting", text: "문의하기")
+        }
+    }
+
+    @ViewBuilder
+    func skipWeekendView() -> some View {
+        blockView(corners: [.topLeft, .topRight]) {
+            settingsOptionToggleView(
+                icon: "Calendar",
+                text: "주말 스킵하기",
+                isOn: viewStore.binding(
+                    get: \.isSkipWeekend,
+                    send: SettingsCore.Action.isSkipWeekendChanged
+                )
+            )
+        }
+    }
+
+    @ViewBuilder
+    func skipAfterDinnerView() -> some View {
+        blockView(corners: [.bottomLeft, .bottomRight]) {
+            settingsOptionToggleView(
+                icon: "SmallMeal",
+                text: "저녁(7시) 이후에는 내일 급식 표시",
+                isOn: viewStore.binding(
+                    get: \.isSkipAfterDinner,
+                    send: SettingsCore.Action.isSkipAfterDinnerChanged
+                )
+            )
+        }
+    }
+
+    @ViewBuilder
     func blockView(
         spacing: CGFloat = 16,
+        corners: UIRectCorner = .allCorners,
         action: (() -> Void)? = nil,
         @ViewBuilder label: () -> some View
     ) -> some View {
@@ -152,27 +130,87 @@ public struct SettingsView: View {
             Button(action: action) {
                 VStack(alignment: .leading, spacing: spacing) {
                     label()
-                        .padding(16)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .padding(16)
                 .frame(maxWidth: .infinity)
                 .background {
                     Color.background
                 }
-                .cornerRadius(8)
+                .cornerRadius(16, corners: corners)
             }
         } else {
             VStack(alignment: .leading, spacing: spacing) {
                 label()
-                    .padding(16)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .padding(16)
             .frame(maxWidth: .infinity)
             .background {
                 Color.background
             }
-            .cornerRadius(8)
+            .cornerRadius(16, corners: corners)
         }
+    }
+
+    @ViewBuilder
+    func settingsOptionChevronView(
+        icon named: String,
+        text: String
+    ) -> some View {
+        HStack(spacing: 8) {
+            settingsOptionsIconView(named)
+
+            growText(text: text)
+
+            Spacer()
+
+            chevronRightIconView()
+        }
+    }
+
+    @ViewBuilder
+    func settingsOptionToggleView(
+        icon named: String,
+        text: String,
+        isOn: Binding<Bool>
+    ) -> some View {
+        HStack(spacing: 8) {
+            settingsOptionsIconView(named)
+
+            growText(text: text)
+
+            Spacer()
+
+            Toggle("",isOn: isOn)
+                .labelsHidden()
+                .tint(.extraPrimary)
+        }
+    }
+
+    @ViewBuilder
+    func growText(text: String) -> some View {
+        Text(text)
+            .font(.system(size: 16, weight: .bold))
+            .foregroundColor(.extraGray)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    @ViewBuilder
+    func settingsOptionsIconView(_ named: String) -> some View {
+        Image(named)
+            .resizable()
+            .renderingMode(.template)
+            .frame(width: 24, height: 24)
+            .foregroundColor(.extraPrimary)
+    }
+
+    @ViewBuilder
+    func chevronRightIconView() -> some View {
+        Image(systemName: "chevron.right")
+            .resizable()
+            .frame(width: 6, height: 12)
+            .foregroundColor(.extraGray)
     }
 
     @ViewBuilder
