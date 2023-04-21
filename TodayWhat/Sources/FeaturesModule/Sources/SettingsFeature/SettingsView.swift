@@ -30,11 +30,11 @@ public struct SettingsView: View {
                 }
 
                 VStack(spacing: 0) {
+                    skipAfterDinnerView()
+
                     skipWeekendView()
 
                     onModifiedTimeTable()
-
-                    skipAfterDinnerView()
                 }
                 .padding(.bottom, 32)
             }
@@ -105,11 +105,25 @@ public struct SettingsView: View {
     }
 
     @ViewBuilder
+    func skipAfterDinnerView() -> some View {
+        blockView(corners: [.bottomLeft, .bottomRight]) {
+            settingsOptionToggleView(
+                icon: "SmallMeal",
+                text: "오후 7시 이후 내일 급식 표시",
+                isOn: viewStore.binding(
+                    get: \.isSkipAfterDinner,
+                    send: SettingsCore.Action.isSkipAfterDinnerChanged
+                )
+            )
+        }
+    }
+
+    @ViewBuilder
     func skipWeekendView() -> some View {
         blockView(corners: [.topLeft, .topRight]) {
             settingsOptionToggleView(
                 icon: "Calendar",
-                text: "주말 스킵하기",
+                text: "주말 건너뛰기",
                 isOn: viewStore.binding(
                     get: \.isSkipWeekend,
                     send: SettingsCore.Action.isSkipWeekendChanged
@@ -127,20 +141,6 @@ public struct SettingsView: View {
                 isOn: viewStore.binding(
                     get: \.isOnModifiedTimeTable,
                     send: SettingsCore.Action.isOnModifiedTimeTableChagned
-                )
-            )
-        }
-    }
-
-    @ViewBuilder
-    func skipAfterDinnerView() -> some View {
-        blockView(corners: [.bottomLeft, .bottomRight]) {
-            settingsOptionToggleView(
-                icon: "SmallMeal",
-                text: "저녁(7시) 이후에는 내일 급식 표시",
-                isOn: viewStore.binding(
-                    get: \.isSkipAfterDinner,
-                    send: SettingsCore.Action.isSkipAfterDinnerChanged
                 )
             )
         }
