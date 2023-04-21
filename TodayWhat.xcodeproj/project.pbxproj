@@ -134,6 +134,7 @@
 		46BFE1052945BB510023443A /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE1042945BB510023443A /* FirebaseAnalyticsSwift */; };
 		46BFE1072945BB520023443A /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE1062945BB520023443A /* FirebaseCrashlytics */; };
 		46C2BEA029A897F000674B64 /* SettingsFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 46C2BE9F29A897F000674B64 /* SettingsFeature */; };
+		46CA849F29F147F300CF586E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 46CA84A129F147F300CF586E /* InfoPlist.strings */; };
 		46E4D6D029896CF2005FB823 /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C23BD293442E400B3A9CB /* DisplayInfoPart.swift */; };
 		46E4D6D229896D69005FB823 /* SwiftUIUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D129896D69005FB823 /* SwiftUIUtil */; };
 		46E4D6D429897352005FB823 /* TWColor in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D329897352005FB823 /* TWColor */; };
@@ -313,6 +314,8 @@
 		46BFE0C229459A100023443A /* TimeTableWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableWidgetEntryView.swift; sourceTree = "<group>"; };
 		46BFE0FF2945BA1E0023443A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		46C2BEA129A8DAD200674B64 /* DeviceClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DeviceClient; sourceTree = "<group>"; };
+		46CA84A029F147F300CF586E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		46CA84A229F147F600CF586E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		46FE681929B02A0100152293 /* DisplayMeal.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = DisplayMeal.intentdefinition; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -785,6 +788,7 @@
 			isa = PBXGroup;
 			children = (
 				461D17FA2986D9260055F0F5 /* Assets.xcassets */,
+				46CA84A129F147F300CF586E /* InfoPlist.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1240,6 +1244,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				461D17FE2986D9260055F0F5 /* Preview Assets.xcassets in Resources */,
+				46CA849F29F147F300CF586E /* InfoPlist.strings in Resources */,
 				461D17FB2986D9260055F0F5 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1434,6 +1439,18 @@
 			targetProxy = 463490C7298D19B9007EBF26 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		46CA84A129F147F300CF586E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				46CA84A029F147F300CF586E /* en */,
+				46CA84A229F147F600CF586E /* ko */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		4603115B2923DCE900A5CB09 /* Debug */ = {
@@ -1891,7 +1908,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_ASSET_PATHS = "\"TodayWhat Mac App/Preview Content\"";
 				DEVELOPMENT_TEAM = 235C2RVZ7L;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1907,7 +1924,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.6.1;
+				MARKETING_VERSION = 2.6.2;
 				PRODUCT_BUNDLE_IDENTIFIER = baegteun.TodayWhat;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = TodayWhat;
@@ -1928,7 +1945,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_ASSET_PATHS = "\"TodayWhat Mac App/Preview Content\"";
 				DEVELOPMENT_TEAM = 235C2RVZ7L;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1944,7 +1961,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.6.1;
+				MARKETING_VERSION = 2.6.2;
 				PRODUCT_BUNDLE_IDENTIFIER = baegteun.TodayWhat;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = TodayWhat;
