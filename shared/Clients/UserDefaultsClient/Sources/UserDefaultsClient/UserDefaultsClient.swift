@@ -14,6 +14,7 @@ public enum UserDefaultsKeys: String {
     case major = "MAJOR"
     case isSkipWeekend = "IS-SKIP-WEEKEND"
     case isSkipAfterDinner = "IS-SKIP-AFTER-DINNER"
+    case isOnModifiedTimeTable = "IS-ON-MODIFIED-TIME-TABLE"
 }
 
 public struct UserDefaultsClient {
