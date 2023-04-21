@@ -32,6 +32,8 @@ public struct SettingsView: View {
                 VStack(spacing: 0) {
                     skipWeekendView()
 
+                    onModifiedTimeTable()
+
                     skipAfterDinnerView()
                 }
                 .padding(.bottom, 32)
@@ -111,6 +113,20 @@ public struct SettingsView: View {
                 isOn: viewStore.binding(
                     get: \.isSkipWeekend,
                     send: SettingsCore.Action.isSkipWeekendChanged
+                )
+            )
+        }
+    }
+
+    @ViewBuilder
+    func onModifiedTimeTable() -> some View {
+        blockView(corners: [.bottomLeft, .bottomRight]) {
+            settingsOptionToggleView(
+                icon: "Clock",
+                text: "커스텀 시간표 표시",
+                isOn: viewStore.binding(
+                    get: \.isOnModifiedTimeTable,
+                    send: SettingsCore.Action.isOnModifiedTimeTableChagned
                 )
             )
         }
