@@ -38,6 +38,10 @@ let package = Package(
         .library(
             name: "SettingsFeature",
             targets: ["SettingsFeature"]
+        ),
+        .library(
+            name: "ModifyTimeTableFeature",
+            targets: ["ModifyTimeTableFeature"]
         )
     ],
     dependencies: [
@@ -178,8 +182,21 @@ let package = Package(
                 "ITunesClient",
                 "DeviceClient",
                 "SchoolSettingFeature",
-                "AllergySettingFeature"
+                "AllergySettingFeature",
+                "ModifyTimeTableFeature"
             ]
         ),
+
+        .target(
+            name: "ModifyTimeTableFeature",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-composable-architecture"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "TWColor", package: "DesignSystem"),
+                .product(name: "TWButton", package: "DesignSystem"),
+                .product(name: "SwiftUIUtil", package: "Utilities"),
+                "LocalDatabaseClient"
+            ]
+        )
     ]
 )

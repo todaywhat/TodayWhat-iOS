@@ -4,6 +4,7 @@ import SwiftUI
 import TWButton
 import SchoolSettingFeature
 import SwiftUIUtil
+import ModifyTimeTableFeature
 
 public struct SettingsView: View {
     let store: StoreOf<SettingsCore>
@@ -26,7 +27,7 @@ public struct SettingsView: View {
 
                     consultingSettingsView()
 
-                    clockSettingsView()
+                    timeTableSettingsView()
                 }
 
                 VStack(spacing: 0) {
@@ -97,9 +98,9 @@ public struct SettingsView: View {
     }
 
     @ViewBuilder
-    func clockSettingsView() -> some View {
+    func timeTableSettingsView() -> some View {
         blockView(corners: [.bottomLeft, .bottomRight]) {
-            
+            viewStore.send(.modifyTimeTableButtonDidTap)
         } label: {
             settingsOptionChevronView(icon: "WritingPencil", text: "시간표 수정")
         }
@@ -282,6 +283,23 @@ public struct SettingsView: View {
             EmptyView()
         }
 
+        NavigationLink(
+            isActive: viewStore.binding(
+                get: \.isNavigateModifyTimeTable,
+                send: SettingsCore.Action.modifyTimeTableDismissed
+            )
+        ) {
+            IfLetStore(
+                store.scope(
+                    state: \.modifyTimeTableCore,
+                    action: SettingsCore.Action.modifyTimeTableCore
+                )
+            ) { store in
+                ModifyTimeTableView(store: store)
+            }
+        } label: {
+            EmptyView()
+        }
     }
 }
 

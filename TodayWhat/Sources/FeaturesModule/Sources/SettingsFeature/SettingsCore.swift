@@ -5,6 +5,7 @@ import SchoolSettingFeature
 import ITunesClient
 import UserDefaultsClient
 import UIKit.UIApplication
+import ModifyTimeTableFeature
 
 public struct SettingsCore: ReducerProtocol {
     public init() {}
@@ -20,6 +21,8 @@ public struct SettingsCore: ReducerProtocol {
         public var isNavigateSchoolSetting: Bool = false
         public var allergySettingCore: AllergySettingCore.State? = nil
         public var isNavigateAllergySetting: Bool = false
+        public var modifyTimeTableCore: ModifyTimeTableCore.State? = nil
+        public var isNavigateModifyTimeTable: Bool = false
         public var confirmationDialog: ConfirmationDialogState<Action>? = nil
         public var alert: AlertState<Action>? = nil
 
@@ -37,6 +40,9 @@ public struct SettingsCore: ReducerProtocol {
         case allergyBlockButtonDidTap
         case allergySettingDismissed
         case allergySettingCore(AllergySettingCore.Action)
+        case modifyTimeTableButtonDidTap
+        case modifyTimeTableDismissed
+        case modifyTimeTableCore(ModifyTimeTableCore.Action)
         case consultingButtonDidTap
         case githubIssueButtonDidTap
         case mailIssueButtonDidTap
@@ -74,6 +80,14 @@ public struct SettingsCore: ReducerProtocol {
             case .schoolBlockButtonDidTap:
                 state.schoolSettingCore = .init()
                 state.isNavigateSchoolSetting = true
+
+            case .modifyTimeTableButtonDidTap:
+                state.modifyTimeTableCore = .init()
+                state.isNavigateModifyTimeTable = true
+
+            case .modifyTimeTableDismissed:
+                state.modifyTimeTableCore = nil
+                state.isNavigateModifyTimeTable = false
 
             case .schoolSettingDismissed:
                 state.schoolSettingCore = nil
