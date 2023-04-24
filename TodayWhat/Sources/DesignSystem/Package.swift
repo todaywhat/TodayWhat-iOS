@@ -35,6 +35,10 @@ let package = Package(
         .library(
             name: "LabelledDivider",
             targets: ["LabelledDivider"]
+        ),
+        .library(
+            name: "TopTabbar",
+            targets: ["TopTabbar"]
         )
     ],
     dependencies: [
@@ -76,6 +80,12 @@ let package = Package(
         ),
         .target(
             name: "LabelledDivider",
+            dependencies: [
+                "TWColor"
+            ]
+        ),
+        .target(
+            name: "TopTabbar",
             dependencies: [
                 "TWColor"
             ]
