@@ -1,12 +1,20 @@
 import SwiftUI
 import TWColor
 
-struct TopTabbarView: View {
+public struct TopTabbarView: View {
     @Binding var currentTab: Int
     let items: [String]
     @Namespace var tabAnimation
 
-    var body: some View {
+    public init(
+        currentTab: Binding<Int>,
+        items: [String]
+    ) {
+        _currentTab = currentTab
+        self.items = items
+    }
+
+    public var body: some View {
         VStack(spacing: 0) {
             HStack {
                 ForEach(items.indices, id: \.self) { index in
@@ -18,7 +26,7 @@ struct TopTabbarView: View {
                         VStack {
                             Text(items[index])
                                 .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(.extraPrimary)
+                                .foregroundColor(currentTab == index ? .extraPrimary : .extraGray)
 
                             if currentTab == index {
                                 RoundedRectangle(cornerRadius: 17)

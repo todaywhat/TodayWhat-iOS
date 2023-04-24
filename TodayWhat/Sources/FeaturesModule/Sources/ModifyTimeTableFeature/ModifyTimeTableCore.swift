@@ -3,6 +3,7 @@ import ComposableArchitecture
 public struct ModifyTimeTableCore: ReducerProtocol {
     public init() {}
     public struct State: Equatable {
+        
         public init() {}
     }
 

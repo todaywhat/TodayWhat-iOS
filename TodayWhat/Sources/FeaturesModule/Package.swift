@@ -107,6 +107,7 @@ let package = Package(
                 .product(name: "TWColor", package: "DesignSystem"),
                 .product(name: "TWImage", package: "DesignSystem"),
                 .product(name: "TWButton", package: "DesignSystem"),
+                .product(name: "TopTabbar", package: "DesignSystem"),
                 "UserDefaultsClient",
                 "MealFeature",
                 "ITunesClient",
@@ -194,6 +195,7 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "TWColor", package: "DesignSystem"),
                 .product(name: "TWButton", package: "DesignSystem"),
+                .product(name: "TopTabbar", package: "DesignSystem"),
                 .product(name: "SwiftUIUtil", package: "Utilities"),
                 "LocalDatabaseClient"
             ]

@@ -5,6 +5,7 @@ import TWImage
 import MealFeature
 import TimeTableFeature
 import SettingsFeature
+import TopTabbar
 
 public struct MainView: View {
     let store: StoreOf<MainCore>
