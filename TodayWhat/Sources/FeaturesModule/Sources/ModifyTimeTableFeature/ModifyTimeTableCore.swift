@@ -5,18 +5,19 @@ import Entity
 import Foundation
 import FoundationUtil
 import TimeTableClient
+import LocalDatabaseClient
 
 public struct ModifyTimeTableCore: ReducerProtocol {
     public init() {}
     public struct State: Equatable {
         public var currentTab: Int = Date().weekday == 1 ? 6 : Date().weekday - 2
-        public var timeTables: [TimeTable] = []
-        public var inputedTimeTables: [String] = ["한국사", "네트워크"]
+        public var inputedTimeTables: [String] = []
         public var modifiedTimeTables: [ModifiedTimeTableLocalEntity] = []
         public init() {}
     }
 
     public enum Action: Equatable {
+        case onLoad
         case tabChanged(Int)
         case timeTableResponse(TaskResult<[TimeTable]>)
         case timeTableInputed(index: Int, content: String)
@@ -25,15 +26,52 @@ public struct ModifyTimeTableCore: ReducerProtocol {
     }
 
     @Dependency(\.timeTableClient) var timeTableClient
+    @Dependency(\.localDatabaseClient) var localDatabaseClient
 
+    struct TabID: Hashable {}
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
+            case .onLoad:
+                let modifiedTimeTables = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
+                    .filter { $0.weekday == WeekdayType.allCases[safe: state.currentTab]?.rawValue ?? 2 }
+                if (modifiedTimeTables ?? []).isEmpty {
+                    return .task {
+                        .timeTableResponse(
+                            await TaskResult {
+                                try await timeTableClient.fetchTimeTable(
+                                    Date.getDateForDayOfWeek(dayOfWeek: Date().weekday) ?? .init()
+                                )
+                            }
+                        )
+                    }.animation()
+                }
+                state.inputedTimeTables = (modifiedTimeTables ?? [])
+                    .sorted { $0.perio < $1.perio }
+                    .map { $0.content }
+                
             case let .timeTableResponse(.success(timeTables)):
-                state.timeTables = timeTables
+                state.inputedTimeTables = timeTables
+                    .sorted { $0.perio < $1.perio }
+                    .map { $0.content }
 
             case let .tabChanged(tab):
                 state.currentTab = tab
+                let modifiedTimeTables = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
+                    .filter { $0.weekday == WeekdayType.allCases[safe: tab]?.rawValue ?? 2 }
+                if (modifiedTimeTables ?? []).isEmpty {
+                    return .task {
+                        .timeTableResponse(
+                            await TaskResult {
+                                let weekday = WeekdayType.allCases[tab].rawValue
+                                return try await timeTableClient.fetchTimeTable(
+                                    Date.getDateForDayOfWeek(dayOfWeek: weekday) ?? .init()
+                                )
+                            }
+                        )
+                    }
+                    .debounce(id: TabID(), for: 0.3, scheduler: RunLoop.main)
+                }
 
             case let .timeTableInputed(index, content):
                 guard state.inputedTimeTables[safe: index] != nil else { return .none }

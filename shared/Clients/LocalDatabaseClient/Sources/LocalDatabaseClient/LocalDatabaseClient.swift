@@ -184,6 +184,13 @@ extension LocalDatabaseClient: DependencyKey {
                 t.column("id", .text).primaryKey(onConflict: .replace).notNull()
                 t.column("major", .text).notNull()
             }
+
+            try db.create(table: "modifiedTimeTableLocalEntity") { t in
+                t.column("id", .text).primaryKey(onConflict: .replace).notNull()
+                t.column("weekday", .integer).notNull().defaults(to: 1)
+                t.column("perio", .integer).notNull().defaults(to: 1)
+                t.column("content", .text).notNull().defaults(to: "")
+            }
         }
     }
 }
