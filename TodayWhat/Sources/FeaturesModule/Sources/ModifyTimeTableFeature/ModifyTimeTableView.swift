@@ -86,7 +86,7 @@ public struct ModifyTimeTableView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    
+                    viewStore.send(.saveButtonDidTap)
                 } label: {
                     Text("저장")
                         .font(.system(size: 14))
