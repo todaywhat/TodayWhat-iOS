@@ -146,5 +146,8 @@ public struct SettingsCore: ReducerProtocol {
         .ifLet(\.allergySettingCore, action: /Action.allergySettingCore) {
             AllergySettingCore()
         }
+        .ifLet(\.modifyTimeTableCore, action: /Action.modifyTimeTableCore) {
+            ModifyTimeTableCore()
+        }
     }
 }
