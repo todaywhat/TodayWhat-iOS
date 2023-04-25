@@ -194,9 +194,15 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "TWColor", package: "DesignSystem"),
+                .product(name: "TWTextField", package: "DesignSystem"),
                 .product(name: "TWButton", package: "DesignSystem"),
                 .product(name: "TopTabbar", package: "DesignSystem"),
                 .product(name: "SwiftUIUtil", package: "Utilities"),
+                .product(name: "FoundationUtil", package: "Utilities"),
+                .product(name: "EnumUtil", package: "Utilities"),
+                .product(name: "DateUtil", package: "Utilities"),
+                "TimeTableClient",
+                "Entity",
                 "LocalDatabaseClient"
             ]
         )
