@@ -38,4 +38,12 @@ public extension Date {
     func adding(by component: Calendar.Component, value: Int) -> Date {
         return Calendar.current.date(byAdding: component, value: value, to: self) ?? self
     }
+
+    static func getDateForDayOfWeek(dayOfWeek: Int) -> Date? {
+        let calendar = Calendar.current
+        let today = Date()
+        let daysUntilTargetDay = (dayOfWeek - calendar.component(.weekday, from: today) + 7) % 7
+        let targetDate = calendar.date(byAdding: .day, value: daysUntilTargetDay, to: today)
+        return targetDate
+    }
 }

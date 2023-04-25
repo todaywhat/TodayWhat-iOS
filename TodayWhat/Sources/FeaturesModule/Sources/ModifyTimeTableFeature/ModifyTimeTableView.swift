@@ -76,6 +76,9 @@ public struct ModifyTimeTableView: View {
 
             Spacer()
         }
+        .onLoad {
+            viewStore.send(.onLoad, animation: .default)
+        }
         .hideKeyboardWhenTap()
         .twBackButton(dismiss: dismiss)
         .navigationBarTitleDisplayMode(.inline)
