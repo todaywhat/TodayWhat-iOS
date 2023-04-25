@@ -148,7 +148,9 @@ let package = Package(
             dependencies: [
                 .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "EnumUtil", package: "Utilities"),
                 .product(name: "TWColor", package: "DesignSystem"),
+                "LocalDatabaseClient",
                 "Entity",
                 "TimeTableClient",
                 "UserDefaultsClient"

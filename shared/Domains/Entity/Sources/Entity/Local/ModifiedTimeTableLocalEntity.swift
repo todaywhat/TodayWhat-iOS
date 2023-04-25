@@ -7,7 +7,7 @@ public struct ModifiedTimeTableLocalEntity: Codable, FetchableRecord, Persistabl
     public let perio: Int
     public let content: String
 
-    public init(id: String, weekday: Int, perio: Int, content: String) {
+    public init(id: String = UUID().uuidString, weekday: Int, perio: Int, content: String) {
         self.id = id
         self.weekday = weekday
         self.perio = perio

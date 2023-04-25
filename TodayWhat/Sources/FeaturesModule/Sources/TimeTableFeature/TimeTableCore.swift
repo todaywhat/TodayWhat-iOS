@@ -1,8 +1,10 @@
 import ComposableArchitecture
 import Entity
+import EnumUtil
 import Foundation
 import TimeTableClient
 import UserDefaultsClient
+import LocalDatabaseClient
 
 public struct TimeTableCore: ReducerProtocol {
     public init() {}
@@ -20,20 +22,36 @@ public struct TimeTableCore: ReducerProtocol {
 
     @Dependency(\.timeTableClient) var timeTableClient
     @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.localDatabaseClient) var localDatabaseClient
 
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear, .refresh:
+                var todayDate = Date()
+                if userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true {
+                    if todayDate.weekday == 7 {
+                        todayDate = todayDate.adding(by: .day, value: 2)
+                    } else if todayDate.weekday == 1 {
+                        todayDate = todayDate.adding(by: .day, value: 1)
+                    }
+                } else if todayDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
+                    todayDate = todayDate.adding(by: .day, value: 1)
+                }
                 state.isLoading = true
-                return .task {
+
+                if userDefaultsClient.getValue(.isOnModifiedTimeTable) as? Bool ?? false {
+                    let modifiedTimeTables = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
+                        .filter { $0.weekday == WeekdayType(weekday: todayDate.weekday).rawValue }
+                    state.timeTableList = (modifiedTimeTables ?? [])
+                        .sorted { $0.perio < $1.perio }
+                        .map { TimeTable(perio: $0.perio, content: $0.content) }
+                    return .none
+                }
+                return .task { [todayDate] in
                     .timeTableResponse(
                         await TaskResult {
-                            var targetDate = Date()
-                            if targetDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
-                                targetDate = targetDate.adding(by: .day, value: 1)
-                            }
-                            return try await timeTableClient.fetchTimeTable(targetDate)
+                            try await timeTableClient.fetchTimeTable(todayDate)
                         }
                     )
                 }

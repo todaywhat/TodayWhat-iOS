@@ -23,6 +23,7 @@ public struct ModifyTimeTableCore: ReducerProtocol {
         case timeTableInputed(index: Int, content: String)
         case appendTimeTableButtonDidTap
         case removeTimeTable(index: Int)
+        case saveButtonDidTap
     }
 
     @Dependency(\.timeTableClient) var timeTableClient
@@ -82,6 +83,17 @@ public struct ModifyTimeTableCore: ReducerProtocol {
 
             case let .removeTimeTable(index):
                 state.inputedTimeTables.remove(at: index)
+
+            case .saveButtonDidTap:
+                let modifiedTimeTables = state.inputedTimeTables.indices
+                    .map {
+                        ModifiedTimeTableLocalEntity(
+                            weekday: WeekdayType.allCases[$0].rawValue,
+                            perio: $0,
+                            content: state.inputedTimeTables[$0]
+                        )
+                    }
+                try? localDatabaseClient.save(records: modifiedTimeTables)
 
             default:
                 return .none
