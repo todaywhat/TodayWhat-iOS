@@ -45,7 +45,7 @@ public struct ModifyTimeTableView: View {
 
                     Text("시간표 가져오는 중...")
                         .font(.system(size: 14, weight: .bold))
-                        .foregroundColor(.extraBlack)
+                        .foregroundColor(.extraGray)
                 }
             }
             .frame(height: 24)
@@ -71,7 +71,7 @@ public struct ModifyTimeTableView: View {
                                 if focusIndex == index {
                                     viewStore.send(.timeTableInputed(index: index, content: ""))
                                 } else {
-                                    viewStore.send(.removeTimeTable(index: index), animation: .default)
+                                    viewStore.send(.removeTimeTable(index: index))
                                 }
                             } label: {
                                 Image(systemName: "xmark.circle.fill")
