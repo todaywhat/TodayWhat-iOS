@@ -39,6 +39,10 @@ let package = Package(
         .library(
             name: "TopTabbar",
             targets: ["TopTabbar"]
+        ),
+        .library(
+            name: "TWToast",
+            targets: ["TWToast"]
         )
     ],
     dependencies: [
@@ -86,6 +90,12 @@ let package = Package(
         ),
         .target(
             name: "TopTabbar",
+            dependencies: [
+                "TWColor"
+            ]
+        ),
+        .target(
+            name: "TWToast",
             dependencies: [
                 "TWColor"
             ]
