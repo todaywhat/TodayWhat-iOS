@@ -199,6 +199,7 @@ let package = Package(
                 .product(name: "TWTextField", package: "DesignSystem"),
                 .product(name: "TWButton", package: "DesignSystem"),
                 .product(name: "TopTabbar", package: "DesignSystem"),
+                .product(name: "TWToast", package: "DesignSystem"),
                 .product(name: "SwiftUIUtil", package: "Utilities"),
                 .product(name: "FoundationUtil", package: "Utilities"),
                 .product(name: "EnumUtil", package: "Utilities"),

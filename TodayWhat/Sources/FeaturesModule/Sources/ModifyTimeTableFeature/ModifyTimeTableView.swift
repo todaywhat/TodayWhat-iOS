@@ -1,8 +1,10 @@
 import ComposableArchitecture
+import DateUtil
 import SwiftUI
 import TWColor
 import TWButton
 import TWTextField
+import TWToast
 import TopTabbar
 import SwiftUIUtil
 import FoundationUtil
@@ -28,19 +30,34 @@ public struct ModifyTimeTableView: View {
                 items: ["월", "화", "수", "목", "금", "토", "일"]
             )
             .padding(.top, 16)
+            .animation(nil)
 
             HStack {
                 Text("교시 순서")
                     .font(.system(size: 14, weight: .bold))
                     .foregroundColor(.extraBlack)
-                
+
                 Spacer()
+
+                if viewStore.isLoading {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+
+                    Text("시간표 가져오는 중...")
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(.extraBlack)
+                }
             }
+            .frame(height: 24)
             .padding(.horizontal, 16)
             .padding(.top, 8)
+            .animation(nil)
 
             ScrollView(showsIndicators: false) {
                 LazyVStack(spacing: 8) {
+                    Spacer()
+                        .frame(height: 1)
+
                     ForEach(viewStore.inputedTimeTables.indices, id: \.self) { index in
                         TWTextField(
                             text: viewStore.binding(
@@ -79,6 +96,7 @@ public struct ModifyTimeTableView: View {
 
             Spacer()
         }
+        .background(Color.background)
         .onLoad {
             viewStore.send(.onLoad, animation: .default)
         }
@@ -97,5 +115,12 @@ public struct ModifyTimeTableView: View {
                 }
             }
         }
+        .twToast(
+            isShowing: viewStore.binding(
+                get: \.isShowingSuccessToast,
+                send: ModifyTimeTableCore.Action.toastDismissed
+            ),
+            text: "\(viewStore.weekdayString) 시간표 저장완료"
+        )
     }
 }
