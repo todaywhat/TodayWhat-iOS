@@ -31,7 +31,7 @@ public struct TWToast: ViewModifier {
         }
         .onChange(of: isShowing) { _ in
             if isShowing {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     withAnimation {
                         isShowing = false
                     }
@@ -55,6 +55,11 @@ public struct TWToast: ViewModifier {
                     }
                     .opacity(isShowing ? 1 : 0)
                     .transition(.move(edge: .top).combined(with: AnyTransition.opacity.animation(.easeInOut)))
+                    .onTapGesture {
+                        withAnimation {
+                            isShowing = false
+                        }
+                    }
             }
 
             Spacer()

@@ -53,7 +53,7 @@ public struct ModifyTimeTableCore: ReducerProtocol {
                                 )
                             }
                         )
-                    }.animation()
+                    }
                 }
                 state.inputedTimeTables = (modifiedTimeTables ?? [])
                     .sorted { $0.perio < $1.perio }

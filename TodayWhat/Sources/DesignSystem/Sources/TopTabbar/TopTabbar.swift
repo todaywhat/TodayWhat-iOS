@@ -32,7 +32,7 @@ public struct TopTabbarView: View {
                                 RoundedRectangle(cornerRadius: 17)
                                     .fill(Color.extraPrimary)
                                     .frame(height: 2)
-                                    .matchedGeometryEffect(id: "TAB", in: tabAnimation)
+                                    .matchedGeometryEffect(id: "TAB", in: tabAnimation, properties: .position)
                             } else {
                                 Color.clear
                                     .frame(height: 2)
