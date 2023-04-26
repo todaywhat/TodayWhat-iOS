@@ -39,38 +39,41 @@ public struct ModifyTimeTableView: View {
             .padding(.horizontal, 16)
             .padding(.top, 8)
 
-            LazyVStack(spacing: 8) {
-                ForEach(viewStore.inputedTimeTables.indices, id: \.self) { index in
-                    TWTextField(
-                        text: viewStore.binding(
-                            get: { $0.inputedTimeTables[safe: index] ?? "" },
-                            send: { .timeTableInputed(index: index, content: $0) }
+            ScrollView(showsIndicators: false) {
+                LazyVStack(spacing: 8) {
+                    ForEach(viewStore.inputedTimeTables.indices, id: \.self) { index in
+                        TWTextField(
+                            text: viewStore.binding(
+                                get: { $0.inputedTimeTables[safe: index] ?? "" },
+                                send: { .timeTableInputed(index: index, content: $0) }
+                            )
                         )
-                    )
-                    .focused($focusIndex, equals: index)
-                    .overlay(alignment: .trailing) {
-                        Button {
-                            if focusIndex == index {
-                                viewStore.send(.timeTableInputed(index: index, content: ""))
-                            } else {
-                                viewStore.send(.removeTimeTable(index: index), animation: .default)
+                        .focused($focusIndex, equals: index)
+                        .overlay(alignment: .trailing) {
+                            Button {
+                                if focusIndex == index {
+                                    viewStore.send(.timeTableInputed(index: index, content: ""))
+                                } else {
+                                    viewStore.send(.removeTimeTable(index: index), animation: .default)
+                                }
+                            } label: {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.system(size: 16, weight: .medium))
+                                    .foregroundColor(.extraGray)
+                                    .frame(width: 28, height: 28)
+                                    .padding(.trailing, 16)
                             }
-                        } label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .font(.system(size: 16, weight: .medium))
-                                .foregroundColor(.extraGray)
-                                .frame(width: 28, height: 28)
-                                .padding(.trailing, 16)
                         }
+                        .padding(.horizontal, 0.5)
                     }
-                }
 
-                TWButton(title: "추가 +") {
-                    viewStore.send(.appendTimeTableButtonDidTap, animation: .default)
+                    TWButton(title: "추가 +") {
+                        viewStore.send(.appendTimeTableButtonDidTap, animation: .default)
+                    }
+                    .frame(width: 80, height: 40)
+                    .clipShape(Capsule())
+                    .padding(.top, 16)
                 }
-                .frame(width: 80, height: 40)
-                .clipShape(Capsule())
-                .padding(.top, 16)
             }
             .padding(.horizontal, 16)
 

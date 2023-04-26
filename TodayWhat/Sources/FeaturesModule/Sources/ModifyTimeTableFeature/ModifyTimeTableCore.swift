@@ -88,11 +88,12 @@ public struct ModifyTimeTableCore: ReducerProtocol {
                 let modifiedTimeTables = state.inputedTimeTables.indices
                     .map {
                         ModifiedTimeTableLocalEntity(
-                            weekday: WeekdayType.allCases[$0].rawValue,
-                            perio: $0,
+                            weekday: WeekdayType.allCases[state.currentTab].rawValue,
+                            perio: $0 + 1,
                             content: state.inputedTimeTables[$0]
                         )
                     }
+                try? localDatabaseClient.deleteAll(record: ModifiedTimeTableLocalEntity.self)
                 try? localDatabaseClient.save(records: modifiedTimeTables)
 
             default:
