@@ -12,14 +12,14 @@ let package = Package(
             targets: ["UserDefaultsClient"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.47.0"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.53.2"),
         .package(path: "../Common/Utilities")
     ],
     targets: [
         .target(
             name: "UserDefaultsClient",
             dependencies: [
-                .product(name: "Dependencies", package: "swift-composable-architecture"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "EnumUtil", package: "Utilities"),
                 .product(name: "FoundationUtil", package: "Utilities")
             ]),
