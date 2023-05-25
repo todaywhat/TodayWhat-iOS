@@ -43,23 +43,15 @@
 		461C233D292C57AB00B3A9CB /* TWColor in Frameworks */ = {isa = PBXBuildFile; productRef = 461C233C292C57AB00B3A9CB /* TWColor */; };
 		461C233F292C57AB00B3A9CB /* TWRadioButton in Frameworks */ = {isa = PBXBuildFile; productRef = 461C233E292C57AB00B3A9CB /* TWRadioButton */; };
 		461C2341292C57AB00B3A9CB /* TWTextField in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2340292C57AB00B3A9CB /* TWTextField */; };
-		461C2343292C57B300B3A9CB /* RootFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2342292C57B300B3A9CB /* RootFeature */; };
-		461C2345292C57B300B3A9CB /* SchoolMajorSheetFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2344292C57B300B3A9CB /* SchoolMajorSheetFeature */; };
-		461C2347292C57B300B3A9CB /* SchoolSettingFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2346292C57B300B3A9CB /* SchoolSettingFeature */; };
 		461C2349292C58D600B3A9CB /* SwiftUIUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2348292C58D600B3A9CB /* SwiftUIUtil */; };
 		461C2350292DA89D00B3A9CB /* TWColor in Frameworks */ = {isa = PBXBuildFile; productRef = 461C234F292DA89D00B3A9CB /* TWColor */; };
 		461C2352292DD50800B3A9CB /* Fraunces9pt-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 461C2351292DD50700B3A9CB /* Fraunces9pt-Black.ttf */; };
 		461C2353292DD50800B3A9CB /* Fraunces9pt-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 461C2351292DD50700B3A9CB /* Fraunces9pt-Black.ttf */; };
-		461C235A293070FC00B3A9CB /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 461C2359293070FC00B3A9CB /* ComposableArchitecture */; };
-		461C235C293070FD00B3A9CB /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 461C235B293070FD00B3A9CB /* Dependencies */; };
 		461C2360293071FD00B3A9CB /* LocalDatabaseClient in Frameworks */ = {isa = PBXBuildFile; productRef = 461C235F293071FD00B3A9CB /* LocalDatabaseClient */; };
 		461C23622930720400B3A9CB /* TimeTableClient in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23612930720400B3A9CB /* TimeTableClient */; };
 		461C23642930759A00B3A9CB /* NeisClient in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23632930759A00B3A9CB /* NeisClient */; };
 		461C23662930759C00B3A9CB /* UserDefaultsClient in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23652930759C00B3A9CB /* UserDefaultsClient */; };
-		461C23692930776700B3A9CB /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23682930776700B3A9CB /* SwiftUINavigation */; };
-		461C236B2930776700B3A9CB /* _SwiftUINavigationState in Frameworks */ = {isa = PBXBuildFile; productRef = 461C236A2930776700B3A9CB /* _SwiftUINavigationState */; };
 		461C239429343D9100B3A9CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C239329343D9100B3A9CB /* AppDelegate.swift */; };
-		461C23B62934411B00B3A9CB /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23B52934411B00B3A9CB /* Dependencies */; };
 		461C23B82934412900B3A9CB /* MealClient in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23B72934412900B3A9CB /* MealClient */; };
 		461C23BA2934413000B3A9CB /* TimeTableClient in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23B92934413000B3A9CB /* TimeTableClient */; };
 		461C23BC2934417000B3A9CB /* EnumUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 461C23BB2934417000B3A9CB /* EnumUtil */; };
@@ -77,8 +69,17 @@
 		461D17FB2986D9260055F0F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 461D17FA2986D9260055F0F5 /* Assets.xcassets */; };
 		461D17FE2986D9260055F0F5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 461D17FD2986D9260055F0F5 /* Preview Assets.xcassets */; };
 		461D180629896A390055F0F5 /* ContentCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461D180529896A390055F0F5 /* ContentCore.swift */; };
-		461D180829896A570055F0F5 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 461D180729896A570055F0F5 /* ComposableArchitecture */; };
-		461D180A29896A5D0055F0F5 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 461D180929896A5D0055F0F5 /* Dependencies */; };
+		461FA10A2A1EE1E20016FCAE /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 461FA1092A1EE1E20016FCAE /* ComposableArchitecture */; };
+		461FA10C2A1EE4A20016FCAE /* RootFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461FA10B2A1EE4A20016FCAE /* RootFeature */; };
+		461FA10E2A1EE4AA0016FCAE /* SchoolSettingFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461FA10D2A1EE4AA0016FCAE /* SchoolSettingFeature */; };
+		461FA1102A1EE4B60016FCAE /* SchoolMajorSheetFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461FA10F2A1EE4B60016FCAE /* SchoolMajorSheetFeature */; };
+		461FA1122A1EE4EB0016FCAE /* MealFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461FA1112A1EE4EB0016FCAE /* MealFeature */; };
+		461FA1142A1EE4F10016FCAE /* ModifyTimeTableFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461FA1132A1EE4F10016FCAE /* ModifyTimeTableFeature */; };
+		461FA1162A1EE4F10016FCAE /* TimeTableFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461FA1152A1EE4F10016FCAE /* TimeTableFeature */; };
+		461FA1182A1EE5380016FCAE /* SplashFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461FA1172A1EE5380016FCAE /* SplashFeature */; };
+		461FA11A2A1EE5660016FCAE /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 461FA1192A1EE5660016FCAE /* ComposableArchitecture */; };
+		461FA11C2A1EE56B0016FCAE /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 461FA11B2A1EE56B0016FCAE /* ComposableArchitecture */; };
+		461FA11E2A1EE5A40016FCAE /* AllergySettingFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 461FA11D2A1EE5A40016FCAE /* AllergySettingFeature */; };
 		462BABA42935CE630063E0C8 /* SwiftUIUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 462BABA32935CE630063E0C8 /* SwiftUIUtil */; };
 		463490AE298BC61D007EBF26 /* LocalDatabaseClient in Frameworks */ = {isa = PBXBuildFile; productRef = 463490AD298BC61D007EBF26 /* LocalDatabaseClient */; };
 		463490B0298BC623007EBF26 /* UserDefaultsClient in Frameworks */ = {isa = PBXBuildFile; productRef = 463490AF298BC623007EBF26 /* UserDefaultsClient */; };
@@ -133,7 +134,6 @@
 		46BFE1032945BB510023443A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE1022945BB510023443A /* FirebaseAnalytics */; };
 		46BFE1052945BB510023443A /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE1042945BB510023443A /* FirebaseAnalyticsSwift */; };
 		46BFE1072945BB520023443A /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE1062945BB520023443A /* FirebaseCrashlytics */; };
-		46C2BEA029A897F000674B64 /* SettingsFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 46C2BE9F29A897F000674B64 /* SettingsFeature */; };
 		46CA849F29F147F300CF586E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 46CA84A129F147F300CF586E /* InfoPlist.strings */; };
 		46E4D6D029896CF2005FB823 /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C23BD293442E400B3A9CB /* DisplayInfoPart.swift */; };
 		46E4D6D229896D69005FB823 /* SwiftUIUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D129896D69005FB823 /* SwiftUIUtil */; };
@@ -142,7 +142,6 @@
 		46E4D6D829897B10005FB823 /* MealClient in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D729897B10005FB823 /* MealClient */; };
 		46FE681A29B02A0100152293 /* DisplayMeal.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 46FE681929B02A0100152293 /* DisplayMeal.intentdefinition */; };
 		46FE681B29B02BEC00152293 /* DisplayMeal.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 46FE681929B02A0100152293 /* DisplayMeal.intentdefinition */; };
-		46FE681D29B054D100152293 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 46FE681C29B054D100152293 /* Dependencies */; };
 		46FE681E29B055E600152293 /* DisplayMeal.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4611F4B429AFAECD00F13A86 /* DisplayMeal.intentdefinition */; };
 /* End PBXBuildFile section */
 
@@ -343,36 +342,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				461FA1162A1EE4F10016FCAE /* TimeTableFeature in Frameworks */,
 				460310A3291DD96900A5CB09 /* SwiftyJSON in Frameworks */,
+				461FA1122A1EE4EB0016FCAE /* MealFeature in Frameworks */,
 				465023592926F97C008B015A /* ResponseDTO in Frameworks */,
-				461C235A293070FC00B3A9CB /* ComposableArchitecture in Frameworks */,
 				4650234D29268217008B015A /* NeisClient in Frameworks */,
 				46BFE1032945BB510023443A /* FirebaseAnalytics in Frameworks */,
 				461C2341292C57AB00B3A9CB /* TWTextField in Frameworks */,
 				465023572926F97C008B015A /* RequestDTO in Frameworks */,
+				461FA11E2A1EE5A40016FCAE /* AllergySettingFeature in Frameworks */,
 				461C2360293071FD00B3A9CB /* LocalDatabaseClient in Frameworks */,
 				464DED4029A626B500D9899C /* ITunesClient in Frameworks */,
+				461FA1142A1EE4F10016FCAE /* ModifyTimeTableFeature in Frameworks */,
 				465023662926FEBC008B015A /* UserDefaultsClient in Frameworks */,
-				46C2BEA029A897F000674B64 /* SettingsFeature in Frameworks */,
-				461C236B2930776700B3A9CB /* _SwiftUINavigationState in Frameworks */,
 				4650234429267847008B015A /* ErrorModule in Frameworks */,
 				461C2339292C57AB00B3A9CB /* TWBottomSheet in Frameworks */,
-				461C2345292C57B300B3A9CB /* SchoolMajorSheetFeature in Frameworks */,
+				461FA10C2A1EE4A20016FCAE /* RootFeature in Frameworks */,
 				4650234B2926811C008B015A /* ConstantUtil in Frameworks */,
 				4650235F2926FC19008B015A /* Entity in Frameworks */,
 				461C233F292C57AB00B3A9CB /* TWRadioButton in Frameworks */,
-				461C2347292C57B300B3A9CB /* SchoolSettingFeature in Frameworks */,
+				461FA1182A1EE5380016FCAE /* SplashFeature in Frameworks */,
 				46BFE1072945BB520023443A /* FirebaseCrashlytics in Frameworks */,
 				4603112629234F8100A5CB09 /* GRDB in Frameworks */,
+				461FA1102A1EE4B60016FCAE /* SchoolMajorSheetFeature in Frameworks */,
 				46BFE1052945BB510023443A /* FirebaseAnalyticsSwift in Frameworks */,
 				4650235D2926F984008B015A /* EnumUtil in Frameworks */,
 				461C233D292C57AB00B3A9CB /* TWColor in Frameworks */,
 				465023632926FE1F008B015A /* SchoolClient in Frameworks */,
+				461FA10A2A1EE1E20016FCAE /* ComposableArchitecture in Frameworks */,
+				461FA10E2A1EE4AA0016FCAE /* SchoolSettingFeature in Frameworks */,
 				461C23622930720400B3A9CB /* TimeTableClient in Frameworks */,
-				461C23692930776700B3A9CB /* SwiftUINavigation in Frameworks */,
-				461C235C293070FD00B3A9CB /* Dependencies in Frameworks */,
 				461C233B292C57AB00B3A9CB /* TWButton in Frameworks */,
-				461C2343292C57B300B3A9CB /* RootFeature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,11 +389,11 @@
 			files = (
 				461C23BC2934417000B3A9CB /* EnumUtil in Frameworks */,
 				461C23B82934412900B3A9CB /* MealClient in Frameworks */,
+				461FA11C2A1EE56B0016FCAE /* ComposableArchitecture in Frameworks */,
 				461C23BA2934413000B3A9CB /* TimeTableClient in Frameworks */,
 				461C2337292C574100B3A9CB /* TWColor in Frameworks */,
 				461C2349292C58D600B3A9CB /* SwiftUIUtil in Frameworks */,
 				465023B2292B049F008B015A /* Entity in Frameworks */,
-				461C23B62934411B00B3A9CB /* Dependencies in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,13 +421,12 @@
 				463490AE298BC61D007EBF26 /* LocalDatabaseClient in Frameworks */,
 				46E4D6D629897ACC005FB823 /* Entity in Frameworks */,
 				463490B0298BC623007EBF26 /* UserDefaultsClient in Frameworks */,
-				461D180829896A570055F0F5 /* ComposableArchitecture in Frameworks */,
 				463490B7298CDA16007EBF26 /* LaunchAtLogin in Frameworks */,
 				46E4D6D429897352005FB823 /* TWColor in Frameworks */,
 				46E4D6D229896D69005FB823 /* SwiftUIUtil in Frameworks */,
-				461D180A29896A5D0055F0F5 /* Dependencies in Frameworks */,
 				463490B2298BD9FB007EBF26 /* TWTextField in Frameworks */,
 				463490B4298BF3EE007EBF26 /* SchoolClient in Frameworks */,
+				461FA11A2A1EE5660016FCAE /* ComposableArchitecture in Frameworks */,
 				464DED3C29A5DE6D00D9899C /* EnumUtil in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -439,7 +438,6 @@
 				463490D5298D19F2007EBF26 /* MealClient in Frameworks */,
 				463490D7298D1A78007EBF26 /* NeisClient in Frameworks */,
 				463490BF298D19B8007EBF26 /* SwiftUI.framework in Frameworks */,
-				46FE681D29B054D100152293 /* Dependencies in Frameworks */,
 				463490CF298D19E1007EBF26 /* DateUtil in Frameworks */,
 				463490DB298D1A86007EBF26 /* TimeTableClient in Frameworks */,
 				463490D9298D1A7F007EBF26 /* SwiftUIUtil in Frameworks */,
@@ -951,20 +949,21 @@
 				461C233C292C57AB00B3A9CB /* TWColor */,
 				461C233E292C57AB00B3A9CB /* TWRadioButton */,
 				461C2340292C57AB00B3A9CB /* TWTextField */,
-				461C2342292C57B300B3A9CB /* RootFeature */,
-				461C2344292C57B300B3A9CB /* SchoolMajorSheetFeature */,
-				461C2346292C57B300B3A9CB /* SchoolSettingFeature */,
-				461C2359293070FC00B3A9CB /* ComposableArchitecture */,
-				461C235B293070FD00B3A9CB /* Dependencies */,
 				461C235F293071FD00B3A9CB /* LocalDatabaseClient */,
 				461C23612930720400B3A9CB /* TimeTableClient */,
-				461C23682930776700B3A9CB /* SwiftUINavigation */,
-				461C236A2930776700B3A9CB /* _SwiftUINavigationState */,
 				46BFE1022945BB510023443A /* FirebaseAnalytics */,
 				46BFE1042945BB510023443A /* FirebaseAnalyticsSwift */,
 				46BFE1062945BB520023443A /* FirebaseCrashlytics */,
 				464DED3F29A626B500D9899C /* ITunesClient */,
-				46C2BE9F29A897F000674B64 /* SettingsFeature */,
+				461FA1092A1EE1E20016FCAE /* ComposableArchitecture */,
+				461FA10B2A1EE4A20016FCAE /* RootFeature */,
+				461FA10D2A1EE4AA0016FCAE /* SchoolSettingFeature */,
+				461FA10F2A1EE4B60016FCAE /* SchoolMajorSheetFeature */,
+				461FA1112A1EE4EB0016FCAE /* MealFeature */,
+				461FA1132A1EE4F10016FCAE /* ModifyTimeTableFeature */,
+				461FA1152A1EE4F10016FCAE /* TimeTableFeature */,
+				461FA1172A1EE5380016FCAE /* SplashFeature */,
+				461FA11D2A1EE5A40016FCAE /* AllergySettingFeature */,
 			);
 			productName = TodayWhat;
 			productReference = 460843D728DBFE2400D60E39 /* TodayWhat.app */;
@@ -1005,10 +1004,10 @@
 				465023B1292B049F008B015A /* Entity */,
 				461C2336292C574100B3A9CB /* TWColor */,
 				461C2348292C58D600B3A9CB /* SwiftUIUtil */,
-				461C23B52934411B00B3A9CB /* Dependencies */,
 				461C23B72934412900B3A9CB /* MealClient */,
 				461C23B92934413000B3A9CB /* TimeTableClient */,
 				461C23BB2934417000B3A9CB /* EnumUtil */,
+				461FA11B2A1EE56B0016FCAE /* ComposableArchitecture */,
 			);
 			productName = "TodayWhat Watch App";
 			productReference = 460843FD28DBFE2500D60E39 /* TodayWhat Watch App.app */;
@@ -1067,8 +1066,6 @@
 			);
 			name = "TodayWhat Mac App";
 			packageProductDependencies = (
-				461D180729896A570055F0F5 /* ComposableArchitecture */,
-				461D180929896A5D0055F0F5 /* Dependencies */,
 				46E4D6D129896D69005FB823 /* SwiftUIUtil */,
 				46E4D6D329897352005FB823 /* TWColor */,
 				46E4D6D529897ACC005FB823 /* Entity */,
@@ -1081,6 +1078,7 @@
 				463490B6298CDA16007EBF26 /* LaunchAtLogin */,
 				464DED3B29A5DE6D00D9899C /* EnumUtil */,
 				464DED4129A62C9F00D9899C /* ITunesClient */,
+				461FA1192A1EE5660016FCAE /* ComposableArchitecture */,
 			);
 			productName = "TodayWhat Mac App";
 			productReference = 461D17F42986D9250055F0F5 /* TodayWhat.app */;
@@ -1109,7 +1107,6 @@
 				463490DA298D1A86007EBF26 /* TimeTableClient */,
 				463490DC298D1A8C007EBF26 /* TWColor */,
 				463490DE298D1A91007EBF26 /* UserDefaultsClient */,
-				46FE681C29B054D100152293 /* Dependencies */,
 			);
 			productName = TodayWhatMacWidgetExtension;
 			productReference = 463490BD298D19B8007EBF26 /* TodayWhatMacWidgetExtension.appex */;
@@ -1167,10 +1164,9 @@
 			packageReferences = (
 				460310A1291DD96900A5CB09 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				4603112429234F8100A5CB09 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
-				461C2358293070FC00B3A9CB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				461C23672930776700B3A9CB /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
 				46BFE1012945BB510023443A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				463490B5298CDA15007EBF26 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
+				461FA1082A1EE1E20016FCAE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = 460843D828DBFE2400D60E39 /* Products */;
 			projectDirPath = "";
@@ -2134,20 +2130,12 @@
 				minimumVersion = 6.3.1;
 			};
 		};
-		461C2358293070FC00B3A9CB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+		461FA1082A1EE1E20016FCAE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
 			requirement = {
 				kind = exactVersion;
-				version = 0.47.0;
-			};
-		};
-		461C23672930776700B3A9CB /* XCRemoteSwiftPackageReference "swiftui-navigation" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swiftui-navigation";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.4.2;
+				version = 0.53.2;
 			};
 		};
 		463490B5298CDA15007EBF26 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */ = {
@@ -2207,18 +2195,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = TWTextField;
 		};
-		461C2342292C57B300B3A9CB /* RootFeature */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RootFeature;
-		};
-		461C2344292C57B300B3A9CB /* SchoolMajorSheetFeature */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SchoolMajorSheetFeature;
-		};
-		461C2346292C57B300B3A9CB /* SchoolSettingFeature */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SchoolSettingFeature;
-		};
 		461C2348292C58D600B3A9CB /* SwiftUIUtil */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftUIUtil;
@@ -2226,16 +2202,6 @@
 		461C234F292DA89D00B3A9CB /* TWColor */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TWColor;
-		};
-		461C2359293070FC00B3A9CB /* ComposableArchitecture */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 461C2358293070FC00B3A9CB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = ComposableArchitecture;
-		};
-		461C235B293070FD00B3A9CB /* Dependencies */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 461C2358293070FC00B3A9CB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = Dependencies;
 		};
 		461C235F293071FD00B3A9CB /* LocalDatabaseClient */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2252,21 +2218,6 @@
 		461C23652930759C00B3A9CB /* UserDefaultsClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UserDefaultsClient;
-		};
-		461C23682930776700B3A9CB /* SwiftUINavigation */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 461C23672930776700B3A9CB /* XCRemoteSwiftPackageReference "swiftui-navigation" */;
-			productName = SwiftUINavigation;
-		};
-		461C236A2930776700B3A9CB /* _SwiftUINavigationState */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 461C23672930776700B3A9CB /* XCRemoteSwiftPackageReference "swiftui-navigation" */;
-			productName = _SwiftUINavigationState;
-		};
-		461C23B52934411B00B3A9CB /* Dependencies */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 461C2358293070FC00B3A9CB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = Dependencies;
 		};
 		461C23B72934412900B3A9CB /* MealClient */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2288,15 +2239,52 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = EnumUtil;
 		};
-		461D180729896A570055F0F5 /* ComposableArchitecture */ = {
+		461FA1092A1EE1E20016FCAE /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 461C2358293070FC00B3A9CB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			package = 461FA1082A1EE1E20016FCAE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
 		};
-		461D180929896A5D0055F0F5 /* Dependencies */ = {
+		461FA10B2A1EE4A20016FCAE /* RootFeature */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 461C2358293070FC00B3A9CB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = Dependencies;
+			productName = RootFeature;
+		};
+		461FA10D2A1EE4AA0016FCAE /* SchoolSettingFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SchoolSettingFeature;
+		};
+		461FA10F2A1EE4B60016FCAE /* SchoolMajorSheetFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SchoolMajorSheetFeature;
+		};
+		461FA1112A1EE4EB0016FCAE /* MealFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MealFeature;
+		};
+		461FA1132A1EE4F10016FCAE /* ModifyTimeTableFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ModifyTimeTableFeature;
+		};
+		461FA1152A1EE4F10016FCAE /* TimeTableFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TimeTableFeature;
+		};
+		461FA1172A1EE5380016FCAE /* SplashFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SplashFeature;
+		};
+		461FA1192A1EE5660016FCAE /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 461FA1082A1EE1E20016FCAE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+		461FA11B2A1EE56B0016FCAE /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 461FA1082A1EE1E20016FCAE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+		461FA11D2A1EE5A40016FCAE /* AllergySettingFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AllergySettingFeature;
 		};
 		462BABA32935CE630063E0C8 /* SwiftUIUtil */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2442,10 +2430,6 @@
 			package = 46BFE1012945BB510023443A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
 		};
-		46C2BE9F29A897F000674B64 /* SettingsFeature */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SettingsFeature;
-		};
 		46E4D6D129896D69005FB823 /* SwiftUIUtil */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftUIUtil;
@@ -2461,11 +2445,6 @@
 		46E4D6D729897B10005FB823 /* MealClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MealClient;
-		};
-		46FE681C29B054D100152293 /* Dependencies */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 461C2358293070FC00B3A9CB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = Dependencies;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

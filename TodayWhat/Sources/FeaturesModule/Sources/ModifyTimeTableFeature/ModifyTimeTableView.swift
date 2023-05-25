@@ -84,12 +84,23 @@ public struct ModifyTimeTableView: View {
                         .padding(.horizontal, 0.5)
                     }
 
-                    TWButton(title: "추가 +") {
+                    Button {
                         viewStore.send(.appendTimeTableButtonDidTap, animation: .default)
+                    } label: {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color.veryLightGray)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.lightGray, lineWidth: 1)
+                            }
+                            .overlay {
+                                Text("+ 추가")
+                                    .font(.system(size: 16))
+                                    .foregroundColor(.extraGray)
+                            }
+                            .frame(height: 52)
                     }
-                    .frame(width: 80, height: 40)
-                    .clipShape(Capsule())
-                    .padding(.top, 16)
+                    .frame(maxWidth: .infinity)
                 }
             }
             .padding(.horizontal, 16)

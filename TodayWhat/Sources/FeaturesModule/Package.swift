@@ -8,6 +8,10 @@ let package = Package(
     platforms: [.iOS(.v15)],
     products: [
         .library(
+            name: "AllergySettingFeature",
+            targets: ["AllergySettingFeature"]
+        ),
+        .library(
             name: "RootFeature",
             targets: ["RootFeature"]
         ),
@@ -45,7 +49,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.47.0"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.53.2"),
         .package(path: "../../Domains/Entity"),
         .package(path: "../../Clients/UserDefaultsClient"),
         .package(path: "../../Clients/SchoolClient"),
@@ -61,7 +65,6 @@ let package = Package(
         .target(
             name: "RootFeature",
             dependencies: [
-                .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 "SchoolSettingFeature",
                 "MainFeature",
@@ -74,7 +77,6 @@ let package = Package(
         .target(
             name: "SchoolSettingFeature",
             dependencies: [
-                .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "TWButton", package: "DesignSystem"),
                 .product(name: "TWTextField", package: "DesignSystem"),
@@ -90,7 +92,6 @@ let package = Package(
         .target(
             name: "SchoolMajorSheetFeature",
             dependencies: [
-                .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "TWRadioButton", package: "DesignSystem"),
                 .product(name: "SwiftUIUtil", package: "Utilities"),
@@ -102,7 +103,6 @@ let package = Package(
         .target(
             name: "MainFeature",
             dependencies: [
-                .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "TWColor", package: "DesignSystem"),
                 .product(name: "TWImage", package: "DesignSystem"),
@@ -120,7 +120,6 @@ let package = Package(
         .target(
             name: "SplashFeature",
             dependencies: [
-                .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 "UserDefaultsClient"
             ]
@@ -130,7 +129,6 @@ let package = Package(
         .target(
             name: "MealFeature",
             dependencies: [
-                .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "LabelledDivider", package: "DesignSystem"),
                 .product(name: "TWButton", package: "DesignSystem"),
@@ -146,7 +144,6 @@ let package = Package(
         .target(
             name: "TimeTableFeature",
             dependencies: [
-                .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "EnumUtil", package: "Utilities"),
                 .product(name: "TWColor", package: "DesignSystem"),
@@ -161,7 +158,6 @@ let package = Package(
         .target(
             name: "AllergySettingFeature",
             dependencies: [
-                .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "EnumUtil", package: "Utilities"),
                 .product(name: "SwiftUIUtil", package: "Utilities"),
@@ -176,7 +172,6 @@ let package = Package(
         .target(
             name: "SettingsFeature",
             dependencies: [
-                .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "TWColor", package: "DesignSystem"),
                 .product(name: "TWButton", package: "DesignSystem"),
@@ -193,7 +188,6 @@ let package = Package(
         .target(
             name: "ModifyTimeTableFeature",
             dependencies: [
-                .product(name: "Dependencies", package: "swift-composable-architecture"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "TWColor", package: "DesignSystem"),
                 .product(name: "TWTextField", package: "DesignSystem"),
