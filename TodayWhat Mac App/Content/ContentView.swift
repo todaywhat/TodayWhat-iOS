@@ -33,9 +33,6 @@ struct ContentView: View {
                 .frame(maxHeight: .infinity)
             }
             .frame(width: 400, height: 350)
-            .onAppear {
-                viewStore.send(.fetchData)
-            }
         }
         .onReceive(popoverOpenPublisher) { output in
             viewStore.send(.popoverOpen)
