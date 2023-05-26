@@ -58,6 +58,7 @@ struct ContentCore: ReducerProtocol {
                 default:
                     state.selectedInfoType = .breakfast
                 }
+                return .send(.fetchData)
                 
             case .fetchData:
                 guard
