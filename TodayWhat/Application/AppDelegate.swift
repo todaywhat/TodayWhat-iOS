@@ -20,6 +20,19 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
+
+    func application(
+        _ application: UIApplication,
+        shouldAllowExtensionPointIdentifier extensionPointIdentifier: UIApplication.ExtensionPointIdentifier
+    ) -> Bool {
+        switch extensionPointIdentifier {
+        case .keyboard:
+            return false
+
+        default:
+            return true
+        }
+    }
 }
 
 extension AppDelegate: WCSessionDelegate {
