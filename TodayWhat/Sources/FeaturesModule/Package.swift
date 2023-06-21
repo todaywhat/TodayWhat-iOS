@@ -46,6 +46,10 @@ let package = Package(
         .library(
             name: "ModifyTimeTableFeature",
             targets: ["ModifyTimeTableFeature"]
+        ),
+        .library(
+            name: "NoticeFeature",
+            targets: ["NoticeFeature"]
         )
     ],
     dependencies: [
@@ -58,6 +62,7 @@ let package = Package(
         .package(path: "../../Clients/LocalDatabaseClient"),
         .package(path: "../../Clients/DeviceClient"),
         .package(path: "../../Clients/ITunesClient"),
+        .package(path: "../../Clients/NoticeClient"),
         .package(path: "../DesignSystem"),
         .package(path: "../../Common/Utilities")
     ],
@@ -82,6 +87,7 @@ let package = Package(
                 .product(name: "TWTextField", package: "DesignSystem"),
                 .product(name: "TWBottomSheet", package: "DesignSystem"),
                 "Entity",
+                "NoticeClient",
                 "SchoolMajorSheetFeature",
                 "SchoolClient",
                 "UserDefaultsClient"
@@ -107,12 +113,16 @@ let package = Package(
                 .product(name: "TWColor", package: "DesignSystem"),
                 .product(name: "TWImage", package: "DesignSystem"),
                 .product(name: "TWButton", package: "DesignSystem"),
+                .product(name: "TWToast", package: "DesignSystem"),
                 .product(name: "TopTabbar", package: "DesignSystem"),
+                "NoticeClient",
                 "UserDefaultsClient",
                 "MealFeature",
+                "NoticeFeature",
                 "ITunesClient",
                 "TimeTableFeature",
-                "SettingsFeature"
+                "SettingsFeature",
+                "Entity"
             ]
         ),
         .testTarget(name: "MainFeatureTests", dependencies: ["MainFeature"]),
@@ -201,6 +211,15 @@ let package = Package(
                 "TimeTableClient",
                 "Entity",
                 "LocalDatabaseClient"
+            ]
+        ),
+
+        .target(
+            name: "NoticeFeature",
+            dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "TWColor", package: "DesignSystem"),
+                "Entity"
             ]
         )
     ]

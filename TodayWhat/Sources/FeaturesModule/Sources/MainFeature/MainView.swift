@@ -5,6 +5,7 @@ import TWImage
 import MealFeature
 import TimeTableFeature
 import SettingsFeature
+import NoticeFeature
 import TopTabbar
 
 public struct MainView: View {
@@ -96,6 +97,31 @@ public struct MainView: View {
             }
             .onAppear {
                 viewStore.send(.onAppear, animation: .default)
+            }
+            .twToast(
+                isShowing: Binding(
+                    get: { viewStore.state.notice?.title != nil },
+                    set: { _ in viewStore.send(.noticeToastDismissed) }
+                ),
+                text: viewStore.state.notice?.title ?? "",
+                toastTime: .now() + 10
+            ) {
+                viewStore.send(.noticeButtonDidTap)
+            }
+            .fullScreenCover(
+                isPresented: Binding(
+                    get: { viewStore.state.noticeCore != nil },
+                    set: { _ in viewStore.send(.noticeDismissed) }
+                )
+            ) {
+                IfLetStore(
+                    store.scope(
+                        state: \.noticeCore,
+                        action: MainCore.Action.noticeCore
+                    )
+                ) { store in
+                    NoticeView(store: store)
+                }
             }
         }
         .navigationViewStyle(.stack)
