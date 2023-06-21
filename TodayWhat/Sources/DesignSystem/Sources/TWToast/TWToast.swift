@@ -4,23 +4,31 @@ import TWColor
 public extension View {
     func twToast(
         isShowing: Binding<Bool>,
-        text: String
+        text: String,
+        toastTime: DispatchTime = .now() + 3,
+        onTap: (() -> Void)? = nil
     ) -> some View {
         self
-            .modifier(TWToast(isShowing: isShowing, text: text))
+            .modifier(TWToast(isShowing: isShowing, text: text, toastTime: toastTime, onTap: onTap))
     }
 }
 
 public struct TWToast: ViewModifier {
     @Binding var isShowing: Bool
     var text: String
+    var toastTime: DispatchTime
+    var onTap: (() -> Void)?
 
     public init(
         isShowing: Binding<Bool>,
-        text: String
+        text: String,
+        toastTime: DispatchTime = .now() + 3,
+        onTap: (() -> Void)? = nil
     ) {
         _isShowing = isShowing
         self.text = text
+        self.toastTime = toastTime
+        self.onTap = onTap
     }
 
     public func body(content: Content) -> some View {
@@ -31,7 +39,7 @@ public struct TWToast: ViewModifier {
         }
         .onChange(of: isShowing) { _ in
             if isShowing {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                DispatchQueue.main.asyncAfter(deadline: toastTime) {
                     withAnimation {
                         isShowing = false
                     }
@@ -56,8 +64,12 @@ public struct TWToast: ViewModifier {
                     .opacity(isShowing ? 1 : 0)
                     .transition(.move(edge: .top).combined(with: AnyTransition.opacity.animation(.easeInOut)))
                     .onTapGesture {
-                        withAnimation {
-                            isShowing = false
+                        if let onTap {
+                            onTap()
+                        } else {
+                            withAnimation {
+                                self.isShowing = false
+                            }
                         }
                     }
             }

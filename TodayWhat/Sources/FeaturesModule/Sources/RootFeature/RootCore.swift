@@ -14,7 +14,7 @@ public struct RootCore: ReducerProtocol {
         public init() { self = .splashCore(.init()) }
     }
 
-    public enum Action: Equatable {
+    public enum Action {
         case splashCore(SplashCore.Action)
         case schoolSettingCore(SchoolSettingCore.Action)
         case mainCore(MainCore.Action)
