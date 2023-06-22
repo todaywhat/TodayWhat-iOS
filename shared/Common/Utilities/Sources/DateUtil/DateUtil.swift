@@ -46,4 +46,18 @@ public extension Date {
         let targetDate = calendar.date(byAdding: .day, value: daysUntilTargetDay, to: today)
         return targetDate
     }
+
+    func toStringCustomFormat(format: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter.string(from: self)
+    }
+}
+
+public extension String {
+    func toDateCustomFormat(format: String) -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter.date(from: self) ?? .init()
+    }
 }

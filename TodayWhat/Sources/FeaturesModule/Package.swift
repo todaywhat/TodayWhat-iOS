@@ -218,7 +218,10 @@ let package = Package(
             name: "NoticeFeature",
             dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "TWButton", package: "DesignSystem"),
                 .product(name: "TWColor", package: "DesignSystem"),
+                .product(name: "DateUtil", package: "Utilities"),
+                "NoticeClient",
                 "Entity"
             ]
         )

@@ -20,9 +20,8 @@ public struct MainCore: ReducerProtocol {
         public var timeTableCore: TimeTableCore.State? = nil
         public var settingsCore: SettingsCore.State? = nil
         public var noticeCore: NoticeCore.State? = nil
-        public var notice: EmegencyNotice? = nil
         public var isInitial: Bool = true
-        public var isNavigateSettings = false
+        public var isNavigateSettings: Bool = false
         public var isExistNewVersion: Bool = false
 
         public init() {}
@@ -38,8 +37,6 @@ public struct MainCore: ReducerProtocol {
         case noticeCore(NoticeCore.Action)
         case settingsDismissed
         case checkVersion(TaskResult<String>)
-        case fetchEmergencyNotice(TaskResult<EmegencyNotice?>)
-        case noticeToastDismissed
         case noticeButtonDidTap
         case noticeDismissed
     }
@@ -68,24 +65,14 @@ public struct MainCore: ReducerProtocol {
                 if state.timeTableCore == nil {
                     state.timeTableCore = .init()
                 }
-                return .merge(
-                    .run { send in
-                        let checkVersion = await Action.checkVersion(
-                            TaskResult {
-                                try await iTunesClient.fetchCurrentVersion(.ios)
-                            }
-                        )
-                        await send(checkVersion)
-                    },
-                    .run { send in
-                        let fetchEmergencyNotice = await Action.fetchEmergencyNotice(
-                            TaskResult {
-                                try await noticeClient.fetchEmergencyNotice()
-                            }
-                        )
-                        await send(fetchEmergencyNotice)
-                    }
-                )
+                return .run { send in
+                    let checkVersion = await Action.checkVersion(
+                        TaskResult {
+                            try await iTunesClient.fetchCurrentVersion(.ios)
+                        }
+                    )
+                    await send(checkVersion)
+                }
 
             case .mealCore(.refresh), .timeTableCore(.refresh):
                 state.displayDate = Date()
@@ -125,22 +112,11 @@ public struct MainCore: ReducerProtocol {
                 let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
                 state.isExistNewVersion = currentVersion != latestVersion
 
-            case let .fetchEmergencyNotice(.success(notice)):
-                guard let notice, state.isInitial else { break }
-                state.notice = notice
-                state.isInitial = false
-
-            case .noticeToastDismissed:
-                state.notice = nil
-                return .none
-
             case .noticeButtonDidTap:
-                guard let notice = state.notice else { break }
-                state.noticeCore = .init(emegencyNotice: notice)
+                state.noticeCore = .init()
                 return .none
 
             case .noticeDismissed:
-                state.notice = nil
                 state.noticeCore = nil
 
             default:
