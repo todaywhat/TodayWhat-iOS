@@ -41,17 +41,21 @@ public struct MainView: View {
                             send: MainCore.Action.tabChanged
                         ).animation(.default)
                     ) {
-                        IfLetStore(
-                            store.scope(state: \.mealCore, action: MainCore.Action.mealCore)
-                        ) { store in
-                            MealView(store: store)
+                        VStack {
+                            IfLetStore(
+                                store.scope(state: \.mealCore, action: MainCore.Action.mealCore)
+                            ) { store in
+                                MealView(store: store)
+                            }
                         }
                         .tag(0)
 
-                        IfLetStore(
-                            store.scope(state: \.timeTableCore, action: MainCore.Action.timeTableCore)
-                        ) { store in
-                            TimeTableView(store: store)
+                        VStack {
+                            IfLetStore(
+                                store.scope(state: \.timeTableCore, action: MainCore.Action.timeTableCore)
+                            ) { store in
+                                TimeTableView(store: store)
+                            }
                         }
                         .tag(1)
                     }
