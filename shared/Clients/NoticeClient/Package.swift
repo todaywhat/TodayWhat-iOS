@@ -13,7 +13,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.53.2"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.54.1"),
         .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "10.3.0"),
         .package(path: "../../Domains/Entity")
     ],

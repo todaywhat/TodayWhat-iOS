@@ -2,16 +2,10 @@ import SwiftUI
 import RootFeature
 import ComposableArchitecture
 import UIKit
-import Firebase
-import FirebaseCore
 
 @main
 struct TodayWhatApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-
-    init() {
-        FirebaseApp.configure()
-    }
 
     var body: some Scene {
         WindowGroup {

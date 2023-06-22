@@ -12,7 +12,7 @@ let package = Package(
             targets: ["NeisClient"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.53.2"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.54.1"),
         .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", exact: "5.0.1"),
         .package(path: "../Common/ErrorModule"),
         .package(path: "../Common/Utilities")
