@@ -10,7 +10,6 @@ import TopTabbar
 
 public struct MainView: View {
     let store: StoreOf<MainCore>
-    @State var tab = 0
     @ObservedObject var viewStore: ViewStoreOf<MainCore>
     @Environment(\.openURL) var openURL
     
@@ -85,43 +84,24 @@ public struct MainView: View {
                         .foregroundColor(.extraPrimary)
                 }
 
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button {
+                        viewStore.send(.noticeButtonDidTap)
+                    } label: {
+                        Image("BellBadge")
+                            .renderingMode(.original)
+                    }
+
                     Button {
                         viewStore.send(.settingButtonDidTap)
                     } label: {
                         Image.gear
                             .renderingMode(.original)
                     }
-
                 }
             }
             .onAppear {
                 viewStore.send(.onAppear, animation: .default)
-            }
-            .twToast(
-                isShowing: Binding(
-                    get: { viewStore.state.notice?.title != nil },
-                    set: { _ in viewStore.send(.noticeToastDismissed) }
-                ),
-                text: viewStore.state.notice?.title ?? "",
-                toastTime: .now() + 10
-            ) {
-                viewStore.send(.noticeButtonDidTap)
-            }
-            .fullScreenCover(
-                isPresented: Binding(
-                    get: { viewStore.state.noticeCore != nil },
-                    set: { _ in viewStore.send(.noticeDismissed) }
-                )
-            ) {
-                IfLetStore(
-                    store.scope(
-                        state: \.noticeCore,
-                        action: MainCore.Action.noticeCore
-                    )
-                ) { store in
-                    NoticeView(store: store)
-                }
             }
         }
         .navigationViewStyle(.stack)
@@ -196,6 +176,25 @@ public struct MainView: View {
         } label: {
             EmptyView()
         }
+
+        NavigationLink(
+            isActive: viewStore.binding(
+                get: { $0.noticeCore != nil },
+                send: MainCore.Action.noticeDismissed
+            )
+        ) {
+            IfLetStore(
+                store.scope(
+                    state: \.noticeCore,
+                    action: MainCore.Action.noticeCore
+                )
+            ) { store in
+                NoticeView(store: store)
+            }
+        } label: {
+            EmptyView()
+        }
+
     }
 }
 

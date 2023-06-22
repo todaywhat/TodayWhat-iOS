@@ -1,4 +1,5 @@
 import Dependencies
+import DateUtil
 import Entity
 import Firebase
 import FirebaseCore
@@ -8,6 +9,7 @@ import XCTestDynamicOverlay
 
 public struct NoticeClient: Sendable {
     public var fetchEmergencyNotice: @Sendable () async throws -> EmegencyNotice?
+    public var fetchNoticeList: @Sendable () async throws -> [Notice]
 }
 
 extension NoticeClient: DependencyKey {
@@ -26,13 +28,38 @@ extension NoticeClient: DependencyKey {
                 }
                 .first
             return notice
+        },
+        fetchNoticeList: {
+            let noticeList: [Notice] = try await Firestore.firestore()
+                .collection("noticeList")
+                .getDocuments()
+                .documents
+                .compactMap { (snapshot) -> Notice? in
+                    let data = snapshot.data()
+                    guard let title = data["title"] as? String,
+                            let content = data["content"] as? String,
+                            let createdAt = data["createdAt"] as? String
+                    else {
+                        return nil
+                    }
+                    return Notice(
+                        id: snapshot.documentID,
+                        title: title,
+                        content: content,
+                        createdAt: createdAt
+                            .toDateCustomFormat(format: "yyyy-MM-dd")
+                    )
+                }
+                .sorted { $0.createdAt < $1.createdAt}
+            return noticeList
         }
     )
 }
 
 extension NoticeClient: TestDependencyKey {
     public static var testValue: NoticeClient = NoticeClient(
-        fetchEmergencyNotice: unimplemented("noticeClient.fetchEmergencyNotice")
+        fetchEmergencyNotice: unimplemented("noticeClient.fetchEmergencyNotice"),
+        fetchNoticeList: unimplemented("noticeClient.fetchNoticeList")
     )
 }
 
