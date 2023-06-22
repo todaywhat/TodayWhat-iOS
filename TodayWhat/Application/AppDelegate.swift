@@ -1,5 +1,7 @@
 import UIKit
 import Dependencies
+import Firebase
+import FirebaseCore
 import UserDefaultsClient
 import WatchConnectivity
 import OSLog
@@ -12,6 +14,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
+        FirebaseApp.configure()
         session = WCSession.default
         if WCSession.isSupported() {
             session.delegate = self

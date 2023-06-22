@@ -2146,7 +2146,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
 			requirement = {
 				kind = exactVersion;
-				version = 0.53.2;
+				version = 0.54.1;
 			};
 		};
 		463490B5298CDA15007EBF26 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */ = {

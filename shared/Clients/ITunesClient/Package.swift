@@ -12,7 +12,7 @@ let package = Package(
             targets: ["ITunesClient"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.53.2"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", exact: "0.54.1"),
     ],
     targets: [
         .target(
