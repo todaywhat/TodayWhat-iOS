@@ -13,14 +13,21 @@ public struct RootView: View {
 
     public var body: some View {
         SwitchStore(store) {
-            CaseLet(state: /RootCore.State.splashCore, action: RootCore.Action.splashCore) { store in
-                SplashView(store: store)
-            }
-            CaseLet(state: /RootCore.State.schoolSettingCore, action: RootCore.Action.schoolSettingCore) { store in
-                SchoolSettingView(store: store)
-            }
-            CaseLet(state: /RootCore.State.mainCore, action: RootCore.Action.mainCore) { store in
-                MainView(store: store)
+            switch $0 {
+            case .splashCore:
+                CaseLet(state: /RootCore.State.splashCore, action: RootCore.Action.splashCore) { store in
+                    SplashView(store: store)
+                }
+
+            case .schoolSettingCore:
+                CaseLet(state: /RootCore.State.schoolSettingCore, action: RootCore.Action.schoolSettingCore) { store in
+                    SchoolSettingView(store: store)
+                }
+
+            case .mainCore:
+                CaseLet(state: /RootCore.State.mainCore, action: RootCore.Action.mainCore) { store in
+                    MainView(store: store)
+                }
             }
         }
     }
