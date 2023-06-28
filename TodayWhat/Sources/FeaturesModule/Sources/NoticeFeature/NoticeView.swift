@@ -26,7 +26,7 @@ public struct NoticeView: View {
                         } label: {
                             noticeRowView(notice: notice)
                                 .padding(.horizontal, 16)
-                                .matchedGeometryEffect(id: "NOTICE_MODAL", in: noticeModal, properties: .position, anchor: .center)
+                                .matchedGeometryEffect(id: "NOTICE_MODAL\(notice.id)", in: noticeModal, properties: .position, anchor: .center)
                         }
                     }
                 }
@@ -51,7 +51,7 @@ public struct NoticeView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal, 16)
                         .aspectRatio(1.0, contentMode: .fit)
-                        .matchedGeometryEffect(id: "NOTICE_MODAL", in: noticeModal, properties: .position, anchor: .center)
+                        .matchedGeometryEffect(id: "NOTICE_MODAL\(selectedNotice.id)", in: noticeModal, properties: .position, anchor: .center)
                 }
             }
         }
@@ -70,6 +70,7 @@ public struct NoticeView: View {
                 Text(notice.title)
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(.extraPrimary)
+                    .multilineTextAlignment(.leading)
 
                 Spacer()
 
@@ -82,6 +83,7 @@ public struct NoticeView: View {
                 .lineLimit(2)
                 .font(.system(size: 16))
                 .foregroundColor(.extraPrimary)
+                .multilineTextAlignment(.leading)
         }
         .padding(16)
         .background {
@@ -107,7 +109,7 @@ public struct NoticeView: View {
             }
 
             ScrollView {
-                Text(notice.content)
+                Text(notice.content.replacingOccurrences(of: "\\n", with: "\n"))
                     .lineLimit(nil)
                     .font(.system(size: 16))
                     .foregroundColor(.extraPrimary)
