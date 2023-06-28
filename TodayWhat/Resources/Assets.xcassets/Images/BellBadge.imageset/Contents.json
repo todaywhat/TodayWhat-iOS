@@ -3,6 +3,16 @@
     {
       "filename" : "bell.badge.svg",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "bell.badge-dark.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
