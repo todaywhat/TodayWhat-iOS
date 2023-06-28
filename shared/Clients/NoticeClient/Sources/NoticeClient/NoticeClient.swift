@@ -50,7 +50,7 @@ extension NoticeClient: DependencyKey {
                             .toDateCustomFormat(format: "yyyy-MM-dd")
                     )
                 }
-                .sorted { $0.createdAt > $1.createdAt}
+                .sorted { $0.createdAt > $1.createdAt }
             return noticeList
         }
     )
