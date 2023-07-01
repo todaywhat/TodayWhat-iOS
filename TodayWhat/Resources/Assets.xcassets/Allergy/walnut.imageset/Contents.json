@@ -2,18 +2,7 @@
   "images" : [
     {
       "filename" : "walnut 3.svg",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "walnut 1.svg",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "walnut 4.svg",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "idiom" : "universal"
     }
   ],
   "info" : {
