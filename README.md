@@ -11,15 +11,9 @@ AppStore - https://apps.apple.com/app/id1629567018
 <br>
 
 ## 📸 Screenshots
-![image](https://user-images.githubusercontent.com/74440939/213751506-9122baec-2f3a-4c7a-be56-0d425ca6e89a.png)
+![todaywhat-banner](https://github.com/baekteun/TodayWhat-new/assets/74440939/cddf070b-7ff4-41f5-ae27-9c165d66be97)
 
 <br>
-
-## 🤔 Experiences
-- Swift Package Manager를 사용한 모듈화
-- SwiftUI와 TCA를 사용하여 iOS앱 개발
-- Watch Connectivity를 사용하여 아이폰과 애플워치 연동 및 데이터 전송
-- WidgetKit을 사용하여 iOS 홈화면 위젯 개발
 
 <br>
 
