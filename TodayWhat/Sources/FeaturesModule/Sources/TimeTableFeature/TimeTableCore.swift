@@ -46,6 +46,7 @@ public struct TimeTableCore: ReducerProtocol {
                     state.timeTableList = (modifiedTimeTables ?? [])
                         .sorted { $0.perio < $1.perio }
                         .map { TimeTable(perio: $0.perio, content: $0.content) }
+                    state.isLoading = false
                     return .none
                 }
                 return .task { [todayDate] in

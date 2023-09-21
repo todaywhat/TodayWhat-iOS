@@ -15,7 +15,7 @@ public struct TimeTableView: View {
     public var body: some View {
         ScrollView {
             if viewStore.timeTableList.isEmpty && !viewStore.isLoading {
-                Text("오늘은 시간표가 없는 날이에요!")
+                Text("오늘 시간표를 찾을 수 없어요!")
                     .padding(.top, 16)
                     .foregroundColor(.darkGray)
 

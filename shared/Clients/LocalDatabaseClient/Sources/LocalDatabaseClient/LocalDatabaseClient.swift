@@ -179,7 +179,9 @@ extension LocalDatabaseClient: DependencyKey {
                 t.column("id", .text).primaryKey(onConflict: .replace).notNull()
                 t.column("allergy", .text).notNull()
             }
+        }
 
+        migrator.registerMigration("v1.1.0") { db in
             try db.create(table: "schoolMajorLocalEntity") { t in
                 t.column("id", .text).primaryKey(onConflict: .replace).notNull()
                 t.column("major", .text).notNull()
