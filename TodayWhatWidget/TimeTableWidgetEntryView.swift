@@ -12,7 +12,14 @@ struct TimeTableWidgetEntryView: View {
     let entry: TimeTableProvider.Entry
 
     var body: some View {
-        widgetBody()
+        if #available(iOSApplicationExtension 17.0, *) {
+            widgetBody()
+                .containerBackground(for: .widget) {
+                    EmptyView()
+                }
+        } else {
+            widgetBody()
+        }
     }
 
     @ViewBuilder
