@@ -179,7 +179,13 @@ struct TodayWhatMealWidget: Widget {
     let kind: String = "TodayWhatMealWidget"
 
     var body: some WidgetConfiguration {
-        let configuration = IntentConfiguration(
+        let widgetFamily: [WidgetFamily] = if #available(iOSApplicationExtension 16.0, *) {
+            [.systemSmall, .systemMedium, .systemLarge, .accessoryRectangular, .accessoryCircular]
+        } else {
+            [.systemSmall, .systemMedium, .systemLarge]
+        }
+
+        return IntentConfiguration(
             kind: kind,
             intent: DisplayMealIntent.self,
             provider: MealProvider()
@@ -188,14 +194,8 @@ struct TodayWhatMealWidget: Widget {
         }
         .configurationDisplayName("오늘 급식 뭐임")
         .description("시간에 따라 아침, 점심, 저녁 급식을 확인해요!\n(아침0~8, 점심8~13, 저녁13~20, 내일아침20~24)")
-
-        if #available(iOSApplicationExtension 16.0, *) {
-            return configuration
-                .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .accessoryRectangular, .accessoryCircular])
-        } else {
-            return configuration
-                .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
-        }
+        .contentMarginsDisabled()
+        .supportedFamilies(widgetFamily)
     }
 }
 
@@ -212,6 +212,7 @@ struct TodayWhatTimeTableWidget: Widget {
         .configurationDisplayName("오늘 시간표 뭐임")
         .description("오늘 시간표를 확인해요!")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+        .contentMarginsDisabled()
     }
 }
 
