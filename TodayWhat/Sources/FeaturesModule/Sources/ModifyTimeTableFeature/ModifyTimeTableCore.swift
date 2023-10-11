@@ -102,6 +102,13 @@ public struct ModifyTimeTableCore: ReducerProtocol {
                 state.inputedTimeTables.remove(at: index)
 
             case .saveButtonDidTap:
+                let prevModifiedTimeTables = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
+                    .filter { $0.weekday == WeekdayType.allCases[safe: state.currentTab]?.rawValue ?? 2 }
+                guard let prevModifiedTimeTables else { return .none }
+                prevModifiedTimeTables.forEach { timeTable in
+                    try? localDatabaseClient.delete(record: timeTable)
+                }
+
                 let modifiedTimeTables = state.inputedTimeTables.indices
                     .map {
                         ModifiedTimeTableLocalEntity(
@@ -110,7 +117,6 @@ public struct ModifyTimeTableCore: ReducerProtocol {
                             content: state.inputedTimeTables[$0]
                         )
                     }
-                try? localDatabaseClient.deleteAll(record: ModifiedTimeTableLocalEntity.self)
                 try? localDatabaseClient.save(records: modifiedTimeTables)
                 state.isShowingSuccessToast = true
 
