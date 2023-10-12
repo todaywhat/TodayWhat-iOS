@@ -12,6 +12,7 @@ public struct MealCore: ReducerProtocol {
         public var meal: Meal?
         public var isLoading = false
         public var allergyList: [AllergyType] = []
+        public var currentTimeMealType: MealType = .breakfast
         public init() {}
     }
 
@@ -25,6 +26,7 @@ public struct MealCore: ReducerProtocol {
     @Dependency(\.mealClient) var mealClient
     @Dependency(\.localDatabaseClient) var localDatabaseClient
     @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.date) var dateGenerator
 
     public var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
@@ -67,6 +69,8 @@ public struct MealCore: ReducerProtocol {
 
             case let .mealResponse(.success(meal)):
                 state.meal = meal
+                let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
+                state.currentTimeMealType = MealType(hour: dateGenerator.now, isSkipWeekend: isSkipWeekend)
                 state.isLoading = false
 
             case .mealResponse(.failure(_)):
