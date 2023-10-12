@@ -35,7 +35,7 @@ public enum MealType: String, Decodable {
         let weekday = Calendar.current.component(.weekday, from: hour)
         let hourTime = Calendar.current.component(.hour, from: hour)
 
-        if !isSkipWeekend && weekday.isWeekend {
+        if isSkipWeekend && weekday.isWeekend {
             self = .breakfast
             return
         }
