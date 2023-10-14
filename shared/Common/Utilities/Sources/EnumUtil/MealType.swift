@@ -30,4 +30,33 @@ public enum MealType: String, Decodable {
             return "🍛 저녁"
         }
     }
+
+    public init(hour: Date, isSkipWeekend: Bool = false) {
+        let weekday = Calendar.current.component(.weekday, from: hour)
+        let hourTime = Calendar.current.component(.hour, from: hour)
+
+        if isSkipWeekend && weekday.isWeekend {
+            self = .breakfast
+            return
+        }
+        switch hourTime {
+        case 0..<8:
+            self = .breakfast
+
+        case 8..<13:
+            self = .lunch
+
+        case 13..<20:
+            self = .dinner
+
+        default:
+            self = .breakfast
+        }
+    }
+}
+
+private extension Int {
+    var isWeekend: Bool {
+        self == 7 || self == 1
+    }
 }

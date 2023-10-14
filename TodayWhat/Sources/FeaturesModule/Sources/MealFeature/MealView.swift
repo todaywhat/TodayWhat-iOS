@@ -19,40 +19,47 @@ public struct MealView: View {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     public var body: some View {
-        ScrollView {
-            let date = Date()
-            if let meal = viewStore.meal {
-                LazyVStack(spacing: 8) {
-                    ForEach([MealType.breakfast, .lunch, .dinner], id: \.hashValue) { type in
-                        mealListView(type: type, subMeal: meal.mealByType(type: type))
+        ScrollViewReader { scrollProxy in
+            ScrollView {
+                let date = Date()
+                if let meal = viewStore.meal {
+                    LazyVStack(spacing: 8) {
+                        ForEach([MealType.breakfast, .lunch, .dinner], id: \.hashValue) { type in
+                            mealListView(type: type, subMeal: meal.mealByType(type: type))
+                        }
+                    }
+                } else if viewStore.isLoading {
+                    ProgressView()
+                        .progressViewStyle(.automatic)
+                        .padding(.top, 16)
+                } else if viewStore.meal?.isEmpty ?? true,
+                          (date.weekday == 7 || date.weekday == 1),
+                          userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false {
+                    Text("주말에도 월요일 급식을 보고 싶다면?")
+                        .foregroundColor(.extraGray)
+
+                    TWButton(title: "설정하러가기", style: .cta) {
+                        viewStore.send(.settingsButtonDidTap)
                     }
                 }
-            } else if viewStore.isLoading {
-                ProgressView()
-                    .progressViewStyle(.automatic)
-                    .padding(.top, 16)
-            } else if viewStore.meal?.isEmpty ?? true,
-                      (date.weekday == 7 || date.weekday == 1),
-                      userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false {
-                Text("주말에도 월요일 급식을 보고 싶다면?")
-                    .foregroundColor(.extraGray)
-
-                TWButton(title: "설정하러가기", style: .cta) {
-                    viewStore.send(.settingsButtonDidTap)
+                else {
+                    Text("등록된 정보를 찾지 못했어요 😥")
+                        .padding(.top, 16)
                 }
             }
-            else {
-                Text("등록된 정보를 찾지 못했어요 😥")
-                    .padding(.top, 16)
+            .onAppear {
+                viewStore.send(.onAppear, animation: .default)
             }
+            .onChange(of: viewStore.currentTimeMealType) { mealType in
+                withAnimation(.easeInOut(duration: 0.5)) {
+                    scrollProxy.scrollTo(mealType, anchor: .top)
+                }
+            }
+            .refreshable {
+                viewStore.send(.refresh, animation: .default)
+            }
+            .edgesIgnoringSafeArea(.bottom)
         }
-        .onAppear {
-            viewStore.send(.onAppear, animation: .default)
-        }
-        .refreshable {
-            viewStore.send(.refresh, animation: .default)
-        }
-        .edgesIgnoringSafeArea(.bottom)
     }
 
     @ViewBuilder
@@ -61,6 +68,7 @@ public struct MealView: View {
             .padding(.top, 16)
             .padding(.bottom, 12)
             .padding(.horizontal, 16)
+            .id(type)
         
         LazyVStack {
             ForEach(subMeal.meals, id: \.hashValue) { meal in
