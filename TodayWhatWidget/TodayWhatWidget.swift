@@ -60,11 +60,10 @@ struct MealProvider: IntentTimelineProvider {
             if currentDate.hour >= 20 {
                 currentDate = currentDate.adding(by: .day, value: 1)
             }
-            let mealPartTime: MealPartTime
-            if configuration.displayMeal == .auto {
-                mealPartTime = MealPartTime(hour: currentDate)
+            let mealPartTime: MealPartTime = if configuration.displayMeal == .auto {
+                MealPartTime(hour: currentDate)
             } else {
-                mealPartTime = configuration.displayMeal.toMealPartTime()
+                configuration.displayMeal.toMealPartTime()
             }
 
             do {
@@ -92,12 +91,17 @@ struct TimeTableProvider: TimelineProvider {
     typealias Entry = TimeTableEntry
 
     @Dependency(\.timeTableClient) var timeTableClient
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.localDatabaseClient) var localDatabaseClient
 
     func placeholder(in context: Context) -> TimeTableEntry {
         .empty()
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (TimeTableEntry) -> Void) {
+    func getSnapshot(
+        in context: Context,
+        completion: @escaping (TimeTableEntry) -> Void
+    ) {
         Task {
             var currentDate = Date()
             if currentDate.hour >= 20 {
@@ -114,7 +118,10 @@ struct TimeTableProvider: TimelineProvider {
         }
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<TimeTableEntry>) -> Void) {
+    func getTimeline(
+        in context: Context,
+        completion: @escaping (Timeline<TimeTableEntry>) -> Void
+    ) {
         let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? .init()
         Task {
             var currentDate = Date()
@@ -122,7 +129,7 @@ struct TimeTableProvider: TimelineProvider {
                 currentDate = currentDate.adding(by: .hour, value: 5)
             }
             do {
-                let timeTable = try await timeTableClient.fetchTimeTable(currentDate).prefix(7)
+                let timeTable = try await fetchTimeTables(date: currentDate)
                 let entry = TimeTableEntry(date: currentDate, timeTable: Array(timeTable))
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
@@ -132,6 +139,19 @@ struct TimeTableProvider: TimelineProvider {
                 completion(timeline)
             }
         }
+    }
+
+    private func fetchTimeTables(date: Date) async throws -> [TimeTable] {
+        let isOnModifiedTimeTable = userDefaultsClient.getValue(.isOnModifiedTimeTable) as? Bool ?? false
+        if isOnModifiedTimeTable {
+            let modifiedTimeTables = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
+                .filter { $0.weekday == WeekdayType(weekday: date.weekday).rawValue }
+            return (modifiedTimeTables ?? [])
+                .sorted { $0.perio < $1.perio }
+                .map { TimeTable(perio: $0.perio, content: $0.content) }
+        }
+        let timeTable = try await timeTableClient.fetchTimeTable(date).prefix(7)
+        return Array(timeTable)
     }
 }
 
