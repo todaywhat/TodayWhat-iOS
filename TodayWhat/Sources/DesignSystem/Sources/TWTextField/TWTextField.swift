@@ -6,6 +6,23 @@ public struct TWTextField: View {
     private var placeholder: String
     private var onCommit: () -> Void
     @FocusState private var isFocused: Bool
+    @Environment(\.colorScheme) var colorScheme
+
+    var placeholderColor: Color {
+        return if colorScheme == .light {
+            Color.n20
+        } else {
+            Color.n10
+        }
+    }
+
+    var buttonColor: Color {
+        return if colorScheme == .light {
+            Color.n20
+        } else {
+            Color.n10
+        }
+    }
 
     public init(
         _ placeholder: String = "",
@@ -21,15 +38,15 @@ public struct TWTextField: View {
         ZStack(alignment: .leading) {
             TextField("", text: $text)
                 .font(.system(size: 16))
-                .foregroundColor(.extraPrimary)
+                .foregroundColor(.extraBlack)
                 .padding()
                 .background {
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(Color.veryLightGray)
+                        .fill(Color.n40)
                 }
                 .overlay {
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(isFocused ? Color.extraPrimary : .lightGray, lineWidth: 1)
+                        .stroke(isFocused ? Color.extraBlack : .clear, lineWidth: 1)
                 }
                 .focused($isFocused)
                 .onSubmit(onCommit)
@@ -39,14 +56,14 @@ public struct TWTextField: View {
                 if isFocused || !text.isEmpty {
                     Text(placeholder)
                         .font(.system(size: 12))
-                        .foregroundColor(.extraGray)
+                        .foregroundColor(placeholderColor)
                         .offset(y: -35)
                         .transition(.offset(y: 20))
                         .zIndex(0)
                 } else {
                     Text(placeholder)
                         .font(.system(size: 16))
-                        .foregroundColor(.extraGray)
+                        .foregroundColor(placeholderColor)
                         .padding()
                         .onTapGesture {
                             isFocused = true
@@ -68,7 +85,7 @@ public struct TWTextField: View {
                     if isFocused && !text.isEmpty {
                         Image(systemName: "xmark.circle.fill")
                             .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(.extraGray)
+                            .foregroundColor(buttonColor)
                             .frame(width: 28, height: 28)
                     } else {
                         EmptyView()

@@ -15,7 +15,9 @@ public extension Color {
     static let background = Color("BG", bundle: .module)
 
     static let extraBlack = Color("Black", bundle: .module)
+    static let constantBlack = Color("ConstantBlack", bundle: .module)
     static let extraWhite = Color("White", bundle: .module)
+    static let constantWhite = Color("ConstantWhite", bundle: .module)
     static let n00 = Color("N00", bundle: .module)
     static let n10 = Color("N10", bundle: .module)
     static let n20 = Color("N20", bundle: .module)

@@ -54,12 +54,12 @@ public struct TWToast: ViewModifier {
             if isShowing {
                 Text(text)
                     .font(.system(size: 14))
-                    .foregroundColor(.background)
+                    .foregroundColor(.extraWhite)
                     .padding(.vertical, 15.5)
                     .padding(.horizontal, 16)
                     .background {
                         Capsule()
-                            .fill(Color.extraPrimary)
+                            .fill(Color.extraBlack)
                     }
                     .opacity(isShowing ? 1 : 0)
                     .transition(.move(edge: .top).combined(with: AnyTransition.opacity.animation(.easeInOut)))
