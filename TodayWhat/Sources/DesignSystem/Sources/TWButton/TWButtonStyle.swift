@@ -29,18 +29,25 @@ private extension TWButtonStyle {
         @Environment(\.isEnabled) var isEnabled
 
         var background: Color {
-            if isEnabled {
-                return configuration.isPressed ?
-                    .black :
-                    .extraPrimary
+            return if isEnabled {
+                Color.extraBlack
             } else {
-                return .extraGray
+                Color.n30
             }
         }
+
+        var foreground: Color {
+            return if isEnabled {
+                Color.extraWhite
+            } else {
+                Color.n20
+            }
+        }
+
         var body: some View {
             configuration.label
                 .font(.system(size: 14))
-                .foregroundColor(.veryLightGray)
+                .foregroundColor(foreground)
                 .background(background)
                 .cornerRadius(8)
         }
@@ -51,18 +58,25 @@ private extension TWButtonStyle {
         @Environment(\.isEnabled) var isEnabled
 
         var background: Color {
-            if isEnabled {
-                return configuration.isPressed ?
-                    .black :
-                    .extraPrimary
+            return if isEnabled {
+                Color.extraBlack
             } else {
-                return .extraGray
+                Color.n30
             }
         }
+
+        var foreground: Color {
+            return if isEnabled {
+                Color.extraWhite
+            } else {
+                Color.n20
+            }
+        }
+
         var body: some View {
             configuration.label
                 .font(.system(size: 14))
-                .foregroundColor(.veryLightGray)
+                .foregroundColor(foreground)
                 .background(background)
         }
     }

@@ -10,7 +10,7 @@ public struct LabelledDivider: View {
     public init(
         label: String,
         horizontalPadding: CGFloat = 8,
-        color: Color = .extraGray
+        color: Color = .n30
     ) {
         self.label = label
         self.horizontalPadding = horizontalPadding

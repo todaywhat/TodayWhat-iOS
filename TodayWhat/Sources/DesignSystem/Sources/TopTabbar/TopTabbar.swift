@@ -26,11 +26,11 @@ public struct TopTabbarView: View {
                         VStack {
                             Text(items[index])
                                 .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(currentTab == index ? .extraPrimary : .extraGray)
+                                .foregroundColor(currentTab == index ? .n00 : .n20)
 
                             if currentTab == index {
                                 RoundedRectangle(cornerRadius: 17)
-                                    .fill(Color.extraPrimary)
+                                    .fill(Color.n00)
                                     .frame(height: 2)
                                     .matchedGeometryEffect(id: "TAB", in: tabAnimation, properties: .position)
                             } else {
@@ -40,7 +40,7 @@ public struct TopTabbarView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .background {
-                            Color.background
+                            Color.extraWhite
                         }
                         .padding(.horizontal, 16)
                     }
@@ -48,9 +48,9 @@ public struct TopTabbarView: View {
                 }
             }
 
-            LinearGradient(colors: [.background, .darkGray.opacity(0.08)], startPoint: .bottom, endPoint: .top)
-                   .frame(height: 8)
-                   .opacity(0.8)
+            LinearGradient(colors: [.extraWhite, .n30.opacity(0.08)], startPoint: .bottom, endPoint: .top)
+                .frame(height: 8)
+                .opacity(0.8)
         }
     }
 }
