@@ -56,12 +56,13 @@ private extension TWButtonStyle {
     struct WideButton: View {
         let configuration: ButtonStyle.Configuration
         @Environment(\.isEnabled) var isEnabled
+        @Environment(\.colorScheme) var colorScheme
 
         var background: Color {
             return if isEnabled {
                 Color.extraBlack
             } else {
-                Color.n30
+                Color.unselectedSecondary
             }
         }
 
@@ -69,7 +70,7 @@ private extension TWButtonStyle {
             return if isEnabled {
                 Color.extraWhite
             } else {
-                Color.n20
+                Color.unselectedPrimary
             }
         }
 
