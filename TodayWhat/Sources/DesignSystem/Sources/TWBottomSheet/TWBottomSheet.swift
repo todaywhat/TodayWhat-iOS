@@ -54,7 +54,7 @@ struct TWBottomSheet<T: View>: ViewModifier {
                         .transition(.opacity)
 
                     ZStack {
-                        Color.extraWhite
+                        Color.backgroundMain
                             .cornerRadius(16, corners: [.topLeft, .topRight])
                             .padding(.top, -dragHeight)
                             .gesture(sheetDragging)

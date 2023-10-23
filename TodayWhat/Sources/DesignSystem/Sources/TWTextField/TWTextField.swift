@@ -6,23 +6,6 @@ public struct TWTextField: View {
     private var placeholder: String
     private var onCommit: () -> Void
     @FocusState private var isFocused: Bool
-    @Environment(\.colorScheme) var colorScheme
-
-    var placeholderColor: Color {
-        return if colorScheme == .light {
-            Color.n20
-        } else {
-            Color.n10
-        }
-    }
-
-    var buttonColor: Color {
-        return if colorScheme == .light {
-            Color.n20
-        } else {
-            Color.n10
-        }
-    }
 
     public init(
         _ placeholder: String = "",
@@ -42,7 +25,7 @@ public struct TWTextField: View {
                 .padding()
                 .background {
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(Color.n40)
+                        .fill(Color.cardBackground)
                 }
                 .overlay {
                     RoundedRectangle(cornerRadius: 8)
@@ -56,14 +39,14 @@ public struct TWTextField: View {
                 if isFocused || !text.isEmpty {
                     Text(placeholder)
                         .font(.system(size: 12))
-                        .foregroundColor(placeholderColor)
+                        .foregroundColor(.unselectedPrimary)
                         .offset(y: -35)
                         .transition(.offset(y: 20))
                         .zIndex(0)
                 } else {
                     Text(placeholder)
                         .font(.system(size: 16))
-                        .foregroundColor(placeholderColor)
+                        .foregroundColor(.unselectedPrimary)
                         .padding()
                         .onTapGesture {
                             isFocused = true
@@ -85,7 +68,7 @@ public struct TWTextField: View {
                     if isFocused && !text.isEmpty {
                         Image(systemName: "xmark.circle.fill")
                             .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(buttonColor)
+                            .foregroundColor(.unselectedPrimary)
                             .frame(width: 28, height: 28)
                     } else {
                         EmptyView()

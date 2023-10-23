@@ -4,15 +4,6 @@ import TWColor
 public struct TWRadioButton: View {
     private var isChecked: Bool
     private var onTap: () -> Void
-    @Environment(\.colorScheme) var colorScheme
-
-    var primaryColor: Color {
-        return if colorScheme == .light {
-            Color.n30
-        } else {
-            Color.n20
-        }
-    }
 
     public init(
         isChecked: Bool,
@@ -26,11 +17,11 @@ public struct TWRadioButton: View {
         Button(action: onTap) {
             ZStack {
                 Circle()
-                    .stroke(isChecked ? primaryColor : .extraBlack, lineWidth: 1.72)
+                    .stroke(isChecked ? Color.textPrimary : .unselectedPrimary, lineWidth: 1.72)
                     .frame(width: 20, height: 20)
 
                 Circle()
-                    .fill(isChecked ? Color.extraBlack : .clear)
+                    .fill(isChecked ? Color.textPrimary : .clear)
                     .frame(width: 12, height: 12)
             }
         }
