@@ -36,7 +36,7 @@ public struct MealView: View {
                           (date.weekday == 7 || date.weekday == 1),
                           userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false {
                     Text("주말에도 월요일 급식을 보고 싶다면?")
-                        .foregroundColor(.extraGray)
+                        .foregroundColor(.textSecondary)
 
                     TWButton(title: "설정하러가기", style: .cta) {
                         viewStore.send(.settingsButtonDidTap)
@@ -75,6 +75,7 @@ public struct MealView: View {
                 HStack {
                     Text(mealDisplay(meal: meal))
                         .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.textPrimary)
 
                     Spacer()
 
@@ -88,7 +89,7 @@ public struct MealView: View {
                 .frame(maxWidth: .infinity)
                 .background {
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.veryLightGray)
+                        .fill(Color.cardBackground)
                 }
                 .padding(.horizontal, 16)
             }

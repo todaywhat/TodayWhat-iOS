@@ -56,7 +56,7 @@ public struct NoticeView: View {
             }
         }
         .background {
-            Color.veryLightGray.ignoresSafeArea()
+            Color.backgroundSecondary.ignoresSafeArea()
         }
         .twBackButton(dismiss: dismiss)
         .navigationBarTitleDisplayMode(.large)
@@ -69,25 +69,25 @@ public struct NoticeView: View {
             HStack {
                 Text(notice.title)
                     .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.extraPrimary)
+                    .foregroundColor(.textPrimary)
                     .multilineTextAlignment(.leading)
 
                 Spacer()
 
                 Text(notice.createdAt.toStringCustomFormat(format: "yyyy년 MM월 dd일"))
                     .font(.system(size: 12))
-                    .foregroundColor(.darkGray)
+                    .foregroundColor(.textPrimary)
             }
 
             Text(notice.content)
                 .lineLimit(2)
                 .font(.system(size: 16))
-                .foregroundColor(.extraPrimary)
+                .foregroundColor(.textSecondary)
                 .multilineTextAlignment(.leading)
         }
         .padding(16)
         .background {
-            Color.background
+            Color.cardBackgroundSecondary
                 .cornerRadius(8)
         }
     }
@@ -99,25 +99,25 @@ public struct NoticeView: View {
                 Text(notice.title)
                     .lineLimit(nil)
                     .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.extraPrimary)
+                    .foregroundColor(.textPrimary)
 
                 Spacer()
 
                 Text(notice.createdAt.toStringCustomFormat(format: "yyyy년 MM월 dd일"))
                     .font(.system(size: 12))
-                    .foregroundColor(.darkGray)
+                    .foregroundColor(.textSecondary)
             }
 
             ScrollView {
                 Text(notice.content.replacingOccurrences(of: "\\n", with: "\n"))
                     .lineLimit(nil)
                     .font(.system(size: 16))
-                    .foregroundColor(.extraPrimary)
+                    .foregroundColor(.textPrimary)
             }
         }
         .padding(16)
         .background {
-            Color.background
+            Color.backgroundMain
                 .cornerRadius(8)
         }
     }
