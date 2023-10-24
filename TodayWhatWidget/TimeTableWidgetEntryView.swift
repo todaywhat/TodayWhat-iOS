@@ -14,7 +14,9 @@ struct TimeTableWidgetEntryView: View {
     var body: some View {
         if #available(iOSApplicationExtension 17.0, *) {
             widgetBody()
-                .containerBackground(.fill, for: .widget)
+                .containerBackground(for: .widget) {
+                    Color.backgroundMain
+                }
         } else {
             widgetBody()
         }
