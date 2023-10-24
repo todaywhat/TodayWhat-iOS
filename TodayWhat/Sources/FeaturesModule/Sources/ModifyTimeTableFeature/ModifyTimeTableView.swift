@@ -87,7 +87,6 @@ public struct ModifyTimeTableView: View {
                     TWButton(title: "추가 +") {
                         viewStore.send(.appendTimeTableButtonDidTap, animation: .default)
                     }
-                    .clipShape(Capsule())
                 }
             }
             .padding(.horizontal, 16)
