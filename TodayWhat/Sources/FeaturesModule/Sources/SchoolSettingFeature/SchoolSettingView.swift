@@ -37,11 +37,12 @@ public struct SchoolSettingView: View {
                             VStack(alignment: .leading, spacing: 4){
                                 Text(viewStore.titleMessage)
                                     .font(.system(size: 20, weight: .medium))
+                                    .foregroundColor(.extraBlack)
 
                                 if !viewStore.class.isEmpty && !viewStore.schoolMajorList.isEmpty {
                                     Text("학과는 없으면 안해도 괜찮아요!")
                                         .font(.system(size: 16, weight: .medium))
-                                        .foregroundColor(.darkGray)
+                                        .foregroundColor(.extraBlack)
                                 }
                             }
 
@@ -125,7 +126,7 @@ public struct SchoolSettingView: View {
                                         }
                                         .frame(maxWidth: .infinity)
                                         .background {
-                                            Color.background
+                                            Color.backgroundMain
                                         }
                                         .onTapGesture {
                                             viewStore.send(.schoolRowDidSelect(school), animation: .default)
@@ -176,7 +177,7 @@ public struct SchoolSettingView: View {
             }
             .hideKeyboardWhenTap()
             .background {
-                Color.background.ignoresSafeArea()
+                Color.backgroundMain.ignoresSafeArea()
             }
             .twBottomSheet(
                 isShowing: viewStore.binding(
@@ -203,10 +204,11 @@ public struct SchoolSettingView: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(school.name)
                 .font(.system(size: 16, weight: .bold))
+                .foregroundColor(.textPrimary)
 
             Text(school.location)
                 .font(.system(size: 14))
-                .foregroundColor(.extraGray)
+                .foregroundColor(.unselectedPrimary)
         }
     }
 }

@@ -17,13 +17,13 @@ public struct TimeTableView: View {
             if viewStore.timeTableList.isEmpty && !viewStore.isLoading {
                 Text("오늘 시간표를 찾을 수 없어요!")
                     .padding(.top, 16)
-                    .foregroundColor(.darkGray)
+                    .foregroundColor(.textSecondary)
 
                 if Date().month == 3 {
                     Text("3월 초중반에는 neis에 정규시간표가\n 등록되어있지 않을 수도 있어요.")
                         .multilineTextAlignment(.center)
                         .padding(.top, 14)
-                        .foregroundColor(.extraGray)
+                        .foregroundColor(.textSecondary)
                 }
             }
 
@@ -59,15 +59,15 @@ public struct TimeTableView: View {
         HStack(spacing: 8) {
             Text("\(timeTable.perio)교시")
                 .font(.system(size: 12))
-                .foregroundColor(.darkGray)
+                .foregroundColor(.textPrimary)
 
             Divider()
-                .foregroundColor(.lightGray)
+                .foregroundColor(.unselectedSecondary)
                 .frame(height: 18)
 
             Text(timeTable.content)
                 .font(.system(size: 16, weight: .bold))
-                .foregroundColor(.extraPrimary)
+                .foregroundColor(.textPrimary)
                 .padding(.leading, 4)
 
             Spacer()
@@ -76,7 +76,7 @@ public struct TimeTableView: View {
         .padding(.horizontal, 12)
         .padding(.vertical, 16)
         .background {
-            Color.veryLightGray
+            Color.cardBackground
         }
         .cornerRadius(4)
     }

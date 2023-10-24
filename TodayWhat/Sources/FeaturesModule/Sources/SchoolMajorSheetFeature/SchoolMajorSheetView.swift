@@ -35,7 +35,7 @@ public struct SchoolMajorSheetView: View {
         HStack {
             Text(major)
                 .font(.system(size: 18, weight: .semibold))
-                .foregroundColor(.extraPrimary)
+                .foregroundColor(.textPrimary)
 
             Spacer()
 
