@@ -78,7 +78,7 @@ public struct AllergySettingView: View {
         .frame(maxWidth: .infinity)
         .background {
             RoundedRectangle(cornerRadius: 8)
-                .fill(Color.extraBlack)
+                .fill(Color.cardBackgroundSecondary)
         }
         .overlay {
             RoundedRectangle(cornerRadius: 8)

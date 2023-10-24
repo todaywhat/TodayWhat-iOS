@@ -71,12 +71,14 @@ private struct SmallMealWidgetView: View {
             Text("[\(entry.mealPartTime.display)]")
                 .frame(maxHeight: .infinity)
                 .font(.system(size: 12).bold())
+                .foregroundColor(.textSecondary)
 
             ForEach(entry.meal.meals(mealPartTime: entry.mealPartTime).meals, id: \.hashValue) { meal in
                 HStack {
                     Text(mealDisplay(meal: meal))
                         .frame(maxHeight: .infinity)
                         .font(.system(size: 12))
+                        .foregroundColor(.textPrimary)
                         .if(isMealContainsAllergy(meal: meal)) {
                             $0.foregroundColor(.red)
                         }
@@ -111,15 +113,17 @@ private struct MediumMealWidgetView: View {
                 HStack(spacing: 4) {
                     Text("ONMI")
                         .font(.custom("Fraunces9pt-Black", size: 16))
+                        .foregroundColor(.extraBlack)
 
                     Text("[\(entry.mealPartTime.display)]")
                         .font(.system(size: 12))
+                        .foregroundColor(.extraBlack)
 
                     Spacer()
 
                     Text("\(String(format: "%.1f", calorie)) kcal")
                         .font(.system(size: 12))
-                        .foregroundColor(Color.extraGray)
+                        .foregroundColor(Color.textSecondary)
                 }
                 .padding(.horizontal, 4)
 
@@ -129,6 +133,7 @@ private struct MediumMealWidgetView: View {
                             Text(mealDisplay(meal: meal))
                                 .frame(maxHeight: .infinity)
                                 .font(.system(size: 12))
+                                .foregroundColor(.extraBlack)
                                 .if(isMealContainsAllergy(meal: meal)) {
                                     $0.foregroundColor(.red)
                                 }
@@ -141,7 +146,7 @@ private struct MediumMealWidgetView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(8)
                 .background {
-                    Color.veryLightGray
+                    Color.cardBackground
                         .cornerRadius(8)
                 }
                 .padding([.bottom, .horizontal], 4)
@@ -172,24 +177,26 @@ private struct LargeMealWidgetView: View {
                 HStack(spacing: 4) {
                     Text("ONMI")
                         .font(.custom("Fraunces9pt-Black", size: 16))
+                        .foregroundColor(.extraBlack)
 
                     Text("[\(entry.mealPartTime.display)]")
                         .font(.system(size: 12))
+                        .foregroundColor(.extraBlack)
 
                     Spacer()
 
                     Text("\(String(format: "%.1f", calorie)) Kcal")
                         .font(.system(size: 12))
-                        .foregroundColor(Color.extraGray)
+                        .foregroundColor(Color.textSecondary)
                 }
 
                 GeometryReader { proxy in
                     RoundedRectangle(cornerRadius: 2)
-                        .fill(Color.lightGray)
+                        .fill(Color.cardBackground)
                         .frame(height: 8)
                         .overlay(alignment: .leading) {
                             RoundedRectangle(cornerRadius: 2)
-                                .fill(Color.extraPrimary)
+                                .fill(Color.textPrimary)
                                 .frame(width: proxy.size.width * calorie / 2350, height: 8)
                         }
                 }
@@ -203,6 +210,7 @@ private struct LargeMealWidgetView: View {
                         Text(mealDisplay(meal: meal))
                             .font(.system(size: 16, weight: isAllergy ? .bold : .regular))
                             .frame(maxHeight: .infinity)
+                            .foregroundColor(.extraBlack)
                             .if(isAllergy) {
                                 $0.foregroundColor(.red)
                             }
@@ -215,7 +223,7 @@ private struct LargeMealWidgetView: View {
             .padding(.top, 4)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
-                Color.veryLightGray
+                Color.cardBackground
             }
             .cornerRadius(8)
         }
