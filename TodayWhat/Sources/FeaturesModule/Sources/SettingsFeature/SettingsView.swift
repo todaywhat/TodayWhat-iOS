@@ -46,7 +46,7 @@ public struct SettingsView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.horizontal, 16)
         .background {
-            Color.veryLightGray.ignoresSafeArea()
+            Color.backgroundSecondary.ignoresSafeArea()
         }
         .navigationTitle("설정")
         .navigationBarTitleDisplayMode(.large)
@@ -68,11 +68,11 @@ public struct SettingsView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text("\(viewStore.grade)학년 \(viewStore.class)반")
                     .font(.system(size: 14, weight: .regular))
-                    .foregroundColor(.extraGray)
+                    .foregroundColor(.textSecondary)
 
                 Text("\(viewStore.schoolName)")
                     .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.darkGray)
+                    .foregroundColor(.textPrimary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -166,7 +166,7 @@ public struct SettingsView: View {
                 .padding(16)
                 .frame(maxWidth: .infinity)
                 .background {
-                    Color.background
+                    Color.cardBackgroundSecondary
                 }
                 .cornerRadius(16, corners: corners)
             }
@@ -178,7 +178,7 @@ public struct SettingsView: View {
             .padding(16)
             .frame(maxWidth: .infinity)
             .background {
-                Color.background
+                Color.cardBackgroundSecondary
             }
             .cornerRadius(16, corners: corners)
         }
@@ -215,7 +215,7 @@ public struct SettingsView: View {
 
             Toggle("",isOn: isOn)
                 .labelsHidden()
-                .tint(.extraPrimary)
+                .tint(.textPrimary)
         }
     }
 
@@ -223,7 +223,7 @@ public struct SettingsView: View {
     func growText(text: String) -> some View {
         Text(text)
             .font(.system(size: 14))
-            .foregroundColor(.extraPrimary)
+            .foregroundColor(.textPrimary)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 
@@ -233,7 +233,7 @@ public struct SettingsView: View {
             .resizable()
             .renderingMode(.template)
             .frame(width: 24, height: 24)
-            .foregroundColor(.extraPrimary)
+            .foregroundColor(.extraBlack)
     }
 
     @ViewBuilder
@@ -241,7 +241,7 @@ public struct SettingsView: View {
         Image("ChevronRight")
             .resizable()
             .frame(width: 24, height: 24)
-            .foregroundColor(.extraGray)
+            .foregroundColor(.unselectedPrimary)
     }
 
     // MARK: - Navigation Links
@@ -300,16 +300,5 @@ public struct SettingsView: View {
         } label: {
             EmptyView()
         }
-    }
-}
-
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView(
-            store: .init(
-                initialState: .init(),
-                reducer: SettingsCore()
-            )
-        )
     }
 }

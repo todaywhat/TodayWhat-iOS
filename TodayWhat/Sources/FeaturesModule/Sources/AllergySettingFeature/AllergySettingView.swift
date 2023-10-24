@@ -43,7 +43,7 @@ public struct AllergySettingView: View {
                 .padding(.bottom, 8)
             }
         }
-        .background(Color.background.ignoresSafeArea())
+        .background(Color.backgroundMain.ignoresSafeArea())
         .navigationTitle("알레르기 설정")
         .onAppear {
             viewStore.send(.onAppear, animation: .default)
@@ -60,8 +60,8 @@ public struct AllergySettingView: View {
     func allergyColumnView(allergy: AllergyType) -> some View {
         let isAllergyContains = viewStore.selectedAllergyList.contains(allergy)
         let allergyForeground: Color = isAllergyContains ?
-            .extraPrimary :
-            .extraGray
+            .textPrimary :
+            .unselectedPrimary
 
         VStack(spacing: 16) {
             Image(allergy.image)
@@ -78,7 +78,7 @@ public struct AllergySettingView: View {
         .frame(maxWidth: .infinity)
         .background {
             RoundedRectangle(cornerRadius: 8)
-                .fill(Color.veryLightGray)
+                .fill(Color.cardBackgroundSecondary)
         }
         .overlay {
             RoundedRectangle(cornerRadius: 8)

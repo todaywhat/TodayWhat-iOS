@@ -47,11 +47,11 @@ private struct SmallTimeTableWidgetView: View {
                 HStack(spacing: 4) {
                     Text("\(timeTable.perio)")
                         .font(.system(size: 12, weight: .bold))
-                        .foregroundColor(.extraGray)
+                        .foregroundColor(.textSecondary)
 
                     Text(timeTable.content)
                         .font(.system(size: 12))
-                        .foregroundColor(.darkGray)
+                        .foregroundColor(.textPrimary)
                         .lineLimit(1)
 
                     Spacer()
@@ -73,15 +73,17 @@ private struct MediumTimeTableWidgetView: View {
                 HStack(spacing: 4) {
                     Text("ONMI")
                         .font(.custom("Fraunces9pt-Black", size: 16))
+                        .foregroundColor(.extraBlack)
 
                     Text("[시간표]")
                         .font(.system(size: 12))
+                        .foregroundColor(.extraBlack)
 
                     Spacer()
 
                     Text("\(entry.date.month)월 \(entry.date.day)일 \(entry.date.weekdayString)")
                         .font(.system(size: 12))
-                        .foregroundColor(Color.extraGray)
+                        .foregroundColor(Color.textSecondary)
                 }
                 .padding(.horizontal, 4)
 
@@ -90,10 +92,11 @@ private struct MediumTimeTableWidgetView: View {
                         HStack(spacing: 2) {
                             Text("\(timetable.perio)")
                                 .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(.extraGray)
+                                .foregroundColor(.textSecondary)
                             
                             Text(timetable.content)
                                 .font(.system(size: 12))
+                                .foregroundColor(.textPrimary)
 
                             Spacer()
                         }
@@ -104,7 +107,7 @@ private struct MediumTimeTableWidgetView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(8)
                 .background {
-                    Color.veryLightGray
+                    Color.cardBackground
                         .cornerRadius(8)
                 }
                 .padding([.bottom, .horizontal], 4)
@@ -122,15 +125,17 @@ private struct LargeTimeTableWidgetView: View {
             HStack(spacing: 4) {
                 Text("ONMI")
                     .font(.custom("Fraunces9pt-Black", size: 16))
+                    .foregroundColor(.extraBlack)
 
                 Text("[시간표]")
                     .font(.system(size: 12))
+                    .foregroundColor(.extraBlack)
 
                 Spacer()
 
                 Text("\(entry.date.month)월 \(entry.date.day)일 \(entry.date.weekdayString)")
                     .font(.system(size: 12))
-                    .foregroundColor(Color.extraGray)
+                    .foregroundColor(Color.textSecondary)
             }
             .padding(.horizontal, 4)
 
@@ -139,10 +144,11 @@ private struct LargeTimeTableWidgetView: View {
                     HStack(spacing: 4) {
                         Text("\(timetable.perio)")
                             .font(.system(size: 14, weight: .bold))
-                            .foregroundColor(.extraGray)
+                            .foregroundColor(.textSecondary)
 
                         Text(timetable.content)
                             .font(.system(size: 16))
+                            .foregroundColor(.textPrimary)
 
                         Spacer()
                     }
@@ -153,7 +159,7 @@ private struct LargeTimeTableWidgetView: View {
             .padding(.top, 4)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
-                Color.veryLightGray
+                Color.cardBackground
             }
             .cornerRadius(8)
         }

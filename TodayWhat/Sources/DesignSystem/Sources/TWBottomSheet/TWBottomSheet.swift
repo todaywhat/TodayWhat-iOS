@@ -43,8 +43,7 @@ struct TWBottomSheet<T: View>: ViewModifier {
 
             ZStack(alignment: .bottom) {
                 if isShowing {
-                    Color.black
-                        .opacity(0.25)
+                    Color.lightBox
                         .ignoresSafeArea()
                         .onTapGesture {
                             withAnimation {
@@ -55,7 +54,7 @@ struct TWBottomSheet<T: View>: ViewModifier {
                         .transition(.opacity)
 
                     ZStack {
-                        Color.background
+                        Color.backgroundMain
                             .cornerRadius(16, corners: [.topLeft, .topRight])
                             .padding(.top, -dragHeight)
                             .gesture(sheetDragging)

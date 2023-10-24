@@ -21,15 +21,15 @@ public struct TWTextField: View {
         ZStack(alignment: .leading) {
             TextField("", text: $text)
                 .font(.system(size: 16))
-                .foregroundColor(.extraPrimary)
+                .foregroundColor(.extraBlack)
                 .padding()
                 .background {
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(Color.veryLightGray)
+                        .fill(Color.cardBackground)
                 }
                 .overlay {
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(isFocused ? Color.extraPrimary : .lightGray, lineWidth: 1)
+                        .stroke(isFocused ? Color.extraBlack : .clear, lineWidth: 1)
                 }
                 .focused($isFocused)
                 .onSubmit(onCommit)
@@ -39,14 +39,14 @@ public struct TWTextField: View {
                 if isFocused || !text.isEmpty {
                     Text(placeholder)
                         .font(.system(size: 12))
-                        .foregroundColor(.extraGray)
+                        .foregroundColor(.unselectedPrimary)
                         .offset(y: -35)
                         .transition(.offset(y: 20))
                         .zIndex(0)
                 } else {
                     Text(placeholder)
                         .font(.system(size: 16))
-                        .foregroundColor(.extraGray)
+                        .foregroundColor(.unselectedPrimary)
                         .padding()
                         .onTapGesture {
                             isFocused = true
@@ -68,7 +68,7 @@ public struct TWTextField: View {
                     if isFocused && !text.isEmpty {
                         Image(systemName: "xmark.circle.fill")
                             .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(.extraGray)
+                            .foregroundColor(.unselectedPrimary)
                             .frame(width: 28, height: 28)
                     } else {
                         EmptyView()
