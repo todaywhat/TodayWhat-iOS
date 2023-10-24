@@ -70,22 +70,22 @@ public struct MainView: View {
                         } label: {
                             Circle()
                                 .frame(width: 56, height: 56)
-                                .foregroundColor(.extraPrimary)
+                                .foregroundColor(.extraBlack)
                                 .overlay {
                                     Image(systemName: "arrow.down.to.line")
-                                        .foregroundColor(.background)
+                                        .foregroundColor(.extraWhite)
                                 }
                         }
                         .padding([.bottom, .trailing], 16)
                     }
                 }
             }
-            .background(Color.background)
+            .background(Color.backgroundMain)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Text("ONMI")
                         .font(.custom("Fraunces9pt-Black", size: 32))
-                        .foregroundColor(.extraPrimary)
+                        .foregroundColor(.extraBlack)
                 }
 
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -118,13 +118,13 @@ public struct MainView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(viewStore.school)
                         .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.darkGray)
+                        .foregroundColor(.extraBlack)
 
                     let gradeClassString = "\(viewStore.grade)학년 \(viewStore.class)반"
                     let dateString = "\(viewStore.displayDate.toString())"
                     Text("\(gradeClassString) • \(dateString)")
                         .font(.system(size: 14))
-                        .foregroundColor(.extraGray)
+                        .foregroundColor(.textSecondary)
                 }
 
                 Spacer()
@@ -153,7 +153,7 @@ public struct MainView: View {
         }
         .frame(maxWidth: .infinity)
         .background {
-            Color.veryLightGray
+            Color.cardBackground
         }
         .background {
             navigationLinks

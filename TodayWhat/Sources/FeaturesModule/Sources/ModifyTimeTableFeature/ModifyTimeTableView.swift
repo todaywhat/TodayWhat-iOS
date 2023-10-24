@@ -45,7 +45,7 @@ public struct ModifyTimeTableView: View {
 
                     Text("시간표 가져오는 중...")
                         .font(.system(size: 14, weight: .bold))
-                        .foregroundColor(.extraGray)
+                        .foregroundColor(.textSecondary)
                 }
             }
             .frame(height: 24)
@@ -76,7 +76,7 @@ public struct ModifyTimeTableView: View {
                             } label: {
                                 Image(systemName: "xmark.circle.fill")
                                     .font(.system(size: 16, weight: .medium))
-                                    .foregroundColor(.extraGray)
+                                    .foregroundColor(.unselectedPrimary)
                                     .frame(width: 28, height: 28)
                                     .padding(.trailing, 16)
                             }
@@ -84,30 +84,16 @@ public struct ModifyTimeTableView: View {
                         .padding(.horizontal, 0.5)
                     }
 
-                    Button {
+                    TWButton(title: "추가 +") {
                         viewStore.send(.appendTimeTableButtonDidTap, animation: .default)
-                    } label: {
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(Color.veryLightGray)
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.lightGray, lineWidth: 1)
-                            }
-                            .overlay {
-                                Text("+ 추가")
-                                    .font(.system(size: 16))
-                                    .foregroundColor(.extraGray)
-                            }
-                            .frame(height: 52)
                     }
-                    .frame(maxWidth: .infinity)
                 }
             }
             .padding(.horizontal, 16)
 
             Spacer()
         }
-        .background(Color.background)
+        .background(Color.backgroundMain)
         .onLoad {
             viewStore.send(.onLoad, animation: .default)
         }
@@ -122,7 +108,7 @@ public struct ModifyTimeTableView: View {
                 } label: {
                     Text("저장")
                         .font(.system(size: 14))
-                        .foregroundColor(.extraPrimary)
+                        .foregroundColor(.extraBlack)
                 }
             }
         }

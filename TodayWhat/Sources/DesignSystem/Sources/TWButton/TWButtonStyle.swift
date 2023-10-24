@@ -29,18 +29,25 @@ private extension TWButtonStyle {
         @Environment(\.isEnabled) var isEnabled
 
         var background: Color {
-            if isEnabled {
-                return configuration.isPressed ?
-                    .black :
-                    .extraPrimary
+            return if isEnabled {
+                Color.extraBlack
             } else {
-                return .extraGray
+                Color.unselectedSecondary
             }
         }
+
+        var foreground: Color {
+            return if isEnabled {
+                Color.extraWhite
+            } else {
+                Color.unselectedPrimary
+            }
+        }
+
         var body: some View {
             configuration.label
                 .font(.system(size: 14))
-                .foregroundColor(.veryLightGray)
+                .foregroundColor(foreground)
                 .background(background)
                 .cornerRadius(8)
         }
@@ -49,20 +56,28 @@ private extension TWButtonStyle {
     struct WideButton: View {
         let configuration: ButtonStyle.Configuration
         @Environment(\.isEnabled) var isEnabled
+        @Environment(\.colorScheme) var colorScheme
 
         var background: Color {
-            if isEnabled {
-                return configuration.isPressed ?
-                    .black :
-                    .extraPrimary
+            return if isEnabled {
+                Color.extraBlack
             } else {
-                return .extraGray
+                Color.unselectedSecondary
             }
         }
+
+        var foreground: Color {
+            return if isEnabled {
+                Color.extraWhite
+            } else {
+                Color.unselectedPrimary
+            }
+        }
+
         var body: some View {
             configuration.label
                 .font(.system(size: 14))
-                .foregroundColor(.veryLightGray)
+                .foregroundColor(foreground)
                 .background(background)
         }
     }

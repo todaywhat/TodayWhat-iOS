@@ -17,11 +17,11 @@ public struct TWRadioButton: View {
         Button(action: onTap) {
             ZStack {
                 Circle()
-                    .stroke(isChecked ? Color.extraPrimary : .lightGray, lineWidth: 1.72)
+                    .stroke(isChecked ? Color.textPrimary : .unselectedPrimary, lineWidth: 1.72)
                     .frame(width: 20, height: 20)
 
                 Circle()
-                    .fill(isChecked ? Color.extraPrimary : .clear)
+                    .fill(isChecked ? Color.textPrimary : .clear)
                     .frame(width: 12, height: 12)
             }
         }
