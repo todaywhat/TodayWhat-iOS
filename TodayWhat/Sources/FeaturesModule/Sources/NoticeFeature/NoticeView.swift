@@ -38,8 +38,7 @@ public struct NoticeView: View {
         .overlay {
             if let selectedNotice = viewStore.selectedNotice {
                 ZStack {
-                    Color.black
-                        .opacity(0.25)
+                    Color.lightBox
                         .ignoresSafeArea()
                         .animation(.default, value: viewStore.selectedNotice)
                         .transition(.opacity)
