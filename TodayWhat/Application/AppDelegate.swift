@@ -1,10 +1,11 @@
-import UIKit
 import Dependencies
 import Firebase
 import FirebaseCore
+import OSLog
+import UIKit
 import UserDefaultsClient
 import WatchConnectivity
-import OSLog
+import WidgetKit
 
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
@@ -19,6 +20,19 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         if WCSession.isSupported() {
             session.delegate = self
             session.activate()
+        }
+        WidgetCenter.shared.getCurrentConfigurations { [weak self] widgetInfos in
+            guard let self else { return }
+            let widgetCount = self.userDefaultsClient.getValue(.widgetCount) as? Int ?? 0
+
+            guard case let .success(infos) = widgetInfos, widgetCount != infos.count else { return }
+            self.userDefaultsClient.setValue(.widgetCount, infos.count)
+            infos.forEach { info in
+                Analytics.logEvent("widget_configuration", parameters: [
+                    "family": info.family.description,
+                    "kind": info.kind
+                ])
+            }
         }
 
         return true
