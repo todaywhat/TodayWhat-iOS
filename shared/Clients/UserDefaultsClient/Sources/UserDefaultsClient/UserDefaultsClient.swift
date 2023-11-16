@@ -15,6 +15,7 @@ public enum UserDefaultsKeys: String {
     case isSkipWeekend = "IS-SKIP-WEEKEND"
     case isSkipAfterDinner = "IS-SKIP-AFTER-DINNER"
     case isOnModifiedTimeTable = "IS-ON-MODIFIED-TIME-TABLE"
+    case widgetCount = "WIDGET-COUNT"
 }
 
 public struct UserDefaultsClient {

@@ -138,6 +138,8 @@
 		46BFE1052945BB510023443A /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE1042945BB510023443A /* FirebaseAnalyticsSwift */; };
 		46BFE1072945BB520023443A /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 46BFE1062945BB520023443A /* FirebaseCrashlytics */; };
 		46CA849F29F147F300CF586E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 46CA84A129F147F300CF586E /* InfoPlist.strings */; };
+		46D82BE82B06652D00AD33BB /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 46D82BE72B06652D00AD33BB /* FirebaseAnalytics */; };
+		46D82BEA2B06652D00AD33BB /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46D82BE92B06652D00AD33BB /* FirebaseAnalyticsSwift */; };
 		46E4D6D029896CF2005FB823 /* DisplayInfoPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C23BD293442E400B3A9CB /* DisplayInfoPart.swift */; };
 		46E4D6D229896D69005FB823 /* SwiftUIUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D129896D69005FB823 /* SwiftUIUtil */; };
 		46E4D6D429897352005FB823 /* TWColor in Frameworks */ = {isa = PBXBuildFile; productRef = 46E4D6D329897352005FB823 /* TWColor */; };
@@ -331,6 +333,8 @@
 				46BFE0FE2945A7A20023443A /* TimeTableClient in Frameworks */,
 				467CD847292BC51100A9766A /* MealClient in Frameworks */,
 				461C23642930759A00B3A9CB /* NeisClient in Frameworks */,
+				46D82BEA2B06652D00AD33BB /* FirebaseAnalyticsSwift in Frameworks */,
+				46D82BE82B06652D00AD33BB /* FirebaseAnalytics in Frameworks */,
 				461C23D52935908E00B3A9CB /* EnumUtil in Frameworks */,
 				465023AF292AFF4E008B015A /* Entity in Frameworks */,
 				465023BE292B1C3D008B015A /* DateUtil in Frameworks */,
@@ -917,6 +921,8 @@
 				461C23D42935908E00B3A9CB /* EnumUtil */,
 				462BABA32935CE630063E0C8 /* SwiftUIUtil */,
 				46BFE0FD2945A7A20023443A /* TimeTableClient */,
+				46D82BE72B06652D00AD33BB /* FirebaseAnalytics */,
+				46D82BE92B06652D00AD33BB /* FirebaseAnalyticsSwift */,
 			);
 			productName = TodayWhatWidgetExtension;
 			productReference = 460311482923DCE700A5CB09 /* TodayWhatWidgetExtension.appex */;
@@ -2454,6 +2460,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 46BFE1012945BB510023443A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
+		};
+		46D82BE72B06652D00AD33BB /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46BFE1012945BB510023443A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		46D82BE92B06652D00AD33BB /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46BFE1012945BB510023443A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
 		};
 		46E4D6D129896D69005FB823 /* SwiftUIUtil */ = {
 			isa = XCSwiftPackageProductDependency;
