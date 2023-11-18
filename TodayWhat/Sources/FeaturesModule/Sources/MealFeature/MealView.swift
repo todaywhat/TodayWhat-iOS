@@ -66,7 +66,6 @@ public struct MealView: View {
     private func mealListView(type: MealType, subMeal: Meal.SubMeal) -> some View {
         LabelledDivider(label: type.display, subLabel: "\(String(format: "%.1f", subMeal.cal)) Kcal")
             .padding(.top, 16)
-            .padding(.bottom, 12)
             .padding(.horizontal, 16)
             .id(type)
         
