@@ -55,6 +55,8 @@ public struct MainCore: ReducerProtocol {
                     } else if state.displayDate.weekday == 1 {
                         state.displayDate = state.displayDate.adding(by: .day, value: 1)
                     }
+                } else if state.displayDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
+                    state.displayDate = state.displayDate.adding(by: .day, value: 1)
                 }
                 state.school = userDefaultsClient.getValue(.school) as? String ?? ""
                 state.grade = "\(userDefaultsClient.getValue(.grade) as? Int ?? 1)"

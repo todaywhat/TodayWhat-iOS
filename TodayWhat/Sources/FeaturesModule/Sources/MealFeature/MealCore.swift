@@ -59,10 +59,22 @@ public struct MealCore: ReducerProtocol {
 
             case .refresh:
                 state.isLoading = true
-                return .task {
+
+                var todayDate = Date()
+                if userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true {
+                    if todayDate.weekday == 7 {
+                        todayDate = todayDate.adding(by: .day, value: 2)
+                    } else if todayDate.weekday == 1 {
+                        todayDate = todayDate.adding(by: .day, value: 1)
+                    }
+                } else if todayDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
+                    todayDate = todayDate.adding(by: .day, value: 1)
+                }
+
+                return .task { [todayDate] in
                     .mealResponse(
                         await TaskResult {
-                            try await mealClient.fetchMeal(Date())
+                            try await mealClient.fetchMeal(todayDate)
                         }
                     )
                 }
