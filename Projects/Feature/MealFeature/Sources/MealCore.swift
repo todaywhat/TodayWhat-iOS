@@ -39,12 +39,11 @@ public struct MealCore: ReducerProtocol {
                 state.isLoading = true
 
                 var todayDate = Date()
-                if userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true {
-                    if todayDate.weekday == 7 {
-                        todayDate = todayDate.adding(by: .day, value: 2)
-                    } else if todayDate.weekday == 1 {
-                        todayDate = todayDate.adding(by: .day, value: 1)
-                    }
+                let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true
+                if isSkipWeekend, todayDate.weekday == 7 {
+                    todayDate = todayDate.adding(by: .day, value: 2)
+                } else if isSkipWeekend, todayDate.weekday == 1 {
+                    todayDate = todayDate.adding(by: .day, value: 1)
                 } else if todayDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
                     todayDate = todayDate.adding(by: .day, value: 1)
                 }
@@ -61,12 +60,11 @@ public struct MealCore: ReducerProtocol {
                 state.isLoading = true
 
                 var todayDate = Date()
-                if userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true {
-                    if todayDate.weekday == 7 {
-                        todayDate = todayDate.adding(by: .day, value: 2)
-                    } else if todayDate.weekday == 1 {
-                        todayDate = todayDate.adding(by: .day, value: 1)
-                    }
+                let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true
+                if isSkipWeekend, todayDate.weekday == 7 {
+                    todayDate = todayDate.adding(by: .day, value: 2)
+                } else if isSkipWeekend, todayDate.weekday == 1 {
+                    todayDate = todayDate.adding(by: .day, value: 1)
                 } else if todayDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
                     todayDate = todayDate.adding(by: .day, value: 1)
                 }
