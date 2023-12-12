@@ -49,12 +49,13 @@ public struct MainCore: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                state.displayDate = Date()
                 let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true
-                if isSkipWeekend, todayDate.weekday == 7 {
+                if isSkipWeekend, state.displayDate.weekday == 7 {
                     state.displayDate = state.displayDate.adding(by: .day, value: 2)
-                } else if isSkipWeekend, todayDate.weekday == 1 {
+                } else if isSkipWeekend, state.displayDate.weekday == 1 {
                     state.displayDate = state.displayDate.adding(by: .day, value: 1)
-                } else if todayDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
+                } else if state.displayDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
                     state.displayDate = state.displayDate.adding(by: .day, value: 1)
                 }
                 state.school = userDefaultsClient.getValue(.school) as? String ?? ""
@@ -78,11 +79,11 @@ public struct MainCore: ReducerProtocol {
             case .mealCore(.refresh), .timeTableCore(.refresh):
                 state.displayDate = Date()
                 let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true
-                if isSkipWeekend, todayDate.weekday == 7 {
+                if isSkipWeekend, state.displayDate.weekday == 7 {
                     state.displayDate = state.displayDate.adding(by: .day, value: 2)
-                } else if isSkipWeekend, todayDate.weekday == 1 {
+                } else if isSkipWeekend, state.displayDate.weekday == 1 {
                     state.displayDate = state.displayDate.adding(by: .day, value: 1)
-                } else if todayDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
+                } else if state.displayDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
                     state.displayDate = state.displayDate.adding(by: .day, value: 1)
                 }
 
