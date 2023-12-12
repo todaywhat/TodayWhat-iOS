@@ -49,12 +49,12 @@ public struct MainCore: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                if userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true {
-                    if state.displayDate.weekday == 7 {
-                        state.displayDate = state.displayDate.adding(by: .day, value: 2)
-                    } else if state.displayDate.weekday == 1 {
-                        state.displayDate = state.displayDate.adding(by: .day, value: 1)
-                    }
+                state.displayDate = Date()
+                let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true
+                if isSkipWeekend, state.displayDate.weekday == 7 {
+                    state.displayDate = state.displayDate.adding(by: .day, value: 2)
+                } else if isSkipWeekend, state.displayDate.weekday == 1 {
+                    state.displayDate = state.displayDate.adding(by: .day, value: 1)
                 } else if state.displayDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
                     state.displayDate = state.displayDate.adding(by: .day, value: 1)
                 }
@@ -78,12 +78,13 @@ public struct MainCore: ReducerProtocol {
 
             case .mealCore(.refresh), .timeTableCore(.refresh):
                 state.displayDate = Date()
-                if userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true {
-                    if state.displayDate.weekday == 7 {
-                        state.displayDate = state.displayDate.adding(by: .day, value: 2)
-                    } else if state.displayDate.weekday == 1 {
-                        state.displayDate = state.displayDate.adding(by: .day, value: 1)
-                    }
+                let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true
+                if isSkipWeekend, state.displayDate.weekday == 7 {
+                    state.displayDate = state.displayDate.adding(by: .day, value: 2)
+                } else if isSkipWeekend, state.displayDate.weekday == 1 {
+                    state.displayDate = state.displayDate.adding(by: .day, value: 1)
+                } else if state.displayDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
+                    state.displayDate = state.displayDate.adding(by: .day, value: 1)
                 }
 
             case let .tabChanged(tab):
