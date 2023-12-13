@@ -18,14 +18,12 @@ struct MealProvider: IntentTimelineProvider {
     func placeholder(in context: Context) -> MealEntry {
         return MealEntry.empty()
     }
-    
 
     func getSnapshot(
         for configuration: Intent,
         in context: Context,
         completion: @escaping (MealEntry) -> Void
     ) {
-        
         Task {
             var currentDate = Date()
             if currentDate.hour >= 20 {
@@ -144,7 +142,7 @@ struct TimeTableProvider: TimelineProvider {
     private func fetchTimeTables(date: Date) async throws -> [TimeTable] {
         let isOnModifiedTimeTable = userDefaultsClient.getValue(.isOnModifiedTimeTable) as? Bool ?? false
         if isOnModifiedTimeTable {
-            let modifiedTimeTables = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
+            let modifiedTimeTables: [ModifiedTimeTableLocalEntity]? = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
                 .filter { $0.weekday == WeekdayType(weekday: date.weekday).rawValue }
             return (modifiedTimeTables ?? [])
                 .sorted { $0.perio < $1.perio }
