@@ -49,6 +49,7 @@ let targets: [Target] = [
         infoPlist: .file(path: "iOS-Widget/Support/Info.plist"),
         sources: ["iOS-Widget/Sources/**"],
         resources: ["iOS-Widget/Resources/**"],
+        entitlements: .file(path: "iOS-Widget/Support/TodayWhatWidget.entitlements"),
         scripts: scripts,
         dependencies: [
             .SPM.ComposableArchitecture,
