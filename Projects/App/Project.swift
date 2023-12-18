@@ -14,7 +14,9 @@ let configurations: [Configuration] = generateEnvironment == .ci ?
     ]
 
 let settings: Settings = .settings(
-    base: env.baseSetting,
+    base: env.baseSetting.merging(
+        ["DEBUG_INFORMATION_FORMAT": "dwarf-with-dsym"]
+    ),
     configurations: configurations,
     defaultSettings: .recommended
 )
@@ -32,7 +34,7 @@ let targets: [Target] = [
         sources: ["iOS/Sources/**"],
         resources: ["iOS/Resources/**"],
         entitlements: .file(path: "iOS/Support/TodayWhat.entitlements"),
-        scripts: scripts,
+        scripts: scripts + [.firebaseCrashlytics],
         dependencies: [
             .feature(target: .RootFeature),
             .target(name: "\(env.name)Widget"),
