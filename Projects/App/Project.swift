@@ -99,7 +99,7 @@ let targets: [Target] = [
         sources: ["macOS/Sources/**"],
         resources: ["macOS/Resources/**"],
         entitlements: .file(path: "macOS/Support/TodayWhat_Mac_App.entitlements"),
-        scripts: scripts,
+        scripts: scripts + [.launchAtLogin],
         dependencies: [
             .SPM.ComposableArchitecture,
             .SPM.LaunchAtScreen,
