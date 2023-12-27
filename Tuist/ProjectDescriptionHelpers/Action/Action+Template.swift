@@ -16,4 +16,9 @@ public extension TargetScript {
         ],
         basedOnDependencyAnalysis: false
     )
+
+    static let launchAtLogin = TargetScript.post(
+        path: .relativeToRoot("Scripts/LaunchAtLogin.sh"),
+        name: "Launch At Login Helper"
+    )
 }
