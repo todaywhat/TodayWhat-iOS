@@ -161,42 +161,22 @@ public struct MainView: View {
 
     @ViewBuilder
     var navigationLinks: some View {
-        NavigationLink(
-            isActive: viewStore.binding(
-                get: \.isNavigateSettings,
-                send: MainCore.Action.settingsDismissed
-            )
-        ) {
-            IfLetStore(
-                store.scope(
-                    state: \.settingsCore,
-                    action: MainCore.Action.settingsCore
-                )
-            ) { store in
+        NavigationLinkStore(
+            store.scope(state: \.$settingsCore, action: \.settingsCore),
+            onTap: {},
+            destination: { store in
                 SettingsView(store: store)
-            }
-        } label: {
-            EmptyView()
-        }
-
-        NavigationLink(
-            isActive: viewStore.binding(
-                get: { $0.noticeCore != nil },
-                send: MainCore.Action.noticeDismissed
-            )
-        ) {
-            IfLetStore(
-                store.scope(
-                    state: \.noticeCore,
-                    action: MainCore.Action.noticeCore
-                )
-            ) { store in
+            },
+            label: { EmptyView() }
+        )
+        NavigationLinkStore(
+            store.scope(state: \.$noticeCore, action: \.noticeCore),
+            onTap: {},
+            destination: { store in
                 NoticeView(store: store)
-            }
-        } label: {
-            EmptyView()
-        }
-
+            },
+            label: { EmptyView() }
+        )
     }
 }
 

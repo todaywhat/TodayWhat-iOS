@@ -16,29 +16,27 @@ public struct MainCore: Reducer {
         public var `class` = ""
         public var displayDate = Date()
         public var currentTab = 0
-        public var mealCore: MealCore.State? = nil
-        public var timeTableCore: TimeTableCore.State? = nil
-        public var settingsCore: SettingsCore.State? = nil
-        public var noticeCore: NoticeCore.State? = nil
         public var isInitial: Bool = true
-        public var isNavigateSettings: Bool = false
         public var isExistNewVersion: Bool = false
+        public var mealCore: MealCore.State?
+        public var timeTableCore: TimeTableCore.State?
+        @PresentationState public var settingsCore: SettingsCore.State?
+        @PresentationState public var noticeCore: NoticeCore.State?
 
         public init() {}
     }
 
+    @CasePathable
     public enum Action {
         case onAppear
         case tabChanged(Int)
         case mealCore(MealCore.Action)
         case timeTableCore(TimeTableCore.Action)
         case settingButtonDidTap
-        case settingsCore(SettingsCore.Action)
-        case noticeCore(NoticeCore.Action)
-        case settingsDismissed
         case checkVersion(TaskResult<String>)
         case noticeButtonDidTap
-        case noticeDismissed
+        case settingsCore(PresentationAction<SettingsCore.Action>)
+        case noticeCore(PresentationAction<NoticeCore.Action>)
     }
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
@@ -90,25 +88,17 @@ public struct MainCore: Reducer {
             case let .tabChanged(tab):
                 state.currentTab = tab
 
-            case .settingButtonDidTap:
+            case .settingButtonDidTap, .mealCore(.settingsButtonDidTap):
                 state.settingsCore = .init()
-                state.isNavigateSettings = true
 
-            case .mealCore(.settingsButtonDidTap):
-                state.settingsCore = .init()
-                state.isNavigateSettings = true
-
-            case .settingsDismissed:
+            case .settingsCore(.dismiss):
                 state.settingsCore = nil
-                state.isNavigateSettings = false
 
-            case .settingsCore(.allergySettingCore(.presented(.saveButtonDidTap))):
+            case .settingsCore(.presented(.allergySettingCore(.presented(.saveButtonDidTap)))):
                 state.settingsCore = nil
-                state.isNavigateSettings = false
 
-            case .settingsCore(.schoolSettingCore(.presented(.schoolSettingFinished))):
+            case .settingsCore(.presented(.schoolSettingCore(.presented(.schoolSettingFinished)))):
                 state.settingsCore = nil
-                state.isNavigateSettings = false
 
             case let .checkVersion(.success(latestVersion)):
                 guard !latestVersion.isEmpty else { break }
@@ -117,9 +107,8 @@ public struct MainCore: Reducer {
 
             case .noticeButtonDidTap:
                 state.noticeCore = .init()
-                return .none
 
-            case .noticeDismissed:
+            case .noticeCore(.dismiss):
                 state.noticeCore = nil
 
             default:
@@ -133,10 +122,10 @@ public struct MainCore: Reducer {
         .ifLet(\.timeTableCore, action: /Action.timeTableCore) {
             TimeTableCore()
         }
-        .ifLet(\.settingsCore, action: /Action.settingsCore) {
+        .ifLet(\.$settingsCore, action: \.settingsCore) {
             SettingsCore()
         }
-        .ifLet(\.noticeCore, action: /Action.noticeCore) {
+        .ifLet(\.$noticeCore, action: \.noticeCore) {
             NoticeCore()
         }
     }
