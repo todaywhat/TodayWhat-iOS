@@ -17,37 +17,39 @@ public struct SettingsCore: Reducer {
         public var isSkipWeekend: Bool = false
         public var isSkipAfterDinner: Bool = false
         public var isOnModifiedTimeTable: Bool = false
-        public var schoolSettingCore: SchoolSettingCore.State? = nil
-        public var isNavigateSchoolSetting: Bool = false
-        public var allergySettingCore: AllergySettingCore.State? = nil
-        public var isNavigateAllergySetting: Bool = false
-        public var modifyTimeTableCore: ModifyTimeTableCore.State? = nil
-        public var isNavigateModifyTimeTable: Bool = false
-        public var confirmationDialog: ConfirmationDialogState<Action>? = nil
-        public var alert: AlertState<Action>? = nil
+        @PresentationState public var schoolSettingCore: SchoolSettingCore.State?
+        @PresentationState public var allergySettingCore: AllergySettingCore.State?
+        @PresentationState public var modifyTimeTableCore: ModifyTimeTableCore.State?
+        @PresentationState public var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
+        @PresentationState public var alert: AlertState<Action.Alert>?
 
         public init() {}
     }
 
-    public enum Action: Equatable {
+    @CasePathable
+    public enum Action {
         case onAppear
         case isSkipWeekendChanged(Bool)
         case isSkipAfterDinnerChanged(Bool)
         case isOnModifiedTimeTableChagned(Bool)
         case schoolBlockButtonDidTap
-        case schoolSettingDismissed
-        case schoolSettingCore(SchoolSettingCore.Action)
         case allergyBlockButtonDidTap
-        case allergySettingDismissed
-        case allergySettingCore(AllergySettingCore.Action)
         case modifyTimeTableButtonDidTap
-        case modifyTimeTableDismissed
-        case modifyTimeTableCore(ModifyTimeTableCore.Action)
         case consultingButtonDidTap
-        case githubIssueButtonDidTap
-        case mailIssueButtonDidTap
-        case alertDismissed
-        case confirmationDialogDismissed
+        case schoolSettingCore(PresentationAction<SchoolSettingCore.Action>)
+        case allergySettingCore(PresentationAction<AllergySettingCore.Action>)
+        case modifyTimeTableCore(PresentationAction<ModifyTimeTableCore.Action>)
+        case alert(PresentationAction<Alert>)
+        case confirmationDialog(PresentationAction<ConfirmationDialog>)
+
+        public enum Alert: Equatable, Sendable {
+            case githubIssueButtonDidTap
+            case mailIssueButtonDidTap
+        }
+        public enum ConfirmationDialog: Equatable, Sendable {
+            case githubIssueButtonDidTap
+            case mailIssueButtonDidTap
+        }
     }
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
@@ -79,27 +81,21 @@ public struct SettingsCore: Reducer {
 
             case .schoolBlockButtonDidTap:
                 state.schoolSettingCore = .init()
-                state.isNavigateSchoolSetting = true
 
             case .modifyTimeTableButtonDidTap:
                 state.modifyTimeTableCore = .init()
-                state.isNavigateModifyTimeTable = true
 
-            case .modifyTimeTableDismissed:
+            case .modifyTimeTableCore(.dismiss):
                 state.modifyTimeTableCore = nil
-                state.isNavigateModifyTimeTable = false
 
-            case .schoolSettingDismissed:
+            case .schoolSettingCore(.dismiss):
                 state.schoolSettingCore = nil
-                state.isNavigateSchoolSetting = false
 
             case .allergyBlockButtonDidTap:
                 state.allergySettingCore = .init()
-                state.isNavigateAllergySetting = true
 
-            case .allergySettingDismissed:
-                state.allergySettingCore = .init()
-                state.isNavigateAllergySetting = false
+            case .allergySettingCore(.dismiss):
+                state.allergySettingCore = nil
 
             case .consultingButtonDidTap:
                 if deviceClient.isPad() {
@@ -119,19 +115,21 @@ public struct SettingsCore: Reducer {
                         ButtonState.cancel(.init("취소"))
                     }
                 }
- 
-            case .githubIssueButtonDidTap:
+
+            case .alert(.presented(.githubIssueButtonDidTap)),
+                    .confirmationDialog(.presented(.githubIssueButtonDidTap)):
                 guard let url = URL(string: "https://github.com/baekteun/TodayWhat-new/issues") else { break }
                 UIApplication.shared.open(url)
 
-            case .mailIssueButtonDidTap:
+            case .alert(.presented(.mailIssueButtonDidTap)),
+                    .confirmationDialog(.presented(.mailIssueButtonDidTap)):
                 guard let url = URL(string: "mailto:baegteun@gmail.com") else { break }
                 UIApplication.shared.open(url)
 
-            case .alertDismissed:
+            case .alert(.dismiss):
                 state.alert = nil
 
-            case .confirmationDialogDismissed:
+            case .confirmationDialog(.dismiss):
                 state.confirmationDialog = nil
 
             default:
@@ -140,13 +138,15 @@ public struct SettingsCore: Reducer {
 
             return .none
         }
-        .ifLet(\.schoolSettingCore, action: /Action.schoolSettingCore) {
+        .ifLet(\.$alert, action: \.alert)
+        .ifLet(\.$confirmationDialog, action: \.confirmationDialog)
+        .ifLet(\.$schoolSettingCore, action: \.schoolSettingCore) {
             SchoolSettingCore()
         }
-        .ifLet(\.allergySettingCore, action: /Action.allergySettingCore) {
+        .ifLet(\.$allergySettingCore, action: \.allergySettingCore) {
             AllergySettingCore()
         }
-        .ifLet(\.modifyTimeTableCore, action: /Action.modifyTimeTableCore) {
+        .ifLet(\.$modifyTimeTableCore, action: \.modifyTimeTableCore) {
             ModifyTimeTableCore()
         }
     }
