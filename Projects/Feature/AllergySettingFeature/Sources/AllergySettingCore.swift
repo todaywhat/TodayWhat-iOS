@@ -7,7 +7,6 @@ public struct AllergySettingCore: Reducer {
     public init() {}
     public struct State: Equatable {
         public var selectedAllergyList: [AllergyType] = []
-        public var isSaved = false
         public var allergyDidTap = false
         public init() {}
     }
@@ -19,6 +18,7 @@ public struct AllergySettingCore: Reducer {
     }
 
     @Dependency(\.localDatabaseClient) var localDatabaseClient
+    @Dependency(\.dismiss) var dismiss
 
     public func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
@@ -45,7 +45,9 @@ public struct AllergySettingCore: Reducer {
                 try localDatabaseClient.save(
                     records: state.selectedAllergyList.map { AllergyLocalEntity(allergy: $0.rawValue) }
                 )
-                state.isSaved = true
+                return .run { _ in
+                    await dismiss()
+                }
             } catch { }
 
         default:

@@ -47,11 +47,6 @@ public struct AllergySettingView: View {
         .onAppear {
             viewStore.send(.onAppear, animation: .default)
         }
-        .onChange(of: viewStore.isSaved) { newValue in
-            if newValue {
-                dismiss()
-            }
-        }
         .twBackButton(dismiss: dismiss)
     }
 
