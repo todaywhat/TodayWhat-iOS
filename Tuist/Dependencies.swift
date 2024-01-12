@@ -5,7 +5,8 @@ let dependencies = Dependencies(
     carthage: nil,
     swiftPackageManager: SwiftPackageManagerDependencies(
         productTypes: [
-            "ComposableArchitecture": .framework
+            :
+            // "ComposableArchitecture": .framework
         ],
         baseSettings: .settings(
             configurations: [

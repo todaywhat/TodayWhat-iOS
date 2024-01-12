@@ -8,7 +8,7 @@ import SettingsFeature
 import Entity
 import UIKit
 
-public struct MainCore: ReducerProtocol {
+public struct MainCore: Reducer {
     public init() {}
     public struct State: Equatable {
         public var school = ""
@@ -45,7 +45,7 @@ public struct MainCore: ReducerProtocol {
     @Dependency(\.iTunesClient) var iTunesClient
     @Dependency(\.noticeClient) var noticeClient
 
-    public var body: some ReducerProtocol<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear:
@@ -102,11 +102,11 @@ public struct MainCore: ReducerProtocol {
                 state.settingsCore = nil
                 state.isNavigateSettings = false
 
-            case .settingsCore(.allergySettingCore(.saveButtonDidTap)):
+            case .settingsCore(.allergySettingCore(.presented(.saveButtonDidTap))):
                 state.settingsCore = nil
                 state.isNavigateSettings = false
 
-            case .settingsCore(.schoolSettingCore(.schoolSettingFinished)):
+            case .settingsCore(.schoolSettingCore(.presented(.schoolSettingFinished))):
                 state.settingsCore = nil
                 state.isNavigateSettings = false
 

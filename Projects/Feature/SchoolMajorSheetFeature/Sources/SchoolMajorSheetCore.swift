@@ -1,6 +1,6 @@
 import ComposableArchitecture
 
-public struct SchoolMajorSheetCore: ReducerProtocol {
+public struct SchoolMajorSheetCore: Reducer {
     public init() {}
     public struct State: Equatable {
         public var majorList: [String] = []
@@ -19,7 +19,7 @@ public struct SchoolMajorSheetCore: ReducerProtocol {
         case majorRowDidSelect(String)
     }
 
-    public var body: some ReducerProtocol<State, Action> {
+    public var body: some ReducerOf<SchoolMajorSheetCore> {
         Reduce { state, action in
             switch action {
             case let .majorRowDidSelect(major):

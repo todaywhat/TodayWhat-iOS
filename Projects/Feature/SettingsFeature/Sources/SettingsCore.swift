@@ -7,7 +7,7 @@ import UserDefaultsClient
 import UIKit.UIApplication
 import ModifyTimeTableFeature
 
-public struct SettingsCore: ReducerProtocol {
+public struct SettingsCore: Reducer {
     public init() {}
 
     public struct State: Equatable {
@@ -54,7 +54,7 @@ public struct SettingsCore: ReducerProtocol {
     @Dependency(\.deviceClient) var deviceClient
     @Dependency(\.iTunesClient) var iTunesClient
 
-    public var body: some ReducerProtocol<State, Action> {
+    public var body: some ReducerOf<SettingsCore> {
         Reduce { state, action in
             switch action {
             case .onAppear:

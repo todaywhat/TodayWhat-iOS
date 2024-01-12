@@ -6,7 +6,7 @@ import UserDefaultsClient
 import Foundation
 import EnumUtil
 
-public struct MealCore: ReducerProtocol {
+public struct MealCore: Reducer {
     public init() {}
     public struct State: Equatable {
         public var meal: Meal?
@@ -28,7 +28,7 @@ public struct MealCore: ReducerProtocol {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
     @Dependency(\.date) var dateGenerator
 
-    public var body: some ReducerProtocol<State, Action> {
+    public var body: some ReducerOf<MealCore> {
         Reduce { state, action in
             switch action {
             case .onAppear:
@@ -48,12 +48,13 @@ public struct MealCore: ReducerProtocol {
                     todayDate = todayDate.adding(by: .day, value: 1)
                 }
 
-                return .task { [todayDate] in
-                    .mealResponse(
+                return .run { [todayDate] send in
+                    let task = Action.mealResponse(
                         await TaskResult {
                             try await mealClient.fetchMeal(todayDate)
                         }
                     )
+                    await send(task)
                 }
 
             case .refresh:
@@ -69,12 +70,13 @@ public struct MealCore: ReducerProtocol {
                     todayDate = todayDate.adding(by: .day, value: 1)
                 }
 
-                return .task { [todayDate] in
-                    .mealResponse(
+                return .run { [todayDate] send in
+                    let task = Action.mealResponse(
                         await TaskResult {
                             try await mealClient.fetchMeal(todayDate)
                         }
                     )
+                    await send(task)
                 }
 
             case let .mealResponse(.success(meal)):

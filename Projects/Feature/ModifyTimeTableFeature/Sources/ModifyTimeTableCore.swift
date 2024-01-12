@@ -7,7 +7,7 @@ import FoundationUtil
 import TimeTableClient
 import LocalDatabaseClient
 
-public struct ModifyTimeTableCore: ReducerProtocol {
+public struct ModifyTimeTableCore: Reducer {
     public init() {}
     public struct State: Equatable {
         public var currentTab: Int = Date().weekday == 1 ? 6 : Date().weekday - 2
@@ -37,7 +37,7 @@ public struct ModifyTimeTableCore: ReducerProtocol {
     @Dependency(\.localDatabaseClient) var localDatabaseClient
 
     struct TabID: Hashable {}
-    public var body: some ReducerProtocol<State, Action> {
+    public var body: some ReducerOf<ModifyTimeTableCore> {
         Reduce { state, action in
             switch action {
             case .onLoad:
@@ -45,14 +45,15 @@ public struct ModifyTimeTableCore: ReducerProtocol {
                     .filter { $0.weekday == WeekdayType.allCases[safe: state.currentTab]?.rawValue ?? 2 }
                 if (modifiedTimeTables ?? []).isEmpty {
                     state.isLoading = true
-                    return .task {
-                        .timeTableResponse(
+                    return .run { send in
+                        let task = Action.timeTableResponse(
                             await TaskResult {
                                 try await timeTableClient.fetchTimeTable(
                                     Date.getDateForDayOfWeek(dayOfWeek: Date().weekday) ?? .init()
                                 )
                             }
                         )
+                        await send(task)
                     }
                 }
                 state.inputedTimeTables = (modifiedTimeTables ?? [])
@@ -75,8 +76,8 @@ public struct ModifyTimeTableCore: ReducerProtocol {
                     .filter { $0.weekday == WeekdayType.allCases[safe: tab]?.rawValue ?? 2 }
                 if (modifiedTimeTables ?? []).isEmpty {
                     state.isLoading = true
-                    return .task {
-                        .timeTableResponse(
+                    return .run { send in
+                        let task = Action.timeTableResponse(
                             await TaskResult {
                                 let weekday = WeekdayType.allCases[tab].rawValue
                                 return try await timeTableClient.fetchTimeTable(
@@ -84,6 +85,7 @@ public struct ModifyTimeTableCore: ReducerProtocol {
                                 )
                             }
                         )
+                        await send(task)
                     }
                     .debounce(id: TabID(), for: 0.3, scheduler: RunLoop.main)
                 }

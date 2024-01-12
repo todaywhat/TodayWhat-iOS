@@ -2,7 +2,7 @@ import ComposableArchitecture
 import NoticeClient
 import Entity
 
-public struct NoticeCore: ReducerProtocol {
+public struct NoticeCore: Reducer {
     public init() {}
     public struct State: Equatable {
         public var selectedNotice: Notice?
@@ -22,7 +22,7 @@ public struct NoticeCore: ReducerProtocol {
 
     @Dependency(\.noticeClient) var noticeClient
 
-    public var body: some ReducerProtocol<State, Action> {
+    public var body: some ReducerOf<NoticeCore> {
         Reduce { state, action in
             switch action {
             case .onAppear:

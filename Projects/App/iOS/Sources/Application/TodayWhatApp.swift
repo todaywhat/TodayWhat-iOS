@@ -14,7 +14,9 @@ struct TodayWhatApp: App {
             RootView(
                 store: .init(
                     initialState: .init(),
-                    reducer: RootCore()
+                    reducer: {
+                        RootCore()
+                    }
                 )
             )
         }

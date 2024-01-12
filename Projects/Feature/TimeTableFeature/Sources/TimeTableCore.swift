@@ -6,7 +6,7 @@ import TimeTableClient
 import UserDefaultsClient
 import LocalDatabaseClient
 
-public struct TimeTableCore: ReducerProtocol {
+public struct TimeTableCore: Reducer {
     public init() {}
     public struct State: Equatable {
         public var timeTableList: [TimeTable] = []
@@ -24,7 +24,7 @@ public struct TimeTableCore: ReducerProtocol {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
     @Dependency(\.localDatabaseClient) var localDatabaseClient
 
-    public var body: some ReducerProtocol<State, Action> {
+    public var body: some ReducerOf<TimeTableCore> {
         Reduce { state, action in
             switch action {
             case .onAppear, .refresh:
@@ -48,12 +48,13 @@ public struct TimeTableCore: ReducerProtocol {
                     state.isLoading = false
                     return .none
                 }
-                return .task { [todayDate] in
-                    .timeTableResponse(
+                return .run { [todayDate] send in
+                    let task = Action.timeTableResponse(
                         await TaskResult {
                             try await timeTableClient.fetchTimeTable(todayDate)
                         }
                     )
+                    await send(task)
                 }
 
             case let .timeTableResponse(.success(timeTableList)):

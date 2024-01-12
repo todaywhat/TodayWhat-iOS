@@ -4,7 +4,7 @@ import SplashFeature
 import SchoolSettingFeature
 import MainFeature
 
-public struct RootCore: ReducerProtocol {
+public struct RootCore: Reducer {
     public init() {}
     public enum State: Equatable {
         case splashCore(SplashCore.State)
@@ -22,7 +22,7 @@ public struct RootCore: ReducerProtocol {
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
 
-    public var body: some ReducerProtocol<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .splashCore(.userInfoIsRequired):
