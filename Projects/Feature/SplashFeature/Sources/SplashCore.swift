@@ -1,7 +1,7 @@
 import ComposableArchitecture
 import UserDefaultsClient
 
-public struct SplashCore: ReducerProtocol {
+public struct SplashCore: Reducer {
     public init() {}
     public struct State: Equatable {
         
@@ -16,7 +16,7 @@ public struct SplashCore: ReducerProtocol {
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
 
-    public var body: some ReducerProtocol<State, Action> {
+    public var body: some ReducerOf<SplashCore> {
         Reduce { state, action in
             switch action {
             case .initialize:

@@ -3,7 +3,7 @@ import LocalDatabaseClient
 import EnumUtil
 import Entity
 
-public struct AllergySettingCore: ReducerProtocol {
+public struct AllergySettingCore: Reducer {
     public init() {}
     public struct State: Equatable {
         public var selectedAllergyList: [AllergyType] = []
@@ -20,7 +20,7 @@ public struct AllergySettingCore: ReducerProtocol {
 
     @Dependency(\.localDatabaseClient) var localDatabaseClient
 
-    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    public func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .onAppear:
             do {

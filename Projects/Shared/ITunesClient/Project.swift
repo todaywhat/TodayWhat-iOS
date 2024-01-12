@@ -6,7 +6,7 @@ let project = Project.module(
     name: ModulePaths.Shared.ITunesClient.rawValue,
     targets: [
         .implements(module: .shared(.ITunesClient), dependencies: [
-            .SPM.ComposableArchitecture
+            .shared(target: .ComposableArchitectureWrapper)
         ])
     ]
 )

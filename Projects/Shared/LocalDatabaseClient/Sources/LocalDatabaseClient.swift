@@ -3,6 +3,7 @@ import GRDB
 import ConstantUtil
 import Foundation
 
+// swiftlint: disable identifier_name
 public struct LocalDatabaseClient {
     private let dbQueue: DatabaseQueue
     private var migrator = DatabaseMigrator()
@@ -211,3 +212,4 @@ extension DependencyValues {
     }
 }
 #endif
+// swiftlint: enable identifier_name

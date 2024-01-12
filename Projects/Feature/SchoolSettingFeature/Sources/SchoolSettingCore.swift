@@ -7,7 +7,7 @@ import SchoolMajorSheetFeature
 import EnumUtil
 import LocalDatabaseClient
 
-public struct SchoolSettingCore: ReducerProtocol {
+public struct SchoolSettingCore: Reducer {
     public init() {}
     public struct State: Equatable {
         public var school = ""
@@ -72,7 +72,7 @@ public struct SchoolSettingCore: ReducerProtocol {
 
     struct SchoolDebounceID: Hashable {}
 
-    public var body: some ReducerProtocol<State, Action> {
+    public var body: some ReducerOf<SchoolSettingCore> {
         Reduce { state, action in
             switch action {
             case .onLoad:
@@ -105,12 +105,13 @@ public struct SchoolSettingCore: ReducerProtocol {
             case let .schoolChanged(school):
                 state.school = school
                 state.isLoading = true
-                return .task { [school = state.school] in
-                    .schoolListResponse(
+                return .run { [school = state.school] send in
+                    let task = Action.schoolListResponse(
                         await TaskResult {
                             try await schoolClient.fetchSchoolList(school)
                         }
                     )
+                    await send(task)
                 }
                 .debounce(id: SchoolDebounceID(), for: .milliseconds(150), scheduler: DispatchQueue.main)
 
@@ -148,12 +149,13 @@ public struct SchoolSettingCore: ReducerProtocol {
                 state.school = school.name
                 state.isFocusedSchool = false
                 state.major = ""
-                return .task {
-                    .schoolMajorListResponse(
+                return .run { send in
+                    let task = Action.schoolMajorListResponse(
                         await TaskResult {
                             try await schoolClient.fetchSchoolsMajorList(school.orgCode, school.schoolCode)
                         }
                     )
+                    await send(task)
                 }
 
             case .nextButtonDidTap:

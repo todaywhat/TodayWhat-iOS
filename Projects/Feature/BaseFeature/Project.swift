@@ -9,7 +9,7 @@ let project = Project.module(
             module: .feature(.BaseFeature),
             product: .framework,
             dependencies: [
-                .SPM.ComposableArchitecture,
+                .shared(target: .ComposableArchitectureWrapper),
                 .shared(target: .SwiftUIUtil),
                 .shared(target: .EnumUtil),
                 .shared(target: .DateUtil),
