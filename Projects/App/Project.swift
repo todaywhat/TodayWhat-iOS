@@ -54,7 +54,7 @@ let targets: [Target] = [
         entitlements: .file(path: "iOS-Widget/Support/TodayWhatWidget.entitlements"),
         scripts: scripts,
         dependencies: [
-            .SPM.ComposableArchitecture,
+            .shared(target: .ComposableArchitectureWrapper),
             .shared(target: .UserDefaultsClient),
             .shared(target: .TimeTableClient),
             .shared(target: .LocalDatabaseClient),
@@ -77,7 +77,7 @@ let targets: [Target] = [
         resources: ["watchOS/Resources/**"],
         scripts: scripts,
         dependencies: [
-            .SPM.ComposableArchitecture,
+            .shared(target: .ComposableArchitectureWrapper),
             .shared(target: .UserDefaultsClient),
             .shared(target: .TimeTableClient),
             .shared(target: .LocalDatabaseClient),
@@ -101,8 +101,8 @@ let targets: [Target] = [
         entitlements: .file(path: "macOS/Support/TodayWhat_Mac_App.entitlements"),
         scripts: scripts + [.launchAtLogin],
         dependencies: [
-            .SPM.ComposableArchitecture,
             .SPM.LaunchAtScreen,
+            .shared(target: .ComposableArchitectureWrapper),
             .shared(target: .Entity),
             .shared(target: .EnumUtil),
             .shared(target: .SwiftUIUtil),
@@ -129,7 +129,7 @@ let targets: [Target] = [
         entitlements: .file(path: "macOS-Widget/Support/TodayWhatMacWidget.entitlements"),
         scripts: scripts,
         dependencies: [
-            .SPM.ComposableArchitecture,
+            .shared(target: .ComposableArchitectureWrapper),
             .shared(target: .UserDefaultsClient),
             .shared(target: .TimeTableClient),
             .shared(target: .MealClient),

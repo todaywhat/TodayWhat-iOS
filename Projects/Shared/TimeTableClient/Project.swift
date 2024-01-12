@@ -6,7 +6,7 @@ let project = Project.module(
     name: ModulePaths.Shared.TimeTableClient.rawValue,
     targets: [
         .implements(module: .shared(.TimeTableClient), dependencies: [
-            .SPM.ComposableArchitecture,
+            .shared(target: .ComposableArchitectureWrapper),
             .shared(target: .DateUtil),
             .shared(target: .EnumUtil),
             .shared(target: .ConstantUtil),

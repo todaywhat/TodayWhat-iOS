@@ -8,7 +8,7 @@ let project = Project.module(
         .implements(
             module: .shared(.NoticeClient),
             dependencies: [
-                .SPM.ComposableArchitecture,
+                .shared(target: .ComposableArchitectureWrapper),
                 .shared(target: .FirebaseWrapper),
                 .shared(target: .Entity),
                 .shared(target: .DateUtil)

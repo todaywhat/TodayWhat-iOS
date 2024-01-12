@@ -6,7 +6,7 @@ let project = Project.module(
     name: ModulePaths.Shared.UserDefaultsClient.rawValue,
     targets: [
         .implements(module: .shared(.UserDefaultsClient), dependencies: [
-            .SPM.ComposableArchitecture,
+            .shared(target: .ComposableArchitectureWrapper),
             .shared(target: .EnumUtil),
             .shared(target: .FoundationUtil)
         ])

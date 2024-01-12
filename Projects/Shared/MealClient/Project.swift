@@ -6,7 +6,7 @@ let project = Project.module(
     name: ModulePaths.Shared.MealClient.rawValue,
     targets: [
         .implements(module: .shared(.MealClient), dependencies: [
-            .SPM.ComposableArchitecture,
+            .shared(target: .ComposableArchitectureWrapper),
             .shared(target: .NeisClient),
             .shared(target: .UserDefaultsClient),
             .shared(target: .DateUtil),
