@@ -54,8 +54,8 @@ public struct SettingsView: View {
             navigationLinks()
         }
         .twBackButton(dismiss: dismiss)
-        .confirmationDialog(store.scope(state: \.confirmationDialog), dismiss: .confirmationDialogDismissed)
-        .alert(store.scope(state: \.alert), dismiss: .alertDismissed)
+        .alert(store: store.scope(state: \.$alert, action: \.alert))
+        .confirmationDialog(store: store.scope(state: \.$confirmationDialog, action: \.confirmationDialog))
     }
 
     @ViewBuilder
@@ -213,7 +213,7 @@ public struct SettingsView: View {
 
             Spacer()
 
-            Toggle("",isOn: isOn)
+            Toggle("", isOn: isOn)
                 .labelsHidden()
                 .tint(.textPrimary)
         }
@@ -247,58 +247,29 @@ public struct SettingsView: View {
     // MARK: - Navigation Links
     @ViewBuilder
     func navigationLinks() -> some View {
-        NavigationLink(
-            isActive: viewStore.binding(
-                get: \.isNavigateSchoolSetting,
-                send: SettingsCore.Action.schoolSettingDismissed
-            )
-        ) {
-            IfLetStore(
-                store.scope(
-                    state: \.schoolSettingCore,
-                    action: SettingsCore.Action.schoolSettingCore
-                )
-            ) { store in
-                SchoolSettingView(store: store, isNavigationPushed: true)
-            }
-        } label: {
-            EmptyView()
-        }
-
-        NavigationLink(
-            isActive: viewStore.binding(
-                get: \.isNavigateAllergySetting,
-                send: SettingsCore.Action.allergySettingDismissed
-            )
-        ) {
-            IfLetStore(
-                store.scope(
-                    state: \.allergySettingCore,
-                    action: SettingsCore.Action.allergySettingCore
-                )
-            ) { store in
+        NavigationLinkStore(
+            store.scope(state: \.$schoolSettingCore, action: \.schoolSettingCore),
+            onTap: {},
+            destination: { store in
+                SchoolSettingView(store: store)
+            },
+            label: { EmptyView() }
+        )
+        NavigationLinkStore(
+            store.scope(state: \.$allergySettingCore, action: \.allergySettingCore),
+            onTap: {},
+            destination: { store in
                 AllergySettingView(store: store)
-            }
-        } label: {
-            EmptyView()
-        }
-
-        NavigationLink(
-            isActive: viewStore.binding(
-                get: \.isNavigateModifyTimeTable,
-                send: SettingsCore.Action.modifyTimeTableDismissed
-            )
-        ) {
-            IfLetStore(
-                store.scope(
-                    state: \.modifyTimeTableCore,
-                    action: SettingsCore.Action.modifyTimeTableCore
-                )
-            ) { store in
+            },
+            label: { EmptyView() }
+        )
+        NavigationLinkStore(
+            store.scope(state: \.$modifyTimeTableCore, action: \.modifyTimeTableCore),
+            onTap: {},
+            destination: { store in
                 ModifyTimeTableView(store: store)
-            }
-        } label: {
-            EmptyView()
-        }
+            },
+            label: { EmptyView() }
+        )
     }
 }
