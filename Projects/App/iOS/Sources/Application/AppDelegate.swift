@@ -1,9 +1,9 @@
 import Dependencies
-import FirebaseWrapper
 import Firebase
-import FirebaseCore
 import FirebaseAnalytics
-import OSLog
+import FirebaseCore
+import FirebaseWrapper
+import TWLog
 import UIKit
 import UserDefaultsClient
 import WatchConnectivity
@@ -30,10 +30,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             guard case let .success(infos) = widgetInfos, widgetCount != infos.count else { return }
             self.userDefaultsClient.setValue(.widgetCount, infos.count)
             infos.forEach { info in
-                Analytics.logEvent("widget_configuration", parameters: [
-                    "family": info.family.description,
-                    "kind": info.kind
-                ])
+                let log = WidgetConfigEventLog(family: info.family.description, kind: info.kind)
+                TWLog.event(log)
             }
         }
 

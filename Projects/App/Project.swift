@@ -38,7 +38,8 @@ let targets: [Target] = [
         dependencies: [
             .feature(target: .RootFeature),
             .target(name: "\(env.name)Widget"),
-            .target(name: "\(env.name)WatchApp")
+            .target(name: "\(env.name)WatchApp"),
+            .shared(target: .TWLog)
         ],
         settings: settings
     ),
