@@ -1,0 +1,16 @@
+name: "버그"
+description: "버그가 생겼어요 👾"
+labels: "🐞 BugFix"
+body:
+  - type: textarea
+    attributes:
+      label: Describe
+      description: |
+        [Description] 버그에 관한 설명을 적어주세요.
+      placeholder: |
+        UI가 콰지직 깨져버림!
+  - type: textarea
+    attributes:
+      label: Additional
+      description: |
+        [추가사항] 별도로 알려줘야 할 사항이나 추가사항을 작성해주세요.
