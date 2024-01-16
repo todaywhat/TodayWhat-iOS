@@ -1,4 +1,4 @@
-name: "문의"
+name: "문의사항"
 description: "편하게 문의해주세요! 💫"
 body:
   - type: textarea

@@ -1,4 +1,4 @@
-name: "버그"
+name: "버그사항"
 description: "버그가 생겼어요 👾"
 labels: "🐞 BugFix"
 body:
