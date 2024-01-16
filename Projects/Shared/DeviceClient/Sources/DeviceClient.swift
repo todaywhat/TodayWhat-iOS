@@ -1,4 +1,5 @@
 import Dependencies
+import DeviceUtil
 import SwiftUI
 import XCTestDynamicOverlay
 
@@ -11,13 +12,13 @@ public struct DeviceClient {
 extension DeviceClient: DependencyKey {
     public static var liveValue: DeviceClient = DeviceClient(
         isPad: {
-            UIDevice.current.userInterfaceIdiom == .pad
+            Device.current.isPad
         },
         isPhone: {
-            UIDevice.current.userInterfaceIdiom == .phone
+            Device.current.isPhone
         },
         isMac: {
-            UIDevice.current.userInterfaceIdiom == .mac
+            Device.current.isMac
         }
     )
 }
