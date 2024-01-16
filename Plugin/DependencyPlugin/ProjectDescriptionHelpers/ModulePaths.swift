@@ -53,6 +53,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Shared: String, MicroTargetPathConvertable {
+        case TWLog
         case ComposableArchitectureWrapper
         case FirebaseWrapper
         case Entity
