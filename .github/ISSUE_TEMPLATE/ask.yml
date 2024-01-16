@@ -1,0 +1,15 @@
+name: "문의"
+description: "편하게 문의해주세요! 💫"
+body:
+  - type: textarea
+    attributes:
+      label: Describe
+      description: |
+        [Description] 문의 내용을 작성해주세요.
+      placeholder: |
+        기능 추가해주세요!
+  - type: textarea
+    attributes:
+      label: Additional
+      description: |
+        [추가사항] 별도로 알려줘야 할 사항이나 추가사항을 작성해주세요.
