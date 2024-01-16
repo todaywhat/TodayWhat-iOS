@@ -1,7 +1,9 @@
+import BaseFeature
 import ComposableArchitecture
-import LocalDatabaseClient
-import EnumUtil
 import Entity
+import EnumUtil
+import LocalDatabaseClient
+import TWLog
 
 public struct AllergySettingCore: Reducer {
     public init() {}
@@ -23,6 +25,9 @@ public struct AllergySettingCore: Reducer {
     public func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .onAppear:
+            let pageShowedEvengLog = PageShowedEventLog(pageName: "allergy_setting_page")
+            TWLog.event(pageShowedEvengLog)
+
             do {
                 let records = try localDatabaseClient.readRecords(as: AllergyLocalEntity.self)
                     .compactMap { AllergyType(rawValue: $0.allergy) ?? nil }

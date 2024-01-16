@@ -1,3 +1,4 @@
+import FirebaseWrapper
 import TWLog
 
 public struct PageShowedEventLog: EventLog {
