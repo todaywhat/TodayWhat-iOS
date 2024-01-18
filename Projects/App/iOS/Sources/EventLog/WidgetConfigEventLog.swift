@@ -5,9 +5,9 @@ struct WidgetConfigEventLog: EventLog {
     let params: [String: Any]
 
     init(family: String, kind: String) {
-        self.params = [
-            "family": family,
-            "kind": kind
-        ]
+        self.params = EventLogParameterBuilder()
+            .set(key: "family", value: family)
+            .set(key: "kind", value: kind)
+            .build()
     }
 }
