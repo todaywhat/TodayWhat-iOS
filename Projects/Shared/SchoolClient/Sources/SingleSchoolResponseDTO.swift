@@ -1,6 +1,6 @@
-import Foundation
 import Entity
 import EnumUtil
+import Foundation
 
 public struct SingleSchoolResponseDTO: Decodable {
     public let orgCode: String
@@ -22,7 +22,7 @@ public struct SingleSchoolResponseDTO: Decodable {
         self.location = location
         self.schoolKind = schoolKind
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case orgCode = "ATPT_OFCDC_SC_CODE"
         case schoolCode = "SD_SCHUL_CODE"

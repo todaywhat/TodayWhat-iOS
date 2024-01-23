@@ -1,10 +1,10 @@
-import SwiftUI
-import WidgetKit
-import Intents
 import Dependencies
-import Entity
 import DesignSystem
+import Entity
+import Intents
+import SwiftUI
 import SwiftUIUtil
+import WidgetKit
 
 struct MealWidgetEntryView: View {
     @Environment(\.widgetFamily) var widgetFamily
@@ -235,4 +235,3 @@ private struct LargeMealWidgetView: View {
             .first { meal.contains($0.number) } != nil
     }
 }
-

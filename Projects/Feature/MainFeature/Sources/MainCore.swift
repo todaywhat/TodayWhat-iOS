@@ -60,7 +60,8 @@ public struct MainCore: Reducer {
                     state.displayDate = state.displayDate.adding(by: .day, value: 2)
                 } else if isSkipWeekend, state.displayDate.weekday == 1 {
                     state.displayDate = state.displayDate.adding(by: .day, value: 1)
-                } else if state.displayDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
+                } else if state.displayDate.hour >= 19,
+                          userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
                     state.displayDate = state.displayDate.adding(by: .day, value: 1)
                 }
                 state.school = userDefaultsClient.getValue(.school) as? String ?? ""
@@ -88,7 +89,8 @@ public struct MainCore: Reducer {
                     state.displayDate = state.displayDate.adding(by: .day, value: 2)
                 } else if isSkipWeekend, state.displayDate.weekday == 1 {
                     state.displayDate = state.displayDate.adding(by: .day, value: 1)
-                } else if state.displayDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
+                } else if state.displayDate.hour >= 19,
+                          userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
                     state.displayDate = state.displayDate.adding(by: .day, value: 1)
                 }
 

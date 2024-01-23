@@ -1,5 +1,5 @@
-import Foundation
 import EnumUtil
+import Foundation
 
 public struct Meal: Equatable, Hashable {
     public let breakfast: SubMeal

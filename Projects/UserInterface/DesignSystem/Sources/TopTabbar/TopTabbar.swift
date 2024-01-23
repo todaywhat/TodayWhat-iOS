@@ -25,7 +25,7 @@ public struct TopTabbarView: View {
                         Text(items[index])
                             .font(.system(size: 16, weight: .bold))
                             .foregroundColor(currentTab == index ? .extraBlack : .unselectedPrimary)
-                        
+
                         if currentTab == index {
                             RoundedRectangle(cornerRadius: 17)
                                 .fill(Color.textPrimary)

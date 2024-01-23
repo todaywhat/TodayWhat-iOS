@@ -1,14 +1,14 @@
 import ComposableArchitecture
-import SwiftUI
-import EnumUtil
-import Entity
 import DesignSystem
+import Entity
+import EnumUtil
+import SwiftUI
 import UserDefaultsClient
 
 public struct MealView: View {
     let store: StoreOf<MealCore>
     @ObservedObject var viewStore: ViewStoreOf<MealCore>
-    
+
     public init(store: StoreOf<MealCore>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
@@ -31,7 +31,7 @@ public struct MealView: View {
                         .progressViewStyle(.automatic)
                         .padding(.top, 16)
                 } else if viewStore.meal?.isEmpty ?? true,
-                          (date.weekday == 7 || date.weekday == 1),
+                          date.weekday == 7 || date.weekday == 1,
                           userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false {
                     Text("주말에도 월요일 급식을 보고 싶다면?")
                         .foregroundColor(.textSecondary)
@@ -39,8 +39,7 @@ public struct MealView: View {
                     TWButton(title: "설정하러가기", style: .cta) {
                         viewStore.send(.settingsButtonDidTap)
                     }
-                }
-                else {
+                } else {
                     Text("등록된 정보를 찾지 못했어요 😥")
                         .padding(.top, 16)
                 }
@@ -66,7 +65,7 @@ public struct MealView: View {
             .padding(.top, 16)
             .padding(.horizontal, 16)
             .id(type)
-        
+
         LazyVStack {
             ForEach(subMeal.meals, id: \.hashValue) { meal in
                 HStack {
@@ -107,7 +106,7 @@ public struct MealView: View {
 private extension Meal {
     var isEmpty: Bool {
         return self.breakfast.meals.isEmpty &&
-        self.lunch.meals.isEmpty &&
-        self.dinner.meals.isEmpty
+            self.lunch.meals.isEmpty &&
+            self.dinner.meals.isEmpty
     }
 }

@@ -1,6 +1,6 @@
 //
 //  SchoolMajorSheetTests.swift
-//  
+//
 //
 //  Created by 최형우 on 2022/11/22.
 //
@@ -8,7 +8,6 @@
 import XCTest
 
 final class SchoolMajorSheetTests: XCTestCase {
-
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -31,5 +30,4 @@ final class SchoolMajorSheetTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-
 }

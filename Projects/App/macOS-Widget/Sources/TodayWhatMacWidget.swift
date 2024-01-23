@@ -1,11 +1,11 @@
 import Dependencies
-import WidgetKit
-import SwiftUI
 import Entity
-import MealClient
-import LocalDatabaseClient
 import EnumUtil
+import LocalDatabaseClient
+import MealClient
+import SwiftUI
 import TimeTableClient
+import WidgetKit
 
 struct MealProvider: IntentTimelineProvider {
     typealias Intent = DisplayMealIntent
@@ -21,7 +21,7 @@ struct MealProvider: IntentTimelineProvider {
     func getSnapshot(
         for configuration: Intent,
         in context: Context,
-        completion: @escaping (MealEntry) -> ()
+        completion: @escaping (MealEntry) -> Void
     ) {
         Task {
             var currentDate = Date()
@@ -49,7 +49,7 @@ struct MealProvider: IntentTimelineProvider {
     func getTimeline(
         for configuration: Intent,
         in context: Context,
-        completion: @escaping (Timeline<Entry>) -> ()
+        completion: @escaping (Timeline<Entry>) -> Void
     ) {
         let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? .init()
         Task {
@@ -185,7 +185,7 @@ struct TodayWhatMealWidget: Widget {
 
 struct TodayWhatTimeTableWidget: Widget {
     let kind: String = "TodayWhatTimeTableWidget"
-    
+
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: TimeTableProvider()) { entry in
             TimeTableWidgetEntryView(entry: entry)

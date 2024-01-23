@@ -1,7 +1,7 @@
 import ComposableArchitecture
-@testable import SchoolSettingFeature
-import ErrorModule
 import Entity
+import ErrorModule
+@testable import SchoolSettingFeature
 import XCTest
 
 @MainActor
@@ -12,7 +12,7 @@ final class SchoolSettingCoreTests: XCTestCase {
             reducer: SchoolSettingCore()
         )
         store.timeout = 5_000_000_000
-        
+
         let dummySchool = School(orgCode: "3", schoolCode: "2", name: "광소마고", location: "미궁", schoolType: .high)
         store.dependencies.schoolClient.fetchSchoolList = { keyword in
             if keyword == "error" {

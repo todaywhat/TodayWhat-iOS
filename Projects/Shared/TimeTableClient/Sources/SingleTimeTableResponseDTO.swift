@@ -1,10 +1,10 @@
-import Foundation
 import Entity
+import Foundation
 
 public struct SingleTimeTableResponseDTO: Decodable {
     public let perio: String
     public let content: String
-    
+
     enum CodingKeys: String, CodingKey {
         case perio = "PERIO"
         case content = "ITRT_CNTNT"

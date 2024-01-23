@@ -24,6 +24,5 @@ public struct TWRadioButton: View {
                     .frame(width: 12, height: 12)
             }
         }
-
     }
 }

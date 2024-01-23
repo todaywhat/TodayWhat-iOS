@@ -1,8 +1,8 @@
 import ComposableArchitecture
 import DateUtil
+import DesignSystem
 import Entity
 import SwiftUI
-import DesignSystem
 
 public struct NoticeView: View {
     let store: StoreOf<NoticeCore>
@@ -25,7 +25,12 @@ public struct NoticeView: View {
                         } label: {
                             noticeRowView(notice: notice)
                                 .padding(.horizontal, 16)
-                                .matchedGeometryEffect(id: "NOTICE_MODAL\(notice.id)", in: noticeModal, properties: .position, anchor: .center)
+                                .matchedGeometryEffect(
+                                    id: "NOTICE_MODAL\(notice.id)",
+                                    in: noticeModal,
+                                    properties: .position,
+                                    anchor: .center
+                                )
                         }
                     }
                 }
@@ -49,7 +54,12 @@ public struct NoticeView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal, 16)
                         .aspectRatio(1.0, contentMode: .fit)
-                        .matchedGeometryEffect(id: "NOTICE_MODAL\(selectedNotice.id)", in: noticeModal, properties: .position, anchor: .center)
+                        .matchedGeometryEffect(
+                            id: "NOTICE_MODAL\(selectedNotice.id)",
+                            in: noticeModal,
+                            properties: .position,
+                            anchor: .center
+                        )
                 }
             }
         }

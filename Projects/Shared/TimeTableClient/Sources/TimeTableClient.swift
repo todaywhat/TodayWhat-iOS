@@ -1,11 +1,11 @@
+import ConstantUtil
+import DateUtil
 import Dependencies
+import Entity
+import EnumUtil
 import Foundation
 import NeisClient
-import Entity
 import UserDefaultsClient
-import DateUtil
-import EnumUtil
-import ConstantUtil
 
 public struct TimeTableClient: Sendable {
     public var fetchTimeTable: @Sendable (_ date: Date) async throws -> [TimeTable]
@@ -84,7 +84,7 @@ extension TimeTableClient: DependencyKey {
                     type: [SingleTimeTableResponseDTO].self
                 )
             }
-            
+
             return response
                 .map { $0.toDomain() }
                 .uniqued()
@@ -179,8 +179,8 @@ extension TimeTableClient: TestDependencyKey {
     )
 }
 
-extension DependencyValues {
-    public var timeTableClient: TimeTableClient {
+public extension DependencyValues {
+    var timeTableClient: TimeTableClient {
         get { self[TimeTableClient.self] }
         set { self[TimeTableClient.self] = newValue }
     }

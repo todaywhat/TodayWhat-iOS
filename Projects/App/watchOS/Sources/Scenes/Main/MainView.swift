@@ -1,5 +1,5 @@
-import SwiftUI
 import Entity
+import SwiftUI
 
 struct MainView: View {
     @StateObject var viewModel = MainViewModel()
@@ -9,7 +9,7 @@ struct MainView: View {
             VStack(alignment: .leading) {
                 Text(viewModel.part.display)
                     .font(.system(size: 16))
-                
+
                 Text("옵션변경")
                     .font(.system(size: 14))
                     .foregroundColor(Color("Sub"))
@@ -34,7 +34,7 @@ struct MainView: View {
                     Text("등록된 정보를 찾지 못했어요 😥")
                 }
             }
-            
+
             LazyVStack(spacing: 4) {
                 if viewModel.part == .timeTable {
                     ForEach(viewModel.timeTables, id: \.hashValue) { timetable in
@@ -68,7 +68,7 @@ struct MainView: View {
         .navigationTitle("오늘 뭐임")
         .navigationBarTitleDisplayMode(.inline)
     }
-    
+
     @ViewBuilder
     func mealView(_ meal: String) -> some View {
         Text(mealDisplay(meal: meal))
@@ -77,13 +77,13 @@ struct MainView: View {
             .padding(.horizontal, 12)
             .multilineTextAlignment(.leading)
     }
-    
+
     @ViewBuilder
     func timetableView(_ timetable: TimeTable) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(timetable.content)
                 .font(.system(size: 14, weight: .medium))
-            
+
             Text("\(timetable.perio)교시")
                 .foregroundColor(Color("Sub"))
                 .font(.system(size: 14))

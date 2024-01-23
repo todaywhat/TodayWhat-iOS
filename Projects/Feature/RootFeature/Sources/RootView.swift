@@ -1,12 +1,12 @@
 import ComposableArchitecture
-import SwiftUI
-import SplashFeature
-import SchoolSettingFeature
 import MainFeature
+import SchoolSettingFeature
+import SplashFeature
+import SwiftUI
 
 public struct RootView: View {
     private let store: StoreOf<RootCore>
-    
+
     public init(store: StoreOf<RootCore>) {
         self.store = store
     }

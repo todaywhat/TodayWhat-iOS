@@ -1,11 +1,11 @@
 import ComposableArchitecture
-import SwiftUI
 import DesignSystem
+import SwiftUI
 
 public struct SchoolMajorSheetView: View {
     let store: StoreOf<SchoolMajorSheetCore>
     @ObservedObject var viewStore: ViewStoreOf<SchoolMajorSheetCore>
-    
+
     public init(store: StoreOf<SchoolMajorSheetCore>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })

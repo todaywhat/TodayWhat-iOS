@@ -1,7 +1,7 @@
 import ComposableArchitecture
-import GRDB
 import ConstantUtil
 import Foundation
+import GRDB
 
 // swiftlint: disable identifier_name
 public struct LocalDatabaseClient {
@@ -62,8 +62,8 @@ public struct LocalDatabaseClient {
         }
     }
 
-    public func delete<Record: FetchableRecord & PersistableRecord>(
-        record: Record.Type,
+    public func delete(
+        record: (some FetchableRecord & PersistableRecord).Type,
         key: some DatabaseValueConvertible
     ) throws {
         try dbQueue.write { db in
@@ -71,8 +71,8 @@ public struct LocalDatabaseClient {
         }
     }
 
-    public func deleteAll<Record: FetchableRecord & PersistableRecord>(
-        record: Record.Type
+    public func deleteAll(
+        record: (some FetchableRecord & PersistableRecord).Type
     ) throws {
         try dbQueue.write { db in
             _ = try record.deleteAll(db)
@@ -87,14 +87,14 @@ public extension LocalDatabaseClient {
         var url: URL
         #if os(macOS)
         url = try! FileManager.default.url(
-               for: .applicationSupportDirectory,
-               in: .userDomainMask,
-               appropriateFor: nil,
-               create: true
-           ).appendingPathComponent(
-               "unprotected",
-               isDirectory: true
-           )
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true
+        ).appendingPathComponent(
+            "unprotected",
+            isDirectory: true
+        )
 
         try? FileManager.default.createDirectory(
             at: url,
@@ -105,7 +105,7 @@ public extension LocalDatabaseClient {
         )
         #else
         url = AppGroup.group.containerURL
-        #endif        
+        #endif
 
         if #available(iOS 16, macOS 13.0, *) {
             url.append(path: "TodayWhat")
@@ -148,6 +148,7 @@ public extension LocalDatabaseClient {
         migrate(&migrator)
         try? migrator.migrate(dbQueue)
     }
+
     // swiftlint: enable force_try
 
     private func unprotectedDirectory() throws -> URL {
@@ -175,9 +176,9 @@ public extension LocalDatabaseClient {
 
 extension LocalDatabaseClient: DependencyKey {
     public static var liveValue: LocalDatabaseClient = LocalDatabaseClient { migrator in
-#if DEBUG
+        #if DEBUG
         migrator.eraseDatabaseOnSchemaChange = true
-#endif
+        #endif
         migrator.registerMigration("v1.0.0") { db in
             try db.create(table: "allergyLocalEntity") { table in
                 table.column("id", .text).primaryKey(onConflict: .replace).notNull()
@@ -205,8 +206,8 @@ extension LocalDatabaseClient: TestDependencyKey {
     public static var testValue: LocalDatabaseClient = LocalDatabaseClient { _ in }
 }
 
-extension DependencyValues {
-    public var localDatabaseClient: LocalDatabaseClient {
+public extension DependencyValues {
+    var localDatabaseClient: LocalDatabaseClient {
         get { self[LocalDatabaseClient.self] }
         set { self[LocalDatabaseClient.self] = newValue }
     }

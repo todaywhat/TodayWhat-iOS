@@ -1,5 +1,5 @@
-import Dependencies
 import DateUtil
+import Dependencies
 import Entity
 import FirebaseFirestore
 import XCTestDynamicOverlay
@@ -31,11 +31,11 @@ extension NoticeClient: DependencyKey {
                 .collection("noticeList")
                 .getDocuments()
                 .documents
-                .compactMap { (snapshot) -> Notice? in
+                .compactMap { snapshot -> Notice? in
                     let data = snapshot.data()
                     guard let title = data["title"] as? String,
-                            let content = data["content"] as? String,
-                            let createdAt = data["createdAt"] as? String
+                          let content = data["content"] as? String,
+                          let createdAt = data["createdAt"] as? String
                     else {
                         return nil
                     }

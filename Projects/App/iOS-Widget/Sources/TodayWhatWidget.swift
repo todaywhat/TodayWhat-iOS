@@ -1,12 +1,12 @@
 import Dependencies
-import WidgetKit
-import SwiftUI
 import Entity
-import MealClient
-import LocalDatabaseClient
 import EnumUtil
-import TimeTableClient
 import IntentsUI
+import LocalDatabaseClient
+import MealClient
+import SwiftUI
+import TimeTableClient
+import WidgetKit
 
 struct MealProvider: IntentTimelineProvider {
     typealias Entry = MealEntry
@@ -50,7 +50,7 @@ struct MealProvider: IntentTimelineProvider {
     func getTimeline(
         for configuration: Intent,
         in context: Context,
-        completion: @escaping (Timeline<Entry>) -> ()
+        completion: @escaping (Timeline<Entry>) -> Void
     ) {
         let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? .init()
         Task {
@@ -142,7 +142,8 @@ struct TimeTableProvider: TimelineProvider {
     private func fetchTimeTables(date: Date) async throws -> [TimeTable] {
         let isOnModifiedTimeTable = userDefaultsClient.getValue(.isOnModifiedTimeTable) as? Bool ?? false
         if isOnModifiedTimeTable {
-            let modifiedTimeTables: [ModifiedTimeTableLocalEntity]? = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
+            let modifiedTimeTables: [ModifiedTimeTableLocalEntity]? = try? localDatabaseClient
+                .readRecords(as: ModifiedTimeTableLocalEntity.self)
                 .filter { $0.weekday == WeekdayType(weekday: date.weekday).rawValue }
             return (modifiedTimeTables ?? [])
                 .sorted { $0.perio < $1.perio }

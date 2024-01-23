@@ -39,6 +39,7 @@ public struct SchoolSettingCore: Reducer {
                 return "입력하신 정보가 정확한가요?"
             }
         }
+
         public var nextButtonTitle: String {
             if major.isEmpty || schoolMajorList.isEmpty {
                 return "이대로하기"
@@ -113,8 +114,8 @@ public struct SchoolSettingCore: Reducer {
                 state.school = school
                 state.isLoading = true
                 return .run { [school = state.school] send in
-                    let task = Action.schoolListResponse(
-                        await TaskResult {
+                    let task = await Action.schoolListResponse(
+                        TaskResult {
                             try await schoolClient.fetchSchoolList(school)
                         }
                     )
@@ -157,8 +158,8 @@ public struct SchoolSettingCore: Reducer {
                 state.isFocusedSchool = false
                 state.major = ""
                 return .run { send in
-                    let task = Action.schoolMajorListResponse(
-                        await TaskResult {
+                    let task = await Action.schoolMajorListResponse(
+                        TaskResult {
                             try await schoolClient.fetchSchoolsMajorList(school.orgCode, school.schoolCode)
                         }
                     )
@@ -195,7 +196,7 @@ public struct SchoolSettingCore: Reducer {
             case .majorSheetDismissed:
                 state.schoolMajorSheetCore = nil
                 state.isPresentedMajorSheet = false
-            
+
             default:
                 return .none
             }

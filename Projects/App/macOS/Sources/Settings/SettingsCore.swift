@@ -1,13 +1,13 @@
 import ComposableArchitecture
 import Entity
 import Foundation
+import ITunesClient
 import LocalDatabaseClient
 import SchoolClient
 import UserDefaultsClient
-import ITunesClient
 
 struct SettingsCore: ReducerProtocol {
-    enum FocusState: Hashable{
+    enum FocusState: Hashable {
         case school
         case grade
         case `class`
@@ -64,7 +64,7 @@ struct SettingsCore: ReducerProtocol {
             state.isSkipAfterDinner = userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true
             state.majorText = userDefaultsClient.getValue(.major) as? String ?? ""
             let majorList = try? localDatabaseClient.readRecords(as: SchoolMajorLocalEntity.self)
-                .map { $0.major }
+                .map(\.major)
             state.schoolMajorList = majorList ?? []
             return .task {
                 await .versionCheck(
@@ -154,7 +154,7 @@ struct SettingsCore: ReducerProtocol {
         default:
             return .none
         }
-        
+
         return .none
     }
 }

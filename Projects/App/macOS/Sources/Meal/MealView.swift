@@ -1,7 +1,7 @@
+import DesignSystem
 import Entity
 import EnumUtil
 import SwiftUI
-import DesignSystem
 
 struct MealView: View {
     let meal: [String]
@@ -18,8 +18,8 @@ struct MealView: View {
                     Text(mealDisplay(meal: meal))
                         .foregroundColor(
                             isMealContainsAllergy(meal: meal)
-                            ? .red
-                            : .textPrimary
+                                ? .red
+                                : .textPrimary
                         )
                 }
             }

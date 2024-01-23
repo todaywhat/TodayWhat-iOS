@@ -54,9 +54,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: WCSessionDelegate {
     func sessionDidBecomeInactive(_ session: WCSession) {}
-    
+
     func sessionDidDeactivate(_ session: WCSession) {}
-    
+
     func session(
         _ session: WCSession,
         activationDidCompleteWith activationState: WCSessionActivationState,
@@ -81,7 +81,7 @@ extension AppDelegate: WCSessionDelegate {
         if let major = userDefaultsClient.getValue(.major) as? String {
             dict["major"] = major
         }
-        
+
         session.sendMessage(dict, replyHandler: nil)
     }
 
@@ -109,7 +109,7 @@ extension AppDelegate: WCSessionDelegate {
         if let major = userDefaultsClient.getValue(.major) as? String {
             reply["major"] = major
         }
-         
+
         replyHandler(reply)
     }
 }

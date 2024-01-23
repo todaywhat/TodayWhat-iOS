@@ -1,5 +1,5 @@
-import Foundation
 import EnumUtil
+import Foundation
 
 public struct School: Equatable, Hashable {
     public let orgCode: String

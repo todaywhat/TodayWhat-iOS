@@ -1,6 +1,6 @@
+import FirebaseAnalytics
 import Foundation
 import OSLog
-import FirebaseAnalytics
 
 fileprivate extension OSLog {
     static let subSystem = Bundle.main.bundleIdentifier ?? ""

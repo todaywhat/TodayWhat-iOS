@@ -3,7 +3,7 @@ public enum SchoolKind: String, Decodable {
     case middle = "중학교"
     case high = "고등학교"
     case special = "외국인학교"
-    
+
     public func toType() -> SchoolType {
         switch self {
         case .elementary:

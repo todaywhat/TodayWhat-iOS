@@ -1,8 +1,8 @@
 import ComposableArchitecture
+import DesignSystem
 import EnumUtil
 import SwiftUI
 import SwiftUIUtil
-import DesignSystem
 
 struct AllergyView: View {
     let store: StoreOf<AllergyCore>

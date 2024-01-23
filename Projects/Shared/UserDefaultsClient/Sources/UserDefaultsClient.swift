@@ -1,8 +1,8 @@
-import Foundation
-import EnumUtil
-import XCTestDynamicOverlay
-import FoundationUtil
 import Dependencies
+import EnumUtil
+import Foundation
+import FoundationUtil
+import XCTestDynamicOverlay
 
 public typealias UserDefaultsKeys = FoundationUtil.UserDefaultsKeys
 
@@ -35,8 +35,8 @@ extension UserDefaultsClient: TestDependencyKey {
     )
 }
 
-extension DependencyValues {
-    public var userDefaultsClient: UserDefaultsClient {
+public extension DependencyValues {
+    var userDefaultsClient: UserDefaultsClient {
         get { self[UserDefaultsClient.self] }
         set { self[UserDefaultsClient.self] = newValue }
     }
@@ -48,8 +48,8 @@ extension UserDefaults: DependencyKey {
 
 extension UserDefaults: @unchecked Sendable {}
 
-extension DependencyValues {
-    public var userDefaults: UserDefaults {
+public extension DependencyValues {
+    var userDefaults: UserDefaults {
         get { self[UserDefaults.self] }
         set { self[UserDefaults.self] = newValue }
     }

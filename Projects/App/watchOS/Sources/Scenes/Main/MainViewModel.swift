@@ -1,10 +1,10 @@
 import Combine
-import Entity
 import Dependencies
-import MealClient
-import TimeTableClient
+import Entity
 import EnumUtil
 import Foundation
+import MealClient
+import TimeTableClient
 
 final class MainViewModel: ObservableObject {
     @Dependency(\.mealClient) var mealClient
@@ -35,8 +35,6 @@ final class MainViewModel: ObservableObject {
             self.meal = meal
             let timeTable = try await timeTableClient.fetchTimeTable(Date())
             self.timeTables = timeTable
-        } catch {
-            
-        }
+        } catch {}
     }
 }

@@ -82,9 +82,9 @@ struct TWBottomSheet<T: View>: ViewModifier {
 }
 
 public extension View {
-    func twBottomSheet<Content: View>(
+    func twBottomSheet(
         isShowing: Binding<Bool>,
-        content: @escaping () -> Content
+        content: @escaping () -> some View
     ) -> some View {
         modifier(TWBottomSheet(isShowing: isShowing, content: content))
     }

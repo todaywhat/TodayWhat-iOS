@@ -1,8 +1,8 @@
+import ConstantUtil
 import Dependencies
 import Foundation
 import SwiftyJSON
 import XCTestDynamicOverlay
-import ConstantUtil
 
 public struct NeisClient {
     public func fetchDataOnNeis<T: Decodable>(

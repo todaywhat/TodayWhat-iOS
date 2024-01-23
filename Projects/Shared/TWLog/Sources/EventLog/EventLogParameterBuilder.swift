@@ -18,7 +18,7 @@ public final class EventLogParameterBuilder {
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             return dateFormatter.string(from: currentDate)
         }()
-        
+
         self.params = [
             "os": os,
             "device": device,

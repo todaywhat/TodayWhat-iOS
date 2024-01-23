@@ -1,6 +1,6 @@
 //
 //  ScheduleFeatureTests.swift
-//  
+//
 //
 //  Created by 최형우 on 2022/11/23.
 //
@@ -8,7 +8,6 @@
 import XCTest
 
 final class ScheduleFeatureTests: XCTestCase {
-
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -31,5 +30,4 @@ final class ScheduleFeatureTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-
 }

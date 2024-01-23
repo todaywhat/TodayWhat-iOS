@@ -1,7 +1,7 @@
 import ComposableArchitecture
-import SwiftUI
-import EnumUtil
 import DesignSystem
+import EnumUtil
+import SwiftUI
 import SwiftUIUtil
 
 public struct AllergySettingView: View {

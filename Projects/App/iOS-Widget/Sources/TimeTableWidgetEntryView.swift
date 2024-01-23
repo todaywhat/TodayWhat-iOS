@@ -1,10 +1,10 @@
-import SwiftUI
-import WidgetKit
-import Intents
 import Dependencies
-import Entity
 import DesignSystem
+import Entity
+import Intents
+import SwiftUI
 import SwiftUIUtil
+import WidgetKit
 
 struct TimeTableWidgetEntryView: View {
     @Environment(\.widgetFamily) var widgetFamily
@@ -95,7 +95,7 @@ private struct MediumTimeTableWidgetView: View {
                             Text("\(timetable.perio)")
                                 .font(.system(size: 12, weight: .bold))
                                 .foregroundColor(.textSecondary)
-                            
+
                             Text(timetable.content)
                                 .font(.system(size: 12))
                                 .foregroundColor(.textPrimary)

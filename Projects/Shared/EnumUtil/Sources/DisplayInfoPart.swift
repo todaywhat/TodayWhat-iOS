@@ -7,8 +7,8 @@ public enum DisplayInfoPart: Equatable, CaseIterable {
     case timeTable
 }
 
-extension DisplayInfoPart {
-    public var display: String {
+public extension DisplayInfoPart {
+    var display: String {
         switch self {
         case .breakfast:
             return "🥞 아침"

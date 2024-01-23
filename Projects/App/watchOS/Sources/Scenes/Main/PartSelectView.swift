@@ -1,13 +1,13 @@
+import EnumUtil
 import SwiftUI
 import SwiftUIUtil
-import EnumUtil
 
 struct PartSelectView: View {
     var selectedPart: DisplayInfoPart
     var action: (DisplayInfoPart) -> Void
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var sceneFlowState: SceneFlowState
-    
+
     init(
         selectedPart: DisplayInfoPart,
         action: @escaping (DisplayInfoPart) -> Void
@@ -15,20 +15,20 @@ struct PartSelectView: View {
         self.selectedPart = selectedPart
         self.action = action
     }
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
                 optionView(.breakfast, corners: [.topLeft, .topRight])
-                
+
                 Divider()
-                
+
                 optionView(.lunch, corners: [])
-                
+
                 Divider()
-                
+
                 optionView(.dinner, corners: [.bottomLeft, .bottomRight])
-                
+
                 optionView(DisplayInfoPart.timeTable)
                     .padding(.top, 8)
 
@@ -40,7 +40,7 @@ struct PartSelectView: View {
             }
         }
     }
-    
+
     @ViewBuilder
     func optionView(
         _ part: DisplayInfoPart,
@@ -48,9 +48,9 @@ struct PartSelectView: View {
     ) -> some View {
         HStack {
             Text(part.display)
-            
+
             Spacer()
-            
+
             if part == selectedPart {
                 Image(systemName: "checkmark")
                     .foregroundColor(.white)

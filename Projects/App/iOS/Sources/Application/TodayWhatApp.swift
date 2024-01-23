@@ -1,8 +1,8 @@
-import SwiftUI
-import RootFeature
+import ComposableArchitecture
 import Firebase
 import FirebaseCore
-import ComposableArchitecture
+import RootFeature
+import SwiftUI
 import UIKit
 
 @main
