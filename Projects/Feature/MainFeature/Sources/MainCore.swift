@@ -32,7 +32,8 @@ public struct MainCore: Reducer {
     public enum Action {
         case onLoad
         case onAppear
-        case tabChanged(Int)
+        case tabTapped(Int)
+        case tabSwiped(Int)
         case mealCore(MealCore.Action)
         case timeTableCore(TimeTableCore.Action)
         case settingButtonDidTap
@@ -94,8 +95,13 @@ public struct MainCore: Reducer {
                     state.displayDate = state.displayDate.adding(by: .day, value: 1)
                 }
 
-            case let .tabChanged(tab):
+            case let .tabTapped(tab):
                 state.currentTab = tab
+                logTabSelected(index: tab, selectionType: .tapped)
+
+            case let .tabSwiped(tab):
+                state.currentTab = tab
+                logTabSelected(index: tab, selectionType: .swiped)
 
             case .settingButtonDidTap, .mealCore(.settingsButtonDidTap):
                 state.settingsCore = .init()
@@ -137,5 +143,15 @@ public struct MainCore: Reducer {
         .ifLet(\.$noticeCore, action: \.noticeCore) {
             NoticeCore()
         }
+    }
+
+    func logTabSelected(index: Int, selectionType: TabSelectionType) {
+        let log: EventLog? = switch index {
+        case 0: MealTabSelectedEventLog(tabSelectionType: selectionType)
+        case 1: TimeTableTabSelectedEventLog(tabSelectionType: selectionType)
+        default: nil
+        }
+        guard let log else { return }
+        TWLog.event(log)
     }
 }
