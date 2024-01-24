@@ -122,6 +122,8 @@ public struct MainCore: Reducer {
 
             case .noticeButtonDidTap:
                 state.noticeCore = .init()
+                let log = BellButtonClickedEventLog()
+                TWLog.event(log)
 
             case .noticeCore(.dismiss):
                 state.noticeCore = nil
