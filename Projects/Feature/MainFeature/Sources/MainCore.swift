@@ -1,12 +1,14 @@
+import BaseFeature
 import ComposableArchitecture
-import UserDefaultsClient
+import Entity
 import MealFeature
-import TimeTableFeature
 import NoticeClient
 import NoticeFeature
 import SettingsFeature
-import Entity
+import TWLog
+import TimeTableFeature
 import UIKit
+import UserDefaultsClient
 
 public struct MainCore: Reducer {
     public init() {}
@@ -28,6 +30,7 @@ public struct MainCore: Reducer {
 
     @CasePathable
     public enum Action {
+        case onLoad
         case onAppear
         case tabChanged(Int)
         case mealCore(MealCore.Action)
@@ -46,6 +49,10 @@ public struct MainCore: Reducer {
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
+            case .onLoad:
+                let pageShowedEvengLog = PageShowedEventLog(pageName: "main_page")
+                TWLog.event(pageShowedEvengLog)
+
             case .onAppear:
                 state.displayDate = Date()
                 let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true

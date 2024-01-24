@@ -105,6 +105,9 @@ public struct MainView: View {
             .onAppear {
                 viewStore.send(.onAppear, animation: .default)
             }
+            .onLoad {
+                viewStore.send(.onLoad)
+            }
         }
         .navigationViewStyle(.stack)
     }

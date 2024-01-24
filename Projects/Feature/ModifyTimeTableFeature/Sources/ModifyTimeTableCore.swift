@@ -1,11 +1,13 @@
+import BaseFeature
 import ComposableArchitecture
 import DateUtil
-import EnumUtil
 import Entity
+import EnumUtil
 import Foundation
 import FoundationUtil
-import TimeTableClient
 import LocalDatabaseClient
+import TWLog
+import TimeTableClient
 
 public struct ModifyTimeTableCore: Reducer {
     public init() {}
@@ -23,6 +25,7 @@ public struct ModifyTimeTableCore: Reducer {
     }
 
     public enum Action: Equatable {
+        case onAppear
         case onLoad
         case tabChanged(Int)
         case timeTableResponse(TaskResult<[TimeTable]>)
@@ -40,6 +43,10 @@ public struct ModifyTimeTableCore: Reducer {
     public var body: some ReducerOf<ModifyTimeTableCore> {
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                let pageShowedEvengLog = PageShowedEventLog(pageName: "modify_time_table_page")
+                TWLog.event(pageShowedEvengLog)
+
             case .onLoad:
                 let modifiedTimeTables = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
                     .filter { $0.weekday == WeekdayType.allCases[safe: state.currentTab]?.rawValue ?? 2 }

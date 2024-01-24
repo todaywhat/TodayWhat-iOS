@@ -168,6 +168,7 @@ public struct SchoolSettingView: View {
                 viewStore.send(.onLoad)
             }
             .onAppear {
+                viewStore.send(.onAppear)
                 withAnimation {
                     focusField = .school
                 }

@@ -1,11 +1,13 @@
+import BaseFeature
 import ComposableArchitecture
-import Foundation
 import Entity
-import SchoolClient
-import UserDefaultsClient
-import SchoolMajorSheetFeature
 import EnumUtil
+import Foundation
 import LocalDatabaseClient
+import SchoolClient
+import SchoolMajorSheetFeature
+import TWLog
+import UserDefaultsClient
 
 public struct SchoolSettingCore: Reducer {
     public init() {}
@@ -51,6 +53,7 @@ public struct SchoolSettingCore: Reducer {
 
     public enum Action: Equatable {
         case onLoad
+        case onAppear
         case schoolChanged(String)
         case schoolFocusedChanged(Bool)
         case gradeChanged(String)
@@ -75,6 +78,10 @@ public struct SchoolSettingCore: Reducer {
     public var body: some ReducerOf<SchoolSettingCore> {
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                let pageShowedEvengLog = PageShowedEventLog(pageName: "school_setting_page")
+                TWLog.event(pageShowedEvengLog)
+
             case .onLoad:
                 guard
                     let school = userDefaultsClient.getValue(.school) as? String,

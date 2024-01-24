@@ -6,6 +6,7 @@ import UIKit
 import Foundation
 #endif
 
+// swiftlint: disable identifier_name type_body_length file_length cyclomatic_complexity function_body_length
 public enum Device {
 #if os(iOS)
     case iPodTouch5
@@ -447,3 +448,4 @@ extension Device: Equatable {
         return lhs.description == rhs.description
     }
 }
+// swiftlint: enable identifier_name type_body_length file_length cyclomatic_complexity function_body_length

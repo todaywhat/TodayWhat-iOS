@@ -15,6 +15,7 @@ let project = Project.module(
                 .shared(target: .DateUtil),
                 .shared(target: .FoundationUtil),
                 .shared(target: .ConstantUtil),
+                .shared(target: .TWLog),
                 .userInterface(target: .DesignSystem)
             ]
         )

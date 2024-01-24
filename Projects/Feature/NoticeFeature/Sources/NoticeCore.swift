@@ -1,6 +1,8 @@
+import BaseFeature
 import ComposableArchitecture
-import NoticeClient
 import Entity
+import NoticeClient
+import TWLog
 
 public struct NoticeCore: Reducer {
     public init() {}
@@ -26,6 +28,9 @@ public struct NoticeCore: Reducer {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                let pageShowedEvengLog = PageShowedEventLog(pageName: "notice_page")
+                TWLog.event(pageShowedEvengLog)
+
                 return .run { send in
                     let taskResult = await TaskResult<[Notice]> {
                         try await noticeClient.fetchNoticeList()

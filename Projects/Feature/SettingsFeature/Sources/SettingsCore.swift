@@ -1,11 +1,13 @@
 import AllergySettingFeature
+import BaseFeature
 import ComposableArchitecture
 import DeviceClient
-import SchoolSettingFeature
 import ITunesClient
-import UserDefaultsClient
-import UIKit.UIApplication
 import ModifyTimeTableFeature
+import SchoolSettingFeature
+import TWLog
+import UIKit.UIApplication
+import UserDefaultsClient
 
 public struct SettingsCore: Reducer {
     public init() {}
@@ -60,6 +62,9 @@ public struct SettingsCore: Reducer {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                let pageShowedEvengLog = PageShowedEventLog(pageName: "setting_page")
+                TWLog.event(pageShowedEvengLog)
+
                 state.schoolName = userDefaultsClient.getValue(.school) as? String ?? ""
                 state.grade = userDefaultsClient.getValue(.grade) as? Int ?? 0
                 state.class = userDefaultsClient.getValue(.class) as? Int ?? 0

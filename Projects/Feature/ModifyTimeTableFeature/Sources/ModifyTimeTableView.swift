@@ -90,6 +90,9 @@ public struct ModifyTimeTableView: View {
             Spacer()
         }
         .background(Color.backgroundMain)
+        .onAppear {
+            viewStore.send(.onAppear)
+        }
         .onLoad {
             viewStore.send(.onLoad, animation: .default)
         }
