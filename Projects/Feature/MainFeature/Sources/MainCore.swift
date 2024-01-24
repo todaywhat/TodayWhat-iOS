@@ -105,6 +105,8 @@ public struct MainCore: Reducer {
 
             case .settingButtonDidTap, .mealCore(.settingsButtonDidTap):
                 state.settingsCore = .init()
+                let log = SettingButtonClickedEventLog()
+                TWLog.event(log)
 
             case .settingsCore(.dismiss):
                 state.settingsCore = nil
