@@ -78,6 +78,6 @@ public struct TimeTableView: View {
         .background {
             Color.cardBackground
         }
-        .cornerRadius(4)
+        .cornerRadius(8)
     }
 }

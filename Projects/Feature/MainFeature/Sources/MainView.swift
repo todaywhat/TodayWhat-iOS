@@ -159,7 +159,7 @@ public struct MainView: View {
         .background {
             navigationLinks
         }
-        .cornerRadius(8)
+        .cornerRadius(16)
     }
 
     @ViewBuilder
