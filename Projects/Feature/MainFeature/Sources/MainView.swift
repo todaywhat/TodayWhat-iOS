@@ -1,16 +1,16 @@
 import ComposableArchitecture
-import SwiftUI
 import DesignSystem
 import MealFeature
-import TimeTableFeature
-import SettingsFeature
 import NoticeFeature
+import SettingsFeature
+import SwiftUI
+import TimeTableFeature
 
 public struct MainView: View {
     let store: StoreOf<MainCore>
     @ObservedObject var viewStore: ViewStoreOf<MainCore>
     @Environment(\.openURL) var openURL
-    
+
     public init(store: StoreOf<MainCore>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
@@ -136,7 +136,7 @@ public struct MainView: View {
 
             HStack {
                 Spacer()
-                
+
                 if viewStore.currentTab == 0 {
                     Image.meal
                         .transition(

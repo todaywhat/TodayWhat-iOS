@@ -1,8 +1,8 @@
 import ComposableArchitecture
+import DesignSystem
 import Entity
 import LaunchAtLogin
 import SwiftUI
-import DesignSystem
 
 struct SettingsView: View {
     let store: StoreOf<SettingsCore>
@@ -100,7 +100,8 @@ struct SettingsView: View {
                     Text("문의")
 
                     Link(
-                        destination: URL(string: "https://github.com/baekteun/TodayWhat-iOS/issues") ?? URL(string: "https://www.google.com")!
+                        destination: URL(string: "https://github.com/baekteun/TodayWhat-iOS/issues") ??
+                            URL(string: "https://www.google.com")!
                     ) {
                         Text("깃허브")
                     }
@@ -136,7 +137,8 @@ struct SettingsView: View {
 
                 if viewStore.isNewVersionExist {
                     Button {
-                        let url = URL(string: "https://apps.apple.com/app/id1629567018") ?? URL(string: "https://google.com")!
+                        let url = URL(string: "https://apps.apple.com/app/id1629567018") ??
+                            URL(string: "https://google.com")!
                         openURL(url)
                     } label: {
                         Text("오늘 뭐임 New 버전이 있어요!")

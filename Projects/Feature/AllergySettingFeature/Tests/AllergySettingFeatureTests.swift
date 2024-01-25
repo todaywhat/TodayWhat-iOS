@@ -1,4 +1,3 @@
 import XCTest
 
-final class AllergySettingFeatureTests: XCTestCase {
-}
+final class AllergySettingFeatureTests: XCTestCase {}

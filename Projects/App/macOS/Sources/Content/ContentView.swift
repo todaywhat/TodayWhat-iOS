@@ -1,7 +1,7 @@
 import ComposableArchitecture
+import DesignSystem
 import SwiftUI
 import SwiftUIUtil
-import DesignSystem
 
 struct ContentView: View {
     let store: StoreOf<ContentCore>
@@ -12,7 +12,7 @@ struct ContentView: View {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
     }
-    
+
     var body: some View {
         ZStack {
             Button {
@@ -67,11 +67,12 @@ struct ContentView: View {
                     IfLetStore(
                         store.scope(
                             state: \.allergyCore,
-                            action: ContentCore.Action.alleryCore)
+                            action: ContentCore.Action.alleryCore
+                        )
                     ) { store in
                         AllergyView(store: store)
                     }
-                    
+
                 case .settings:
                     IfLetStore(
                         store.scope(

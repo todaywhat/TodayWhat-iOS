@@ -28,12 +28,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             )
         ).environment(
             \.popoverOpen,
-             popoverSubject
+            popoverSubject
                 .eraseToAnyPublisher()
         )
-        
+
         popover.contentViewController = NSHostingController(rootView: contentViw)
-        
+
         self.popover = popover
 
         eventMonitor = .init(mask: [.leftMouseDown, .rightMouseDown], handler: mouseEventHandle(_:))

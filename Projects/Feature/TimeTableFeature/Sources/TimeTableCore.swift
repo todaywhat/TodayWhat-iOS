@@ -2,9 +2,9 @@ import ComposableArchitecture
 import Entity
 import EnumUtil
 import Foundation
+import LocalDatabaseClient
 import TimeTableClient
 import UserDefaultsClient
-import LocalDatabaseClient
 
 public struct TimeTableCore: Reducer {
     public init() {}
@@ -49,8 +49,8 @@ public struct TimeTableCore: Reducer {
                     return .none
                 }
                 return .run { [todayDate] send in
-                    let task = Action.timeTableResponse(
-                        await TaskResult {
+                    let task = await Action.timeTableResponse(
+                        TaskResult {
                             try await timeTableClient.fetchTimeTable(todayDate)
                         }
                     )

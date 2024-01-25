@@ -17,7 +17,7 @@ public extension Date {
         return Calendar.current.component(.hour, from: self)
     }
 
-    // 1 2 3 4 5 6 7 - 일 월 화 수 목 금 토
+    /// 1 2 3 4 5 6 7 - 일 월 화 수 목 금 토
     var weekday: Int {
         return Calendar.current.component(.weekday, from: self)
     }

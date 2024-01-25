@@ -1,7 +1,7 @@
-import SwiftUI
 import Dependencies
-import UserDefaultsClient
+import SwiftUI
 import SwiftUIUtil
+import UserDefaultsClient
 
 struct RootView: View {
     @EnvironmentObject var sceneFlowState: SceneFlowState

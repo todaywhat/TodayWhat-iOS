@@ -1,8 +1,8 @@
 import Dependencies
-import Foundation
-import XCTestDynamicOverlay
-import NeisClient
 import Entity
+import Foundation
+import NeisClient
+import XCTestDynamicOverlay
 
 public struct SchoolClient: Sendable {
     public var fetchSchoolList: @Sendable (_ keyword: String) async throws -> [School]

@@ -1,5 +1,5 @@
-import SwiftUI
 import Dependencies
+import SwiftUI
 import UserDefaultsClient
 
 struct SettingView: View {
@@ -85,7 +85,6 @@ struct SettingView: View {
         }
     }
 }
-
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {

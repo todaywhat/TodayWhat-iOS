@@ -1,10 +1,10 @@
+import DateUtil
 import Dependencies
+import Entity
+import EnumUtil
 import Foundation
 import NeisClient
-import Entity
 import UserDefaultsClient
-import DateUtil
-import EnumUtil
 
 public struct MealClient: Sendable {
     public var fetchMeal: @Sendable (_ date: Date) async throws -> Meal
@@ -82,8 +82,8 @@ extension MealClient: DependencyKey {
     )
 }
 
-extension DependencyValues {
-    public var mealClient: MealClient {
+public extension DependencyValues {
+    var mealClient: MealClient {
         get { self[MealClient.self] }
         set { self[MealClient.self] = newValue }
     }

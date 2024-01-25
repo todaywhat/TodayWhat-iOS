@@ -1,6 +1,6 @@
 import ComposableArchitecture
-import EnumUtil
 import Entity
+import EnumUtil
 
 struct AllergyCore: ReducerProtocol {
     struct State: Equatable {

@@ -1,7 +1,6 @@
 import SwiftUI
 
 public struct LabelledDivider: View {
-
     private let label: String
     private let subLabel: String
     private let horizontalPadding: CGFloat

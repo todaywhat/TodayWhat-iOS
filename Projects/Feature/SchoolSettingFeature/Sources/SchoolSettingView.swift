@@ -1,8 +1,8 @@
 import ComposableArchitecture
-import SwiftUI
-import Entity
 import DesignSystem
+import Entity
 import SchoolMajorSheetFeature
+import SwiftUI
 import SwiftUIUtil
 
 public struct SchoolSettingView: View {
@@ -12,11 +12,12 @@ public struct SchoolSettingView: View {
         case `class`
         case major
     }
+
     let store: StoreOf<SchoolSettingCore>
     private let isNavigationPushed: Bool
     @FocusState private var focusField: FocusField?
     @Environment(\.dismiss) var dismiss
-    
+
     public init(
         store: StoreOf<SchoolSettingCore>,
         isNavigationPushed: Bool = false
@@ -31,7 +32,7 @@ public struct SchoolSettingView: View {
                 VStack(spacing: 16) {
                     if !viewStore.isFocusedSchool {
                         HStack {
-                            VStack(alignment: .leading, spacing: 4){
+                            VStack(alignment: .leading, spacing: 4) {
                                 Text(viewStore.titleMessage)
                                     .font(.system(size: 20, weight: .medium))
                                     .foregroundColor(.extraBlack)
@@ -146,7 +147,7 @@ public struct SchoolSettingView: View {
                     viewStore.send(.schoolFocusedChanged(newValue == .school), animation: .default)
                 }
                 .onChange(of: viewStore.grade) { newValue in
-                    if newValue.count > 0 {
+                    if !newValue.isEmpty {
                         focusField = .class
                     }
                 }

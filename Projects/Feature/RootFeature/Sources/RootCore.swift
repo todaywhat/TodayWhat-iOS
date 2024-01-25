@@ -1,8 +1,8 @@
 import ComposableArchitecture
-import UserDefaultsClient
-import SplashFeature
-import SchoolSettingFeature
 import MainFeature
+import SchoolSettingFeature
+import SplashFeature
+import UserDefaultsClient
 
 public struct RootCore: Reducer {
     public init() {}
@@ -10,7 +10,7 @@ public struct RootCore: Reducer {
         case splashCore(SplashCore.State)
         case schoolSettingCore(SchoolSettingCore.State)
         case mainCore(MainCore.State)
-        
+
         public init() { self = .splashCore(.init()) }
     }
 
@@ -33,7 +33,7 @@ public struct RootCore: Reducer {
 
             case .schoolSettingCore(.schoolSettingFinished):
                 state = .mainCore(.init())
-            
+
             default:
                 return .none
             }

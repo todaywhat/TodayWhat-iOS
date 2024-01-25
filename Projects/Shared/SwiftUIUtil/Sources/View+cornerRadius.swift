@@ -8,7 +8,6 @@ public extension View {
     }
 }
 
-
 struct RoundedCorner: Shape {
     var radius: CGFloat = 4
     var corners: UIRectCorner = .allCorners

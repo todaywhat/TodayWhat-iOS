@@ -4,10 +4,10 @@ import Dispatch
 import Entity
 import EnumUtil
 import Foundation
-import TimeTableClient
-import MealClient
-import UserDefaultsClient
 import LocalDatabaseClient
+import MealClient
+import TimeTableClient
+import UserDefaultsClient
 
 struct ContentCore: ReducerProtocol {
     struct State: Equatable {
@@ -59,7 +59,7 @@ struct ContentCore: ReducerProtocol {
                     state.selectedInfoType = .breakfast
                 }
                 return .send(.fetchData)
-                
+
             case .fetchData:
                 guard
                     let school = userDefaultsClient.getValue(.school) as? String,
@@ -75,7 +75,7 @@ struct ContentCore: ReducerProtocol {
 
                 return .merge(
                     .task {
-                        .mealResponse(await TaskResult {
+                        await .mealResponse(TaskResult {
                             var targetDate = Date()
                             if targetDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
                                 targetDate = targetDate.adding(by: .day, value: 1)
@@ -84,7 +84,7 @@ struct ContentCore: ReducerProtocol {
                         })
                     },
                     .task {
-                        .timetableResponse(await TaskResult {
+                        await .timetableResponse(TaskResult {
                             var targetDate = Date()
                             if targetDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
                                 targetDate = targetDate.adding(by: .day, value: 1)
@@ -100,11 +100,15 @@ struct ContentCore: ReducerProtocol {
                 }
 
             case .exit:
-                NotificationCenter.default.addObserver(forName: NSApplication.willTerminateNotification, object: nil, queue: .main) { _ in }
+                NotificationCenter.default.addObserver(
+                    forName: NSApplication.willTerminateNotification,
+                    object: nil,
+                    queue: .main
+                ) { _ in }
                 DispatchQueue.main.asyncAfter(deadline: .now()) {
                     exit(0)
                 }
-                
+
             case let .displayInfoTypeDidSelect(part):
                 guard state.selectedInfoType != part else { break }
                 switch part {

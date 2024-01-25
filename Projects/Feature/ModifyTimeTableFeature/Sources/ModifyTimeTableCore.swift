@@ -21,6 +21,7 @@ public struct ModifyTimeTableCore: Reducer {
             let weekday = WeekdayType.allCases[currentTab].rawValue
             return Date.getDateForDayOfWeek(dayOfWeek: weekday)?.weekdayString ?? "오늘"
         }
+
         public init() {}
     }
 
@@ -53,8 +54,8 @@ public struct ModifyTimeTableCore: Reducer {
                 if (modifiedTimeTables ?? []).isEmpty {
                     state.isLoading = true
                     return .run { send in
-                        let task = Action.timeTableResponse(
-                            await TaskResult {
+                        let task = await Action.timeTableResponse(
+                            TaskResult {
                                 try await timeTableClient.fetchTimeTable(
                                     Date.getDateForDayOfWeek(dayOfWeek: Date().weekday) ?? .init()
                                 )
@@ -65,13 +66,13 @@ public struct ModifyTimeTableCore: Reducer {
                 }
                 state.inputedTimeTables = (modifiedTimeTables ?? [])
                     .sorted { $0.perio < $1.perio }
-                    .map { $0.content }
-                
+                    .map(\.content)
+
             case let .timeTableResponse(.success(timeTables)):
                 state.isLoading = false
                 state.inputedTimeTables = timeTables
                     .sorted { $0.perio < $1.perio }
-                    .map { $0.content }
+                    .map(\.content)
 
             case .timeTableResponse(.failure(_)):
                 state.isLoading = false
@@ -84,8 +85,8 @@ public struct ModifyTimeTableCore: Reducer {
                 if (modifiedTimeTables ?? []).isEmpty {
                     state.isLoading = true
                     return .run { send in
-                        let task = Action.timeTableResponse(
-                            await TaskResult {
+                        let task = await Action.timeTableResponse(
+                            TaskResult {
                                 let weekday = WeekdayType.allCases[tab].rawValue
                                 return try await timeTableClient.fetchTimeTable(
                                     Date.getDateForDayOfWeek(dayOfWeek: weekday) ?? .init()
@@ -98,7 +99,7 @@ public struct ModifyTimeTableCore: Reducer {
                 }
                 state.inputedTimeTables = (modifiedTimeTables ?? [])
                     .sorted { $0.perio < $1.perio }
-                    .map { $0.content }
+                    .map(\.content)
 
             case let .timeTableInputed(index, content):
                 guard state.inputedTimeTables[safe: index] != nil else { return .none }

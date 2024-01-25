@@ -1,16 +1,16 @@
 import ComposableArchitecture
 import DateUtil
-import SwiftUI
 import DesignSystem
-import SwiftUIUtil
 import FoundationUtil
+import SwiftUI
+import SwiftUIUtil
 
 public struct ModifyTimeTableView: View {
     @Environment(\.dismiss) var dismiss
     let store: StoreOf<ModifyTimeTableCore>
     @ObservedObject var viewStore: ViewStoreOf<ModifyTimeTableCore>
     @FocusState var focusIndex: Int?
-    
+
     public init(store: StoreOf<ModifyTimeTableCore>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })

@@ -1,6 +1,6 @@
-import Foundation
 import Entity
 import EnumUtil
+import Foundation
 
 public struct SingleMealResponseDTO: Decodable {
     public let info: String

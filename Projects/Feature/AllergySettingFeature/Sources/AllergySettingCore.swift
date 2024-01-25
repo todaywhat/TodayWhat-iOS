@@ -53,7 +53,7 @@ public struct AllergySettingCore: Reducer {
                 return .run { _ in
                     await dismiss()
                 }
-            } catch { }
+            } catch {}
 
         default:
             return .none

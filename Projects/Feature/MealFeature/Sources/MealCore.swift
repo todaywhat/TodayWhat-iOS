@@ -1,10 +1,10 @@
 import ComposableArchitecture
 import Entity
-import MealClient
-import LocalDatabaseClient
-import UserDefaultsClient
-import Foundation
 import EnumUtil
+import Foundation
+import LocalDatabaseClient
+import MealClient
+import UserDefaultsClient
 
 public struct MealCore: Reducer {
     public init() {}
@@ -35,7 +35,7 @@ public struct MealCore: Reducer {
                 do {
                     state.allergyList = try localDatabaseClient.readRecords(as: AllergyLocalEntity.self)
                         .compactMap { AllergyType(rawValue: $0.allergy) ?? nil }
-                } catch { }
+                } catch {}
                 state.isLoading = true
 
                 var todayDate = Date()
@@ -49,8 +49,8 @@ public struct MealCore: Reducer {
                 }
 
                 return .run { [todayDate] send in
-                    let task = Action.mealResponse(
-                        await TaskResult {
+                    let task = await Action.mealResponse(
+                        TaskResult {
                             try await mealClient.fetchMeal(todayDate)
                         }
                     )
@@ -71,8 +71,8 @@ public struct MealCore: Reducer {
                 }
 
                 return .run { [todayDate] send in
-                    let task = Action.mealResponse(
-                        await TaskResult {
+                    let task = await Action.mealResponse(
+                        TaskResult {
                             try await mealClient.fetchMeal(todayDate)
                         }
                     )

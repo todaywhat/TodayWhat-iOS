@@ -1,10 +1,10 @@
 import AllergySettingFeature
 import ComposableArchitecture
-import SwiftUI
 import DesignSystem
-import SchoolSettingFeature
-import SwiftUIUtil
 import ModifyTimeTableFeature
+import SchoolSettingFeature
+import SwiftUI
+import SwiftUIUtil
 
 public struct SettingsView: View {
     let store: StoreOf<SettingsCore>

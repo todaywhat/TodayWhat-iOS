@@ -1,6 +1,6 @@
-import WatchConnectivity
 import Dependencies
 import UserDefaultsClient
+import WatchConnectivity
 
 final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
@@ -23,7 +23,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
             else {
                 return
             }
-            
+
             let dict: [UserDefaultsKeys: Any] = [
                 .grade: grade,
                 .class: `class`,
@@ -39,9 +39,9 @@ final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
             }
         }
     }
-    
+
     static let shared = WatchSessionManager()
-    private override init() {
+    override private init() {
         session = .default
         super.init()
         if WCSession.isSupported() {
@@ -52,12 +52,12 @@ final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
 
     private let session: WCSession
 
-#if os(iOS)
+    #if os(iOS)
     func sessionDidBecomeInactive(_ session: WCSession) {}
     func sessionDidDeactivate(_ session: WCSession) {
         session.activate()
     }
-#endif
+    #endif
     func session(
         _ session: WCSession,
         didReceiveMessage message: [String: Any],

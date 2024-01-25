@@ -24,7 +24,7 @@ public struct SchoolMajorSheetCore: Reducer {
             switch action {
             case let .majorRowDidSelect(major):
                 state.selectedMajor = major
-            
+
             default:
                 return .none
             }

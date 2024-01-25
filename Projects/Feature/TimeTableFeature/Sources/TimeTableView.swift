@@ -1,12 +1,12 @@
 import ComposableArchitecture
+import DesignSystem
 import Entity
 import SwiftUI
-import DesignSystem
 
 public struct TimeTableView: View {
     let store: StoreOf<TimeTableCore>
     @ObservedObject var viewStore: ViewStoreOf<TimeTableCore>
-    
+
     public init(store: StoreOf<TimeTableCore>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })

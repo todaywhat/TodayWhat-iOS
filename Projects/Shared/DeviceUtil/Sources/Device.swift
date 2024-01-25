@@ -8,7 +8,7 @@ import Foundation
 
 // swiftlint: disable identifier_name type_body_length file_length cyclomatic_complexity function_body_length
 public enum Device {
-#if os(iOS)
+    #if os(iOS)
     case iPodTouch5
     case iPodTouch6
     case iPodTouch7
@@ -84,7 +84,7 @@ public enum Device {
     case iPadPro11Inch4
     case iPadPro12Inch6
     case homePod
-#elseif os(watchOS)
+    #elseif os(watchOS)
     case appleWatchSeries0_38mm
     case appleWatchSeries0_42mm
     case appleWatchSeries1_38mm
@@ -111,7 +111,7 @@ public enum Device {
     case appleWatchSeries9_41mm
     case appleWatchSeries9_45mm
     case appleWatchUltra2
-#endif
+    #endif
     indirect case simulator(Device)
     case unknown(String)
 
@@ -132,7 +132,7 @@ public enum Device {
     }()
 
     public static func mapToDevice(identifier: String) -> Device {
-#if os(iOS)
+        #if os(iOS)
         switch identifier {
         case "iPod5,1": return .iPodTouch5
         case "iPod7,1": return .iPodTouch6
@@ -209,10 +209,12 @@ public enum Device {
         case "iPad14,3", "iPad14,4": return .iPadPro11Inch4
         case "iPad14,5", "iPad14,6": return .iPadPro12Inch6
         case "AudioAccessory1,1": return .homePod
-        case "i386", "x86_64", "arm64": return .simulator(mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "iOS"))
+        case "i386", "x86_64",
+             "arm64": return .simulator(mapToDevice(identifier: ProcessInfo()
+                    .environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "iOS"))
         default: return .unknown(identifier)
         }
-#elseif os(watchOS)
+        #elseif os(watchOS)
         switch identifier {
         case "Watch1,1": return .appleWatchSeries0_38mm
         case "Watch1,2": return .appleWatchSeries0_42mm
@@ -240,10 +242,12 @@ public enum Device {
         case "Watch7,3": return .appleWatchSeries9_41mm
         case "Watch7,4": return .appleWatchSeries9_45mm
         case "Watch7,5": return .appleWatchUltra2
-        case "i386", "x86_64", "arm64": return .simulator(mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "watchOS"))
+        case "i386", "x86_64",
+             "arm64": return .simulator(mapToDevice(identifier: ProcessInfo()
+                    .environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "watchOS"))
         default: return .unknown(identifier)
         }
-#endif
+        #endif
     }
 
     public static func realDevice(from device: Device) -> Device {
@@ -275,60 +279,60 @@ public enum Device {
 
     public var name: String? {
         guard isCurrent else { return nil }
-#if os(watchOS)
+        #if os(watchOS)
         return WKInterfaceDevice.current().name
-#else
+        #else
         return UIDevice.current.name
-#endif
+        #endif
     }
 
     public var systemName: String? {
         guard isCurrent else { return nil }
-#if os(watchOS)
+        #if os(watchOS)
         return WKInterfaceDevice.current().systemName
-#elseif os(iOS)
+        #elseif os(iOS)
         if isPad, #available(iOS 13, *), UIDevice.current.systemName == "iOS" {
             return "iPadOS"
         } else {
             return UIDevice.current.systemName
         }
-#else
+        #else
         return UIDevice.current.systemName
-#endif
+        #endif
     }
 
     public var systemVersion: String? {
         guard isCurrent else { return nil }
-#if os(watchOS)
+        #if os(watchOS)
         return WKInterfaceDevice.current().systemVersion
-#else
+        #else
         return UIDevice.current.systemVersion
-#endif
+        #endif
     }
 
     public var model: String? {
         guard isCurrent else { return nil }
-#if os(watchOS)
+        #if os(watchOS)
         return WKInterfaceDevice.current().model
-#else
+        #else
         return UIDevice.current.model
-#endif
+        #endif
     }
 
     public var localizedModel: String? {
         guard isCurrent else { return nil }
-#if os(watchOS)
+        #if os(watchOS)
         return WKInterfaceDevice.current().localizedModel
-#else
+        #else
         return UIDevice.current.localizedModel
-#endif
+        #endif
     }
 }
 
 // MARK: CustomStringConvertible
 extension Device: CustomStringConvertible {
     public var description: String {
-#if os(iOS)
+        #if os(iOS)
         switch self {
         case .iPodTouch5: return "iPod touch (5th generation)"
         case .iPodTouch6: return "iPod touch (6th generation)"
@@ -405,10 +409,10 @@ extension Device: CustomStringConvertible {
         case .iPadPro11Inch4: return "iPad Pro (11-inch) (4th generation)"
         case .iPadPro12Inch6: return "iPad Pro (12.9-inch) (6th generation)"
         case .homePod: return "HomePod"
-        case .simulator(let model): return "Simulator (\(model.description))"
-        case .unknown(let identifier): return identifier
+        case let .simulator(model): return "Simulator (\(model.description))"
+        case let .unknown(identifier): return identifier
         }
-#elseif os(watchOS)
+        #elseif os(watchOS)
         switch self {
         case .appleWatchSeries0_38mm: return "Apple Watch (1st generation) 38mm"
         case .appleWatchSeries0_42mm: return "Apple Watch (1st generation) 42mm"
@@ -436,10 +440,10 @@ extension Device: CustomStringConvertible {
         case .appleWatchSeries9_41mm: return "Apple Watch Series 9 41mm"
         case .appleWatchSeries9_45mm: return "Apple Watch Series 9 45mm"
         case .appleWatchUltra2: return "Apple Watch Ultra2"
-        case .simulator(let model): return "Simulator (\(model.description))"
-        case .unknown(let identifier): return identifier
+        case let .simulator(model): return "Simulator (\(model.description))"
+        case let .unknown(identifier): return identifier
         }
-#endif
+        #endif
     }
 }
 

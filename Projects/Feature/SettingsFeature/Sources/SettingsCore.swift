@@ -48,6 +48,7 @@ public struct SettingsCore: Reducer {
             case githubIssueButtonDidTap
             case mailIssueButtonDidTap
         }
+
         public enum ConfirmationDialog: Equatable, Sendable {
             case githubIssueButtonDidTap
             case mailIssueButtonDidTap
@@ -122,12 +123,12 @@ public struct SettingsCore: Reducer {
                 }
 
             case .alert(.presented(.githubIssueButtonDidTap)),
-                    .confirmationDialog(.presented(.githubIssueButtonDidTap)):
+                 .confirmationDialog(.presented(.githubIssueButtonDidTap)):
                 guard let url = URL(string: "https://github.com/baekteun/TodayWhat-new/issues") else { break }
                 UIApplication.shared.open(url)
 
             case .alert(.presented(.mailIssueButtonDidTap)),
-                    .confirmationDialog(.presented(.mailIssueButtonDidTap)):
+                 .confirmationDialog(.presented(.mailIssueButtonDidTap)):
                 guard let url = URL(string: "mailto:baegteun@gmail.com") else { break }
                 UIApplication.shared.open(url)
 

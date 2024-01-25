@@ -5,6 +5,7 @@ public struct TWButtonStyle: ButtonStyle {
         case cta
         case wide
     }
+
     private var style: Style
 
     init(style: Style) {

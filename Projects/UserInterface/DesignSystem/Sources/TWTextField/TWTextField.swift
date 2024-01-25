@@ -55,10 +55,9 @@ public struct TWTextField: View {
             }
             .animation(.default, value: isFocused)
 
-            
             HStack {
                 Spacer()
-                
+
                 Button {
                     withAnimation {
                         text = ""

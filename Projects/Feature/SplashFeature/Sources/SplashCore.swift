@@ -4,7 +4,6 @@ import UserDefaultsClient
 public struct SplashCore: Reducer {
     public init() {}
     public struct State: Equatable {
-        
         public init() {}
     }
 
@@ -39,7 +38,7 @@ public struct SplashCore: Reducer {
                 return .run { send in
                     await send(.userInfoIsExist, animation: .default)
                 }
-            
+
             default:
                 return .none
             }
