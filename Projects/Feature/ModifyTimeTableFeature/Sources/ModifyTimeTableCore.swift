@@ -6,8 +6,8 @@ import EnumUtil
 import Foundation
 import FoundationUtil
 import LocalDatabaseClient
-import TWLog
 import TimeTableClient
+import TWLog
 
 public struct ModifyTimeTableCore: Reducer {
     public init() {}
