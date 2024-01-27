@@ -452,4 +452,5 @@ extension Device: Equatable {
         return lhs.description == rhs.description
     }
 }
+
 // swiftlint: enable identifier_name type_body_length file_length cyclomatic_complexity function_body_length

@@ -5,8 +5,8 @@ import MealFeature
 import NoticeClient
 import NoticeFeature
 import SettingsFeature
-import TWLog
 import TimeTableFeature
+import TWLog
 import UIKit
 import UserDefaultsClient
 
