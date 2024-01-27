@@ -25,6 +25,7 @@ public struct SchoolSettingCore: Reducer {
         public var isError = false
         public var errorMessage = ""
         public var isLoading = false
+        public var completedStep = Set<SchoolSettingStep>()
 
         public var titleMessage: String {
             if selectedSchool == nil {
@@ -109,6 +110,7 @@ public struct SchoolSettingCore: Reducer {
                 state.major = userDefaultsClient.getValue(.major) as? String ?? ""
                 let majorList = try? localDatabaseClient.readRecords(as: SchoolMajorLocalEntity.self)
                 state.schoolMajorList = majorList?.map(\.major) ?? []
+                state.completedStep = [.school, .grade, .class, .major]
 
             case let .schoolChanged(school):
                 state.school = school
@@ -127,9 +129,11 @@ public struct SchoolSettingCore: Reducer {
                 state.isFocusedSchool = focused
 
             case let .gradeChanged(grade):
+                self.logCompletedStep(state: &state, step: .grade)
                 state.grade = "\(grade)"
 
             case let .classChanged(`class`):
+                self.logCompletedStep(state: &state, step: .class)
                 state.class = "\(`class`)"
 
             case let .schoolListResponse(.success(list)):
@@ -153,6 +157,7 @@ public struct SchoolSettingCore: Reducer {
                 state.errorMessage = error.localizedDescription
 
             case let .schoolRowDidSelect(school):
+                self.logCompletedStep(state: &state, step: .school)
                 state.selectedSchool = school
                 state.school = school.name
                 state.isFocusedSchool = false
@@ -189,6 +194,7 @@ public struct SchoolSettingCore: Reducer {
                 state.isPresentedMajorSheet = true
 
             case let .schoolMajorSheetCore(.majorRowDidSelect(major)):
+                self.logCompletedStep(state: &state, step: .major)
                 state.major = String(major)
                 state.schoolMajorSheetCore = nil
                 state.isPresentedMajorSheet = false
@@ -205,5 +211,12 @@ public struct SchoolSettingCore: Reducer {
         .ifLet(\.schoolMajorSheetCore, action: /Action.schoolMajorSheetCore) {
             SchoolMajorSheetCore()
         }
+    }
+
+    func logCompletedStep(state: inout Self.State, step: SchoolSettingStep) {
+        guard !state.completedStep.contains(step) else { return }
+        let log = SchoolSettingStepCompleteEventLog(step: step)
+        TWLog.event(log)
+        state.completedStep.insert(step)
     }
 }
