@@ -84,7 +84,7 @@ public struct MealView: View {
                 .padding(.vertical, 16)
                 .frame(maxWidth: .infinity)
                 .background {
-                    RoundedRectangle(cornerRadius: 4)
+                    RoundedRectangle(cornerRadius: 8)
                         .fill(Color.cardBackground)
                 }
                 .padding(.horizontal, 16)

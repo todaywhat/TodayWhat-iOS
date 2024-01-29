@@ -96,7 +96,7 @@ public struct NoticeView: View {
         .padding(16)
         .background {
             Color.cardBackgroundSecondary
-                .cornerRadius(8)
+                .cornerRadius(16)
         }
     }
 
