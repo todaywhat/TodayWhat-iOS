@@ -67,12 +67,10 @@ public struct SettingsView: View {
 
             VStack(alignment: .leading, spacing: 8) {
                 Text("\(viewStore.grade)학년 \(viewStore.class)반")
-                    .font(.system(size: 14, weight: .regular))
-                    .foregroundColor(.textSecondary)
+                    .twFont(.caption1, color: .textSecondary)
 
                 Text("\(viewStore.schoolName)")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.textPrimary)
+                    .twFont(.body3, color: .textPrimary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -222,8 +220,7 @@ public struct SettingsView: View {
     @ViewBuilder
     func growText(text: String) -> some View {
         Text(text)
-            .font(.system(size: 14))
-            .foregroundColor(.textPrimary)
+            .twFont(.body3, color: .extraBlack)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 

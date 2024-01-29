@@ -51,7 +51,7 @@ struct AllergyView: View {
 
             Text(allergy.rawValue)
                 .padding(.bottom, 16)
-                .font(.system(size: 14, weight: .medium))
+                .twFont(.body3)
         }
         .foregroundColor(allergyForeground)
         .background {

@@ -72,18 +72,14 @@ private struct SmallMealWidgetView: View {
         VStack(alignment: .leading, spacing: 0) {
             Text("[\(entry.mealPartTime.display)]")
                 .frame(maxHeight: .infinity)
-                .font(.system(size: 12).bold())
-                .foregroundColor(.textSecondary)
+                .twFont(.caption1, color: .textSecondary)
 
             ForEach(entry.meal.meals(mealPartTime: entry.mealPartTime).meals, id: \.hashValue) { meal in
                 HStack {
                     Text(mealDisplay(meal: meal))
                         .frame(maxHeight: .infinity)
-                        .font(.system(size: 12))
-                        .foregroundColor(.textPrimary)
-                        .if(isMealContainsAllergy(meal: meal)) {
-                            $0.foregroundColor(.red)
-                        }
+                        .twFont(.caption1)
+                        .foregroundColor(isMealContainsAllergy(meal: meal) ? .red : .textPrimary)
 
                     Spacer()
                 }
@@ -118,14 +114,12 @@ private struct MediumMealWidgetView: View {
                         .foregroundColor(.extraBlack)
 
                     Text("[\(entry.mealPartTime.display)]")
-                        .font(.system(size: 12))
-                        .foregroundColor(.extraBlack)
+                        .twFont(.caption1, color: .extraBlack)
 
                     Spacer()
 
                     Text("\(String(format: "%.1f", calorie)) kcal")
-                        .font(.system(size: 12))
-                        .foregroundColor(Color.textSecondary)
+                        .twFont(.caption1, color: .textSecondary)
                 }
                 .padding(.horizontal, 4)
 
@@ -134,11 +128,8 @@ private struct MediumMealWidgetView: View {
                         HStack(spacing: 0) {
                             Text(mealDisplay(meal: meal))
                                 .frame(maxHeight: .infinity)
-                                .font(.system(size: 12))
-                                .foregroundColor(.extraBlack)
-                                .if(isMealContainsAllergy(meal: meal)) {
-                                    $0.foregroundColor(.red)
-                                }
+                                .twFont(.caption1)
+                                .foregroundColor(isMealContainsAllergy(meal: meal) ? .red : .extraBlack)
 
                             Spacer()
                         }
@@ -182,14 +173,12 @@ private struct LargeMealWidgetView: View {
                         .foregroundColor(.extraBlack)
 
                     Text("[\(entry.mealPartTime.display)]")
-                        .font(.system(size: 12))
-                        .foregroundColor(.extraBlack)
+                        .twFont(.caption1, color: .extraBlack)
 
                     Spacer()
 
                     Text("\(String(format: "%.1f", calorie)) Kcal")
-                        .font(.system(size: 12))
-                        .foregroundColor(Color.textSecondary)
+                        .twFont(.caption1, color: .textSecondary)
                 }
 
                 GeometryReader { proxy in
@@ -210,12 +199,9 @@ private struct LargeMealWidgetView: View {
                     HStack {
                         let isAllergy = isMealContainsAllergy(meal: meal)
                         Text(mealDisplay(meal: meal))
-                            .font(.system(size: 16, weight: isAllergy ? .bold : .regular))
+                            .twFont(.body1)
                             .frame(maxHeight: .infinity)
-                            .foregroundColor(.extraBlack)
-                            .if(isAllergy) {
-                                $0.foregroundColor(.red)
-                            }
+                            .foregroundColor(isAllergy ? .red : .extraBlack)
 
                         Spacer()
                     }

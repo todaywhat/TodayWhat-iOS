@@ -70,8 +70,7 @@ public struct MealView: View {
             ForEach(subMeal.meals, id: \.hashValue) { meal in
                 HStack {
                     Text(mealDisplay(meal: meal))
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.textPrimary)
+                        .twFont(.headline4, color: .textPrimary)
 
                     Spacer()
 

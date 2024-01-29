@@ -76,21 +76,18 @@ public struct NoticeView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text(notice.title)
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.textPrimary)
+                    .twFont(.body2, color: .textPrimary)
                     .multilineTextAlignment(.leading)
 
                 Spacer()
 
                 Text(notice.createdAt.toStringCustomFormat(format: "yyyy년 MM월 dd일"))
-                    .font(.system(size: 12))
-                    .foregroundColor(.textPrimary)
+                    .twFont(.body2, color: .textPrimary)
             }
 
             Text(notice.content)
                 .lineLimit(2)
-                .font(.system(size: 16))
-                .foregroundColor(.textSecondary)
+                .twFont(.body3, color: .textPrimary)
                 .multilineTextAlignment(.leading)
         }
         .padding(16)
@@ -105,22 +102,19 @@ public struct NoticeView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text(notice.title)
+                    .twFont(.body2, color: .textPrimary)
                     .lineLimit(nil)
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.textPrimary)
 
                 Spacer()
 
                 Text(notice.createdAt.toStringCustomFormat(format: "yyyy년 MM월 dd일"))
-                    .font(.system(size: 12))
-                    .foregroundColor(.textSecondary)
+                    .twFont(.body2, color: .textPrimary)
             }
 
             ScrollView {
                 Text(notice.content.replacingOccurrences(of: "\\n", with: "\n"))
                     .lineLimit(nil)
-                    .font(.system(size: 16))
-                    .foregroundColor(.textPrimary)
+                    .twFont(.body3, color: .textPrimary)
             }
         }
         .padding(16)

@@ -23,7 +23,7 @@ public struct TopTabbarView: View {
                 } label: {
                     VStack {
                         Text(items[index])
-                            .font(.system(size: 16, weight: .bold))
+                            .twFont(.headline4)
                             .foregroundColor(currentTab == index ? .extraBlack : .unselectedPrimary)
 
                         if currentTab == index {

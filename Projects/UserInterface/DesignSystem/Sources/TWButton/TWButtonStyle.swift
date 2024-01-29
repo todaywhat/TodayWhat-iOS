@@ -46,8 +46,7 @@ private extension TWButtonStyle {
 
         var body: some View {
             configuration.label
-                .font(.system(size: 14))
-                .foregroundColor(foreground)
+                .twFont(.headline4, color: foreground)
                 .background(background)
                 .cornerRadius(8)
         }
@@ -76,8 +75,7 @@ private extension TWButtonStyle {
 
         var body: some View {
             configuration.label
-                .font(.system(size: 14))
-                .foregroundColor(foreground)
+                .twFont(.headline4, color: foreground)
                 .background(background)
         }
     }

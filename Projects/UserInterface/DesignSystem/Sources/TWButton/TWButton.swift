@@ -21,7 +21,7 @@ public struct TWButton: View {
                 Spacer()
 
                 Text(title)
-                    .font(.system(size: 16, weight: .medium))
+                    .twFont(.headline4, color: .extraWhite)
                     .padding(.vertical, 18)
 
                 Spacer()

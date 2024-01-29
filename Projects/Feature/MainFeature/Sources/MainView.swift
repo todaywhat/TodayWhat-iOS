@@ -118,14 +118,12 @@ public struct MainView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(viewStore.school)
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.extraBlack)
+                        .twFont(.headline4, color: .extraBlack)
 
                     let gradeClassString = "\(viewStore.grade)학년 \(viewStore.class)반"
                     let dateString = "\(viewStore.displayDate.toString())"
                     Text("\(gradeClassString) • \(dateString)")
-                        .font(.system(size: 14))
-                        .foregroundColor(.textSecondary)
+                        .twFont(.body2, color: .textSecondary)
                 }
 
                 Spacer()
