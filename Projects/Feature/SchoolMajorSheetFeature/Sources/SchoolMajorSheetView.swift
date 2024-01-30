@@ -33,8 +33,7 @@ public struct SchoolMajorSheetView: View {
     private func schoolMajorRowView(major: String) -> some View {
         HStack {
             Text(major)
-                .font(.system(size: 18, weight: .semibold))
-                .foregroundColor(.textPrimary)
+                .twFont(.headline4, color: .textPrimary)
 
             Spacer()
 

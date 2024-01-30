@@ -34,13 +34,11 @@ public struct SchoolSettingView: View {
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(viewStore.titleMessage)
-                                    .font(.system(size: 20, weight: .medium))
-                                    .foregroundColor(.extraBlack)
+                                    .twFont(.headline2, color: .extraBlack)
 
                                 if !viewStore.class.isEmpty && !viewStore.schoolMajorList.isEmpty {
                                     Text("학과는 없으면 안해도 괜찮아요!")
-                                        .font(.system(size: 16, weight: .medium))
-                                        .foregroundColor(.extraBlack)
+                                        .twFont(.body3, color: .extraBlack)
                                 }
                             }
 
@@ -202,12 +200,10 @@ public struct SchoolSettingView: View {
     func schoolRowView(school: School) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(school.name)
-                .font(.system(size: 16, weight: .bold))
-                .foregroundColor(.textPrimary)
+                .twFont(.body3, color: .textPrimary)
 
             Text(school.location)
-                .font(.system(size: 14))
-                .foregroundColor(.unselectedPrimary)
+                .twFont(.caption1, color: .unselectedPrimary)
         }
     }
 }

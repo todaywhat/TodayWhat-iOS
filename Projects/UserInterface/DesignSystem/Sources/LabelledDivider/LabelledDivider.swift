@@ -21,15 +21,13 @@ public struct LabelledDivider: View {
     public var body: some View {
         HStack {
             Text(label)
-                .font(.system(size: 14, weight: .medium))
-                .foregroundColor(color)
+                .twFont(.body2, color: color)
                 .padding(horizontalPadding)
 
             Spacer()
 
             Text(subLabel)
-                .font(.system(size: 14, weight: .medium))
-                .foregroundColor(color)
+                .twFont(.body2, color: color)
                 .padding(horizontalPadding)
         }
     }

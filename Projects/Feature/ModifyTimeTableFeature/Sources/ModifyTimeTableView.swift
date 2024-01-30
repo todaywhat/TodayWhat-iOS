@@ -30,8 +30,7 @@ public struct ModifyTimeTableView: View {
 
             HStack {
                 Text("교시 순서")
-                    .font(.system(size: 14, weight: .bold))
-                    .foregroundColor(.extraBlack)
+                    .twFont(.body2, color: .extraBlack)
 
                 Spacer()
 
@@ -40,8 +39,7 @@ public struct ModifyTimeTableView: View {
                         .progressViewStyle(.circular)
 
                     Text("시간표 가져오는 중...")
-                        .font(.system(size: 14, weight: .bold))
-                        .foregroundColor(.textSecondary)
+                        .twFont(.body3, color: .textSecondary)
                 }
             }
             .frame(height: 24)
@@ -106,8 +104,7 @@ public struct ModifyTimeTableView: View {
                     viewStore.send(.saveButtonDidTap)
                 } label: {
                     Text("저장")
-                        .font(.system(size: 14))
-                        .foregroundColor(.extraBlack)
+                        .twFont(.body2, color: .extraBlack)
                 }
             }
         }

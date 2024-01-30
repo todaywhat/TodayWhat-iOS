@@ -48,12 +48,10 @@ private struct SmallTimeTableWidgetView: View {
             ForEach(entry.timeTable, id: \.hashValue) { timeTable in
                 HStack(spacing: 4) {
                     Text("\(timeTable.perio)")
-                        .font(.system(size: 12, weight: .bold))
-                        .foregroundColor(.textSecondary)
+                        .twFont(.caption1, color: .textSecondary)
 
                     Text(timeTable.content)
-                        .font(.system(size: 12))
-                        .foregroundColor(.textPrimary)
+                        .twFont(.caption1, color: .extraBlack)
                         .lineLimit(1)
 
                     Spacer()
@@ -78,14 +76,12 @@ private struct MediumTimeTableWidgetView: View {
                         .foregroundColor(.extraBlack)
 
                     Text("[시간표]")
-                        .font(.system(size: 12))
-                        .foregroundColor(.extraBlack)
+                        .twFont(.caption1, color: .textPrimary)
 
                     Spacer()
 
                     Text("\(entry.date.month)월 \(entry.date.day)일 \(entry.date.weekdayString)")
-                        .font(.system(size: 12))
-                        .foregroundColor(Color.textSecondary)
+                        .twFont(.caption1, color: .textSecondary)
                 }
                 .padding(.horizontal, 4)
 
@@ -93,12 +89,10 @@ private struct MediumTimeTableWidgetView: View {
                     ForEach(entry.timeTable, id: \.hashValue) { timetable in
                         HStack(spacing: 2) {
                             Text("\(timetable.perio)")
-                                .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(.textSecondary)
+                                .twFont(.caption1, color: .textSecondary)
 
                             Text(timetable.content)
-                                .font(.system(size: 12))
-                                .foregroundColor(.textPrimary)
+                                .twFont(.caption1, color: .extraBlack)
 
                             Spacer()
                         }
@@ -130,14 +124,12 @@ private struct LargeTimeTableWidgetView: View {
                     .foregroundColor(.extraBlack)
 
                 Text("[시간표]")
-                    .font(.system(size: 12))
-                    .foregroundColor(.extraBlack)
+                    .twFont(.caption1, color: .textPrimary)
 
                 Spacer()
 
                 Text("\(entry.date.month)월 \(entry.date.day)일 \(entry.date.weekdayString)")
-                    .font(.system(size: 12))
-                    .foregroundColor(Color.textSecondary)
+                    .twFont(.caption1, color: .textSecondary)
             }
             .padding(.horizontal, 4)
 
@@ -145,12 +137,10 @@ private struct LargeTimeTableWidgetView: View {
                 ForEach(entry.timeTable, id: \.hashValue) { timetable in
                     HStack(spacing: 4) {
                         Text("\(timetable.perio)")
-                            .font(.system(size: 14, weight: .bold))
-                            .foregroundColor(.textSecondary)
+                            .twFont(.body1, color: .textSecondary)
 
                         Text(timetable.content)
-                            .font(.system(size: 16))
-                            .foregroundColor(.textPrimary)
+                            .twFont(.body1, color: .extraBlack)
 
                         Spacer()
                     }

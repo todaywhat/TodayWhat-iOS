@@ -58,16 +58,14 @@ public struct TimeTableView: View {
     private func timeTableRow(timeTable: TimeTable) -> some View {
         HStack(spacing: 8) {
             Text("\(timeTable.perio)교시")
-                .font(.system(size: 12))
-                .foregroundColor(.textPrimary)
+                .twFont(.caption1, color: .textPrimary)
 
             Divider()
                 .foregroundColor(.unselectedSecondary)
                 .frame(height: 18)
 
             Text(timeTable.content)
-                .font(.system(size: 16, weight: .bold))
-                .foregroundColor(.textPrimary)
+                .twFont(.headline4, color: .textPrimary)
                 .padding(.leading, 4)
 
             Spacer()

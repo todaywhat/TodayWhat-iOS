@@ -19,8 +19,7 @@ public struct TWTextField: View {
     public var body: some View {
         ZStack(alignment: .leading) {
             TextField("", text: $text)
-                .font(.system(size: 16))
-                .foregroundColor(.extraBlack)
+                .twFont(.body1, color: .textPrimary)
                 .padding()
                 .background {
                     RoundedRectangle(cornerRadius: 8)
@@ -37,15 +36,13 @@ public struct TWTextField: View {
             Group {
                 if isFocused || !text.isEmpty {
                     Text(placeholder)
-                        .font(.system(size: 12))
-                        .foregroundColor(.unselectedPrimary)
+                        .twFont(.body2, color: .textPrimary)
                         .offset(y: -35)
                         .transition(.offset(y: 20))
                         .zIndex(0)
                 } else {
                     Text(placeholder)
-                        .font(.system(size: 16))
-                        .foregroundColor(.unselectedPrimary)
+                        .twFont(.body1, color: .unselectedPrimary)
                         .padding()
                         .onTapGesture {
                             isFocused = true

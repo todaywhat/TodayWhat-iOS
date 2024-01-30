@@ -53,8 +53,7 @@ public struct TWToast: ViewModifier {
         VStack {
             if isShowing {
                 Text(text)
-                    .font(.system(size: 14))
-                    .foregroundColor(.absoluteBlack)
+                    .twFont(.headline4, color: .absoluteBlack)
                     .padding(.vertical, 15.5)
                     .padding(.horizontal, 16)
                     .background {
