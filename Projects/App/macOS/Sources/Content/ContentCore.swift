@@ -9,7 +9,7 @@ import MealClient
 import TimeTableClient
 import UserDefaultsClient
 
-struct ContentCore: ReducerProtocol {
+struct ContentCore: Reducer {
     struct State: Equatable {
         var selectedInfoType: DisplayInfoType = .breakfast
         var meal: Meal?
@@ -40,7 +40,7 @@ struct ContentCore: ReducerProtocol {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
     @Dependency(\.localDatabaseClient) var localDatabaseClient
 
-    var body: some ReducerProtocolOf<ContentCore> {
+    var body: some ReducerOf<ContentCore> {
         Reduce { state, action in
             switch action {
             case .popoverOpen:
