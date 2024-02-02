@@ -26,7 +26,7 @@ public struct MainView: View {
                 TopTabbarView(
                     currentTab: viewStore.binding(
                         get: \.currentTab,
-                        send: MainCore.Action.tabChanged
+                        send: MainCore.Action.tabTapped
                     ),
                     items: ["급식", "시간표"]
                 )
@@ -36,7 +36,7 @@ public struct MainView: View {
                     TabView(
                         selection: viewStore.binding(
                             get: \.currentTab,
-                            send: MainCore.Action.tabChanged
+                            send: MainCore.Action.tabSwiped
                         ).animation(.default)
                     ) {
                         VStack {
