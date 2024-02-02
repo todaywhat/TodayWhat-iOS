@@ -1,6 +1,6 @@
 
---exclude fastlane,Dependencies,Carthage
---swiftversion 5.8
+--exclude fastlane,Dependencies,Carthage,Tuist,Plugin
+--swiftversion 5.9
 
 # options
 --maxwidth 120
