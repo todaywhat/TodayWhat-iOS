@@ -30,9 +30,11 @@ jobs:
           message: |
             ## ✅ PR의 Assign 자동 지정을 성공했어요!
             @${{ steps.get-pr-author.outputs.author }}
+          allow-repeats: true
 
       - name: Comment failure result to PR
         uses: mshick/add-pr-comment@v2
         if: ${{ failure() }}
         with:
           message: "## ❌ PR의 Assign 자동 지정을 실패했어요."
+          allow-repeats: true
