@@ -77,19 +77,34 @@ public struct SettingsCore: Reducer {
                 state.isSkipWeekend = isSkipWeekend
                 userDefaultsClient.setValue(.isSkipWeekend, isSkipWeekend)
 
+                let log = IsSkipWeekendToggledEventLog(isSkipWeekend: isSkipWeekend)
+                TWLog.event(log)
+
             case let .isSkipAfterDinnerChanged(isSkipAfterDinner):
                 state.isSkipAfterDinner = isSkipAfterDinner
                 userDefaultsClient.setValue(.isSkipAfterDinner, isSkipAfterDinner)
+
+                let log = IsSkipAfterDinnerToggledEventLog(isSkipAfterDinner: isSkipAfterDinner)
+                TWLog.event(log)
 
             case let .isOnModifiedTimeTableChagned(isOnModifiedTimeTable):
                 state.isOnModifiedTimeTable = isOnModifiedTimeTable
                 userDefaultsClient.setValue(.isOnModifiedTimeTable, isOnModifiedTimeTable)
 
+                let log = IsOnModifiedTimeTableToggledEventLog(isOnModifiedTimeTable: isOnModifiedTimeTable)
+                TWLog.event(log)
+
             case .schoolBlockButtonDidTap:
                 state.schoolSettingCore = .init()
 
+                let log = SchoolSettingButtonClickedEventLog()
+                TWLog.event(log)
+
             case .modifyTimeTableButtonDidTap:
                 state.modifyTimeTableCore = .init()
+
+                let log = ModifyTimeTableButtonClickedEventLog()
+                TWLog.event(log)
 
             case .modifyTimeTableCore(.dismiss):
                 state.modifyTimeTableCore = nil
@@ -99,6 +114,9 @@ public struct SettingsCore: Reducer {
 
             case .allergyBlockButtonDidTap:
                 state.allergySettingCore = .init()
+                
+                let log = AllergySettingButtonClickedEventLog()
+                TWLog.event(log)
 
             case .allergySettingCore(.dismiss):
                 state.allergySettingCore = nil
@@ -122,15 +140,24 @@ public struct SettingsCore: Reducer {
                     }
                 }
 
+                let log = InquireButtonClickedEventLog()
+                TWLog.event(log)
+
             case .alert(.presented(.githubIssueButtonDidTap)),
                  .confirmationDialog(.presented(.githubIssueButtonDidTap)):
                 guard let url = URL(string: "https://github.com/baekteun/TodayWhat-new/issues") else { break }
                 UIApplication.shared.open(url)
 
+                let log = InquireTypeSelectedEventLog(inquireType: .github)
+                TWLog.event(log)
+
             case .alert(.presented(.mailIssueButtonDidTap)),
                  .confirmationDialog(.presented(.mailIssueButtonDidTap)):
                 guard let url = URL(string: "mailto:baegteun@gmail.com") else { break }
                 UIApplication.shared.open(url)
+
+                let log = InquireTypeSelectedEventLog(inquireType: .mail)
+                TWLog.event(log)
 
             case .alert(.dismiss):
                 state.alert = nil
