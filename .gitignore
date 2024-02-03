@@ -176,6 +176,8 @@ Pods/
 *.xcodeproj
 *.xcconfig
 !Shared.xcconfig
+.env.default
+AppStoreAPIKey.json
 
 # Carthage
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
