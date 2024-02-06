@@ -100,5 +100,6 @@ jobs:
         run: sh .github/workflows/AppStore/ReleasePR.sh
         shell: bash
         env:
+          PLATFORM: ${{ github.event.inputs.platform }}
           VERSION: ${{ github.event.inputs.version }}
           GH_TOKEN: ${{ github.token }}
