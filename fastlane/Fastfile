@@ -17,11 +17,25 @@ default_platform(:ios)
 
 platform :ios do
   desc "테스트플라이트에 최신코드의 오늘뭐임 iOS앱을 올려요"
-  lane :testflight_release do
+  lane :testflight_release do |options|
+    version = options[:version]
+
+    info_plist_path = "./Projects/App/iOS/Support/Info.plist"
+    set_info_plist_value(path: info_plist_path, key: "CFBundleShortVersionString", value: version)
+
     build_app(
-      scheme: "TodayWhat-STAGE"
+      scheme: "TodayWhat",
+      configuration: "STAGE"
     )
-    upload_to_testflight
+    upload_to_testflight(
+      api_key_path: "fastlane/AppStoreAPIKey.json"
+    )
+    discord_notifier(
+      webhook_url: ENV["WEBHOOK_URL"],
+      title: "🚀 오늘뭐임 iOS TestFlight 업로드 자동화 성공",
+      thumbnail_url: "https://github.com/baekteun/TodayWhat-new/assets/74440939/842b2d8e-0219-42b3-95c7-5ec60a85f863",
+      description: "오늘뭐임 iOS #{version}을 테스트플라이트 성공적으로 업로드하였습니다 !"
+    )
   end
 
   desc "앱스토어에 오늘뭐임 iOS앱의 새로운 버전 심사를 올려요"
@@ -34,7 +48,8 @@ platform :ios do
     set_info_plist_value(path: info_plist_path, key: "CFBundleShortVersionString", value: version)
 
     build_app(
-      scheme: "TodayWhat-PROD",
+      scheme: "TodayWhat",
+      configuration: "PROD",
       export_method: "app-store"
     )
     upload_to_app_store(
@@ -53,7 +68,7 @@ platform :ios do
       webhook_url: ENV["WEBHOOK_URL"],
       title: "🚀 오늘뭐임 iOS 배포 자동화 성공",
       thumbnail_url: "https://github.com/baekteun/TodayWhat-new/assets/74440939/842b2d8e-0219-42b3-95c7-5ec60a85f863",
-      description: "도토리 iOS #{version}을 앱스토어에 성공적으로 배포하였습니다 !"
+      description: "오늘뭐임 iOS #{version}을 앱스토어에 성공적으로 배포하였습니다 !"
     )
     set_github_release(
       repository_name: "baegteun/TodayWhat-iOS",
@@ -78,13 +93,27 @@ platform :ios do
   end
 end
 
-platform :macos do
+platform :mac do
   desc "테스트플라이트에 최신코드의 오늘뭐임 macOS앱을 올려요"
-  lane :testflight_release do
+  lane :testflight_release do |options|
+    version = options[:version]
+
+    info_plist_path = "./Projects/App/macOS/Support/Info.plist"
+    set_info_plist_value(path: info_plist_path, key: "CFBundleShortVersionString", value: version)
+
     build_app(
-      scheme: "TodayWhat-MacOS-STAGE"
+      scheme: "TodayWhat-MacOS",
+      configuration: "STAGE"
     )
-    upload_to_testflight
+    upload_to_testflight(
+      api_key_path: "fastlane/AppStoreAPIKey.json"
+    )
+    discord_notifier(
+      webhook_url: ENV["WEBHOOK_URL"],
+      title: "🚀 오늘뭐임 macOS TestFlight 업로드 자동화 성공",
+      thumbnail_url: "https://github.com/baekteun/TodayWhat-new/assets/74440939/842b2d8e-0219-42b3-95c7-5ec60a85f863",
+      description: "오늘뭐임 macOS #{version}을 테스트플라이트 성공적으로 업로드하였습니다 !"
+    )
   end
 
   desc "앱스토어에 오늘뭐임 macOS앱의 새로운 버전 심사를 올려요"
@@ -97,7 +126,8 @@ platform :macos do
     set_info_plist_value(path: info_plist_path, key: "CFBundleShortVersionString", value: version)
 
     build_app(
-      scheme: "TodayWhat-MacOS-PROD",
+      scheme: "TodayWhat-MacOS",
+      configuration: "PROD",
       export_method: "app-store"
     )
     upload_to_app_store(
@@ -116,7 +146,7 @@ platform :macos do
       webhook_url: ENV["WEBHOOK_URL"],
       title: "🚀 오늘뭐임 macOS 배포 자동화 성공",
       thumbnail_url: "https://github.com/baekteun/TodayWhat-new/assets/74440939/842b2d8e-0219-42b3-95c7-5ec60a85f863",
-      description: "도토리 macOS #{version}을 앱스토어에 성공적으로 배포하였습니다 !"
+      description: "오늘뭐임 macOS #{version}을 앱스토어에 성공적으로 배포하였습니다 !"
     )
     set_github_release(
       repository_name: "baegteun/TodayWhat-new",
@@ -127,10 +157,6 @@ platform :macos do
       description: (File.read("metadata/ko/release_notes.txt") rescue ""),
       is_generate_release_notes: true
     )
-  end
-
-  lane :testflight_release do
-
   end
 
   error do |lane, exception, options|
