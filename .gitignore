@@ -184,6 +184,8 @@ master.key
 *.mobileprovision
 *.provisionprofile
 XCConfig.zip
+StageProvisionProfile.zip
+ProdProvisionProfile.zip
 
 # Carthage
 # Add this line if you want to avoid checking in source code from Carthage dependencies.

@@ -1,0 +1,83 @@
+name: TestFlight Beta
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        type: choice
+        description: "Platform to deploy"
+        options:
+          - ios
+          - mac
+        default: ios
+        required: true
+      version:
+        description: "Version to upload to TestFlight"
+        required: true
+
+env:
+  KEYCHAIN: ${{ 'todaywhat.keychain' }}
+  CERTS_EXPORT_PWD: ${{ secrets.CERTS_EXPORT_PWD }}
+
+  XCCONFIG_SECRET: ${{ secrets.XCCONFIG_SECRET }}
+  ENCRYPTED_XCCONFIG_PATH: ${{ 'XCConfig.zip.gpg' }}
+  DECRYPTED_XCCONFIG_PATH: ${{ 'XCConfig.zip' }}
+
+  STAGE_PROVISION_SECRET: ${{ secrets.STAGE_PROVISION_SECRET }}
+  ENCRYPTED_STAGE_PROVISION_PATH: ${{ 'Tuist/Signing/StageProvisionProfile.zip.gpg' }}
+  DECRYPTED_STAGE_PROVISION_PATH: ${{ 'Tuist/Signing/StageProvisionProfile.zip' }}
+
+  PROD_PROVISION_SECRET: ${{ secrets.PROD_PROVISION_SECRET }}
+  ENCRYPTED_PROD_PROVISION_PATH: ${{ 'Tuist/Signing/ProdProvisionProfile.zip.gpg' }}
+  DECRYPTED_PROD_PROVISION_PATH: ${{ 'Tuist/Signing/ProdProvisionProfile.zip' }}
+
+  MASTER_KEY_SECRET: ${{ secrets.MASTER_KEY_SECRET }}
+  ENCRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key.gpg' }}
+  DECRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key' }}
+
+  FASTLANE_SECRET: ${{ secrets.FASTLANE_SECRET }}
+  ENCRYPTED_FASTLANE_ENV_PATH: ${{ 'fastlane/.env.default.gpg' }}
+  DECRYPTED_FASTLANE_ENV_PATH: ${{ 'fastlane/.env.default' }}
+
+  APPSTORE_CONNECT_SECRET: ${{ secrets.APPSTORE_CONNECT_SECRET }}
+  ENCRYPTED_APPSTORE_CONNECT_PATH: ${{ 'fastlane/AppStoreAPIKey.json.gpg' }}
+  DECRYPTED_APPSTORE_CONNECT_PATH: ${{ 'fastlane/AppStoreAPIKey.json' }}
+
+jobs:
+  distribute:
+    name: 🚀 App Store Submission
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Decode encrypted files
+        run: sh .github/workflows/AppStore/Decode.sh
+        shell: bash
+
+      - uses: jdx/mise-action@v2
+
+      - name: Install tuist
+        run: |
+          tuist_version=`cat .tuist-version`
+          mise install tuist@$tuist_version
+
+      - name: Configure Keychain
+        run: sh .github/workflows/AppStore/Keychain.sh
+        shell: bash
+
+      - name: Install fastlane
+        run: brew install fastlane
+
+      - name: Install dependencies
+        run: tuist fetch
+
+      - name: Project generate
+        run: TUIST_ENV=CD tuist generate
+
+      - name: Distribute
+        run: sh .github/workflows/TestFlight/TestFlight.sh
+        shell: bash
+        env:
+          PLATFORM: ${{ github.event.inputs.platform }}
+          VERSION: ${{ github.event.inputs.version }}
