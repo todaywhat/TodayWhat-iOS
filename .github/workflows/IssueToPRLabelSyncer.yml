@@ -40,9 +40,11 @@ jobs:
         if: steps.check-issue-number.outputs.valid_format == 'true'
         with:
           message: "## ✅ 이슈와 PR의 Labels 동기화를 성공했어요!"
+          allow-repeats: true
 
       - name: Comment skip result to PR
         uses: mshick/add-pr-comment@v2
         if: steps.check-issue-number.outputs.valid_format == 'false'
         with:
           message: "## 🛠️ 이슈와 PR의 Labels 동기화를 스킵했어요."
+          allow-repeats: true

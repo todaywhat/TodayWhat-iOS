@@ -114,7 +114,7 @@ public struct SettingsCore: Reducer {
 
             case .allergyBlockButtonDidTap:
                 state.allergySettingCore = .init()
-                
+
                 let log = AllergySettingButtonClickedEventLog()
                 TWLog.event(log)
 

@@ -1,0 +1,1 @@
+In the above input field, enter a Korean school such as '부산소프트웨어마이스터고등학교', '대덕소프트웨어마이스터고등학교'. If you don't see the data, set the date to Oct 10, 2023 in the Setting app in device.
