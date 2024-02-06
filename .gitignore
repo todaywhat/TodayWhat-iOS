@@ -178,6 +178,12 @@ Pods/
 !Shared.xcconfig
 .env.default
 AppStoreAPIKey.json
+master.key
+*.cer
+*.p12
+*.mobileprovision
+*.provisionprofile
+XCConfig.zip
 
 # Carthage
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
