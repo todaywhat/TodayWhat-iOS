@@ -88,8 +88,8 @@ jobs:
 
       - name: Release Branch Create
         run: |
-          git config --global user.name 'baegteun'
-          git config --global user.email 'baegteun@gmail.com'
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git config pull.rebase false
           git checkout -b release/${{ github.event.inputs.version }}
 
