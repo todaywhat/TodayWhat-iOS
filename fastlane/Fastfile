@@ -23,6 +23,13 @@ platform :ios do
     info_plist_path = "./Projects/App/iOS/Support/Info.plist"
     set_info_plist_value(path: info_plist_path, key: "CFBundleShortVersionString", value: version)
 
+    discord_notifier(
+      webhook_url: ENV["WEBHOOK_URL"],
+      title: "💫 오늘뭐임 iOS TestFlight 업로드 자동화 시작",
+      thumbnail_url: "https://github.com/baekteun/TodayWhat-new/assets/74440939/20913d7a-59a6-46b5-b3e2-c6456a08a7e1",
+      color: "FFF500",
+      description: "오늘뭐임 iOS #{version}을 테스트플라이트 업로드를 시작해요 !"
+    )
     build_app(
       scheme: "TodayWhat",
       configuration: "STAGE"
@@ -34,7 +41,8 @@ platform :ios do
       webhook_url: ENV["WEBHOOK_URL"],
       title: "🚀 오늘뭐임 iOS TestFlight 업로드 자동화 성공",
       thumbnail_url: "https://github.com/baekteun/TodayWhat-new/assets/74440939/842b2d8e-0219-42b3-95c7-5ec60a85f863",
-      description: "오늘뭐임 iOS #{version}을 테스트플라이트 성공적으로 업로드하였습니다 !"
+      color: "69B353",
+      description: "오늘뭐임 iOS #{version}을 테스트플라이트 성공적으로 업로드하였어요 !"
     )
   end
 
@@ -46,6 +54,14 @@ platform :ios do
     build_number = get_info_plist_value(path: info_plist_path, key: "CFBundleVersion")
     set_info_plist_value(path: info_plist_path, key: "CFBundleVersion", value: "#{build_number.to_i + 1}")
     set_info_plist_value(path: info_plist_path, key: "CFBundleShortVersionString", value: version)
+
+    discord_notifier(
+      webhook_url: ENV["WEBHOOK_URL"],
+      title: "💫 오늘뭐임 iOS 배포 자동화 시작",
+      thumbnail_url: "https://github.com/baekteun/TodayWhat-new/assets/74440939/20913d7a-59a6-46b5-b3e2-c6456a08a7e1",
+      color: "FFF500",
+      description: "오늘뭐임 iOS #{version}을 앱스토어 배포를 시작해요 !"
+    )
 
     build_app(
       scheme: "TodayWhat",
@@ -68,6 +84,7 @@ platform :ios do
       webhook_url: ENV["WEBHOOK_URL"],
       title: "🚀 오늘뭐임 iOS 배포 자동화 성공",
       thumbnail_url: "https://github.com/baekteun/TodayWhat-new/assets/74440939/842b2d8e-0219-42b3-95c7-5ec60a85f863",
+      color: "69B353",
       description: "오늘뭐임 iOS #{version}을 앱스토어에 성공적으로 배포하였습니다 !"
     )
     set_github_release(
@@ -101,6 +118,13 @@ platform :mac do
     info_plist_path = "./Projects/App/macOS/Support/Info.plist"
     set_info_plist_value(path: info_plist_path, key: "CFBundleShortVersionString", value: version)
 
+    discord_notifier(
+      webhook_url: ENV["WEBHOOK_URL"],
+      title: "💫 오늘뭐임 macOS TestFlight 업로드 자동화 시작",
+      thumbnail_url: "https://github.com/baekteun/TodayWhat-new/assets/74440939/20913d7a-59a6-46b5-b3e2-c6456a08a7e1",
+      color: "FFF500",
+      description: "오늘뭐임 macOS #{version}을 테스트플라이트 업로드를 시작해요 !"
+    )
     build_app(
       scheme: "TodayWhat-MacOS",
       configuration: "STAGE"
@@ -112,6 +136,7 @@ platform :mac do
       webhook_url: ENV["WEBHOOK_URL"],
       title: "🚀 오늘뭐임 macOS TestFlight 업로드 자동화 성공",
       thumbnail_url: "https://github.com/baekteun/TodayWhat-new/assets/74440939/842b2d8e-0219-42b3-95c7-5ec60a85f863",
+      color: "69B353",
       description: "오늘뭐임 macOS #{version}을 테스트플라이트 성공적으로 업로드하였습니다 !"
     )
   end
@@ -125,6 +150,13 @@ platform :mac do
     set_info_plist_value(path: info_plist_path, key: "CFBundleVersion", value: "#{build_number.to_i + 1}")
     set_info_plist_value(path: info_plist_path, key: "CFBundleShortVersionString", value: version)
 
+    discord_notifier(
+      webhook_url: ENV["WEBHOOK_URL"],
+      title: "💫 오늘뭐임 macOS 앱스토어 배포 자동화 시작",
+      thumbnail_url: "https://github.com/baekteun/TodayWhat-new/assets/74440939/20913d7a-59a6-46b5-b3e2-c6456a08a7e1",
+      color: "FFF500",
+      description: "오늘뭐임 macOS #{version}을 앱스토어 배포를 시작해요 !"
+    )
     build_app(
       scheme: "TodayWhat-MacOS",
       configuration: "PROD",
@@ -146,6 +178,7 @@ platform :mac do
       webhook_url: ENV["WEBHOOK_URL"],
       title: "🚀 오늘뭐임 macOS 배포 자동화 성공",
       thumbnail_url: "https://github.com/baekteun/TodayWhat-new/assets/74440939/842b2d8e-0219-42b3-95c7-5ec60a85f863",
+      color: "69B353",
       description: "오늘뭐임 macOS #{version}을 앱스토어에 성공적으로 배포하였습니다 !"
     )
     set_github_release(

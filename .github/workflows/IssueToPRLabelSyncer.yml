@@ -27,7 +27,9 @@ jobs:
         run: |
           ISSUE_NUMBER="${{ steps.extract-issue-number.outputs.issue_number }}"
           echo "Found Issue Number: $ISSUE_NUMBER"
-          gh issue view $ISSUE_NUMBER --json labels --template "{{range .labels}}{{.name}}{{end}}" | xargs -I LABELS gh pr edit ${{ github.event.number }} --add-label "LABELS"
+          gh issue view $ISSUE_NUMBER --json labels --template "{{range .labels}}'{{.name}}',{{end}}" \
+           | sed 's/.$//g' \
+           | xargs -I LABELS gh pr edit ${{ github.event.number }} --add-label "LABELS"
         env:
           GH_TOKEN: ${{ github.token }}
 
