@@ -22,6 +22,7 @@ platform :ios do
 
     info_plist_path = "./Projects/App/iOS/Support/Info.plist"
     build_number = get_info_plist_value(path: info_plist_path, key: "CFBundleVersion")
+    prev_version = get_info_plist_value(path: info_plist_path, key: "CFBundleShortVersionString")
     set_info_plist_value(path: info_plist_path, key: "CFBundleVersion", value: "#{build_number.to_i + 1}")
     set_info_plist_value(path: info_plist_path, key: "CFBundleShortVersionString", value: version)
 
@@ -39,6 +40,7 @@ platform :ios do
     upload_to_testflight(
       api_key_path: "fastlane/AppStoreAPIKey.json"
     )
+    set_info_plist_value(path: info_plist_path, key: "CFBundleShortVersionString", value: prev_version)
     discord_notifier(
       webhook_url: ENV["WEBHOOK_URL"],
       title: "🚀 오늘뭐임 iOS TestFlight 업로드 자동화 성공",
@@ -119,6 +121,7 @@ platform :mac do
 
     info_plist_path = "./Projects/App/macOS/Support/Info.plist"
     build_number = get_info_plist_value(path: info_plist_path, key: "CFBundleVersion")
+    prev_version = get_info_plist_value(path: info_plist_path, key: "CFBundleShortVersionString")
     set_info_plist_value(path: info_plist_path, key: "CFBundleVersion", value: "#{build_number.to_i + 1}")
     set_info_plist_value(path: info_plist_path, key: "CFBundleShortVersionString", value: version)
 
@@ -136,6 +139,7 @@ platform :mac do
     upload_to_testflight(
       api_key_path: "fastlane/AppStoreAPIKey.json"
     )
+    set_info_plist_value(path: info_plist_path, key: "CFBundleShortVersionString", value: prev_version)
     discord_notifier(
       webhook_url: ENV["WEBHOOK_URL"],
       title: "🚀 오늘뭐임 macOS TestFlight 업로드 자동화 성공",
