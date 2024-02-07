@@ -79,9 +79,23 @@ jobs:
       - name: Project generate
         run: TUIST_ENV=CD tuist generate
 
+      - name: Release Branch Create
+        run: |
+          git config --global user.name 'baegteun'
+          git config --global user.email 'baegteun@gmail.com'
+          git config pull.rebase false
+          git checkout -b build-number-increase-for-testflight
+
       - name: Distribute
         run: sh .github/workflows/TestFlight/TestFlight.sh
         shell: bash
         env:
           PLATFORM: ${{ github.event.inputs.platform }}
           VERSION: ${{ github.event.inputs.version }}
+
+      - name: Commit and PR
+        run: sh .github/workflows/TestFlight/BuildNumberIncreasePR.sh
+        shell: bash
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+          GH_TOKEN: ${{ github.token }}

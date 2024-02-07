@@ -21,6 +21,8 @@ platform :ios do
     version = options[:version]
 
     info_plist_path = "./Projects/App/iOS/Support/Info.plist"
+    build_number = get_info_plist_value(path: info_plist_path, key: "CFBundleVersion")
+    set_info_plist_value(path: info_plist_path, key: "CFBundleVersion", value: "#{build_number.to_i + 1}")
     set_info_plist_value(path: info_plist_path, key: "CFBundleShortVersionString", value: version)
 
     discord_notifier(
@@ -116,6 +118,8 @@ platform :mac do
     version = options[:version]
 
     info_plist_path = "./Projects/App/macOS/Support/Info.plist"
+    build_number = get_info_plist_value(path: info_plist_path, key: "CFBundleVersion")
+    set_info_plist_value(path: info_plist_path, key: "CFBundleVersion", value: "#{build_number.to_i + 1}")
     set_info_plist_value(path: info_plist_path, key: "CFBundleShortVersionString", value: version)
 
     discord_notifier(
