@@ -8,8 +8,11 @@ rm -rf XCConfig.zip
   
 # Provisioning Profile
 gpg -d -o "$DECRYPTED_STAGE_PROVISION_PATH" --pinentry-mode=loopback --passphrase "$STAGE_PROVISION_SECRET" "$ENCRYPTED_STAGE_PROVISION_PATH"
+unzip Tuist/Signing/StageProvisionProfile.zip -d Tuist/Signing
 mv -v Tuist/Signing/StageProvisionProfile/* Tuist/Signing/
+
 gpg -d -o "$DECRYPTED_PROD_PROVISION_PATH" --pinentry-mode=loopback --passphrase "$PROD_PROVISION_SECRET" "$ENCRYPTED_PROD_PROVISION_PATH"
+unzip Tuist/Signing/ProdProvisionProfile.zip -d Tuist/Signing
 mv -v Tuist/Signing/ProdProvisionProfile/* Tuist/Signing/
 
 # master.key
