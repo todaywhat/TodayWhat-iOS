@@ -11,7 +11,6 @@ else
   brew install swiftlint
 fi
 
-
 if which swiftformat > /dev/null; then
   echo "✅ SwiftFormat was installed"
 else
@@ -24,13 +23,6 @@ if which tuist > /dev/null; then
 else
   echo "❌ Tuist was not installed"
   curl -Ls https://install.tuist.io | bash
-fi
-
-if which pre-commit > /dev/null; then
-  echo "✅ pre-commit was installed"
-else
-  echo "❌ pre-commit was not installed"
-  brew install pre-commit
 fi
 
 git config --local include.path ../.gitconfig
