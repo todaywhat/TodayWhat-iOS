@@ -26,6 +26,10 @@ env:
   ENCRYPTED_XCCONFIG_PATH: ${{ 'XCConfig.zip.gpg' }}
   DECRYPTED_XCCONFIG_PATH: ${{ 'XCConfig.zip' }}
 
+  IOS_GOOGLE_SERVICE_PLIST_SECRET: ${{ secrets.GOOGLE_SERVICE_PLIST_SECRET }}
+  ENCRYPTED_IOS_GOOGLE_SERVICE_PLIST_PATH: ${{ 'Projects/App/iOS/Resources/GoogleService-Info.plist.gpg' }}
+  DECRYPTED_IOS_GOOGLE_SERVICE_PLIST_PATH: ${{ 'Projects/App/iOS/Resources/GoogleService-Info.plist' }}
+
   STAGE_PROVISION_SECRET: ${{ secrets.STAGE_PROVISION_SECRET }}
   ENCRYPTED_STAGE_PROVISION_PATH: ${{ 'Tuist/Signing/StageProvisionProfile.zip.gpg' }}
   DECRYPTED_STAGE_PROVISION_PATH: ${{ 'Tuist/Signing/StageProvisionProfile.zip' }}

@@ -5,7 +5,10 @@ rm -rf XCConfig
 gpg -d -o "$DECRYPTED_XCCONFIG_PATH" --pinentry-mode=loopback --passphrase "$XCCONFIG_SECRET" "$ENCRYPTED_XCCONFIG_PATH"
 unzip XCConfig.zip
 rm -rf XCConfig.zip
-  
+
+# GoogleService-Info.plist
+gpg -d -o "$DECRYPTED_IOS_GOOGLE_SERVICE_PLIST_PATH" --pinentry-mode=loopback --passphrase "$IOS_GOOGLE_SERVICE_PLIST_SECRET" "$ENCRYPTED_IOS_GOOGLE_SERVICE_PLIST_PATH"
+
 # Provisioning Profile
 gpg -d -o "$DECRYPTED_STAGE_PROVISION_PATH" --pinentry-mode=loopback --passphrase "$STAGE_PROVISION_SECRET" "$ENCRYPTED_STAGE_PROVISION_PATH"
 unzip Tuist/Signing/StageProvisionProfile.zip -d Tuist/Signing
