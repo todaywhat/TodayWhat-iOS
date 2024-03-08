@@ -5,8 +5,8 @@ import DeviceClient
 import ITunesClient
 import ModifyTimeTableFeature
 import SchoolSettingFeature
-import TWLog
 import TutorialFeature
+import TWLog
 import UIKit.UIApplication
 import UserDefaultsClient
 
