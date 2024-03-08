@@ -13,7 +13,6 @@ fi
 RESULT=$($FORMAT ./Projects --config Scripts/.swiftformat)
 
 if [ "$RESULT" == '' ]; then
-    git add .
     printf "\n 🎉 SwiftFormat 적용을 완료했습니다 !! \n"
 else
     echo ""
