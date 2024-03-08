@@ -5,6 +5,8 @@ public struct TutorialCore: Reducer {
     public init() {}
     public struct State: Equatable {
         public var tutorialList: [TutorialEntity] = []
+    
+        public init() {}
     }
 
     public enum Action {
