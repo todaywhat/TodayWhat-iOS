@@ -16,7 +16,8 @@ let project = Project.module(
                 .shared(target: .FoundationUtil),
                 .shared(target: .ConstantUtil),
                 .shared(target: .TWLog),
-                .userInterface(target: .DesignSystem)
+                .userInterface(target: .DesignSystem),
+                .SPM.Nuke
             ]
         )
     ]
