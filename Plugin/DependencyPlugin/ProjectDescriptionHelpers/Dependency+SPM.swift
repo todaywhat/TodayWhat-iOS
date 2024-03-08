@@ -5,6 +5,7 @@ public extension TargetDependency {
 }
 
 public extension TargetDependency.SPM {
+    static let Nuke = TargetDependency.external(name: "NukeUI")
     static let ComposableArchitecture = TargetDependency.external(name: "ComposableArchitecture")
     static let GRDB = TargetDependency.external(name: "GRDB")
     static let SwiftyJSON = TargetDependency.external(name: "SwiftyJSON")
