@@ -54,6 +54,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Shared: String, MicroTargetPathConvertable {
+        case TutorialClient
         case DeviceUtil
         case TWLog
         case ComposableArchitectureWrapper

@@ -7,7 +7,8 @@ let project = Project.module(
     targets: [
         .implements(module: .feature(.TutorialFeature)),
         .demo(module: .feature(.TutorialFeature), dependencies: [
-            .feature(target: .TutorialFeature)
+            .feature(target: .TutorialFeature),
+            .shared(target: .TutorialClient)
         ])
     ]
 )
