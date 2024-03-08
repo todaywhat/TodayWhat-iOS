@@ -10,6 +10,7 @@ let project = Project.module(
             .feature(target: .SchoolSettingFeature),
             .feature(target: .AllergySettingFeature),
             .feature(target: .ModifyTimeTableFeature),
+            .feature(target: .TutorialFeature),
             .shared(target: .UserDefaultsClient),
             .shared(target: .ITunesClient),
             .shared(target: .DeviceClient)
