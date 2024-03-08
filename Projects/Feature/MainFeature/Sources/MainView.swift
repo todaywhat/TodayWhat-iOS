@@ -90,7 +90,7 @@ public struct MainView: View {
                     Button {
                         viewStore.send(.noticeButtonDidTap)
                     } label: {
-                        Image("BellBadge")
+                        Image.bellBadge
                             .renderingMode(.original)
                     }
 

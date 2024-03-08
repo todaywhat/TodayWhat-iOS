@@ -63,7 +63,7 @@ public struct SettingsView: View {
         blockView(spacing: 12) {
             viewStore.send(.schoolBlockButtonDidTap)
         } label: {
-            settingsOptionsIconView("School")
+            settingsOptionsIconView(.school)
 
             VStack(alignment: .leading, spacing: 8) {
                 Text("\(viewStore.grade)학년 \(viewStore.class)반")
@@ -82,7 +82,7 @@ public struct SettingsView: View {
         blockView(corners: [.topLeft, .topRight]) {
             viewStore.send(.allergyBlockButtonDidTap)
         } label: {
-            settingsOptionChevronView(icon: "AllergySetting", text: "알레르기 설정")
+            settingsOptionChevronView(icon: .allergySetting, text: "알레르기 설정")
         }
     }
 
@@ -91,7 +91,7 @@ public struct SettingsView: View {
         blockView(corners: []) {
             viewStore.send(.consultingButtonDidTap)
         } label: {
-            settingsOptionChevronView(icon: "Consulting", text: "문의하기")
+            settingsOptionChevronView(icon: .consulting, text: "문의하기")
         }
     }
 
@@ -100,7 +100,7 @@ public struct SettingsView: View {
         blockView(corners: [.bottomLeft, .bottomRight]) {
             viewStore.send(.modifyTimeTableButtonDidTap)
         } label: {
-            settingsOptionChevronView(icon: "WritingPencil", text: "시간표 수정")
+            settingsOptionChevronView(icon: .writingPencil, text: "시간표 수정")
         }
     }
 
@@ -109,7 +109,7 @@ public struct SettingsView: View {
     func skipAfterDinnerView() -> some View {
         blockView(corners: [.topLeft, .topRight]) {
             settingsOptionToggleView(
-                icon: "SmallMeal",
+                icon: .smallMeal,
                 text: "오후 7시 이후 내일 급식 표시",
                 isOn: viewStore.binding(
                     get: \.isSkipAfterDinner,
@@ -123,7 +123,7 @@ public struct SettingsView: View {
     func onModifiedTimeTable() -> some View {
         blockView(corners: []) {
             settingsOptionToggleView(
-                icon: "Clock",
+                icon: .clock,
                 text: "커스텀 시간표 표시",
                 isOn: viewStore.binding(
                     get: \.isOnModifiedTimeTable,
@@ -137,7 +137,7 @@ public struct SettingsView: View {
     func skipWeekendView() -> some View {
         blockView(corners: [.bottomLeft, .bottomRight]) {
             settingsOptionToggleView(
-                icon: "Calendar",
+                icon: .calendar,
                 text: "주말 건너뛰기",
                 isOn: viewStore.binding(
                     get: \.isSkipWeekend,
@@ -184,11 +184,11 @@ public struct SettingsView: View {
 
     @ViewBuilder
     func settingsOptionChevronView(
-        icon named: String,
+        icon image: Image,
         text: String
     ) -> some View {
         HStack(spacing: 8) {
-            settingsOptionsIconView(named)
+            settingsOptionsIconView(image)
 
             growText(text: text)
 
@@ -200,12 +200,12 @@ public struct SettingsView: View {
 
     @ViewBuilder
     func settingsOptionToggleView(
-        icon named: String,
+        icon image: Image,
         text: String,
         isOn: Binding<Bool>
     ) -> some View {
         HStack(spacing: 8) {
-            settingsOptionsIconView(named)
+            settingsOptionsIconView(image)
 
             growText(text: text)
 
@@ -225,8 +225,8 @@ public struct SettingsView: View {
     }
 
     @ViewBuilder
-    func settingsOptionsIconView(_ named: String) -> some View {
-        Image(named)
+    func settingsOptionsIconView(_ image: Image) -> some View {
+        image
             .resizable()
             .renderingMode(.template)
             .frame(width: 24, height: 24)
@@ -235,7 +235,7 @@ public struct SettingsView: View {
 
     @ViewBuilder
     func chevronRightIconView() -> some View {
-        Image("ChevronRight")
+        Image.chevronRight
             .resizable()
             .frame(width: 24, height: 24)
             .foregroundColor(.unselectedPrimary)

@@ -75,7 +75,7 @@ public struct MealView: View {
                     Spacer()
 
                     if isMealContainsAllergy(meal: meal) {
-                        Image("Allergy")
+                        Image.allergy
                             .renderingMode(.original)
                     }
                 }
