@@ -24,6 +24,7 @@ extension ModulePaths: MicroTargetPathConvertable {
 
 public extension ModulePaths {
     enum Feature: String, MicroTargetPathConvertable {
+        case TutorialFeature
         case TimeTableFeature
         case SplashFeature
         case SettingsFeature
@@ -53,6 +54,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Shared: String, MicroTargetPathConvertable {
+        case TutorialClient
         case DeviceUtil
         case TWLog
         case ComposableArchitectureWrapper

@@ -5,6 +5,7 @@ import DeviceClient
 import ITunesClient
 import ModifyTimeTableFeature
 import SchoolSettingFeature
+import TutorialFeature
 import TWLog
 import UIKit.UIApplication
 import UserDefaultsClient
@@ -22,6 +23,7 @@ public struct SettingsCore: Reducer {
         @PresentationState public var schoolSettingCore: SchoolSettingCore.State?
         @PresentationState public var allergySettingCore: AllergySettingCore.State?
         @PresentationState public var modifyTimeTableCore: ModifyTimeTableCore.State?
+        @PresentationState public var tutorialCore: TutorialCore.State?
         @PresentationState public var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
         @PresentationState public var alert: AlertState<Action.Alert>?
 
@@ -38,9 +40,11 @@ public struct SettingsCore: Reducer {
         case allergyBlockButtonDidTap
         case modifyTimeTableButtonDidTap
         case consultingButtonDidTap
+        case tutorialButtonDidTap
         case schoolSettingCore(PresentationAction<SchoolSettingCore.Action>)
         case allergySettingCore(PresentationAction<AllergySettingCore.Action>)
         case modifyTimeTableCore(PresentationAction<ModifyTimeTableCore.Action>)
+        case tutorialCore(PresentationAction<TutorialCore.Action>)
         case alert(PresentationAction<Alert>)
         case confirmationDialog(PresentationAction<ConfirmationDialog>)
 
@@ -106,6 +110,12 @@ public struct SettingsCore: Reducer {
                 let log = ModifyTimeTableButtonClickedEventLog()
                 TWLog.event(log)
 
+            case .tutorialButtonDidTap:
+                state.tutorialCore = .init()
+
+                let log = TutorialButtonClickedEventLog()
+                TWLog.event(log)
+
             case .modifyTimeTableCore(.dismiss):
                 state.modifyTimeTableCore = nil
 
@@ -120,6 +130,9 @@ public struct SettingsCore: Reducer {
 
             case .allergySettingCore(.dismiss):
                 state.allergySettingCore = nil
+
+            case .tutorialCore(.dismiss):
+                state.tutorialCore = nil
 
             case .consultingButtonDidTap:
                 if deviceClient.isPad() {
@@ -181,6 +194,9 @@ public struct SettingsCore: Reducer {
         }
         .ifLet(\.$modifyTimeTableCore, action: \.modifyTimeTableCore) {
             ModifyTimeTableCore()
+        }
+        .ifLet(\.$tutorialCore, action: \.tutorialCore) {
+            TutorialCore()
         }
     }
 }

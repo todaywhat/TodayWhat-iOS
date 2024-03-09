@@ -5,6 +5,7 @@ import ModifyTimeTableFeature
 import SchoolSettingFeature
 import SwiftUI
 import SwiftUIUtil
+import TutorialFeature
 
 public struct SettingsView: View {
     let store: StoreOf<SettingsCore>
@@ -25,9 +26,11 @@ public struct SettingsView: View {
                 VStack(spacing: 0) {
                     allergySettingsView()
 
-                    consultingSettingsView()
-
                     timeTableSettingsView()
+
+                    tutorialSettingsView()
+
+                    consultingSettingsView()
                 }
 
                 VStack(spacing: 0) {
@@ -87,20 +90,29 @@ public struct SettingsView: View {
     }
 
     @ViewBuilder
-    func consultingSettingsView() -> some View {
-        blockView(corners: []) {
-            viewStore.send(.consultingButtonDidTap)
+    func timeTableSettingsView() -> some View {
+        blockView {
+            viewStore.send(.modifyTimeTableButtonDidTap)
         } label: {
-            settingsOptionChevronView(icon: .consulting, text: "문의하기")
+            settingsOptionChevronView(icon: .writingPencil, text: "시간표 수정")
         }
     }
 
     @ViewBuilder
-    func timeTableSettingsView() -> some View {
-        blockView(corners: [.bottomLeft, .bottomRight]) {
-            viewStore.send(.modifyTimeTableButtonDidTap)
+    func tutorialSettingsView() -> some View {
+        blockView {
+            viewStore.send(.tutorialButtonDidTap)
         } label: {
-            settingsOptionChevronView(icon: .writingPencil, text: "시간표 수정")
+            settingsOptionChevronView(icon: .tutorial, text: "사용법")
+        }
+    }
+
+    @ViewBuilder
+    func consultingSettingsView() -> some View {
+        blockView(corners: [.bottomLeft, .bottomRight]) {
+            viewStore.send(.consultingButtonDidTap)
+        } label: {
+            settingsOptionChevronView(icon: .consulting, text: "문의하기")
         }
     }
 
@@ -265,6 +277,14 @@ public struct SettingsView: View {
             onTap: {},
             destination: { store in
                 ModifyTimeTableView(store: store)
+            },
+            label: { EmptyView() }
+        )
+        NavigationLinkStore(
+            store.scope(state: \.$tutorialCore, action: \.tutorialCore),
+            onTap: {},
+            destination: { store in
+                TutorialView(store: store)
             },
             label: { EmptyView() }
         )
