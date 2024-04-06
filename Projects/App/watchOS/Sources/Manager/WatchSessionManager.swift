@@ -1,11 +1,21 @@
 import Dependencies
+import Entity
 import UserDefaultsClient
+import LocalDatabaseClient
 import WatchConnectivity
 
 final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.localDatabaseClient) var localDatabaseClient
+
     var isReachable: Bool {
-        session.activationState == .activated
+        session.isReachable
+    }
+
+    static let shared = WatchSessionManager()
+
+    func activate() {
+        session.activate()
     }
 
     func session(
@@ -13,23 +23,27 @@ final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
         activationDidCompleteWith activationState: WCSessionActivationState,
         error: Error?
     ) {
-        sendMessage(message: [:]) { items in
+        sendMessage(message: [:]) { [weak self] items in
+            guard let self else { return }
             guard
                 let code = items["code"] as? String,
                 let orgCode = items["orgCode"] as? String,
                 let grade = items["grade"] as? Int,
                 let `class` = items["class"] as? Int,
-                let type = items["type"] as? String
+                let type = items["type"] as? String,
+                let isOnModifiedTimeTable = items["isOnModifiedTimeTable"] as? Bool,
+                let timeTablesData = items["timeTables"] as? Data
             else {
                 return
             }
-
+            let timeTables = self.decodeTimeTables(data: timeTablesData)
             let dict: [UserDefaultsKeys: Any] = [
                 .grade: grade,
                 .class: `class`,
                 .schoolType: type,
                 .orgCode: orgCode,
-                .schoolCode: code
+                .schoolCode: code,
+                .isOnModifiedTimeTable: isOnModifiedTimeTable
             ]
             dict.forEach { key, value in
                 self.userDefaultsClient.setValue(key, value)
@@ -37,10 +51,10 @@ final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
             if let major = items["major"] as? String {
                 self.userDefaultsClient.setValue(.major, major)
             }
+            try? self.localDatabaseClient.save(records: timeTables)
         }
     }
 
-    static let shared = WatchSessionManager()
     override private init() {
         session = .default
         super.init()
@@ -63,21 +77,26 @@ final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
         didReceiveMessage message: [String: Any],
         replyHandler: @escaping ([String: Any]) -> Void
     ) {
+        print("RECEIVE : \(message)")
         guard
             let code = message["code"] as? String,
             let orgCode = message["orgCode"] as? String,
             let grade = message["grade"] as? Int,
             let `class` = message["class"] as? Int,
-            let type = message["type"] as? String
+            let type = message["type"] as? String,
+            let isOnModifiedTimeTable = message["isOnModifiedTimeTable"] as? Bool,
+            let timeTablesData = message["timeTables"] as? Data
         else {
             return
         }
+        let timeTables = decodeTimeTables(data: timeTablesData)
         let dict: [UserDefaultsKeys: Any] = [
             .grade: grade,
             .class: `class`,
             .schoolType: type,
             .orgCode: orgCode,
-            .schoolCode: code
+            .schoolCode: code,
+            .isOnModifiedTimeTable: isOnModifiedTimeTable
         ]
         dict.forEach { key, value in
             self.userDefaultsClient.setValue(key, value)
@@ -85,6 +104,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
         if let major = message["major"] as? String {
             self.userDefaultsClient.setValue(.major, major)
         }
+        try? self.localDatabaseClient.save(records: timeTables)
     }
 
     func sendMessage(
@@ -102,4 +122,11 @@ final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
         #endif
         session.sendMessage(message, replyHandler: reply, errorHandler: error)
     }
+
+    // swiftlint: disable force_try
+    private func decodeTimeTables(data: Data) -> [ModifiedTimeTableLocalEntity] {
+        let entities = try! JSONDecoder().decode([ModifiedTimeTableLocalEntity].self, from: data)
+        return entities
+    }
+    // swiftlint: enable force_try
 }

@@ -80,7 +80,6 @@ public struct LocalDatabaseClient {
     }
 }
 
-#if !os(watchOS)
 public extension LocalDatabaseClient {
     // swiftlint: disable force_try
     init(migrate: (inout DatabaseMigrator) -> Void) {
@@ -103,11 +102,29 @@ public extension LocalDatabaseClient {
                 FileAttributeKey.protectionKey: URLFileProtection.none
             ]
         )
-        #else
+        #elseif os(iOS)
         url = AppGroup.group.containerURL
+        #elseif os(watchOS)
+        url = try! FileManager.default.url(
+            for: .documentDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true
+        ).appendingPathComponent(
+            "unprotected",
+            isDirectory: true
+        )
+
+        try? FileManager.default.createDirectory(
+            at: url,
+            withIntermediateDirectories: false,
+            attributes: [
+                FileAttributeKey.protectionKey: URLFileProtection.none
+            ]
+        )
         #endif
 
-        if #available(iOS 16, macOS 13.0, *) {
+        if #available(iOS 16, macOS 13.0, watchOS 9.0, *) {
             url.append(path: "TodayWhat")
         } else {
             url.appendPathComponent("TodayWhat")
@@ -121,20 +138,20 @@ public extension LocalDatabaseClient {
             ]
         )
 
-        if #available(iOS 16.0, macOS 13.0, *) {
+        if #available(iOS 16.0, macOS 13.0, watchOS 9.0, *) {
             url.append(path: "TodayWhat.sqlite")
         } else {
             url.appendPathComponent("TodayWhat.sqlite")
         }
         var dir = ""
 
-        if #available(iOS 16.0, macOS 13.0, *) {
+        if #available(iOS 16.0, macOS 13.0, watchOS 9.0, *) {
             dir = url.path()
         } else {
             dir = url.path
         }
 
-        if #available(iOS 16.0, macOS 13.0, *) {
+        if #available(iOS 16.0, macOS 13.0, watchOS 9.0, *) {
             dir.replace("%20", with: " ")
         } else {
             dir = dir.replacingOccurrences(of: "%20", with: " ")
@@ -212,5 +229,4 @@ public extension DependencyValues {
         set { self[LocalDatabaseClient.self] = newValue }
     }
 }
-#endif
 // swiftlint: enable identifier_name

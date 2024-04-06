@@ -4,6 +4,10 @@ import SwiftUI
 struct TodayWhatWatchApp: App {
     @StateObject var sceneFlowState = SceneFlowState()
 
+    init() {
+        WatchSessionManager.shared.activate()
+    }
+
     var body: some Scene {
         WindowGroup {
             NavigationView {

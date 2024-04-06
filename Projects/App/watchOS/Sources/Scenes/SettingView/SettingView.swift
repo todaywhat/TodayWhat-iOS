@@ -1,4 +1,6 @@
 import Dependencies
+import Entity
+import LocalDatabaseClient
 import SwiftUI
 import UserDefaultsClient
 
@@ -9,6 +11,7 @@ struct SettingView: View {
     @State var loadingStateText = "아이폰에서 먼저 학교 설정을 마치고 와주세요!"
     @State var isLoading = false
     @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.localDatabaseClient) var localDatabaseClient
 
     var body: some View {
         VStack {
@@ -45,6 +48,7 @@ struct SettingView: View {
     private func receiveIPhoneSetting() {
         isReachable = watchSessionManager.isReachable
         guard WatchSessionManager.shared.isReachable else {
+            isReachable = false
             return
         }
         loadingStateText = "아이폰과 연결중이에요... \n시간이 좀 걸릴 수도 있어요!"
@@ -58,17 +62,23 @@ struct SettingView: View {
                 let orgCode = items["orgCode"] as? String,
                 let grade = items["grade"] as? Int,
                 let `class` = items["class"] as? Int,
-                let type = items["type"] as? String
+                let type = items["type"] as? String,
+                let isOnModifiedTimeTable = items["isOnModifiedTimeTable"] as? Bool,
+                let timeTablesData = items["timeTables"] as? Data
             else {
                 return
             }
 
+            // swiftlint: disable force_try
+            let timeTables = try! JSONDecoder().decode([ModifiedTimeTableLocalEntity].self, from: timeTablesData)
+            // swiftlint: enable force_try
             let dict: [UserDefaultsKeys: Any] = [
                 .grade: grade,
                 .class: `class`,
                 .schoolType: type,
                 .orgCode: orgCode,
-                .schoolCode: code
+                .schoolCode: code,
+                .isOnModifiedTimeTable: isOnModifiedTimeTable
             ]
             dict.forEach { key, value in
                 userDefaultsClient.setValue(key, value)
@@ -79,6 +89,7 @@ struct SettingView: View {
             DispatchQueue.main.async {
                 sceneFlowState.sceneFlow = .main
             }
+            try? self.localDatabaseClient.save(records: timeTables)
         } error: { error in
             isLoading = false
             loadingStateText = "아이폰의 오늘 뭐임을 켠 상태로 다시 시도해주세요!"
