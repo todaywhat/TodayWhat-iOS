@@ -1,7 +1,7 @@
 import Dependencies
 import Entity
-import UserDefaultsClient
 import LocalDatabaseClient
+import UserDefaultsClient
 import WatchConnectivity
 
 final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {

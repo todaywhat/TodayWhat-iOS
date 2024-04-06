@@ -229,4 +229,5 @@ public extension DependencyValues {
         set { self[LocalDatabaseClient.self] = newValue }
     }
 }
+
 // swiftlint: enable identifier_name

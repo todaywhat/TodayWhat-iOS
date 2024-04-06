@@ -4,10 +4,10 @@ import Firebase
 import FirebaseAnalytics
 import FirebaseCore
 import FirebaseWrapper
+import LocalDatabaseClient
 import TWLog
 import UIKit
 import UserDefaultsClient
-import LocalDatabaseClient
 import WatchConnectivity
 import WidgetKit
 
