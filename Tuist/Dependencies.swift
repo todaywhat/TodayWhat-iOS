@@ -5,7 +5,7 @@ let dependencies = Dependencies(
     carthage: nil,
     swiftPackageManager: SwiftPackageManagerDependencies(
         productTypes: [
-            :
+            "GRDB": .framework
             // "ComposableArchitecture": .framework
         ],
         baseSettings: .settings(

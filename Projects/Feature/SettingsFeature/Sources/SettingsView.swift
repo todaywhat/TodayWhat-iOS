@@ -28,7 +28,7 @@ public struct SettingsView: View {
 
                     timeTableSettingsView()
 
-                    tutorialSettingsView()
+//                    tutorialSettingsView()
 
                     consultingSettingsView()
                 }

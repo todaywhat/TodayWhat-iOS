@@ -1,8 +1,10 @@
 import Dependencies
+import Entity
 import Firebase
 import FirebaseAnalytics
 import FirebaseCore
 import FirebaseWrapper
+import LocalDatabaseClient
 import TWLog
 import UIKit
 import UserDefaultsClient
@@ -11,6 +13,7 @@ import WidgetKit
 
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.localDatabaseClient) var localDatabaseClient
     var session: WCSession!
 
     func application(
@@ -71,18 +74,24 @@ extension AppDelegate: WCSessionDelegate {
         else {
             return
         }
+        let isOnModifiedTimeTable = userDefaultsClient.getValue(.isOnModifiedTimeTable) as? Bool ?? false
+        let timeTables = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
         var dict: [String: Any] = [
             "type": type,
             "code": code,
             "orgCode": orgCode,
             "grade": grade,
-            "class": `class`
+            "class": `class`,
+            "isOnModifiedTimeTable": isOnModifiedTimeTable,
+            "timeTables": encodeTimeTables(timeTables: timeTables ?? [])
         ]
         if let major = userDefaultsClient.getValue(.major) as? String {
             dict["major"] = major
         }
 
-        session.sendMessage(dict, replyHandler: nil)
+        session.sendMessage(dict, replyHandler: nil) { error in
+            TWLog.error(error.localizedDescription)
+        }
     }
 
     func session(
@@ -99,17 +108,28 @@ extension AppDelegate: WCSessionDelegate {
         else {
             return
         }
+        let isOnModifiedTimeTable = userDefaultsClient.getValue(.isOnModifiedTimeTable) as? Bool ?? false
+        let timeTables = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
         var reply: [String: Any] = [
             "type": type,
             "code": code,
             "orgCode": orgCode,
             "grade": grade,
-            "class": `class`
+            "class": `class`,
+            "isOnModifiedTimeTable": isOnModifiedTimeTable,
+            "timeTables": encodeTimeTables(timeTables: timeTables ?? [])
         ]
         if let major = userDefaultsClient.getValue(.major) as? String {
             reply["major"] = major
         }
 
         replyHandler(reply)
+    }
+
+    private func encodeTimeTables(timeTables: [ModifiedTimeTableLocalEntity]) -> Data {
+        // swiftlint: disable force_try
+        let data = try! JSONEncoder().encode(timeTables)
+        // swiftlint: enable force_try
+        return data
     }
 }
