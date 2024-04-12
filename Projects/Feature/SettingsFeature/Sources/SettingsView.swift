@@ -91,7 +91,7 @@ public struct SettingsView: View {
 
     @ViewBuilder
     func timeTableSettingsView() -> some View {
-        blockView {
+        blockView(corners: []) {
             viewStore.send(.modifyTimeTableButtonDidTap)
         } label: {
             settingsOptionChevronView(icon: .writingPencil, text: "시간표 수정")
