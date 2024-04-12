@@ -92,7 +92,7 @@ platform :ios do
       description: "오늘뭐임 iOS #{version}을 앱스토어에 성공적으로 배포하였습니다 !"
     )
     set_github_release(
-      repository_name: "baegteun/TodayWhat-iOS",
+      repository_name: "baekteun/TodayWhat-new",
       api_token: ENV["GITHUB_TOKEN"],
       name: "오늘뭐임 iOS #{version}",
       tag_name: "#{version}-iOS",
@@ -190,7 +190,7 @@ platform :mac do
       description: "오늘뭐임 macOS #{version}을 앱스토어에 성공적으로 배포하였습니다 !"
     )
     set_github_release(
-      repository_name: "baegteun/TodayWhat-new",
+      repository_name: "baekteun/TodayWhat-new",
       api_token: ENV["GITHUB_TOKEN"],
       name: "오늘뭐임 macOS #{version}",
       tag_name: "#{version}-MacOS",
