@@ -24,7 +24,7 @@ let settings: Settings = .settings(
 let scripts: [TargetScript] = generateEnvironment.scripts
 
 let targets: [Target] = [
-    .init(
+    .target(
         name: env.name,
         destinations: [.iPhone, .iPad],
         product: .app,
@@ -43,7 +43,7 @@ let targets: [Target] = [
         ],
         settings: settings
     ),
-    .init(
+    .target(
         name: "\(env.name)Widget",
         destinations: [.iPhone, .iPad],
         product: .appExtension,
@@ -67,7 +67,7 @@ let targets: [Target] = [
         ],
         settings: settings
     ),
-    .init(
+    .target(
         name: "\(env.name)WatchApp",
         destinations: [.appleWatch],
         product: .app,
@@ -90,7 +90,7 @@ let targets: [Target] = [
         ],
         settings: settings
     ),
-    .init(
+    .target(
         name: "\(env.name)-MacOS",
         destinations: [.mac],
         product: .app,
@@ -118,7 +118,7 @@ let targets: [Target] = [
         ],
         settings: settings
     ),
-    .init(
+    .target(
         name: "\(env.name)MacWidget",
         destinations: [.mac],
         product: .appExtension,
@@ -145,7 +145,7 @@ let targets: [Target] = [
 ]
 
 let schemes: [Scheme] = [
-    .init(
+    .scheme(
         name: "\(env.name)-DEV",
         shared: true,
         buildAction: .buildAction(targets: ["\(env.name)"]),
@@ -154,7 +154,7 @@ let schemes: [Scheme] = [
         profileAction: .profileAction(configuration: .dev),
         analyzeAction: .analyzeAction(configuration: .dev)
     ),
-    .init(
+    .scheme(
         name: "\(env.name)-STAGE",
         shared: true,
         buildAction: .buildAction(targets: ["\(env.name)"]),
@@ -163,7 +163,7 @@ let schemes: [Scheme] = [
         profileAction: .profileAction(configuration: .stage),
         analyzeAction: .analyzeAction(configuration: .stage)
     ),
-    .init(
+    .scheme(
         name: "\(env.name)-PROD",
         shared: true,
         buildAction: .buildAction(targets: ["\(env.name)"]),
@@ -172,7 +172,7 @@ let schemes: [Scheme] = [
         profileAction: .profileAction(configuration: .prod),
         analyzeAction: .analyzeAction(configuration: .prod)
     ),
-    .init(
+    .scheme(
         name: "\(env.name)-MacOS-DEV",
         shared: true,
         buildAction: .buildAction(targets: ["\(env.name)-MacOS"]),
@@ -181,7 +181,7 @@ let schemes: [Scheme] = [
         profileAction: .profileAction(configuration: .dev),
         analyzeAction: .analyzeAction(configuration: .dev)
     ),
-    .init(
+    .scheme(
         name: "\(env.name)-MacOS-STAGE",
         shared: true,
         buildAction: .buildAction(targets: ["\(env.name)-MacOS"]),
@@ -190,7 +190,7 @@ let schemes: [Scheme] = [
         profileAction: .profileAction(configuration: .stage),
         analyzeAction: .analyzeAction(configuration: .stage)
     ),
-    .init(
+    .scheme(
         name: "\(env.name)-MacOS-PROD",
         shared: true,
         buildAction: .buildAction(targets: ["\(env.name)-MacOS"]),

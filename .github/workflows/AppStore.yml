@@ -65,9 +65,7 @@ jobs:
       - uses: jdx/mise-action@v2
 
       - name: Install tuist
-        run: |
-          tuist_version=`cat .tuist-version`
-          mise install tuist@$tuist_version
+        run: mise install tuist
 
       - name: Configure Keychain
         run: sh .github/workflows/AppStore/Keychain.sh
@@ -77,7 +75,7 @@ jobs:
         run: brew install fastlane
 
       - name: Install dependencies
-        run: tuist fetch
+        run: tuist install
 
       - name: Project generate
         run: TUIST_ENV=CD tuist generate
@@ -88,8 +86,8 @@ jobs:
 
       - name: Release Branch Create
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config --global user.name '${GITHUB_ACTOR}'
+          git config --global user.email '${GITHUB_ACTOR}@users.noreply.github.com'
           git config pull.rebase false
           git checkout -b release/${{ github.event.inputs.version }}
 
