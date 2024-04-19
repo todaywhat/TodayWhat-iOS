@@ -13,6 +13,6 @@ public let env = ProjectEnvironment(
     name: "TodayWhat",
     organizationName: "baegteun",
     destinations: [.iPhone, .iPad, .mac, .appleWatch],
-    deploymentTargets: .init(iOS: "15.0", macOS: "12.0", watchOS: "8.0"),
+    deploymentTargets: .multiplatform(iOS: "15.0", macOS: "12.0", watchOS: "8.0"),
     baseSetting: [:]
 )
