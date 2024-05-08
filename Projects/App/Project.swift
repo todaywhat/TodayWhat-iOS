@@ -37,6 +37,7 @@ let targets: [Target] = [
         scripts: scripts + [.firebaseCrashlytics],
         dependencies: [
             .feature(target: .RootFeature),
+            .shared(target: .KeychainClient),
             .target(name: "\(env.name)Widget"),
             .target(name: "\(env.name)WatchApp"),
             .shared(target: .TWLog)
