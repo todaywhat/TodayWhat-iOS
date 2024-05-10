@@ -178,7 +178,9 @@ struct SettingsView_Previews: PreviewProvider {
         SettingsView(
             store: .init(
                 initialState: .init(),
-                reducer: SettingsCore()
+                reducer: {
+                    SettingsCore()
+                }
             )
         )
     }

@@ -32,6 +32,10 @@ public enum TWLog {
 }
 
 public extension TWLog {
+    static func setUserID(id: String) {
+        Analytics.setUserID(id)
+    }
+
     static func debug(_ message: Any) {
         TWLog.log(message, level: .debug)
     }

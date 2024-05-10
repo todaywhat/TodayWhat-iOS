@@ -4,6 +4,7 @@ import Firebase
 import FirebaseAnalytics
 import FirebaseCore
 import FirebaseWrapper
+import KeychainClient
 import LocalDatabaseClient
 import TWLog
 import UIKit
@@ -14,6 +15,7 @@ import WidgetKit
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
     @Dependency(\.localDatabaseClient) var localDatabaseClient
+    @Dependency(\.keychainClient) var keychainClient
     var session: WCSession!
 
     func application(
@@ -21,6 +23,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         FirebaseApp.configure()
+        initializeAnalyticsUserID()
         session = WCSession.default
         if WCSession.isSupported() {
             session.delegate = self
@@ -131,5 +134,17 @@ extension AppDelegate: WCSessionDelegate {
         let data = try! JSONEncoder().encode(timeTables)
         // swiftlint: enable force_try
         return data
+    }
+}
+
+private extension AppDelegate {
+    func initializeAnalyticsUserID() {
+        if let uuid = keychainClient.getValue(.uuid) {
+            TWLog.setUserID(id: uuid)
+        } else {
+            let newUUID = UUID().uuidString
+            keychainClient.setValue(.uuid, newUUID)
+            TWLog.setUserID(id: newUUID)
+        }
     }
 }

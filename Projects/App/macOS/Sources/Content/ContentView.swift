@@ -174,7 +174,9 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(
             store: .init(
                 initialState: .init(),
-                reducer: ContentCore()
+                reducer: {
+                    ContentCore()
+                }
             )
         )
     }
