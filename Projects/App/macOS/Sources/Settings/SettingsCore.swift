@@ -6,7 +6,7 @@ import LocalDatabaseClient
 import SchoolClient
 import UserDefaultsClient
 
-struct SettingsCore: ReducerProtocol {
+struct SettingsCore: Reducer {
     enum FocusState: Hashable {
         case school
         case grade
@@ -47,7 +47,7 @@ struct SettingsCore: ReducerProtocol {
     @Dependency(\.localDatabaseClient) var localDatabaseClient
     @Dependency(\.iTunesClient) var iTunesClient
 
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .onAppear:
             guard
@@ -66,12 +66,13 @@ struct SettingsCore: ReducerProtocol {
             let majorList = try? localDatabaseClient.readRecords(as: SchoolMajorLocalEntity.self)
                 .map(\.major)
             state.schoolMajorList = majorList ?? []
-            return .task {
-                await .versionCheck(
+            return .run { send in
+                let action = await Action.versionCheck(
                     TaskResult {
                         try await iTunesClient.fetchCurrentVersion(.macos)
                     }
                 )
+                await send(action)
             }
 
         case let .setFocusState(focusState):
@@ -80,12 +81,13 @@ struct SettingsCore: ReducerProtocol {
         case let .setSchoolText(school):
             state.schoolText = school
             state.isLoading = true
-            return .task {
-                await .schoolListResponse(
+            return .run { send in
+                let action = await Action.schoolListResponse(
                     TaskResult {
                         try await schoolClient.fetchSchoolList(school)
                     }
                 )
+                await send(action)
             }
 
         case let .setGradeText(grade):
@@ -139,12 +141,13 @@ struct SettingsCore: ReducerProtocol {
             userDefaultsClient.setValue(.schoolType, school.schoolType.rawValue)
             userDefaultsClient.setValue(.schoolCode, school.schoolCode)
             userDefaultsClient.setValue(.school, school.name)
-            return .task { [orgCode = school.orgCode, schoolCode = school.schoolCode] in
-                await .schoolMajorListResponse(
+            return .run { [orgCode = school.orgCode, schoolCode = school.schoolCode] send in
+                let action = await Action.schoolMajorListResponse(
                     TaskResult {
                         try await schoolClient.fetchSchoolsMajorList(orgCode, schoolCode)
                     }
                 )
+                await send(action)
             }
 
         case let .majorDidSelect(major):

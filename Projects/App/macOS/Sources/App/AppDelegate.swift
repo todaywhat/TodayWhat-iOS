@@ -24,7 +24,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let contentViw = ContentView(
             store: Store(
                 initialState: .init(),
-                reducer: ContentCore()
+                reducer: {
+                    ContentCore()
+                }
             )
         ).environment(
             \.popoverOpen,

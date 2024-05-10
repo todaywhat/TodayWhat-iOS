@@ -7,9 +7,6 @@ let project = Project.module(
     targets: [
         .implements(module: .shared(.KeychainClient), dependencies: [
             .shared(target: .ComposableArchitectureWrapper)
-        ]),
-        .tests(module: .shared(.KeychainClient), dependencies: [
-            .shared(target: .KeychainClient)
         ])
     ]
 )

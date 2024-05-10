@@ -70,7 +70,9 @@ struct AllergyView_Previews: PreviewProvider {
         AllergyView(
             store: .init(
                 initialState: .init(),
-                reducer: AllergyCore()
+                reducer: {
+                    AllergyCore()
+                }
             )
         )
     }

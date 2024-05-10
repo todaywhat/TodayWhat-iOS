@@ -74,23 +74,25 @@ struct ContentCore: Reducer {
                 state.allergyList = allergyList ?? []
 
                 return .merge(
-                    .task {
-                        await .mealResponse(TaskResult {
+                    .run { send in
+                        let action = await Action.mealResponse(TaskResult {
                             var targetDate = Date()
                             if targetDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
                                 targetDate = targetDate.adding(by: .day, value: 1)
                             }
                             return try await mealClient.fetchMeal(targetDate)
                         })
+                        await send(action)
                     },
-                    .task {
-                        await .timetableResponse(TaskResult {
+                    .run { send in
+                        let action = await Action.timetableResponse(TaskResult {
                             var targetDate = Date()
                             if targetDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
                                 targetDate = targetDate.adding(by: .day, value: 1)
                             }
                             return try await timeTableClient.fetchTimeTable(targetDate)
                         })
+                        await send(action)
                     }
                 )
 

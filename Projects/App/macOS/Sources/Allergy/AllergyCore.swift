@@ -2,7 +2,7 @@ import ComposableArchitecture
 import Entity
 import EnumUtil
 
-struct AllergyCore: ReducerProtocol {
+struct AllergyCore: Reducer {
     struct State: Equatable {
         var selectedAllergyList: [AllergyType] = []
     }
@@ -14,7 +14,7 @@ struct AllergyCore: ReducerProtocol {
 
     @Dependency(\.localDatabaseClient) var localDatabaseClient
 
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .onAppear:
             do {
