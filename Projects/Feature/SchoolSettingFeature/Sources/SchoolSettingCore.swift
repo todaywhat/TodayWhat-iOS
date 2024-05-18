@@ -110,7 +110,6 @@ public struct SchoolSettingCore: Reducer {
                 state.major = userDefaultsClient.getValue(.major) as? String ?? ""
                 let majorList = try? localDatabaseClient.readRecords(as: SchoolMajorLocalEntity.self)
                 state.schoolMajorList = majorList?.map(\.major) ?? []
-                state.completedStep = [.school, .grade, .class, .major]
 
             case let .schoolChanged(school):
                 state.school = school
