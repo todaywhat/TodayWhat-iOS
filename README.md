@@ -11,7 +11,7 @@ AppStore - https://apps.apple.com/app/id1629567018
 <br>
 
 ## 📸 Screenshots
-![todaywhat-banner](https://github.com/baekteun/TodayWhat-new/assets/74440939/cddf070b-7ff4-41f5-ae27-9c165d66be97)
+![todaywhat-banner](https://github.com/user-attachments/assets/18ba98d4-949e-48a3-ba4c-946764d310c3)
 
 <br>
 
