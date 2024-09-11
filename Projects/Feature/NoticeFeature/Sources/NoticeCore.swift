@@ -41,6 +41,9 @@ public struct NoticeCore: Reducer {
             case let .noticeDidSelect(notice):
                 state.selectedNotice = notice
 
+                let log = ClickNoticeItemEventLog(id: notice.id)
+                TWLog.event(log)
+
             case .noticeModalDismissed:
                 state.selectedNotice = nil
 

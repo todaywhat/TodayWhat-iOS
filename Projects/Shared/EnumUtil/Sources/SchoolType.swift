@@ -18,4 +18,17 @@ public extension SchoolType {
             return "spsTimetable"
         }
     }
+
+    var analyticsValue: String {
+        switch self {
+        case .elementary:
+            return "elementary"
+        case .middle:
+            return "middle"
+        case .high:
+            return "high"
+        case .special:
+            return "special"
+        }
+    }
 }

@@ -110,6 +110,9 @@ public struct SchoolSettingCore: Reducer {
                 state.major = userDefaultsClient.getValue(.major) as? String ?? ""
                 let majorList = try? localDatabaseClient.readRecords(as: SchoolMajorLocalEntity.self)
                 state.schoolMajorList = majorList?.map(\.major) ?? []
+                [SchoolSettingStep.school, .grade, .class, .major].forEach {
+                    state.completedStep.insert($0)
+                }
 
             case let .schoolChanged(school):
                 state.school = school
@@ -128,11 +131,15 @@ public struct SchoolSettingCore: Reducer {
                 state.isFocusedSchool = focused
 
             case let .gradeChanged(grade):
-                self.logCompletedStep(state: &state, step: .grade)
+                if !grade.isEmpty {
+                    self.logCompletedStep(state: &state, step: .grade)
+                }
                 state.grade = "\(grade)"
 
             case let .classChanged(`class`):
-                self.logCompletedStep(state: &state, step: .class)
+                if !`class`.isEmpty {
+                    self.logCompletedStep(state: &state, step: .class)
+                }
                 state.class = "\(`class`)"
 
             case let .schoolListResponse(.success(list)):
@@ -171,19 +178,27 @@ public struct SchoolSettingCore: Reducer {
                 }
 
             case .nextButtonDidTap:
-                guard let selectedSchool = state.selectedSchool else { return .none }
+                guard
+                    let selectedSchool = state.selectedSchool,
+                    let grade = Int(state.grade),
+                    let `class` = Int(state.class)
+                else { return .none }
+
                 let dict: [(UserDefaultsKeys, Any?)] = [
                     (UserDefaultsKeys.school, state.school),
                     (.orgCode, selectedSchool.orgCode),
                     (.schoolCode, selectedSchool.schoolCode),
-                    (.grade, Int(state.grade) ?? 1),
-                    (.class, Int(state.class) ?? 1),
+                    (.grade, grade),
+                    (.class, `class`),
                     (.major, state.major.isEmpty ? nil : state.major),
                     (.schoolType, selectedSchool.schoolType.rawValue)
                 ]
                 dict.forEach {
                     userDefaultsClient.setValue($0.0, $0.1)
                 }
+
+                TWLog.setUserProperty(property: .schoolType, value: selectedSchool.schoolType.analyticsValue)
+
                 return .run { send in
                     await send(.schoolSettingFinished, animation: .default)
                 }

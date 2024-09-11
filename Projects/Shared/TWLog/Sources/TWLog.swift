@@ -21,11 +21,19 @@ public enum TWLog {
         case event
         case error
 
+        fileprivate var prefix: String {
+            switch self {
+            case .debug: "✨"
+            case .event: "🎃"
+            case .error: "❌"
+            }
+        }
+
         fileprivate var category: String {
             switch self {
-            case .debug: "🟡 DEBUG"
-            case .event: "🔵 EVENT"
-            case .error: "🔴 ERROR"
+            case .debug: "DEBUG"
+            case .event: "EVENT"
+            case .error: "ERROR"
             }
         }
     }
@@ -34,6 +42,18 @@ public enum TWLog {
 public extension TWLog {
     static func setUserID(id: String) {
         Analytics.setUserID(id)
+
+        TWLog.log("Set UserID : \(id)", level: .event)
+    }
+
+    static func setUserProperty(key: String, value: String?) {
+        Analytics.setUserProperty(value, forName: key)
+
+        TWLog.log("Set UserProperty : [\(key) = \(value ?? "nil")]", level: .event)
+    }
+
+    static func setUserProperty(property: TWUserProperty, value: String?) {
+        Self.setUserProperty(key: property.rawValue, value: value)
     }
 
     static func debug(_ message: Any) {
@@ -44,7 +64,7 @@ public extension TWLog {
         #if PROD
         Analytics.logEvent(eventLog.name, parameters: eventLog.params)
         #endif
-        TWLog.log("\(eventLog.name) logged\n\(eventLog.params)", level: .event)
+        TWLog.log("Logged \(eventLog.name)\n\(eventLog.params)", level: .event)
     }
 
     static func error(_ message: Any) {
@@ -56,7 +76,7 @@ private extension TWLog {
     static func log(_ message: Any, level: Level) {
         #if DEV || STAGE
         let logger = Logger(subsystem: OSLog.subSystem, category: level.category)
-        let logMessage = "[\(level.category)] > \(message)"
+        let logMessage = "[\(level.prefix) \(level.category)] > \(message)"
         switch level {
         case .debug:
             logger.debug("\(logMessage)")

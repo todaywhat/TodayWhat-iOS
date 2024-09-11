@@ -1,12 +1,12 @@
 import TWLog
 
 struct IsSkipWeekendToggledEventLog: EventLog {
-    let name: String = "is_skip_weekend_toggled_on_setting_page"
-    let params: [String: Any]
+    let name: String = "click_is_skip_after_dinner_toggle"
+    let params: [String: String]
 
     init(isSkipWeekend: Bool) {
-        self.params = EventLogParameterBuilder()
-            .set(key: "value", value: isSkipWeekend)
-            .build()
+        self.params = [
+            "value": "\(isSkipWeekend)"
+        ]
     }
 }

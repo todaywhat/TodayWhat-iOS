@@ -8,12 +8,12 @@ public enum SchoolSettingStep: String {
 }
 
 struct SchoolSettingStepCompleteEventLog: EventLog {
-    let name: String = "school_setting_step_complete_on_school_setting_page"
-    let params: [String: Any]
+    let name: String = "complete_school_setting_step"
+    let params: [String: String]
 
     init(step: SchoolSettingStep) {
-        self.params = EventLogParameterBuilder()
-            .set(key: "step", value: step.rawValue)
-            .build()
+        self.params = [
+            "step": step.rawValue
+        ]
     }
 }

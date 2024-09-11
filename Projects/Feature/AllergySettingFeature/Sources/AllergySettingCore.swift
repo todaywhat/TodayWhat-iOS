@@ -2,6 +2,7 @@ import BaseFeature
 import ComposableArchitecture
 import Entity
 import EnumUtil
+import FoundationUtil
 import LocalDatabaseClient
 import TWLog
 
@@ -50,6 +51,19 @@ public struct AllergySettingCore: Reducer {
                 try localDatabaseClient.save(
                     records: state.selectedAllergyList.map { AllergyLocalEntity(allergy: $0.rawValue) }
                 )
+
+                let log = CompleteSettingAllergyEventLog(allergies: state.selectedAllergyList)
+                TWLog.event(log)
+
+                if state.selectedAllergyList.isEmpty {
+                    TWLog.setUserProperty(property: .allergies, value: nil)
+                } else {
+                    TWLog.setUserProperty(
+                        property: .allergies,
+                        value: state.selectedAllergyList.map(\.analyticsValue).joined(separator: ",")
+                    )
+                }
+
                 return .run { _ in
                     await dismiss()
                 }

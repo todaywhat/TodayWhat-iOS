@@ -6,12 +6,12 @@ enum SelectedInquireType: String {
 }
 
 struct InquireTypeSelectedEventLog: EventLog {
-    let name: String = "inquire_type_selected_on_inquire_modal"
-    let params: [String: Any]
+    let name: String = "select_inquiry_type"
+    let params: [String: String]
 
     init(inquireType: SelectedInquireType) {
-        self.params = EventLogParameterBuilder()
-            .set(key: "type", value: inquireType.rawValue)
-            .build()
+        self.params = [
+            "type": inquireType.rawValue
+        ]
     }
 }
