@@ -1,5 +1,6 @@
 import Dependencies
 import Entity
+import EnumUtil
 import Firebase
 import FirebaseAnalytics
 import FirebaseCore
@@ -29,12 +30,47 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             session.delegate = self
             session.activate()
         }
+
+        if let schoolTypeRawString = self.userDefaultsClient.getValue(.schoolType) as? String,
+           let schoolType = SchoolType(rawValue: schoolTypeRawString) {
+            TWLog.setUserProperty(property: .schoolType, value: schoolType.analyticsValue)
+        }
+
+        let isSkipWeekend = self.userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
+        TWLog.setUserProperty(property: .isSkipWeekend, value: "\(isSkipWeekend)")
+
+        let isCustomTimeTable = self.userDefaultsClient.getValue(.isOnModifiedTimeTable) as? Bool ?? false
+        TWLog.setUserProperty(property: .isCustomTimeTable, value: "\(isCustomTimeTable)")
+
+        let isSkipAfterDinner = self.userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true
+        TWLog.setUserProperty(property: .isSkipAfterDinner, value: "\(isSkipAfterDinner)")
+
+        do {
+            let allergies = try self.localDatabaseClient.readRecords(as: AllergyLocalEntity.self)
+                .compactMap { AllergyType(rawValue: $0.allergy) ?? nil }
+
+            if allergies.isEmpty {
+                TWLog.setUserProperty(property: .allergies, value: nil)
+            } else {
+                TWLog.setUserProperty(
+                    property: .allergies,
+                    value: allergies.map(\.analyticsValue).joined(separator: ",")
+                )
+            }
+
+        } catch {
+            TWLog.error(error)
+        }
+
         WidgetCenter.shared.getCurrentConfigurations { [weak self] widgetInfos in
             guard let self else { return }
             let widgetCount = self.userDefaultsClient.getValue(.widgetCount) as? Int ?? 0
 
             guard case let .success(infos) = widgetInfos, widgetCount != infos.count else { return }
             self.userDefaultsClient.setValue(.widgetCount, infos.count)
+
+            TWLog.setUserProperty(property: .widgetCount, value: "\(infos.count)")
+
             infos.forEach { info in
                 let log = WidgetConfigEventLog(family: info.family.description, kind: info.kind)
                 TWLog.event(log)

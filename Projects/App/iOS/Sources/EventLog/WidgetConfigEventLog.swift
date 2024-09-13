@@ -2,12 +2,12 @@ import TWLog
 
 struct WidgetConfigEventLog: EventLog {
     let name: String = "widget_configuration"
-    let params: [String: Any]
+    let params: [String: String]
 
     init(family: String, kind: String) {
-        self.params = EventLogParameterBuilder()
-            .set(key: "family", value: family)
-            .set(key: "kind", value: kind)
-            .build()
+        self.params = [
+            "family": family,
+            "kind": kind
+        ]
     }
 }

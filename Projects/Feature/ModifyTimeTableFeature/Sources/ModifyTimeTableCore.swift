@@ -119,6 +119,10 @@ public struct ModifyTimeTableCore: Reducer {
                     try? localDatabaseClient.delete(record: timeTable)
                 }
 
+                let weekday = WeekdayType.allCases[state.currentTab]
+                let log = CompleteModifyTimeTable(week: weekday.analyticsValue)
+                TWLog.event(log)
+
                 let modifiedTimeTables = state.inputedTimeTables.indices
                     .map {
                         ModifiedTimeTableLocalEntity(

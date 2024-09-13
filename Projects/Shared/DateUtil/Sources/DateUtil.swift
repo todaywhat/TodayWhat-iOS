@@ -35,6 +35,19 @@ public extension Date {
         }
     }
 
+    var shortWeekdayString: String {
+        switch weekday {
+        case 1: return "일"
+        case 2: return "월"
+        case 3: return "화"
+        case 4: return "수"
+        case 5: return "목"
+        case 6: return "금"
+        case 7: return "토"
+        default: return ""
+        }
+    }
+
     func adding(by component: Calendar.Component, value: Int) -> Date {
         return Calendar.current.date(byAdding: component, value: value, to: self) ?? self
     }

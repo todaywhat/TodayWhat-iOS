@@ -24,117 +24,70 @@ public enum AllergyType: String, CaseIterable {
 public extension AllergyType {
     var number: String {
         switch self {
-        case .turbulence:
-            return "1."
-
-        case .milk:
-            return "2."
-
-        case .buckwheat:
-            return "3."
-
-        case .peanut:
-            return "4."
-
-        case .soybean:
-            return "5."
-
-        case .wheat:
-            return "6."
-
-        case .mackerel:
-            return "7."
-
-        case .crab:
-            return "8."
-
-        case .shrimp:
-            return "9."
-
-        case .pork:
-            return "10."
-
-        case .peach:
-            return "11."
-
-        case .tomato:
-            return "12."
-
-        case .sulphite:
-            return "13."
-
-        case .walnut:
-            return "14."
-
-        case .chicken:
-            return "15."
-
-        case .beef:
-            return "16."
-
-        case .squid:
-            return "17."
-
-        case .shellfish:
-            return "18."
+        case .turbulence: return "1."
+        case .milk: return "2."
+        case .buckwheat: return "3."
+        case .peanut: return "4."
+        case .soybean: return "5."
+        case .wheat: return "6."
+        case .mackerel: return "7."
+        case .crab: return "8."
+        case .shrimp: return "9."
+        case .pork: return "10."
+        case .peach: return "11."
+        case .tomato: return "12."
+        case .sulphite: return "13."
+        case .walnut: return "14."
+        case .chicken: return "15."
+        case .beef: return "16."
+        case .squid: return "17."
+        case .shellfish: return "18."
         }
     }
 
     var image: String {
         switch self {
-        case .turbulence:
-            return "turbulence"
+        case .turbulence: return "turbulence"
+        case .milk: return "milk"
+        case .buckwheat: return "buckwheat"
+        case .peanut: return "peanut"
+        case .soybean: return "soybean"
+        case .wheat: return "wheat"
+        case .mackerel: return "mackerel"
+        case .crab: return "crab"
+        case .shrimp: return "shrimp"
+        case .pork: return "pork"
+        case .peach: return "peach"
+        case .tomato: return "tomato"
+        case .sulphite: return "sulphite"
+        case .walnut: return "walnut"
+        case .chicken: return "chicken"
+        case .beef: return "beef"
+        case .squid: return "squid"
+        case .shellfish: return "shellfish"
+        }
+    }
 
-        case .milk:
-            return "milk"
-
-        case .buckwheat:
-            return "buckwheat"
-
-        case .peanut:
-            return "peanut"
-
-        case .soybean:
-            return "soybean"
-
-        case .wheat:
-            return "wheat"
-
-        case .mackerel:
-            return "mackerel"
-
-        case .crab:
-            return "crab"
-
-        case .shrimp:
-            return "shrimp"
-
-        case .pork:
-            return "pork"
-
-        case .peach:
-            return "peach"
-
-        case .tomato:
-            return "tomato"
-
-        case .sulphite:
-            return "sulphite"
-
-        case .walnut:
-            return "walnut"
-
-        case .chicken:
-            return "chicken"
-
-        case .beef:
-            return "beef"
-
-        case .squid:
-            return "squid"
-
-        case .shellfish:
-            return "shellfish"
+    var analyticsValue: String {
+        switch self {
+        case .turbulence: return "난류"
+        case .milk: return "우유"
+        case .buckwheat: return "메밀"
+        case .peanut: return "땅콩"
+        case .soybean: return "대두"
+        case .wheat: return "밀"
+        case .mackerel: return "고등어"
+        case .crab: return "게"
+        case .shrimp: return "새우"
+        case .pork: return "돼지고기"
+        case .peach: return "복숭아"
+        case .tomato: return "토마토"
+        case .sulphite: return "아황산염"
+        case .walnut: return "호두"
+        case .chicken: return "닭고기"
+        case .beef: return "쇠고기"
+        case .squid: return "오징어"
+        case .shellfish: return "조개류"
         }
     }
 }
