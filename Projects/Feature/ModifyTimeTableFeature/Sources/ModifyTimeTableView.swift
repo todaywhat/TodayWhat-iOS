@@ -9,7 +9,8 @@ public struct ModifyTimeTableView: View {
     @Environment(\.dismiss) var dismiss
     let store: StoreOf<ModifyTimeTableCore>
     @ObservedObject var viewStore: ViewStoreOf<ModifyTimeTableCore>
-    @FocusState var focusIndex: Int?
+    @State var focusIndex: Int?
+    @FocusState var isFocused: Bool
 
     public init(store: StoreOf<ModifyTimeTableCore>) {
         self.store = store
@@ -59,7 +60,14 @@ public struct ModifyTimeTableView: View {
                                 send: { .timeTableInputed(index: index, content: $0) }
                             )
                         )
-                        .focused($focusIndex, equals: index)
+                        .disabled(true)
+                        .onTapGesture {
+                            focusIndex = index
+                        }
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(focusIndex == index ? Color.extraBlack : .clear, lineWidth: 1)
+                        }
                         .overlay(alignment: .trailing) {
                             Button {
                                 if focusIndex == index {
@@ -87,6 +95,41 @@ public struct ModifyTimeTableView: View {
 
             Spacer()
         }
+        .safeAreaInset(edge: .bottom) {
+            if let index = focusIndex {
+                TWTextField(
+                    text: viewStore.binding(
+                        get: { $0.inputedTimeTables[safe: index] ?? "" },
+                        send: { .timeTableInputed(index: index, content: $0) }
+                    )
+                )
+                .focused($isFocused)
+                .overlay(alignment: .trailing) {
+                    Button {
+                        if focusIndex == index {
+                            viewStore.send(.timeTableInputed(index: index, content: ""))
+                        } else {
+                            viewStore.send(.removeTimeTable(index: index))
+                        }
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(.unselectedPrimary)
+                            .frame(width: 28, height: 28)
+                            .padding(.trailing, 16)
+                    }
+                }
+                .padding(.horizontal, 0.5)
+                .onAppear {
+                    isFocused = true
+                }
+                .padding(4)
+            }
+        }
+        .onChange(of: isFocused, perform: { isFocused in
+            guard !isFocused else { return }
+            focusIndex = nil
+        })
         .background(Color.backgroundMain)
         .onAppear {
             viewStore.send(.onAppear)
