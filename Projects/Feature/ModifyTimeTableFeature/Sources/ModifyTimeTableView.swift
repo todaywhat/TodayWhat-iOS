@@ -9,7 +9,6 @@ public struct ModifyTimeTableView: View {
     @Environment(\.dismiss) var dismiss
     let store: StoreOf<ModifyTimeTableCore>
     @ObservedObject var viewStore: ViewStoreOf<ModifyTimeTableCore>
-    @State var isFocusedTextField = false
     @State var focusIndex: Int?
     @FocusState var isFocused: Bool
 
@@ -64,7 +63,6 @@ public struct ModifyTimeTableView: View {
                         .disabled(true)
                         .onTapGesture {
                             focusIndex = index
-                            isFocusedTextField = true
                         }
                         .overlay {
                             RoundedRectangle(cornerRadius: 8)
@@ -98,7 +96,7 @@ public struct ModifyTimeTableView: View {
             Spacer()
         }
         .safeAreaInset(edge: .bottom) {
-            if isFocusedTextField, let index = focusIndex {
+            if let index = focusIndex {
                 TWTextField(
                     text: viewStore.binding(
                         get: { $0.inputedTimeTables[safe: index] ?? "" },
@@ -131,7 +129,6 @@ public struct ModifyTimeTableView: View {
         .onChange(of: isFocused, perform: { isFocused in
             guard !isFocused else { return }
             focusIndex = nil
-            isFocusedTextField = false
         })
         .background(Color.backgroundMain)
         .onAppear {
