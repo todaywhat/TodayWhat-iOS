@@ -190,6 +190,7 @@ public struct SettingsCore: Reducer {
 
             return .none
         }
+        .alertFeatures()
         .subFeatures()
     }
 }
@@ -197,11 +198,15 @@ public struct SettingsCore: Reducer {
 extension Reducer where State == SettingsCore.State, Action == SettingsCore.Action {
     func subFeatures() -> some ReducerOf<Self> {
         self
-            .ifLet(\.$alert, action: /Action.alert)
-            .ifLet(\.$confirmationDialog, action: /Action.confirmationDialog)
             .ifLet(\.$schoolSettingCore, action: /Action.schoolSettingCore) { SchoolSettingCore() }
             .ifLet(\.$allergySettingCore, action: /Action.allergySettingCore) { AllergySettingCore() }
             .ifLet(\.$modifyTimeTableCore, action: /Action.modifyTimeTableCore) { ModifyTimeTableCore() }
             .ifLet(\.$tutorialCore, action: /Action.tutorialCore) { TutorialCore() }
+    }
+
+    func alertFeatures() -> some ReducerOf<Self> {
+        self
+            .ifLet(\.$alert, action: /Action.alert)
+            .ifLet(\.$confirmationDialog, action: /Action.confirmationDialog)
     }
 }
