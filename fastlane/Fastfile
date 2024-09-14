@@ -15,9 +15,16 @@
 
 default_platform(:ios)
 
+desc "Match를 사용하여 인증서와 프로비저닝 프로파일 동기화"
+lane :sync_certificates do
+  match(type: "appstore", app_identifier: "baegteun.TodayWhat")
+end
+
 platform :ios do
   desc "테스트플라이트에 최신코드의 오늘뭐임 iOS앱을 올려요"
   lane :testflight_release do |options|
+    sync_certificates
+
     version = options[:version]
 
     info_plist_path = "./Projects/App/iOS/Support/Info.plist"
@@ -52,6 +59,8 @@ platform :ios do
 
   desc "앱스토어에 오늘뭐임 iOS앱의 새로운 버전 심사를 올려요"
   lane :appstore_release do |options|
+    sync_certificates
+
     version = options[:version]
 
     info_plist_path = "./Projects/App/iOS/Support/Info.plist"
@@ -114,9 +123,17 @@ platform :ios do
   end
 end
 
+
+desc "Match를 사용하여 macOS 인증서와 프로비저닝 프로파일 동기화"
+lane :sync_certificates_macos do
+  match(type: "appstore", app_identifier: "baegteun.TodayWhat", platform: "macos")
+end
+
 platform :mac do
   desc "테스트플라이트에 최신코드의 오늘뭐임 macOS앱을 올려요"
   lane :testflight_release do |options|
+    sync_certificates_macos
+
     version = options[:version]
 
     info_plist_path = "./Projects/App/macOS/Support/Info.plist"
@@ -151,6 +168,8 @@ platform :mac do
 
   desc "앱스토어에 오늘뭐임 macOS앱의 새로운 버전 심사를 올려요"
   lane :appstore_release do |options|
+    sync_certificates_macos
+
     version = options[:version]
 
     info_plist_path = "./Projects/App/macOS/Support/Info.plist"

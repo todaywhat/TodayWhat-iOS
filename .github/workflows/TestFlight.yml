@@ -27,18 +27,6 @@ env:
   ENCRYPTED_IOS_GOOGLE_SERVICE_PLIST_PATH: ${{ 'Projects/App/iOS/Resources/GoogleService-Info.plist.gpg' }}
   DECRYPTED_IOS_GOOGLE_SERVICE_PLIST_PATH: ${{ 'Projects/App/iOS/Resources/GoogleService-Info.plist' }}
 
-  STAGE_PROVISION_SECRET: ${{ secrets.STAGE_PROVISION_SECRET }}
-  ENCRYPTED_STAGE_PROVISION_PATH: ${{ 'Tuist/Signing/StageProvisionProfile.zip.gpg' }}
-  DECRYPTED_STAGE_PROVISION_PATH: ${{ 'Tuist/Signing/StageProvisionProfile.zip' }}
-
-  PROD_PROVISION_SECRET: ${{ secrets.PROD_PROVISION_SECRET }}
-  ENCRYPTED_PROD_PROVISION_PATH: ${{ 'Tuist/Signing/ProdProvisionProfile.zip.gpg' }}
-  DECRYPTED_PROD_PROVISION_PATH: ${{ 'Tuist/Signing/ProdProvisionProfile.zip' }}
-
-  MASTER_KEY_SECRET: ${{ secrets.MASTER_KEY_SECRET }}
-  ENCRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key.gpg' }}
-  DECRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key' }}
-
   FASTLANE_SECRET: ${{ secrets.FASTLANE_SECRET }}
   ENCRYPTED_FASTLANE_ENV_PATH: ${{ 'fastlane/.env.default.gpg' }}
   DECRYPTED_FASTLANE_ENV_PATH: ${{ 'fastlane/.env.default' }}
@@ -65,10 +53,6 @@ jobs:
         run: |
           tuist_version=`cat .tuist-version`
           mise install tuist@$tuist_version
-
-      - name: Configure Keychain
-        run: sh .github/workflows/AppStore/Keychain.sh
-        shell: bash
 
       - name: Install fastlane
         run: brew install fastlane

@@ -10,10 +10,6 @@ env:
   CACHED_DEPENDENCY_PATHS: ${{ github.workspace }}/Tuist/Dependencies
   TODAYWHAT_IOS_DISCORD_WEBHOOK: ${{ secrets.TODAYWHAT_IOS_DISCORD_WEBHOOK }}
 
-  MASTER_KEY_SECRET: ${{ secrets.MASTER_KEY_SECRET }}
-  ENCRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key.gpg' }}
-  DECRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key' }}
-
 jobs:
   prepare-dependency:
     name: ⚙️ Prepare for CI
@@ -57,9 +53,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           xcode-version: 15.2
-
-      - name: Decode `master.key`
-        run: gpg -d -o "$DECRYPTED_MASTER_KEY_PATH" --pinentry-mode=loopback --passphrase "$MASTER_KEY_SECRET" "$ENCRYPTED_MASTER_KEY_PATH"
 
       - name: Check dependency cache
         uses: actions/cache@v3
