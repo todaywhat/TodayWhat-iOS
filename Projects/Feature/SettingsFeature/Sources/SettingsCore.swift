@@ -136,21 +136,27 @@ public struct SettingsCore: Reducer {
 
             case .consultingButtonDidTap:
                 if deviceClient.isPad() {
-                    state.alert = AlertState {
-                        .init("오늘 뭐임")
-                    } actions: {
-                        ButtonState.default(.init("깃허브"), action: .send(.githubIssueButtonDidTap))
-                        ButtonState.default(.init("메일"), action: .send(.mailIssueButtonDidTap))
-                        ButtonState.cancel(.init("취소"))
-                    }
+                    state.alert = AlertState(
+                        title: {
+                            TextState.init("오늘 뭐임")
+                        },
+                        actions: {
+                            ButtonState.default(.init("깃허브"), action: .send(.githubIssueButtonDidTap))
+                            ButtonState.default(.init("메일"), action: .send(.mailIssueButtonDidTap))
+                            ButtonState.cancel(.init("취소"))
+                        }
+                    )
                 } else {
-                    state.confirmationDialog = ConfirmationDialogState {
-                        .init("문의하기")
-                    } actions: {
-                        ButtonState.default(.init("깃허브"), action: .send(.githubIssueButtonDidTap))
-                        ButtonState.default(.init("메일"), action: .send(.mailIssueButtonDidTap))
-                        ButtonState.cancel(.init("취소"))
-                    }
+                    state.confirmationDialog = ConfirmationDialogState(
+                        title: {
+                            TextState.init("문의하기")
+                        },
+                        actions: {
+                            ButtonState.default(.init("깃허브"), action: .send(.githubIssueButtonDidTap))
+                            ButtonState.default(.init("메일"), action: .send(.mailIssueButtonDidTap))
+                            ButtonState.cancel(.init("취소"))
+                        }
+                    )
                 }
 
                 let log = InquireButtonClickedEventLog()
@@ -184,19 +190,18 @@ public struct SettingsCore: Reducer {
 
             return .none
         }
-        .ifLet(\.$alert, action: \.alert)
-        .ifLet(\.$confirmationDialog, action: \.confirmationDialog)
-        .ifLet(\.$schoolSettingCore, action: \.schoolSettingCore) {
-            SchoolSettingCore()
-        }
-        .ifLet(\.$allergySettingCore, action: \.allergySettingCore) {
-            AllergySettingCore()
-        }
-        .ifLet(\.$modifyTimeTableCore, action: \.modifyTimeTableCore) {
-            ModifyTimeTableCore()
-        }
-        .ifLet(\.$tutorialCore, action: \.tutorialCore) {
-            TutorialCore()
-        }
+        .subFeatures()
+    }
+}
+
+extension Reducer where State == SettingsCore.State, Action == SettingsCore.Action {
+    func subFeatures() -> some ReducerOf<Self> {
+        self
+            .ifLet(\.$alert, action: /Action.alert)
+            .ifLet(\.$confirmationDialog, action: /Action.confirmationDialog)
+            .ifLet(\.$schoolSettingCore, action: /Action.schoolSettingCore) { SchoolSettingCore() }
+            .ifLet(\.$allergySettingCore, action: /Action.allergySettingCore) { AllergySettingCore() }
+            .ifLet(\.$modifyTimeTableCore, action: /Action.modifyTimeTableCore) { ModifyTimeTableCore() }
+            .ifLet(\.$tutorialCore, action: /Action.tutorialCore) { TutorialCore() }
     }
 }
