@@ -1,1 +1,1 @@
-$(dirname "$0")/../Tuist/Dependencies/SwiftPackageManager/.build/checkouts/firebase-ios-sdk/Crashlytics/run
+$(dirname "$0")/../.build/checkouts/firebase-ios-sdk/Crashlytics/run
