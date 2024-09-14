@@ -43,22 +43,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: webfactory/ssh-agent@v0.5.0
+        with:
+          ssh-private-key: ${{ secrets.MATCH_SSH_PRIVATE_KEY }}
+
       - name: Decode encrypted files
-        run: sh .github/workflows/AppStore/Decode.sh
+        run: |
+          sh .github/workflows/AppStore/Decode.sh
+          sh .github/workflows/AppStore/Keychain.sh
         shell: bash
+        env:
+          KEYCHAIN: "todaywhat.keychain"
 
       - uses: jdx/mise-action@v2
 
       - name: Install tuist
         run: |
-          tuist_version=`cat .tuist-version`
-          mise install tuist@$tuist_version
+          mise install tuist
 
       - name: Install fastlane
         run: brew install fastlane
 
       - name: Install dependencies
-        run: tuist fetch
+        run: tuist install
 
       - name: Project generate
         run: TUIST_ENV=CD tuist generate
@@ -74,6 +81,9 @@ jobs:
         run: sh .github/workflows/TestFlight/TestFlight.sh
         shell: bash
         env:
+          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+          MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSPHRASE }}
           PLATFORM: ${{ github.event.inputs.platform }}
           VERSION: ${{ github.event.inputs.version }}
 

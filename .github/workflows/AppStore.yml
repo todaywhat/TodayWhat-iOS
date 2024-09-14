@@ -46,6 +46,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: webfactory/ssh-agent@v0.5.0
+        with:
+          ssh-private-key: ${{ secrets.MATCH_SSH_PRIVATE_KEY }}
+
       - name: Decode encrypted files
         run: sh .github/workflows/AppStore/Decode.sh
         shell: bash
@@ -79,6 +83,9 @@ jobs:
         run: sh .github/workflows/AppStore/Deploy.sh
         shell: bash
         env:
+          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+          MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSPHRASE }}
           VERSION: ${{ github.event.inputs.version }}
           PLATFORM: ${{ github.event.inputs.platform }}
 
