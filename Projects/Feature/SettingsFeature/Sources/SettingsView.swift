@@ -63,26 +63,28 @@ public struct SettingsView: View {
 
     @ViewBuilder
     func schoolSettingsView() -> some View {
-        blockView(spacing: 12) {
+        SettingsBlockView(spacing: 12) {
             viewStore.send(.schoolBlockButtonDidTap)
         } label: {
-            settingsOptionsIconView(.school)
+            VStack(spacing: 12) {
+                settingsOptionsIconView(.school)
 
-            VStack(alignment: .leading, spacing: 8) {
-                Text("\(viewStore.grade)학년 \(viewStore.class)반")
-                    .twFont(.caption1, color: .textSecondary)
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("\(viewStore.grade)학년 \(viewStore.class)반")
+                        .twFont(.caption1, color: .textSecondary)
 
-                Text("\(viewStore.schoolName)")
-                    .twFont(.body3, color: .textPrimary)
+                    Text("\(viewStore.schoolName)")
+                        .twFont(.body3, color: .textPrimary)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 
     // MARK: - Settings Chevron
     @ViewBuilder
     func allergySettingsView() -> some View {
-        blockView(corners: [.topLeft, .topRight]) {
+        SettingsBlockView(corners: [.topLeft, .topRight]) {
             viewStore.send(.allergyBlockButtonDidTap)
         } label: {
             settingsOptionChevronView(icon: .allergySetting, text: "알레르기 설정")
@@ -91,7 +93,7 @@ public struct SettingsView: View {
 
     @ViewBuilder
     func timeTableSettingsView() -> some View {
-        blockView(corners: []) {
+        SettingsBlockView(corners: []) {
             viewStore.send(.modifyTimeTableButtonDidTap)
         } label: {
             settingsOptionChevronView(icon: .writingPencil, text: "시간표 수정")
@@ -100,7 +102,7 @@ public struct SettingsView: View {
 
     @ViewBuilder
     func tutorialSettingsView() -> some View {
-        blockView {
+        SettingsBlockView {
             viewStore.send(.tutorialButtonDidTap)
         } label: {
             settingsOptionChevronView(icon: .tutorial, text: "사용법")
@@ -109,7 +111,7 @@ public struct SettingsView: View {
 
     @ViewBuilder
     func consultingSettingsView() -> some View {
-        blockView(corners: [.bottomLeft, .bottomRight]) {
+        SettingsBlockView(corners: [.bottomLeft, .bottomRight]) {
             viewStore.send(.consultingButtonDidTap)
         } label: {
             settingsOptionChevronView(icon: .consulting, text: "문의하기")
@@ -119,7 +121,7 @@ public struct SettingsView: View {
     // MARK: - Settings Toggle
     @ViewBuilder
     func skipAfterDinnerView() -> some View {
-        blockView(corners: [.topLeft, .topRight]) {
+        SettingsBlockView(corners: [.topLeft, .topRight]) {
             settingsOptionToggleView(
                 icon: .smallMeal,
                 text: "오후 7시 이후 내일 급식 표시",
@@ -133,7 +135,7 @@ public struct SettingsView: View {
 
     @ViewBuilder
     func onModifiedTimeTable() -> some View {
-        blockView(corners: []) {
+        SettingsBlockView(corners: []) {
             settingsOptionToggleView(
                 icon: .clock,
                 text: "커스텀 시간표 표시",
@@ -147,7 +149,7 @@ public struct SettingsView: View {
 
     @ViewBuilder
     func skipWeekendView() -> some View {
-        blockView(corners: [.bottomLeft, .bottomRight]) {
+        SettingsBlockView(corners: [.bottomLeft, .bottomRight]) {
             settingsOptionToggleView(
                 icon: .calendar,
                 text: "주말 건너뛰기",
@@ -156,41 +158,6 @@ public struct SettingsView: View {
                     send: SettingsCore.Action.isSkipWeekendChanged
                 )
             )
-        }
-    }
-
-    // MARK: - Reusable View
-    @ViewBuilder
-    func blockView(
-        spacing: CGFloat = 16,
-        corners: UIRectCorner = .allCorners,
-        action: (() -> Void)? = nil,
-        @ViewBuilder label: () -> some View
-    ) -> some View {
-        if let action {
-            Button(action: action) {
-                VStack(alignment: .leading, spacing: spacing) {
-                    label()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .padding(16)
-                .frame(maxWidth: .infinity)
-                .background {
-                    Color.cardBackgroundSecondary
-                }
-                .cornerRadius(16, corners: corners)
-            }
-        } else {
-            VStack(alignment: .leading, spacing: spacing) {
-                label()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .padding(16)
-            .frame(maxWidth: .infinity)
-            .background {
-                Color.cardBackgroundSecondary
-            }
-            .cornerRadius(16, corners: corners)
         }
     }
 
