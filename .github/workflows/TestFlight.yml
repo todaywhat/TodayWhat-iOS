@@ -27,18 +27,6 @@ env:
   ENCRYPTED_IOS_GOOGLE_SERVICE_PLIST_PATH: ${{ 'Projects/App/iOS/Resources/GoogleService-Info.plist.gpg' }}
   DECRYPTED_IOS_GOOGLE_SERVICE_PLIST_PATH: ${{ 'Projects/App/iOS/Resources/GoogleService-Info.plist' }}
 
-  STAGE_PROVISION_SECRET: ${{ secrets.STAGE_PROVISION_SECRET }}
-  ENCRYPTED_STAGE_PROVISION_PATH: ${{ 'Tuist/Signing/StageProvisionProfile.zip.gpg' }}
-  DECRYPTED_STAGE_PROVISION_PATH: ${{ 'Tuist/Signing/StageProvisionProfile.zip' }}
-
-  PROD_PROVISION_SECRET: ${{ secrets.PROD_PROVISION_SECRET }}
-  ENCRYPTED_PROD_PROVISION_PATH: ${{ 'Tuist/Signing/ProdProvisionProfile.zip.gpg' }}
-  DECRYPTED_PROD_PROVISION_PATH: ${{ 'Tuist/Signing/ProdProvisionProfile.zip' }}
-
-  MASTER_KEY_SECRET: ${{ secrets.MASTER_KEY_SECRET }}
-  ENCRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key.gpg' }}
-  DECRYPTED_MASTER_KEY_PATH: ${{ 'Tuist/master.key' }}
-
   FASTLANE_SECRET: ${{ secrets.FASTLANE_SECRET }}
   ENCRYPTED_FASTLANE_ENV_PATH: ${{ 'fastlane/.env.default.gpg' }}
   DECRYPTED_FASTLANE_ENV_PATH: ${{ 'fastlane/.env.default' }}
@@ -55,26 +43,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: webfactory/ssh-agent@v0.5.0
+        with:
+          ssh-private-key: ${{ secrets.MATCH_SSH_PRIVATE_KEY }}
+
       - name: Decode encrypted files
-        run: sh .github/workflows/AppStore/Decode.sh
+        run: |
+          sh .github/workflows/AppStore/Decode.sh
+          sh .github/workflows/AppStore/Keychain.sh
         shell: bash
+        env:
+          KEYCHAIN: "todaywhat.keychain"
 
       - uses: jdx/mise-action@v2
 
       - name: Install tuist
         run: |
-          tuist_version=`cat .tuist-version`
-          mise install tuist@$tuist_version
-
-      - name: Configure Keychain
-        run: sh .github/workflows/AppStore/Keychain.sh
-        shell: bash
+          mise install tuist
 
       - name: Install fastlane
         run: brew install fastlane
 
       - name: Install dependencies
-        run: tuist fetch
+        run: tuist install
 
       - name: Project generate
         run: TUIST_ENV=CD tuist generate
@@ -90,6 +81,9 @@ jobs:
         run: sh .github/workflows/TestFlight/TestFlight.sh
         shell: bash
         env:
+          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+          MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSPHRASE }}
           PLATFORM: ${{ github.event.inputs.platform }}
           VERSION: ${{ github.event.inputs.version }}
 
