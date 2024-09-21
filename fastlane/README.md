@@ -13,6 +13,17 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
+### sync_certificates
+
+```sh
+[bundle exec] fastlane sync_certificates
+```
+
+Match를 사용하여 인증서와 프로비저닝 프로파일 동기화
+
+----
+
+
 ## iOS
 
 ### ios testflight_release
@@ -30,27 +41,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 ```
 
 앱스토어에 오늘뭐임 iOS앱의 새로운 버전 심사를 올려요
-
-----
-
-
-## Mac
-
-### mac testflight_release
-
-```sh
-[bundle exec] fastlane mac testflight_release
-```
-
-테스트플라이트에 최신코드의 오늘뭐임 macOS앱을 올려요
-
-### mac appstore_release
-
-```sh
-[bundle exec] fastlane mac appstore_release
-```
-
-앱스토어에 오늘뭐임 macOS앱의 새로운 버전 심사를 올려요
 
 ----
 
