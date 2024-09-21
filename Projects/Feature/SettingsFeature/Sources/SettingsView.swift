@@ -66,7 +66,7 @@ public struct SettingsView: View {
         SettingsBlockView(spacing: 12) {
             viewStore.send(.schoolBlockButtonDidTap)
         } label: {
-            VStack(spacing: 12) {
+            Group {
                 settingsOptionsIconView(.school)
 
                 VStack(alignment: .leading, spacing: 8) {
