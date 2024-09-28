@@ -25,25 +25,8 @@ struct MealProvider: IntentTimelineProvider {
         completion: @escaping (MealEntry) -> Void
     ) {
         Task {
-            var currentDate = Date()
-            if currentDate.hour >= 20 {
-                currentDate = currentDate.adding(by: .day, value: 1)
-            }
-            do {
-                let meal = try await mealClient.fetchMeal(currentDate)
-                let allergy = try localDatabaseClient.readRecords(as: AllergyLocalEntity.self)
-                    .compactMap { AllergyType(rawValue: $0.allergy) }
-                let entry = MealEntry(
-                    date: currentDate,
-                    meal: meal,
-                    mealPartTime: MealPartTime(hour: currentDate),
-                    allergyList: allergy
-                )
-                completion(entry)
-            } catch {
-                let entry = MealEntry.empty()
-                completion(entry)
-            }
+            let entry = await fetchMealEntry(for: configuration)
+            completion(entry)
         }
     }
 
@@ -54,33 +37,131 @@ struct MealProvider: IntentTimelineProvider {
     ) {
         let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? .init()
         Task {
-            var currentDate = Date()
-            if currentDate.hour >= 20 {
-                currentDate = currentDate.adding(by: .day, value: 1)
-            }
-            let mealPartTime: MealPartTime = if configuration.displayMeal == .auto {
-                MealPartTime(hour: currentDate)
+            let entry = await fetchMealEntry(for: configuration)
+            let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+            completion(timeline)
+        }
+    }
+
+    private func fetchMealEntry(for configuration: Intent) async -> MealEntry {
+        let currentDate = Date()
+        let requestedMealTime: MealPartTime = if configuration.displayMeal == .auto {
+            MealPartTime(hour: currentDate)
+        } else {
+            configuration.displayMeal.toMealPartTime()
+        }
+
+        do {
+            let (meal, displayDate) = try await fetchMealAndDate(for: requestedMealTime, currentDate: currentDate)
+            let allergies = try localDatabaseClient.readRecords(as: AllergyLocalEntity.self)
+                .compactMap { AllergyType(rawValue: $0.allergy) }
+
+            let displayMealTime: MealPartTime
+
+            if currentDate.compare(displayDate) == .orderedSame, configuration.displayMeal == .auto {
+                displayMealTime = determineDisplayedMealTime(
+                    requestedMealTime: requestedMealTime,
+                    meal: meal,
+                    currentDate: displayDate
+                ) ?? MealPartTime(hour: displayDate)
+            } else if currentDate.compare(displayDate) != .orderedSame, configuration.displayMeal == .auto {
+                displayMealTime = determineDisplayedMealTime(
+                    meal: meal,
+                    currentDate: displayDate
+                ) ?? MealPartTime(hour: displayDate)
             } else {
-                configuration.displayMeal.toMealPartTime()
+                displayMealTime = configuration.displayMeal.toMealPartTime()
             }
 
-            do {
-                let meal = try await mealClient.fetchMeal(currentDate)
-                let allergy = try localDatabaseClient.readRecords(as: AllergyLocalEntity.self)
-                    .compactMap { AllergyType(rawValue: $0.allergy) }
-                let entry = MealEntry(
-                    date: currentDate,
-                    meal: meal,
-                    mealPartTime: mealPartTime,
-                    allergyList: allergy
-                )
-                let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
-                completion(timeline)
-            } catch {
-                let entry = MealEntry.empty()
-                let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
-                completion(timeline)
+            return MealEntry(
+                date: displayDate,
+                meal: meal,
+                mealPartTime: displayMealTime,
+                allergyList: allergies
+            )
+        } catch {
+            return MealEntry.empty()
+        }
+    }
+
+    private func fetchMealAndDate(
+        for requestedMealTime: MealPartTime,
+        currentDate: Date
+    ) async throws -> (Meal, Date) {
+        var targetDate = currentDate
+        if currentDate.hour >= 20 {
+            targetDate = targetDate.adding(by: .day, value: 1)
+
+            let meal = try await mealClient.fetchMeal(targetDate)
+            return (meal, targetDate)
+        } else {
+            let meal = try await mealClient.fetchMeal(targetDate)
+
+            if isMealEmpty(meal, for: requestedMealTime) {
+                // 1. 요청한 MealTime 이후의 시간도 확인 후 return
+                let mealTimes: [MealPartTime] = [.breakfast, .lunch, .dinner]
+                let startIndex = mealTimes.firstIndex(of: requestedMealTime) ?? 0
+
+                for i in startIndex..<mealTimes.count where !isMealEmpty(meal, for: mealTimes[i]) {
+                    return (meal, targetDate)
+                }
             }
+
+            // 2. 현재 날짜에 비어있지 않은 급식이 없다면 다음 날 확인 후 return
+            let nextDate = targetDate.adding(by: .day, value: 1)
+            let nextDayMeal = try await mealClient.fetchMeal(nextDate)
+
+            // 3. 다음 날 아침부터 순서대로 확인 후 return
+            let mealTimes: [MealPartTime] = [.breakfast, .lunch, .dinner]
+            for mealTime in mealTimes where !isMealEmpty(nextDayMeal, for: mealTime) {
+                return (nextDayMeal, nextDate)
+            }
+
+            return (nextDayMeal, nextDate)
+        }
+    }
+
+    private func determineDisplayedMealTime(
+        requestedMealTime: MealPartTime,
+        meal: Meal,
+        currentDate: Date
+    ) -> MealPartTime? {
+        let mealTimes: [MealPartTime] = [.breakfast, .lunch, .dinner]
+
+        let availableMeals = mealTimes.filter { !isMealEmpty(meal, for: $0) }
+
+        if availableMeals.contains(requestedMealTime) {
+            return requestedMealTime
+        }
+
+        let futureAvailableMeals = availableMeals.filter { $0.rawValue >= requestedMealTime.rawValue }
+        if let nextAvailableMeal = futureAvailableMeals.first {
+            return nextAvailableMeal
+        }
+
+        return nil
+    }
+
+    private func determineDisplayedMealTime(
+        meal: Meal,
+        currentDate: Date
+    ) -> MealPartTime? {
+        let mealTimes: [MealPartTime] = [.breakfast, .lunch, .dinner]
+
+        let availableMeals = mealTimes.filter { !isMealEmpty(meal, for: $0) }
+
+        if let nextAvailableMeal = availableMeals.first {
+            return nextAvailableMeal
+        }
+
+        return nil
+    }
+
+    private func isMealEmpty(_ meal: Meal, for mealTime: MealPartTime) -> Bool {
+        switch mealTime {
+        case .breakfast: return meal.breakfast.meals.isEmpty
+        case .lunch: return meal.lunch.meals.isEmpty
+        case .dinner: return meal.dinner.meals.isEmpty
         }
     }
 }
