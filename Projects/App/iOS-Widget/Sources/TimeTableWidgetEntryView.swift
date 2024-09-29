@@ -71,11 +71,7 @@ private struct MediumTimeTableWidgetView: View {
         GeometryReader { proxy in
             VStack(spacing: 4) {
                 HStack(spacing: 4) {
-                    Text("ONMI")
-                        .font(.custom("Fraunces9pt-Black", size: 16))
-                        .foregroundColor(.extraBlack)
-
-                    Text("[시간표]")
+                    Text(getTimeTableText(date: entry.date))
                         .twFont(.caption1, color: .textPrimary)
 
                     Spacer()
@@ -111,6 +107,27 @@ private struct MediumTimeTableWidgetView: View {
             .padding(12)
         }
     }
+
+    func getTimeTableText(date: Date) -> String {
+        let calendar = Calendar.current
+        let now = Date()
+
+        if calendar.isDate(date, inSameDayAs: now) {
+            return "오늘의 [시간표]"
+        }
+
+        let components = calendar.dateComponents([.day], from: now, to: date)
+
+        if let days = components.day, days == 1 {
+            return "내일의 [시간표]"
+        }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "EEEE"
+        let dayOfWeek = dateFormatter.string(from: date)
+        return "\(dayOfWeek) [시간표]"
+    }
 }
 
 private struct LargeTimeTableWidgetView: View {
@@ -119,11 +136,7 @@ private struct LargeTimeTableWidgetView: View {
     var body: some View {
         VStack(spacing: 4) {
             HStack(spacing: 4) {
-                Text("ONMI")
-                    .font(.custom("Fraunces9pt-Black", size: 16))
-                    .foregroundColor(.extraBlack)
-
-                Text("[시간표]")
+                Text(getTimeTableText(date: entry.date))
                     .twFont(.caption1, color: .textPrimary)
 
                 Spacer()
@@ -156,5 +169,26 @@ private struct LargeTimeTableWidgetView: View {
             .cornerRadius(8)
         }
         .padding(12)
+    }
+
+    func getTimeTableText(date: Date) -> String {
+        let calendar = Calendar.current
+        let now = Date()
+
+        if calendar.isDate(date, inSameDayAs: now) {
+            return "오늘의 [시간표]"
+        }
+
+        let components = calendar.dateComponents([.day], from: now, to: date)
+
+        if let days = components.day, days == 1 {
+            return "내일의 [시간표]"
+        }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "EEEE"
+        let dayOfWeek = dateFormatter.string(from: date)
+        return "\(dayOfWeek) [시간표]"
     }
 }
