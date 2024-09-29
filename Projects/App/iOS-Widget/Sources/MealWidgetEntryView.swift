@@ -1,6 +1,7 @@
 import Dependencies
 import DesignSystem
 import Entity
+import Foundation
 import Intents
 import SwiftUI
 import SwiftUIUtil
@@ -70,7 +71,7 @@ private struct SmallMealWidgetView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("[\(entry.mealPartTime.display)]")
+            Text(getMealText(date: entry.date))
                 .frame(maxHeight: .infinity)
                 .twFont(.caption1, color: .textSecondary)
 
@@ -86,6 +87,27 @@ private struct SmallMealWidgetView: View {
             }
         }
         .padding(12)
+    }
+
+    func getMealText(date: Date) -> String {
+        let calendar = Calendar.current
+        let now = Date()
+
+        if calendar.isDate(date, inSameDayAs: now) {
+            return "오늘의 [\(entry.mealPartTime.display)]"
+        }
+
+        let components = calendar.dateComponents([.day], from: now, to: date)
+
+        if let days = components.day, days == 1 {
+            return "내일의 [\(entry.mealPartTime.display)]"
+        }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "EEEE"
+        let dayOfWeek = dateFormatter.string(from: date)
+        return "\(dayOfWeek) [\(entry.mealPartTime.display)]"
     }
 
     private func mealDisplay(meal: String) -> String {
@@ -109,11 +131,7 @@ private struct MediumMealWidgetView: View {
         GeometryReader { proxy in
             VStack(spacing: 4) {
                 HStack(spacing: 4) {
-                    Text("ONMI")
-                        .font(.custom("Fraunces9pt-Black", size: 16))
-                        .foregroundColor(.extraBlack)
-
-                    Text("[\(entry.mealPartTime.display)]")
+                    Text(getMealText(date: entry.date))
                         .twFont(.caption1, color: .extraBlack)
 
                     Spacer()
@@ -148,6 +166,27 @@ private struct MediumMealWidgetView: View {
         }
     }
 
+    func getMealText(date: Date) -> String {
+        let calendar = Calendar.current
+        let now = Date()
+
+        if calendar.isDate(date, inSameDayAs: now) {
+            return "오늘의 [\(entry.mealPartTime.display)]"
+        }
+
+        let components = calendar.dateComponents([.day], from: now, to: date)
+
+        if let days = components.day, days == 1 {
+            return "내일의 [\(entry.mealPartTime.display)]"
+        }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "EEEE"
+        let dayOfWeek = dateFormatter.string(from: date)
+        return "\(dayOfWeek) [\(entry.mealPartTime.display)]"
+    }
+
     private func mealDisplay(meal: String) -> String {
         return meal.replacingOccurrences(of: "[0-9.() ]", with: "", options: [.regularExpression])
     }
@@ -168,11 +207,7 @@ private struct LargeMealWidgetView: View {
         VStack(spacing: 4) {
             VStack(spacing: 4) {
                 HStack(spacing: 4) {
-                    Text("ONMI")
-                        .font(.custom("Fraunces9pt-Black", size: 16))
-                        .foregroundColor(.extraBlack)
-
-                    Text("[\(entry.mealPartTime.display)]")
+                    Text(getMealText(date: entry.date))
                         .twFont(.caption1, color: .extraBlack)
 
                     Spacer()
@@ -216,6 +251,27 @@ private struct LargeMealWidgetView: View {
             .cornerRadius(8)
         }
         .padding(16)
+    }
+
+    func getMealText(date: Date) -> String {
+        let calendar = Calendar.current
+        let now = Date()
+
+        if calendar.isDate(date, inSameDayAs: now) {
+            return "오늘의 [\(entry.mealPartTime.display)]"
+        }
+
+        let components = calendar.dateComponents([.day], from: now, to: date)
+
+        if let days = components.day, days == 1 {
+            return "내일의 [\(entry.mealPartTime.display)]"
+        }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "EEEE"
+        let dayOfWeek = dateFormatter.string(from: date)
+        return "\(dayOfWeek) [\(entry.mealPartTime.display)]"
     }
 
     private func mealDisplay(meal: String) -> String {
