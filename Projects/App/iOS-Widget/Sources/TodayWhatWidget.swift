@@ -11,6 +11,7 @@ import WidgetKit
 @main
 struct TodayWhatWidget: WidgetBundle {
     var body: some Widget {
+        TodayWhatMealTimeTableWidget()
         TodayWhatMealWidget()
         TodayWhatTimeTableWidget()
     }

@@ -45,11 +45,11 @@ struct TimeTableProvider: TimelineProvider {
         Task {
             var currentDate = Date()
             if currentDate.hour >= 20 {
-                currentDate = currentDate.adding(by: .hour, value: 5)
+                currentDate = currentDate.adding(by: .day, value: 1)
             }
             do {
                 let timeTable = try await fetchTimeTables(date: currentDate)
-                let entry = TimeTableEntry(date: currentDate, timeTable: Array(timeTable))
+                let entry = TimeTableEntry(date: transformSkippingDate(currentDate), timeTable: Array(timeTable))
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
             } catch {
@@ -72,6 +72,20 @@ struct TimeTableProvider: TimelineProvider {
         }
         let timeTable = try await timeTableClient.fetchTimeTable(date).prefix(7)
         return Array(timeTable)
+    }
+
+    private func transformSkippingDate(_ date: Date) -> Date {
+        var resultDate = date
+
+        if userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true {
+            if resultDate.weekday == 7 {
+                resultDate = resultDate.adding(by: .day, value: 2)
+            } else if resultDate.weekday == 1 {
+                resultDate = resultDate.adding(by: .day, value: 1)
+            }
+        }
+
+        return resultDate
     }
 }
 
