@@ -106,19 +106,21 @@ struct MealProvider: IntentTimelineProvider {
                 for i in startIndex..<mealTimes.count where !isMealEmpty(meal, for: mealTimes[i]) {
                     return (meal, transformSkippingDate(targetDate))
                 }
+
+                // 2. 현재 날짜에 비어있지 않은 급식이 없다면 다음 날 확인 후 return
+                let nextDate = targetDate.adding(by: .day, value: 1)
+                let nextDayMeal = try await mealClient.fetchMeal(nextDate)
+
+                // 3. 다음 날 아침부터 순서대로 확인 후 return
+                let nextMealTimes: [MealPartTime] = [.breakfast, .lunch, .dinner]
+                for mealTime in nextMealTimes where !isMealEmpty(nextDayMeal, for: mealTime) {
+                    return (nextDayMeal, transformSkippingDate(nextDate))
+                }
+
+                return (meal, transformSkippingDate(targetDate))
+            } else {
+                return (meal, transformSkippingDate(targetDate))
             }
-
-            // 2. 현재 날짜에 비어있지 않은 급식이 없다면 다음 날 확인 후 return
-            let nextDate = targetDate.adding(by: .day, value: 1)
-            let nextDayMeal = try await mealClient.fetchMeal(nextDate)
-
-            // 3. 다음 날 아침부터 순서대로 확인 후 return
-            let mealTimes: [MealPartTime] = [.breakfast, .lunch, .dinner]
-            for mealTime in mealTimes where !isMealEmpty(nextDayMeal, for: mealTime) {
-                return (nextDayMeal, transformSkippingDate(nextDate))
-            }
-
-            return (nextDayMeal, transformSkippingDate(nextDate))
         }
     }
 
