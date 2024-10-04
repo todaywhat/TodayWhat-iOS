@@ -6,7 +6,7 @@ import SwiftUIUtil
 
 public struct AllergySettingView: View {
     private let store: StoreOf<AllergySettingCore>
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: 17), count: 3)
+    private let columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 2)
     @Environment(\.dismiss) var dismiss
     @ObservedObject private var viewStore: ViewStoreOf<AllergySettingCore>
 
@@ -21,9 +21,11 @@ public struct AllergySettingView: View {
                 Spacer()
                     .frame(height: 20)
 
-                LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(AllergyType.allCases, id: \.hashValue) { allergy in
-                        allergyColumnView(allergy: allergy)
+                LazyVGrid(columns: columns, spacing: 8) {
+                    ForEach(AllergyType.allCases.indices, id: \.self) { index in
+                        let allergy = AllergyType.allCases[safe: index] ?? .turbulence
+
+                        allergyColumnView(index: index, allergy: allergy)
                             .onTapGesture {
                                 viewStore.send(.allergyDidSelect(allergy), animation: .default)
                             }
@@ -42,8 +44,8 @@ public struct AllergySettingView: View {
                 .padding(.bottom, 8)
             }
         }
-        .background(Color.backgroundMain.ignoresSafeArea())
-        .navigationTitle("알레르기 설정")
+        .background(Color.backgroundSecondary.ignoresSafeArea())
+        .navigationTitle("알레르기")
         .onAppear {
             viewStore.send(.onAppear, animation: .default)
         }
@@ -51,32 +53,44 @@ public struct AllergySettingView: View {
     }
 
     @ViewBuilder
-    func allergyColumnView(allergy: AllergyType) -> some View {
+    func allergyColumnView(index: Int, allergy: AllergyType) -> some View {
         let isAllergyContains = viewStore.selectedAllergyList.contains(allergy)
-        let allergyForeground: Color = isAllergyContains ?
-            .textPrimary :
+        let cardForegroundColor: Color = isAllergyContains ?
+            .extraBlack :
             .unselectedPrimary
 
-        VStack(spacing: 16) {
-            Image(allergy.image)
-                .renderingMode(.template)
-                .frame(width: 71, height: 71, alignment: .center)
-                .padding([.top, .horizontal], 16)
+        HStack(alignment: .center, spacing: 8) {
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.backgroundSecondary)
+                .frame(width: 56, height: 56)
+                .overlay {
+                    Image(allergy.image)
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 36, height: 36, alignment: .center)
+                }
+                .padding(.leading, 20)
 
             Text(allergy.rawValue)
-                .padding(.bottom, 16)
-                .twFont(.body2)
+                .twFont(.body3)
         }
-        .foregroundColor(allergyForeground)
-        .frame(height: 136)
-        .frame(maxWidth: .infinity)
+        .foregroundColor(cardForegroundColor)
+        .frame(height: 96)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background {
-            RoundedRectangle(cornerRadius: 8)
+            RoundedRectangle(cornerRadius: 16)
                 .fill(Color.cardBackgroundSecondary)
         }
         .overlay {
-            RoundedRectangle(cornerRadius: 8)
-                .strokeBorder(allergyForeground, lineWidth: isAllergyContains ? 2 : 1)
+            RoundedRectangle(cornerRadius: 16)
+                .strokeBorder(cardForegroundColor, lineWidth: isAllergyContains ? 2 : 0)
+        }
+        .overlay(alignment: .topTrailing) {
+            Text("\(index + 1)")
+                .twFont(.body2)
+                .foregroundColor(cardForegroundColor)
+                .padding(.top, 8)
+                .padding(.trailing, 16)
         }
     }
 }
