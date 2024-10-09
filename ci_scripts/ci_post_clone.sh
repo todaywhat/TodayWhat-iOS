@@ -15,4 +15,5 @@ source "/Users/local/.zshrc"
 
 mise install
 
-make cd_generate
+tuist install
+TUIST_ENV=CD tuist generate
