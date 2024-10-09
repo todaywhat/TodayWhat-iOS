@@ -23,22 +23,20 @@ async function main() {
     });
 
     if (prefix) {
-      branchesToDelete.push(
-        allBranches.data
-          .filter((branch) => branch.name.startsWith(prefix))
-          .map((branch) => branch.name)
-      );
+      allBranches.data
+        .filter((branch) => branch.name.startsWith(prefix))
+        .map((branch) => branch.name)
+        .forEach((branch) => branchesToDelete.push(branch));
     }
 
     if (suffix) {
-      branchesToDelete.push(
-        allBranches
-          .filter((branch) => branch.name.endsWith(suffix))
-          .map((branch) => branch.name)
-      );
+      allBranches.data
+        .filter((branch) => branch.name.endsWith(prefix))
+        .map((branch) => branch.name)
+        .forEach((branch) => branchesToDelete.push(branch));
     }
 
-    // branchesToDelete = removeDuplicates(branchesToDelete);
+    branchesToDelete = removeDuplicates(branchesToDelete);
 
     for (const branch of branchesToDelete) {
       console.log(branch);
