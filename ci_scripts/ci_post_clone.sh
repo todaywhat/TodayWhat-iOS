@@ -10,8 +10,8 @@ mv ./TodayWhat-Secret/XCConfig .
 mv ./TodayWhat-Secret/GoogleService-Info.plist ./Projects/App/iOS/Resources/GoogleService-Info.plist
 
 curl https://mise.run | sh
-echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
-eval "$(/opt/homebrew/bin/mise activate --shims bash)"
+echo "eval \"\$(/Users/local/.local/bin/mise activate zsh)\"" >> "/Users/local/.zshrc"
+eval "$(/opt/homebrew/bin/mise activate --shims zsh)"
 
 mise install
 
