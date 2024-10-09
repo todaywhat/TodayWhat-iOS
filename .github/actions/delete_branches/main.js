@@ -42,6 +42,7 @@ async function main() {
 
     for (const branch of branchesToDelete) {
       console.log(branch);
+      console.log(typeof branch);
       await client.rest.git.deleteRef({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
