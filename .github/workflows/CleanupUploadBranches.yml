@@ -7,6 +7,9 @@ on:
     - cron: "0 23 * * *" # 매일 오전 8시에 실행 (UTC 기준이기에 +9)
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   delete-branches:
     runs-on: ubuntu-latest
