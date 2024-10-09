@@ -13,8 +13,6 @@ curl https://mise.run | sh
 echo "eval \"\$(/Users/local/.local/bin/mise activate zsh)\"" >> "/Users/local/.zshrc"
 source "/Users/local/.zshrc"
 
-mise doctor
-
 mise install
 
 make cd_generate
