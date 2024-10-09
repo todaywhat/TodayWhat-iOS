@@ -16,15 +16,25 @@ async function main() {
 
     let branchesToDelete = branches ? branches.split(",") : [];
 
+    const allBranches = await client.rest.repos.listBranches({
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      per_page: 1000,
+    });
+
     if (prefix) {
       branchesToDelete.push(
-        branches.filter((branch) => branch.startsWith(prefix))
+        allBranches.data
+          .filter((branch) => branch.name.startsWith(prefix))
+          .map((branch) => branch.name)
       );
     }
 
     if (suffix) {
       branchesToDelete.push(
-        branches.filter((branch) => branch.endsWith(suffix))
+        allBranches
+          .filter((branch) => branch.name.endsWith(suffix))
+          .map((branch) => branch.name)
       );
     }
 
