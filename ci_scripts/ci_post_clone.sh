@@ -15,3 +15,5 @@ if ! mv ./TodayWhat-Secret/GoogleService-Info.plist ./Projects/App/iOS/Resources
     echo "❌ Failed to move GoogleService-Info.plist"
     exit 1
 fi
+
+make cd_generate
