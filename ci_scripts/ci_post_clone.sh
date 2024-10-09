@@ -11,6 +11,7 @@ mv ./TodayWhat-Secret/GoogleService-Info.plist ./Projects/App/iOS/Resources/Goog
 
 curl https://mise.run | sh
 echo "eval \"\$(/Users/local/.local/bin/mise activate zsh)\"" >> "/Users/local/.zshrc"
+source "/Users/local/.zshrc"
 
 mise doctor
 
