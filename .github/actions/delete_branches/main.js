@@ -44,7 +44,7 @@ async function main() {
       await client.rest.git.deleteRef({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
-        ref: `heads/${branch}`,
+        ref: `refs/heads/${branch}`,
       });
     }
   } catch (error) {
