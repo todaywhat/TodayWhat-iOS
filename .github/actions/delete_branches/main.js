@@ -38,7 +38,7 @@ async function main() {
       );
     }
 
-    branchesToDelete = removeDuplicates(branchesToDelete);
+    // branchesToDelete = removeDuplicates(branchesToDelete);
 
     for (const branch of branchesToDelete) {
       console.log(branch);
