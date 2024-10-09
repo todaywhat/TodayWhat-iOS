@@ -11,6 +11,9 @@ jobs:
   delete-branches:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Delete upload/* branches
         uses: ./.github/actions/delete_branches/
         with:
