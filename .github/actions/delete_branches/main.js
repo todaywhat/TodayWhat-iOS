@@ -41,7 +41,7 @@ async function main() {
     branchesToDelete = removeDuplicates(branchesToDelete);
 
     for (const branch of branchesToDelete) {
-      await client.git.deleteRef({
+      await client.rest.git.deleteRef({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
         ref: `heads/${branch}`,
