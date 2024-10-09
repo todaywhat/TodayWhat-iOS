@@ -1,8 +1,8 @@
 #!/bin/bash
 
-git clone https://github.com/todaywhat/TodayWhat-Secret.git
-
 cd ../
+
+git clone https://github.com/todaywhat/TodayWhat-Secret.git
 
 rm -rf XCConfig/
 
