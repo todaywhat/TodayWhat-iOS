@@ -1,0 +1,18 @@
+name: Cleanup Upload Branches
+# Xcode Cloud에서 upload 로 시작하는 브랜치가 변경될 시 QA 빌드를 올리는 Xcode Cloud워크플로가 있음.
+# 더미용 브랜치를 하루마다 제거하는 GitHub Action workflow
+
+on:
+  schedule:
+    - cron: "0 23 * * *" # 매일 오전 8시에 실행 (UTC 기준이기에 +9)
+  workflow_dispatch:
+
+jobs:
+  delete-branches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete upload/* branches
+        uses: dawidd6/action-delete-branch@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prefix: upload
