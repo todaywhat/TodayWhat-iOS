@@ -1,0 +1,22 @@
+name: "Delete Branches"
+
+description: "Delete Branches"
+
+inputs:
+  github_token:
+    description: GitHub token
+    required: false
+    default: ${{ secrets.GITHUB_TOKEN }}
+  branches:
+    description: Branches to delete (comma separated)
+    required: false
+  prefix:
+    description: Branches to delete (prefixed)
+    required: false
+  suffix:
+    description: Branches to delete (suffixed)
+    required: false
+
+runs:
+  using: "docker"
+  image: "Dockerfile"

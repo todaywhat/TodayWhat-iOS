@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Delete upload/* branches
-        uses: dawidd6/action-delete-branch@v3
+        uses: ./.github/actions/delete_branches/
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           prefix: upload
