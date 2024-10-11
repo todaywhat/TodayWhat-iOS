@@ -21,4 +21,20 @@ public extension TargetScript {
         path: .relativeToRoot("Scripts/LaunchAtLogin.sh"),
         name: "Launch At Login Helper"
     )
+
+    static let firebaseInfoByConfiguration = TargetScript.post(
+        script: """
+            case "${CONFIGURATION}" in
+              "Release" )
+                cp -r "$SRCROOT/Resources/GoogleService-Info.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
+                ;;
+              *)
+                cp -r "$SRCROOT/Resources/GoogleService-QA-Info.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
+                ;;
+            esac
+
+            """,
+        name: "Firebase Info copy by Configuration",
+        basedOnDependencyAnalysis: false
+    )
 }
