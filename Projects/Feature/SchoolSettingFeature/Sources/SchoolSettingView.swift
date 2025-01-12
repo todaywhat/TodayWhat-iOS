@@ -35,10 +35,13 @@ public struct SchoolSettingView: View {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(viewStore.titleMessage)
                                     .twFont(.headline2, color: .extraBlack)
+                                    .accessibilityLabel(viewStore.titleMessage)
+                                    .accessibilityAddTraits(.isHeader)
 
                                 if !viewStore.class.isEmpty && !viewStore.schoolMajorList.isEmpty {
                                     Text("학과는 없으면 안해도 괜찮아요!")
                                         .twFont(.body3, color: .extraBlack)
+                                        .accessibilityLabel("학과 입력은 선택사항입니다")
                                 }
                             }
 
@@ -56,6 +59,8 @@ public struct SchoolSettingView: View {
                                     )
                                 )
                                 .disabled(true)
+                                .accessibilityLabel("학과 선택")
+                                .accessibilityHint("학과를 선택하려면 두 번 탭하세요")
                             }
                             .padding(.bottom, 16)
                             .onTapGesture {
@@ -78,6 +83,8 @@ public struct SchoolSettingView: View {
                             .focused($focusField, equals: .class)
                             .keyboardType(.numberPad)
                             .padding(.bottom, 16)
+                            .accessibilityLabel("반 입력")
+                            .accessibilityHint("숫자로 반을 입력해주세요")
                         }
 
                         if viewStore.selectedSchool != nil {
@@ -93,6 +100,8 @@ public struct SchoolSettingView: View {
                             .focused($focusField, equals: .grade)
                             .keyboardType(.numberPad)
                             .padding(.bottom, 16)
+                            .accessibilityLabel("학년 입력")
+                            .accessibilityHint("숫자로 학년을 입력해주세요")
                         }
                     }
 
@@ -106,11 +115,14 @@ public struct SchoolSettingView: View {
                         focusField = .school
                     }
                     .focused($focusField, equals: .school)
+                    .accessibilityLabel("학교 이름 입력")
+                    .accessibilityHint("학교 이름을 입력하면 검색 결과가 나타납니다")
 
                     if viewStore.isFocusedSchool {
                         if viewStore.isLoading {
                             ProgressView()
                                 .progressViewStyle(.automatic)
+                                .accessibilityLabel("학교 검색 중")
                         } else {
                             ScrollView {
                                 LazyVStack(spacing: 16) {
@@ -128,9 +140,13 @@ public struct SchoolSettingView: View {
                                             viewStore.send(.schoolRowDidSelect(school), animation: .default)
                                             focusField = .grade
                                         }
+                                        .accessibilityElement(children: .combine)
+                                        .accessibilityLabel("\(school.name) \(school.location)")
+                                        .accessibilityHint("이 학교를 선택하려면 두 번 탭하세요")
                                     }
                                 }
                             }
+                            .accessibilityLabel("검색된 학교 목록")
                         }
                     }
 
@@ -160,6 +176,8 @@ public struct SchoolSettingView: View {
                             viewStore.send(.nextButtonDidTap, animation: .default)
                             focusField = nil
                         }
+                        .accessibilityLabel(viewStore.nextButtonTitle)
+                        .accessibilityHint("입력한 정보로 설정을 완료 혹은 다음 단계로 넘어갑니다")
                     }
                 }
             }

@@ -22,10 +22,15 @@ public struct SchoolMajorSheetView: View {
                             schoolMajorRowView(major: major)
                         }
                         .padding(.horizontal, 32)
+                        .accessibilityElement(children: .combine)
+                        .accessibilityLabel("\(major) \(viewStore.selectedMajor == major ? "선택됨" : "선택안됨")")
+                        .accessibilityHint("이 학과를 선택하려면 두 번 탭하세요")
+                        .accessibilityAddTraits(viewStore.selectedMajor == major ? .isSelected : [])
                     }
                 }
             }
             .padding(.top, 32)
+            .accessibilityLabel("학과 선택 목록")
         }
     }
 
