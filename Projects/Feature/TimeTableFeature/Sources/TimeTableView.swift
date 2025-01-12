@@ -18,12 +18,16 @@ public struct TimeTableView: View {
                 Text("오늘 시간표를 찾을 수 없어요!")
                     .padding(.top, 16)
                     .foregroundColor(.textSecondary)
+                    .accessibilityLabel("시간표를 찾을 수 없습니다")
+                    .accessibilitySortPriority(1)
 
                 if Date().month == 3 {
                     Text("3월 초중반에는 neis에 정규시간표가\n 등록되어있지 않을 수도 있어요.")
                         .multilineTextAlignment(.center)
                         .padding(.top, 14)
                         .foregroundColor(.textSecondary)
+                        .accessibilityLabel("3월 초중반에는 정규시간표가 등록되어 있지 않을 수 있습니다")
+                        .accessibilitySortPriority(2)
                 }
             }
 
@@ -32,6 +36,8 @@ public struct TimeTableView: View {
                     ProgressView()
                         .progressViewStyle(.automatic)
                         .padding(.top, 16)
+                        .accessibilityLabel("시간표를 불러오는 중입니다")
+                        .accessibilitySortPriority(1)
                 }
 
                 LazyVStack(spacing: 8) {
@@ -63,6 +69,7 @@ public struct TimeTableView: View {
             Divider()
                 .foregroundColor(.unselectedSecondary)
                 .frame(height: 18)
+                .accessibilityHidden(true)
 
             Text(timeTable.content)
                 .twFont(.headline4, color: .textPrimary)
@@ -77,5 +84,8 @@ public struct TimeTableView: View {
             Color.cardBackground
         }
         .cornerRadius(8)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(timeTable.perio)교시 \(timeTable.content)")
+        .accessibilitySortPriority(2)
     }
 }

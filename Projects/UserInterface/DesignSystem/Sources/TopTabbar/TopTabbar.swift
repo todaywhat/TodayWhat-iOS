@@ -32,6 +32,7 @@ public struct TopTabbarView: View {
                                 .frame(height: 2)
                                 .matchedGeometryEffect(id: "TAB", in: tabAnimation, properties: .position)
                                 .offset(y: 0.5)
+                                .accessibilityHidden(true)
                         }
                     }
                     .frame(maxWidth: .infinity)
@@ -40,6 +41,9 @@ public struct TopTabbarView: View {
                     }
                     .padding(.horizontal, 16)
                 }
+                .accessibilityLabel("\(items[index]), \(currentTab == index ? "선택됨" : "선택안됨")")
+                .accessibilityAddTraits(currentTab == index ? .isSelected : [])
+                .accessibilitySortPriority(1)
             }
         }
         .background(alignment: .bottom) {
@@ -47,6 +51,7 @@ public struct TopTabbarView: View {
                 .frame(maxWidth: .infinity)
                 .foregroundColor(.unselectedSecondary)
                 .frame(height: 1)
+                .accessibilityHidden(true)
         }
     }
 }
