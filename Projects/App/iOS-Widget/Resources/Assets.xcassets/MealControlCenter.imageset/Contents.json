@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "rice_control_center.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
