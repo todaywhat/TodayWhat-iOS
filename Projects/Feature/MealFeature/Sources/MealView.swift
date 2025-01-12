@@ -30,18 +30,26 @@ public struct MealView: View {
                     ProgressView()
                         .progressViewStyle(.automatic)
                         .padding(.top, 16)
+                        .accessibilityLabel("급식 정보를 불러오는 중입니다")
+                        .accessibilitySortPriority(1)
                 } else if viewStore.meal?.isEmpty ?? true,
                           date.weekday == 7 || date.weekday == 1,
                           userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false {
                     Text("주말에도 월요일 급식을 보고 싶다면?")
                         .foregroundColor(.textSecondary)
+                        .accessibilityLabel("주말 급식 설정 안내")
+                        .accessibilitySortPriority(1)
 
                     TWButton(title: "설정하러가기", style: .cta) {
                         viewStore.send(.settingsButtonDidTap)
                     }
+                    .accessibilityHint("주말 급식 표시 설정을 변경할 수 있습니다")
+                    .accessibilitySortPriority(2)
                 } else {
                     Text("등록된 정보를 찾지 못했어요 😥")
                         .padding(.top, 16)
+                        .accessibilityLabel("급식 정보를 찾을 수 없습니다")
+                        .accessibilitySortPriority(1)
                 }
             }
             .onAppear {
@@ -65,6 +73,9 @@ public struct MealView: View {
             .padding(.top, 16)
             .padding(.horizontal, 16)
             .id(type)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("\(type.display) 메뉴, \(String(format: "%.1f", subMeal.cal)) 칼로리")
+            .accessibilitySortPriority(1)
 
         LazyVStack {
             ForEach(subMeal.meals, id: \.hashValue) { meal in
@@ -77,6 +88,7 @@ public struct MealView: View {
                     if isMealContainsAllergy(meal: meal) {
                         Image.allergy
                             .renderingMode(.original)
+                            .accessibilityHidden(true)
                     }
                 }
                 .padding(.horizontal, 12)
@@ -87,6 +99,10 @@ public struct MealView: View {
                         .fill(Color.cardBackground)
                 }
                 .padding(.horizontal, 16)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("\(mealDisplay(meal: meal))")
+                .accessibilityHint(isMealContainsAllergy(meal: meal) ? "알레르기 유발 식품이 포함되어 있습니다" : "")
+                .accessibilitySortPriority(2)
             }
         }
         .padding(.bottom, 24)

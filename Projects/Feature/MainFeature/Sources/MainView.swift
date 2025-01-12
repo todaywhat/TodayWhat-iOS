@@ -22,6 +22,9 @@ public struct MainView: View {
                 schoolInfoCardView()
                     .padding(.horizontal, 16)
                     .padding(.vertical, 12)
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("\(viewStore.school) \(viewStore.grade)학년 \(viewStore.class)반")
+                    .accessibilityHint("\(viewStore.displayDate.toString()) 입니다. 현재 학교 정보를 표시하고 있습니다.")
 
                 TopTabbarView(
                     currentTab: viewStore.binding(
@@ -31,6 +34,8 @@ public struct MainView: View {
                     items: ["급식", "시간표"]
                 )
                 .padding(.top, 32)
+                .accessibilityLabel("메뉴 탭")
+                .accessibilityHint("급식과 시간표 중 원하는 메뉴를 선택할 수 있습니다.")
 
                 ZStack(alignment: .bottomTrailing) {
                     TabView(
@@ -72,9 +77,12 @@ public struct MainView: View {
                                 .overlay {
                                     Image(systemName: "arrow.down.to.line")
                                         .foregroundColor(.extraWhite)
+                                        .accessibilityHidden(true)
                                 }
                         }
                         .padding([.bottom, .trailing], 16)
+                        .accessibilityLabel("새 버전 업데이트")
+                        .accessibilityHint("앱스토어로 이동하여 새 버전을 설치할 수 있습니다")
                     }
                 }
             }
@@ -84,6 +92,7 @@ public struct MainView: View {
                     Text("ONMI")
                         .font(.custom("Fraunces9pt-Black", size: 32))
                         .foregroundColor(.extraBlack)
+                        .accessibilityHidden(true)
                 }
 
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -92,14 +101,20 @@ public struct MainView: View {
                     } label: {
                         Image.bellBadge
                             .renderingMode(.original)
+                            .accessibilityHidden(true)
                     }
+                    .accessibilityLabel("알림")
+                    .accessibilityHint("알림 목록을 확인할 수 있습니다")
 
                     Button {
                         viewStore.send(.settingButtonDidTap)
                     } label: {
                         Image.gear
                             .renderingMode(.original)
+                            .accessibilityHidden(true)
                     }
+                    .accessibilityLabel("설정")
+                    .accessibilityHint("앱 설정을 변경할 수 있습니다")
                 }
             }
             .onAppear {
@@ -124,6 +139,7 @@ public struct MainView: View {
                     let dateString = "\(viewStore.displayDate.toString())"
                     Text("\(gradeClassString) • \(dateString)")
                         .twFont(.body2, color: .textSecondary)
+                        .accessibilitySortPriority(3)
                 }
 
                 Spacer()
@@ -140,11 +156,13 @@ public struct MainView: View {
                         .transition(
                             .move(edge: .top).combined(with: .opacity)
                         )
+                        .accessibilityHidden(true)
                 } else {
                     Image.book
                         .transition(
                             .move(edge: .bottom).combined(with: .opacity)
                         )
+                        .accessibilityHidden(true)
                 }
             }
             .padding(.trailing, 10)
