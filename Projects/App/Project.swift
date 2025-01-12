@@ -21,7 +21,7 @@ let settings: Settings = .settings(
     defaultSettings: .recommended
 )
 
-let scripts: [TargetScript] = generateEnvironment.scripts
+let scripts: [TargetScript] = [.swiftLint]
 
 let targets: [Target] = [
     .target(
@@ -31,10 +31,10 @@ let targets: [Target] = [
         bundleId: "\(env.organizationName).\(env.name)",
         deploymentTargets: .iOS("15.0"),
         infoPlist: .file(path: "iOS/Support/Info.plist"),
-        sources: ["iOS/Sources/**"],
+        sources: ["iOS/Sources/**", "Intents/**"],
         resources: ["iOS/Resources/**"],
         entitlements: .file(path: "iOS/Support/TodayWhat.entitlements"),
-        scripts: scripts + [.firebaseCrashlytics],
+        scripts: generateEnvironment.iOSScripts,
         dependencies: [
             .feature(target: .RootFeature),
             .shared(target: .KeychainClient),
@@ -51,7 +51,7 @@ let targets: [Target] = [
         bundleId: "\(env.organizationName).\(env.name).TodayWhatWidget",
         deploymentTargets: .iOS("15.0"),
         infoPlist: .file(path: "iOS-Widget/Support/Info.plist"),
-        sources: ["iOS-Widget/Sources/**"],
+        sources: ["iOS-Widget/Sources/**", "Intents/**"],
         resources: ["iOS-Widget/Resources/**"],
         entitlements: .file(path: "iOS-Widget/Support/TodayWhatWidget.entitlements"),
         scripts: scripts,
@@ -101,7 +101,7 @@ let targets: [Target] = [
         sources: ["macOS/Sources/**"],
         resources: ["macOS/Resources/**"],
         entitlements: .file(path: "macOS/Support/TodayWhat_Mac_App.entitlements"),
-        scripts: scripts + [.launchAtLogin],
+        scripts: generateEnvironment.macOSScripts,
         dependencies: [
             .SPM.LaunchAtScreen,
             .shared(target: .ComposableArchitectureWrapper),

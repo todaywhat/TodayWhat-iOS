@@ -39,7 +39,7 @@ public struct TargetSpec: Configurable {
         copyFiles: [CopyFilesAction]? = nil,
         headers: Headers? = nil,
         entitlements: Entitlements? = nil,
-        scripts: [TargetScript] = generateEnvironment.scripts,
+        scripts: [TargetScript] = [.swiftLint],
         dependencies: [TargetDependency] = [],
         settings: Settings? = nil,
         coreDataModels: [CoreDataModel] = [],

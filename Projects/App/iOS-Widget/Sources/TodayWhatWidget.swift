@@ -14,6 +14,11 @@ struct TodayWhatWidget: WidgetBundle {
         TodayWhatMealTimeTableWidget()
         TodayWhatMealWidget()
         TodayWhatTimeTableWidget()
+
+        if #available(iOS 18.0, *) {
+            MealControlWidget()
+            TimeTableControlWidget()
+        }
     }
 }
 

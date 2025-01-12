@@ -22,14 +22,30 @@ public extension TargetScript {
         name: "Launch At Login Helper"
     )
 
-    static let firebaseInfoByConfiguration = TargetScript.post(
+    static let firebaseInfoByIOSConfiguration = TargetScript.post(
         script: """
             case "${CONFIGURATION}" in
               "Release" )
-                cp -r "$SRCROOT/Resources/GoogleService-Info.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
+                cp -r "$SRCROOT/iOS/Resources/GoogleService-Info.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
                 ;;
               *)
-                cp -r "$SRCROOT/Resources/GoogleService-QA-Info.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
+                cp -r "$SRCROOT/iOS/Resources/GoogleService-QA-Info.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
+                ;;
+            esac
+
+            """,
+        name: "Firebase Info copy by Configuration",
+        basedOnDependencyAnalysis: false
+    )
+
+    static let firebaseInfoByMacOSConfiguration = TargetScript.post(
+        script: """
+            case "${CONFIGURATION}" in
+              "Release" )
+                cp -r "$SRCROOT/macOS/Resources/GoogleService-Info.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
+                ;;
+              *)
+                cp -r "$SRCROOT/macOS/Resources/GoogleService-QA-Info.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
                 ;;
             esac
 
