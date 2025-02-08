@@ -89,8 +89,8 @@ public struct MainView: View {
             .background(Color.backgroundMain)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Text("ONMI")
-                        .font(.custom("Fraunces9pt-Black", size: 32))
+                    Text(viewStore.displayTitle)
+                        .twFont(.headline3)
                         .foregroundColor(.extraBlack)
                         .accessibilityHidden(true)
                 }

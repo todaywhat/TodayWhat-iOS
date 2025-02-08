@@ -25,6 +25,30 @@ public struct MainCore: Reducer {
         @PresentationState public var settingsCore: SettingsCore.State?
         @PresentationState public var noticeCore: NoticeCore.State?
 
+        public var displayTitle: String {
+            let calendar = Calendar.current
+            let today = Date()
+
+            if calendar.isDate(displayDate, inSameDayAs: today) {
+                return "오늘뭐임"
+            }
+
+            if let yesterday = calendar.date(byAdding: .day, value: -1, to: today),
+               calendar.isDate(displayDate, inSameDayAs: yesterday) {
+                return "어제뭐임"
+            }
+
+            if let tomorrow = calendar.date(byAdding: .day, value: 1, to: today),
+               calendar.isDate(displayDate, inSameDayAs: tomorrow) {
+                return "내일뭐임"
+            }
+
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "ko_kr")
+            formatter.dateFormat = "EEEE"
+            return "\(formatter.string(from: displayDate))뭐임"
+        }
+
         public init() {}
     }
 
