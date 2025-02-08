@@ -52,6 +52,9 @@ public struct TimeTableView: View {
                 .edgesIgnoringSafeArea(.bottom)
             }
         }
+        .onLoad {
+            viewStore.send(.onLoad)
+        }
         .onAppear {
             viewStore.send(.onAppear, animation: .default)
         }

@@ -10,6 +10,7 @@ public struct MainView: View {
     let store: StoreOf<MainCore>
     @ObservedObject var viewStore: ViewStoreOf<MainCore>
     @Environment(\.openURL) var openURL
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     public init(store: StoreOf<MainCore>) {
         self.store = store
@@ -19,7 +20,7 @@ public struct MainView: View {
     public var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                schoolInfoCardView()
+                SchoolInfoCardView(store: store)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 12)
                     .accessibilityElement(children: .combine)
@@ -89,10 +90,23 @@ public struct MainView: View {
             .background(Color.backgroundMain)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Text(viewStore.displayTitle)
-                        .twFont(.headline3)
-                        .foregroundColor(.extraBlack)
-                        .accessibilityHidden(true)
+                    Button {
+                        viewStore.send(.toggleDatePicker(true))
+                    } label: {
+                        HStack(spacing: 0) {
+                            Text(viewStore.displayTitle)
+                                .twFont(.headline3)
+                                .foregroundColor(.extraBlack)
+
+                            Image.triangleDown
+                                .renderingMode(.template)
+                                .foregroundStyle(Color.textPrimary)
+                                .rotationEffect(.degrees(viewStore.isDatePickerPresented ? 180.0 : 0))
+                                .animation(.easeInOut, value: viewStore.isDatePickerPresented)
+                        }
+                    }
+                    .accessibilityLabel("날짜 선택")
+                    .accessibilityHint("클릭하여 날짜를 선택할 수 있습니다")
                 }
 
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -117,65 +131,38 @@ public struct MainView: View {
                     .accessibilityHint("앱 설정을 변경할 수 있습니다")
                 }
             }
+            .overlay {
+                if viewStore.isDatePickerPresented {
+                    Color.black.opacity(0.2)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            viewStore.send(.toggleDatePicker(false))
+                        }
+                }
+            }
+            .overlay(alignment: .top) {
+                if viewStore.isDatePickerPresented {
+                    DateTensePickerView(displayDate: viewStore.displayDate) { date in
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+                            _ = viewStore.send(.dateSelected(date))
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                    .transition(.move(edge: .top).combined(with: .opacity))
+                }
+            }
+            .animation(.spring(), value: viewStore.isDatePickerPresented)
             .onAppear {
                 viewStore.send(.onAppear, animation: .default)
             }
             .onLoad {
                 viewStore.send(.onLoad)
             }
+            .background {
+                navigationLinks
+            }
         }
         .navigationViewStyle(.stack)
-    }
-
-    @ViewBuilder
-    private func schoolInfoCardView() -> some View {
-        ZStack(alignment: .bottomTrailing) {
-            HStack {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(viewStore.school)
-                        .twFont(.headline4, color: .extraBlack)
-
-                    let gradeClassString = "\(viewStore.grade)학년 \(viewStore.class)반"
-                    let dateString = "\(viewStore.displayDate.toString())"
-                    Text("\(gradeClassString) • \(dateString)")
-                        .twFont(.body2, color: .textSecondary)
-                        .accessibilitySortPriority(3)
-                }
-
-                Spacer()
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 25.5)
-            .zIndex(1)
-
-            HStack {
-                Spacer()
-
-                if viewStore.currentTab == 0 {
-                    Image.meal
-                        .transition(
-                            .move(edge: .top).combined(with: .opacity)
-                        )
-                        .accessibilityHidden(true)
-                } else {
-                    Image.book
-                        .transition(
-                            .move(edge: .bottom).combined(with: .opacity)
-                        )
-                        .accessibilityHidden(true)
-                }
-            }
-            .padding(.trailing, 10)
-            .zIndex(0)
-        }
-        .frame(maxWidth: .infinity)
-        .background {
-            Color.cardBackground
-        }
-        .background {
-            navigationLinks
-        }
-        .cornerRadius(16)
     }
 
     @ViewBuilder
