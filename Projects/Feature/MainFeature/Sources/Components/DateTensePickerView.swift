@@ -46,6 +46,8 @@ struct DateTensePickerView: View {
                             .animation(.easeInOut(duration: 0.2), value: displayDate)
                     }
                     .frame(maxWidth: .infinity)
+                    .accessibilityLabel("\(datePolicy.displayText(for: date, baseDate: today)) 선택")
+                    .accessibilityHint("날짜 변경")
                 }
             }
         }
