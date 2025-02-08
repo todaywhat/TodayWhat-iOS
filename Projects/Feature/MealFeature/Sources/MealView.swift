@@ -52,6 +52,9 @@ public struct MealView: View {
                         .accessibilitySortPriority(1)
                 }
             }
+            .onLoad {
+                viewStore.send(.onLoad)
+            }
             .onAppear {
                 viewStore.send(.onAppear, animation: .default)
             }

@@ -3,20 +3,32 @@ import Entity
 import EnumUtil
 import Foundation
 import LocalDatabaseClient
+import Sharing
 import TimeTableClient
 import UserDefaultsClient
 
 public struct TimeTableCore: Reducer {
+    private enum CancellableID: Hashable {
+        case fetch
+    }
+
     public init() {}
+
     public struct State: Equatable {
         public var timeTableList: [TimeTable] = []
         public var isLoading = false
-        public init() {}
+        @Shared public var displayDate: Date
+
+        public init(displayDate: Shared<Date>) {
+            self._displayDate = displayDate
+        }
     }
 
     public enum Action: Equatable {
+        case onLoad
         case onAppear
         case refresh
+        case refreshData
         case timeTableResponse(TaskResult<[TimeTable]>)
     }
 
@@ -27,17 +39,16 @@ public struct TimeTableCore: Reducer {
     public var body: some ReducerOf<TimeTableCore> {
         Reduce { state, action in
             switch action {
-            case .onAppear, .refresh:
-                var todayDate = Date()
-                let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true
-                if isSkipWeekend, todayDate.weekday == 7 {
-                    todayDate = todayDate.adding(by: .day, value: 2)
-                } else if isSkipWeekend, todayDate.weekday == 1 {
-                    todayDate = todayDate.adding(by: .day, value: 1)
-                } else if todayDate.hour >= 19, userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
-                    todayDate = todayDate.adding(by: .day, value: 1)
+            case .onLoad:
+                return .publisher {
+                    state.$displayDate.publisher
+                        .map { _ in Action.refreshData }
                 }
+
+            case .onAppear, .refreshData:
                 state.isLoading = true
+
+                var todayDate = state.displayDate
 
                 if userDefaultsClient.getValue(.isOnModifiedTimeTable) as? Bool ?? false {
                     let modifiedTimeTables = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
@@ -48,14 +59,18 @@ public struct TimeTableCore: Reducer {
                     state.isLoading = false
                     return .none
                 }
-                return .run { [todayDate] send in
-                    let task = await Action.timeTableResponse(
-                        TaskResult {
-                            try await timeTableClient.fetchTimeTable(todayDate)
-                        }
-                    )
-                    await send(task)
-                }
+                return .concatenate(
+                    .cancel(id: CancellableID.fetch),
+                    .run { [todayDate] send in
+                        let task = await Action.timeTableResponse(
+                            TaskResult {
+                                try await timeTableClient.fetchTimeTable(todayDate)
+                            }
+                        )
+                        await send(task)
+                    }
+                    .cancellable(id: CancellableID.fetch)
+                )
 
             case let .timeTableResponse(.success(timeTableList)):
                 state.isLoading = false
@@ -64,6 +79,9 @@ public struct TimeTableCore: Reducer {
             case .timeTableResponse(.failure(_)):
                 state.timeTableList = []
                 state.isLoading = false
+
+            default:
+                return .none
             }
             return .none
         }

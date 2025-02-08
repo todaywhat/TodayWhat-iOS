@@ -1,10 +1,12 @@
 import BaseFeature
 import ComposableArchitecture
 import Entity
+import FoundationUtil
 import MealFeature
 import NoticeClient
 import NoticeFeature
 import SettingsFeature
+import Sharing
 import TimeTableFeature
 import TWLog
 import UIKit
@@ -12,14 +14,16 @@ import UserDefaultsClient
 
 public struct MainCore: Reducer {
     public init() {}
+
     public struct State: Equatable {
         public var school = ""
         public var grade = ""
         public var `class` = ""
-        public var displayDate = Date()
+        @Shared public var displayDate: Date
         public var currentTab = 0
         public var isInitial: Bool = true
         public var isExistNewVersion: Bool = false
+        public var isDatePickerPresented: Bool = false
         public var mealCore: MealCore.State?
         public var timeTableCore: TimeTableCore.State?
         @PresentationState public var settingsCore: SettingsCore.State?
@@ -49,7 +53,9 @@ public struct MainCore: Reducer {
             return "\(formatter.string(from: displayDate))뭐임"
         }
 
-        public init() {}
+        public init() {
+            self._displayDate = Shared(value: Date())
+        }
     }
 
     @CasePathable
@@ -65,6 +71,8 @@ public struct MainCore: Reducer {
         case noticeButtonDidTap
         case settingsCore(PresentationAction<SettingsCore.Action>)
         case noticeCore(PresentationAction<NoticeCore.Action>)
+        case dateSelected(Date)
+        case toggleDatePicker(Bool)
     }
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
@@ -72,33 +80,34 @@ public struct MainCore: Reducer {
     @Dependency(\.noticeClient) var noticeClient
 
     public var body: some Reducer<State, Action> {
-        Reduce { state, action in
+        Reduce { (state: inout MainCore.State, action: MainCore.Action) in
             switch action {
             case .onLoad:
                 let pageShowedEvengLog = PageShowedEventLog(pageName: "main_page")
                 TWLog.event(pageShowedEvengLog)
 
             case .onAppear:
-                state.displayDate = Date()
-                let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true
-                if isSkipWeekend, state.displayDate.weekday == 7 {
-                    state.displayDate = state.displayDate.adding(by: .day, value: 2)
-                } else if isSkipWeekend, state.displayDate.weekday == 1 {
-                    state.displayDate = state.displayDate.adding(by: .day, value: 1)
-                } else if state.displayDate.hour >= 19,
-                          userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
-                    state.displayDate = state.displayDate.adding(by: .day, value: 1)
-                }
+                let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
+                let isSkipAfterDinner = userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true
+
+                let datePolicy = DatePolicy(
+                    isSkipWeekend: isSkipWeekend,
+                    isSkipAfterDinner: isSkipAfterDinner
+                )
+
+                let today = Date()
+                state.$displayDate.withLock { date in date = datePolicy.adjustedDate(for: today) }
+
                 state.school = userDefaultsClient.getValue(.school) as? String ?? ""
                 state.grade = "\(userDefaultsClient.getValue(.grade) as? Int ?? 1)"
                 state.class = "\(userDefaultsClient.getValue(.class) as? Int ?? 1)"
                 if state.mealCore == nil {
-                    state.mealCore = .init()
+                    state.mealCore = .init(displayDate: state.$displayDate)
                 }
                 if state.timeTableCore == nil {
-                    state.timeTableCore = .init()
+                    state.timeTableCore = .init(displayDate: state.$displayDate)
                 }
-                return .run { send in
+                return Effect.run { send in
                     let checkVersion = await Action.checkVersion(
                         TaskResult {
                             try await iTunesClient.fetchCurrentVersion(.ios)
@@ -108,16 +117,16 @@ public struct MainCore: Reducer {
                 }
 
             case .mealCore(.refresh), .timeTableCore(.refresh):
-                state.displayDate = Date()
-                let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool == true
-                if isSkipWeekend, state.displayDate.weekday == 7 {
-                    state.displayDate = state.displayDate.adding(by: .day, value: 2)
-                } else if isSkipWeekend, state.displayDate.weekday == 1 {
-                    state.displayDate = state.displayDate.adding(by: .day, value: 1)
-                } else if state.displayDate.hour >= 19,
-                          userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true {
-                    state.displayDate = state.displayDate.adding(by: .day, value: 1)
-                }
+                let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
+                let isSkipAfterDinner = userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true
+
+                let datePolicy = DatePolicy(
+                    isSkipWeekend: isSkipWeekend,
+                    isSkipAfterDinner: isSkipAfterDinner
+                )
+
+                let today = Date()
+                state.$displayDate.withLock { date in date = datePolicy.adjustedDate(for: today) }
 
             case let .tabTapped(tab):
                 state.currentTab = tab
@@ -154,23 +163,20 @@ public struct MainCore: Reducer {
             case .noticeCore(.dismiss):
                 state.noticeCore = nil
 
+            case let .dateSelected(date):
+                state.$displayDate.withLock { $0 = date }
+                return .none
+
+            case let .toggleDatePicker(isOn):
+                state.isDatePickerPresented = isOn
+                return .none
+
             default:
                 return .none
             }
             return .none
         }
-        .ifLet(\.mealCore, action: /Action.mealCore) {
-            MealCore()
-        }
-        .ifLet(\.timeTableCore, action: /Action.timeTableCore) {
-            TimeTableCore()
-        }
-        .ifLet(\.$settingsCore, action: \.settingsCore) {
-            SettingsCore()
-        }
-        .ifLet(\.$noticeCore, action: \.noticeCore) {
-            NoticeCore()
-        }
+        .subFeatures()
     }
 
     func logTabSelected(index: Int, selectionType: TabSelectionType) {
@@ -181,5 +187,23 @@ public struct MainCore: Reducer {
         }
         guard let log else { return }
         TWLog.event(log)
+    }
+}
+
+extension Reducer where State == MainCore.State, Action == MainCore.Action {
+    func subFeatures() -> some ReducerOf<Self> {
+        self
+            .ifLet(\.mealCore, action: /Action.mealCore) {
+                MealCore()
+            }
+            .ifLet(\.timeTableCore, action: /Action.timeTableCore) {
+                TimeTableCore()
+            }
+            .ifLet(\.$settingsCore, action: \.settingsCore) {
+                SettingsCore()
+            }
+            .ifLet(\.$noticeCore, action: \.noticeCore) {
+                NoticeCore()
+            }
     }
 }
