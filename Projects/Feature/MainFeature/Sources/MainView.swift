@@ -5,6 +5,7 @@ import NoticeFeature
 import SettingsFeature
 import SwiftUI
 import TimeTableFeature
+import TWLog
 
 public struct MainView: View {
     let store: StoreOf<MainCore>
@@ -92,6 +93,7 @@ public struct MainView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
                         viewStore.send(.toggleDatePicker(true))
+                        TWLog.event(ClickDateTensePickerEventLog())
                     } label: {
                         HStack(spacing: 0) {
                             Text(viewStore.displayTitle)
@@ -143,6 +145,20 @@ public struct MainView: View {
             .overlay(alignment: .top) {
                 if viewStore.isDatePickerPresented {
                     DateTensePickerView(displayDate: viewStore.displayDate) { date in
+                        let calendar = Calendar.current
+                        let today = Date()
+                        let tense: SelectDateTenseEventLog.Tense
+
+                        if calendar.isDate(date, inSameDayAs: today) {
+                            tense = .present
+                        } else if date > today {
+                            tense = .future
+                        } else {
+                            tense = .past
+                        }
+
+                        TWLog.event(SelectDateTenseEventLog(tense: tense))
+
                         withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
                             _ = viewStore.send(.dateSelected(date))
                         }
