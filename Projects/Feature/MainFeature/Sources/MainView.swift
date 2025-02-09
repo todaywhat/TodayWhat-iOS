@@ -145,16 +145,19 @@ public struct MainView: View {
             .overlay(alignment: .top) {
                 if viewStore.isDatePickerPresented {
                     DateTensePickerView(displayDate: viewStore.displayDate) { date in
+                        let calendar = Calendar.current
                         let today = Date()
-                        let comparisonResult: ComparisonResult = today.compare(date)
+                        let tense: SelectDateTenseEventLog.Tense
 
-                        if Calendar.current.isDate(date, inSameDayAs: today) {
-                            TWLog.event(SelectDateTenseEventLog(tense: .present))
-                        } else if comparisonResult == .orderedAscending {
-                            TWLog.event(SelectDateTenseEventLog(tense: .future))
-                        } else if comparisonResult == .orderedDescending {
-                            TWLog.event(SelectDateTenseEventLog(tense: .past))
+                        if calendar.isDate(date, inSameDayAs: today) {
+                            tense = .present
+                        } else if date > today {
+                            tense = .future
+                        } else {
+                            tense = .past
                         }
+
+                        TWLog.event(SelectDateTenseEventLog(tense: tense))
 
                         withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
                             _ = viewStore.send(.dateSelected(date))
