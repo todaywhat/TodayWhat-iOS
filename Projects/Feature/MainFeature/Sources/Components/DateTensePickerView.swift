@@ -4,7 +4,6 @@ import SwiftUI
 
 struct DateTensePickerView: View {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
-    @Namespace private var animation
     private let displayDate: Date
     private let onSelectDate: (Date) -> Void
 
@@ -33,7 +32,6 @@ struct DateTensePickerView: View {
                         if calendar.isDate(displayDate, inSameDayAs: date) {
                             RoundedRectangle(cornerRadius: 4)
                                 .fill(Color.extraBlack)
-                                .matchedGeometryEffect(id: "SELECTED-TENSE", in: animation)
                         }
 
                         Text(datePolicy.displayText(for: date, baseDate: today))
