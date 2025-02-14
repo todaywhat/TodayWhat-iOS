@@ -159,9 +159,8 @@ public struct MainView: View {
 
                         TWLog.event(SelectDateTenseEventLog(tense: tense))
 
-                        withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
-                            _ = viewStore.send(.dateSelected(date))
-                        }
+                        _ = viewStore.send(.dateSelected(date))
+                        _ = viewStore.send(.toggleDatePicker(false))
                     }
                     .padding(.horizontal, 16)
                     .transition(.move(edge: .top).combined(with: .opacity))
