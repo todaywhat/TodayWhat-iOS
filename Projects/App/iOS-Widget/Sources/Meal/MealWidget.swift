@@ -46,7 +46,20 @@ struct MealProvider: IntentTimelineProvider {
 
     private func fetchMealEntry(for configuration: Intent) async -> MealEntry {
         let currentDate = Date()
-        let requestedMealTime: MealPartTime = if configuration.displayMeal == .auto {
+        let latestSelectedDate = Date(
+            timeIntervalSince1970: UserDefaults.standard.double(
+                forKey: PartTimeIntentUserDefaultsKeys.latestSelectedDate
+            )
+        )
+
+        let hasInteractived = Calendar.current.isDate(latestSelectedDate, inSameDayAs: currentDate)
+        let requestedMealTime: MealPartTime = if hasInteractived,
+                                                 let partTime = MealPartTime(
+                                                     rawValue: UserDefaults.standard
+                                                         .integer(forKey: PartTimeIntentUserDefaultsKeys.mealPartTime)
+                                                 ) {
+            partTime
+        } else if configuration.displayMeal == .auto {
             MealPartTime(hour: currentDate)
         } else {
             configuration.displayMeal.toMealPartTime()
@@ -59,7 +72,7 @@ struct MealProvider: IntentTimelineProvider {
 
             let displayMealTime: MealPartTime
 
-            if currentDate.compare(displayDate) == .orderedSame, configuration.displayMeal == .auto {
+            if Calendar.current.isDate(displayDate, inSameDayAs: currentDate), configuration.displayMeal == .auto {
                 displayMealTime = determineDisplayedMealTime(
                     requestedMealTime: requestedMealTime,
                     meal: meal,
@@ -77,7 +90,7 @@ struct MealProvider: IntentTimelineProvider {
             return MealEntry(
                 date: displayDate,
                 meal: meal,
-                mealPartTime: displayMealTime,
+                mealPartTime: hasInteractived ? requestedMealTime : displayMealTime,
                 allergyList: allergies
             )
         } catch {

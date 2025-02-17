@@ -2,7 +2,7 @@ import DateUtil
 import Foundation
 import UserDefaultsClient
 
-enum MealPartTime: Int {
+enum MealPartTime: Int, CaseIterable {
     case breakfast
     case lunch
     case dinner
