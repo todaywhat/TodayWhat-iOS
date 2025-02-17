@@ -1,3 +1,4 @@
+import AppIntents
 import Dependencies
 import DesignSystem
 import Entity
@@ -132,12 +133,34 @@ private struct MediumMealWidgetView: View {
             VStack(spacing: 4) {
                 HStack(spacing: 4) {
                     Text(getMealText(date: entry.date))
-                        .twFont(.caption1, color: .extraBlack)
+                        .twFont(.body3, color: .extraBlack)
 
                     Spacer()
 
-                    Text("\(String(format: "%.1f", calorie)) kcal")
-                        .twFont(.caption1, color: .textSecondary)
+                    HStack(spacing: 0) {
+                        if #available(iOSApplicationExtension 17.0, *) {
+                            ForEach([MealPartTime.breakfast, .lunch, .dinner], id: \.self) { partTime in
+                                Button(intent: MealPartTimeSelectionIntent(displayMeal: partTime)) {
+                                    let isSelected = partTime == entry.mealPartTime
+                                    Text(partTime.display)
+                                        .twFont(.body3, color: isSelected ? .extraWhite : .textSecondary)
+                                        .minimumScaleFactor(0.5)
+                                        .padding(.horizontal, 12)
+                                        .background {
+                                            if isSelected {
+                                                RoundedRectangle(cornerRadius: 8)
+                                                    .fill(Color.extraBlack)
+                                                    .frame(height: 24)
+                                            } else {
+                                                Color.clear
+                                            }
+                                        }
+                                }
+                                .buttonStyle(.borderless)
+                                .frame(height: 24)
+                            }
+                        }
+                    }
                 }
                 .padding(.horizontal, 4)
 
@@ -170,21 +193,22 @@ private struct MediumMealWidgetView: View {
         let calendar = Calendar.current
         let now = Date()
 
+        var dateSuffix: String = "[다음주]"
         if calendar.isDate(date, inSameDayAs: now) {
-            return "오늘의 [\(entry.mealPartTime.display)]"
+            dateSuffix = "[오늘]"
         }
 
         let components = calendar.dateComponents([.day], from: now, to: date)
 
         if let days = components.day, days == 1 {
-            return "내일의 [\(entry.mealPartTime.display)]"
+            dateSuffix = "[내일]"
         }
 
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "EEEE"
-        let dayOfWeek = dateFormatter.string(from: date)
-        return "\(dayOfWeek) [\(entry.mealPartTime.display)]"
+        dateFormatter.dateFormat = "MM월 dd일 EEE"
+        let dayString = dateFormatter.string(from: date)
+        return "\(dayString) \(dateSuffix)"
     }
 
     private func mealDisplay(meal: String) -> String {
@@ -205,28 +229,36 @@ private struct LargeMealWidgetView: View {
 
     var body: some View {
         VStack(spacing: 4) {
-            VStack(spacing: 4) {
-                HStack(spacing: 4) {
-                    Text(getMealText(date: entry.date))
-                        .twFont(.caption1, color: .extraBlack)
+            HStack(spacing: 4) {
+                Text(getMealText(date: entry.date))
+                    .twFont(.body3, color: .extraBlack)
 
-                    Spacer()
+                Spacer()
 
-                    Text("\(String(format: "%.1f", calorie)) Kcal")
-                        .twFont(.caption1, color: .textSecondary)
-                }
-
-                GeometryReader { proxy in
-                    RoundedRectangle(cornerRadius: 2)
-                        .fill(Color.cardBackground)
-                        .frame(height: 8)
-                        .overlay(alignment: .leading) {
-                            RoundedRectangle(cornerRadius: 2)
-                                .fill(Color.textPrimary)
-                                .frame(width: proxy.size.width * calorie / 2350, height: 8)
+                HStack(spacing: 0) {
+                    if #available(iOSApplicationExtension 17.0, *) {
+                        ForEach([MealPartTime.breakfast, .lunch, .dinner], id: \.self) { partTime in
+                            Button(intent: MealPartTimeSelectionIntent(displayMeal: partTime)) {
+                                let isSelected = partTime == entry.mealPartTime
+                                Text(partTime.display)
+                                    .twFont(.body3, color: isSelected ? .extraWhite : .textSecondary)
+                                    .minimumScaleFactor(0.5)
+                                    .padding(.horizontal, 12)
+                                    .background {
+                                        if isSelected {
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .fill(Color.extraBlack)
+                                                .frame(height: 24)
+                                        } else {
+                                            Color.clear
+                                        }
+                                    }
+                            }
+                            .buttonStyle(.borderless)
+                            .frame(height: 24)
                         }
+                    }
                 }
-                .frame(height: 8)
             }
 
             VStack(alignment: .leading, spacing: 0) {
@@ -249,6 +281,10 @@ private struct LargeMealWidgetView: View {
                 Color.cardBackground
             }
             .cornerRadius(8)
+
+            Text("\(String(format: "%.1f", calorie)) kcal")
+                .twFont(.caption1, color: .textSecondary)
+                .frame(maxWidth: .infinity, alignment: .trailing)
         }
         .padding(16)
     }
@@ -257,21 +293,22 @@ private struct LargeMealWidgetView: View {
         let calendar = Calendar.current
         let now = Date()
 
+        var dateSuffix: String = "[다음주]"
         if calendar.isDate(date, inSameDayAs: now) {
-            return "오늘의 [\(entry.mealPartTime.display)]"
+            dateSuffix = "[오늘]"
         }
 
         let components = calendar.dateComponents([.day], from: now, to: date)
 
         if let days = components.day, days == 1 {
-            return "내일의 [\(entry.mealPartTime.display)]"
+            dateSuffix = "[내일]"
         }
 
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "EEEE"
-        let dayOfWeek = dateFormatter.string(from: date)
-        return "\(dayOfWeek) [\(entry.mealPartTime.display)]"
+        dateFormatter.dateFormat = "MM월 dd일 EEE"
+        let dayString = dateFormatter.string(from: date)
+        return "\(dayString) \(dateSuffix)"
     }
 
     private func mealDisplay(meal: String) -> String {
