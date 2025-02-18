@@ -24,8 +24,9 @@ public extension TargetScript {
 
     static let firebaseInfoByIOSConfiguration = TargetScript.post(
         script: """
+            echo "${CONFIGURATION}"
             case "${CONFIGURATION}" in
-              "Release" )
+              "PROD" )
                 cp -r "$SRCROOT/iOS/Resources/GoogleService-Info.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
                 ;;
               *)
