@@ -27,7 +27,11 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         FirebaseApp.configure()
         Task {
-            try await featureFlagClient.activate()
+            do {
+                try await featureFlagClient.activate()
+            } catch {
+                TWLog.error(error)
+            }
         }
         initializeAnalyticsUserID()
         session = WCSession.default
