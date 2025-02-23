@@ -190,7 +190,6 @@ public struct MainCore: Reducer {
 
             case .requestReview:
                 state.isShowingReviewToast = false
-                userDefaultsClient.setValue(.lastReviewRequestDate, Date())
                 userDefaultsClient.setValue(.hasReviewed, true)
                 if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                     SKStoreReviewController.requestReview(in: windowScene)
@@ -212,10 +211,8 @@ public struct MainCore: Reducer {
         }
 
         let appOpenCount = (userDefaultsClient.getValue(.appOpenCount) as? Int) ?? 0
-        let lastReviewRequestDate = userDefaultsClient.getValue(.lastReviewRequestDate) as? Date
-        let threeDaysAgo = Calendar.current.date(byAdding: .day, value: -3, to: Date()) ?? Date()
 
-        return appOpenCount >= 5 && (lastReviewRequestDate == nil || lastReviewRequestDate! < threeDaysAgo)
+        return appOpenCount >= 5
     }
 
     private func logTabSelected(index: Int, selectionType: TabSelectionType) {
