@@ -4,10 +4,17 @@ import FirebaseCore
 import RootFeature
 import SwiftUI
 import UIKit
+import UserDefaultsClient
 
 @main
 struct TodayWhatApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
+
+    init() {
+        let appOpenCount = (userDefaultsClient.getValue(.appOpenCount) as? Int) ?? 0
+        userDefaultsClient.setValue(.appOpenCount, appOpenCount + 1)
+    }
 
     var body: some Scene {
         WindowGroup {
