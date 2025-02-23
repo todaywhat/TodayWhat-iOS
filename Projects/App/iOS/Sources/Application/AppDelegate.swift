@@ -1,6 +1,7 @@
 import Dependencies
 import Entity
 import EnumUtil
+import FeatureFlagClient
 import Firebase
 import FirebaseAnalytics
 import FirebaseCore
@@ -17,6 +18,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
     @Dependency(\.localDatabaseClient) var localDatabaseClient
     @Dependency(\.keychainClient) var keychainClient
+    @Dependency(\.featureFlagClient) var featureFlagClient
     var session: WCSession!
 
     func application(
@@ -24,6 +26,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         FirebaseApp.configure()
+        Task {
+            try await featureFlagClient.activate()
+        }
         initializeAnalyticsUserID()
         session = WCSession.default
         if WCSession.isSupported() {

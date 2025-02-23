@@ -11,10 +11,11 @@ let project = Project.module(
             .feature(target: .NoticeFeature),
             .feature(target: .TimeTableFeature),
             .feature(target: .SettingsFeature),
+            .shared(target: .FeatureFlagClient),
             .shared(target: .NoticeClient),
-            .shared(target: .Entity),
             .shared(target: .UserDefaultsClient),
-            .shared(target: .ITunesClient)
+            .shared(target: .ITunesClient),
+            .shared(target: .Entity)
         ])
     ]
 )
