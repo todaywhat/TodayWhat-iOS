@@ -7,6 +7,7 @@ import NoticeClient
 import NoticeFeature
 import SettingsFeature
 import Sharing
+import StoreKit
 import TimeTableFeature
 import TWLog
 import UIKit
@@ -28,6 +29,7 @@ public struct MainCore: Reducer {
         public var timeTableCore: TimeTableCore.State?
         @PresentationState public var settingsCore: SettingsCore.State?
         @PresentationState public var noticeCore: NoticeCore.State?
+        public var isShowingReviewToast: Bool = false
 
         public var displayTitle: String {
             let calendar = Calendar.current
@@ -73,6 +75,9 @@ public struct MainCore: Reducer {
         case noticeCore(PresentationAction<NoticeCore.Action>)
         case dateSelected(Date)
         case toggleDatePicker(Bool)
+        case showReviewToast
+        case hideReviewToast
+        case requestReview
     }
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
@@ -85,6 +90,10 @@ public struct MainCore: Reducer {
             case .onLoad:
                 let pageShowedEvengLog = PageShowedEventLog(pageName: "main_page")
                 TWLog.event(pageShowedEvengLog)
+
+                if shouldRequestReview() {
+                    return .send(.showReviewToast)
+                }
 
             case .onAppear:
                 let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
@@ -171,6 +180,22 @@ public struct MainCore: Reducer {
                 state.isDatePickerPresented = isOn
                 return .none
 
+            case .showReviewToast:
+                state.isShowingReviewToast = true
+                return .none
+
+            case .hideReviewToast:
+                state.isShowingReviewToast = false
+                return .none
+
+            case .requestReview:
+                state.isShowingReviewToast = false
+                userDefaultsClient.setValue(.hasReviewed, true)
+                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                    SKStoreReviewController.requestReview(in: windowScene)
+                }
+                return .none
+
             default:
                 return .none
             }
@@ -179,7 +204,18 @@ public struct MainCore: Reducer {
         .subFeatures()
     }
 
-    func logTabSelected(index: Int, selectionType: TabSelectionType) {
+    private func shouldRequestReview() -> Bool {
+        let hasReviewed = userDefaultsClient.getValue(.hasReviewed) as? Bool ?? false
+        if hasReviewed {
+            return false
+        }
+
+        let appOpenCount = (userDefaultsClient.getValue(.appOpenCount) as? Int) ?? 0
+
+        return appOpenCount >= 5
+    }
+
+    private func logTabSelected(index: Int, selectionType: TabSelectionType) {
         let log: EventLog? = switch index {
         case 0: MealTabSelectedEventLog(tabSelectionType: selectionType)
         case 1: TimeTableTabSelectedEventLog(tabSelectionType: selectionType)

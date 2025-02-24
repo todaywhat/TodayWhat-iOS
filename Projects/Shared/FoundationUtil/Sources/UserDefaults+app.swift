@@ -13,6 +13,8 @@ public enum UserDefaultsKeys: String {
     case isSkipAfterDinner = "IS-SKIP-AFTER-DINNER"
     case isOnModifiedTimeTable = "IS-ON-MODIFIED-TIME-TABLE"
     case widgetCount = "WIDGET-COUNT"
+    case appOpenCount = "APP-OPEN-COUNT"
+    case hasReviewed = "HAS-REVIEWED"
 }
 
 public extension UserDefaults {
