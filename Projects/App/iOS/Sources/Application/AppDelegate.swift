@@ -71,21 +71,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             TWLog.error(error)
         }
 
-        WidgetCenter.shared.getCurrentConfigurations { [weak self] widgetInfos in
-            guard let self else { return }
-            let widgetCount = self.userDefaultsClient.getValue(.widgetCount) as? Int ?? 0
-
-            guard case let .success(infos) = widgetInfos, widgetCount != infos.count else { return }
-            self.userDefaultsClient.setValue(.widgetCount, infos.count)
-
-            TWLog.setUserProperty(property: .widgetCount, value: "\(infos.count)")
-
-            infos.forEach { info in
-                let log = WidgetConfigEventLog(family: info.family.description, kind: info.kind)
-                TWLog.event(log)
-            }
-        }
-
         return true
     }
 
@@ -174,6 +159,27 @@ extension AppDelegate: WCSessionDelegate {
         replyHandler(reply)
     }
 
+    private func sendUserPropertyWidget() {
+        WidgetCenter.shared.getCurrentConfigurations { [weak self] widgetInfos in
+            guard let self else { return }
+            let widgetCount = self.userDefaultsClient.getValue(.widgetCount) as? Int ?? 0
+
+            guard case let .success(infos) = widgetInfos, widgetCount != infos.count else { return }
+            self.userDefaultsClient.setValue(.widgetCount, infos.count)
+
+            TWLog.setUserProperty(property: .widgetCount, value: "\(infos.count)")
+
+            let propertyString: String = infos
+                .compactMap { (info: WidgetInfo) in
+                    let string = WidgetUserPropertyBuiler(widgetInfo: info).buildString()
+                    return string
+                }
+                .joined(separator: ",")
+
+            TWLog.setUserProperty(property: .widget, value: propertyString)
+        }
+    }
+
     private func encodeTimeTables(timeTables: [ModifiedTimeTableLocalEntity]) -> Data {
         // swiftlint: disable force_try
         let data = try! JSONEncoder().encode(timeTables)
@@ -190,6 +196,44 @@ private extension AppDelegate {
             let newUUID = UUID().uuidString
             keychainClient.setValue(.uuid, newUUID)
             TWLog.setUserID(id: newUUID)
+        }
+    }
+}
+
+private struct WidgetUserPropertyBuiler: Sendable {
+    private let info: WidgetInfo
+
+    init(widgetInfo: WidgetInfo) {
+        self.info = widgetInfo
+    }
+
+    func buildString() -> String? {
+        switch info.kind {
+        case "TodayWhatMealControlWidget":
+            return "meal_control_center"
+        case "TodayWhatTimeTableControlWidget":
+            return "timetable_control_center"
+        case "TodayWhatMealWidget":
+            return "meal_\(familyToProperty(family: info.family))"
+        case "TodayWhatTimeTableWidget":
+            return "timetable_\(familyToProperty(family: info.family))"
+        case "TodayWhatMealTimeTableWidget":
+            return "meal_and_timetable_\(familyToProperty(family: info.family))"
+        default:
+            assertionFailure("failed to convert widget kind")
+            return nil
+        }
+    }
+
+    private func familyToProperty(family: WidgetFamily) -> String {
+        switch family {
+        case .systemSmall: return "small"
+        case .systemMedium: return "medium"
+        case .systemLarge: return "large"
+        case .systemExtraLarge: return "extra_large"
+        case .accessoryRectangular: return "meal_lockscreen_rectangular"
+        case .accessoryCircular: return "lockscreen_circular"
+        case .accessoryInline: return "lockscreen_inline"
         }
     }
 }
