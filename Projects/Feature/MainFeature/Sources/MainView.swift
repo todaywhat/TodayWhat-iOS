@@ -66,25 +66,43 @@ public struct MainView: View {
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
 
-                    if viewStore.isExistNewVersion {
-                        Button {
-                            let url = URL(
-                                string: "https://apps.apple.com/app/id1629567018"
-                            ) ?? URL(string: "https://google.com")!
-                            openURL(url)
-                        } label: {
-                            Circle()
-                                .frame(width: 56, height: 56)
-                                .foregroundColor(.extraBlack)
-                                .overlay {
-                                    Image(systemName: "arrow.down.to.line")
-                                        .foregroundColor(.extraWhite)
-                                        .accessibilityHidden(true)
+                    VStack {
+                        if viewStore.isShowingReviewToast {
+                            ReviewToast {
+                                viewStore.send(.requestReview)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal, 16)
+                            .padding(.bottom, viewStore.isExistNewVersion ? 72 : 16)
+                            .animation(.default, value: viewStore.isShowingReviewToast)
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                                    viewStore.send(.hideReviewToast)
                                 }
+                            }
                         }
-                        .padding([.bottom, .trailing], 16)
-                        .accessibilityLabel("새 버전 업데이트")
-                        .accessibilityHint("앱스토어로 이동하여 새 버전을 설치할 수 있습니다")
+
+                        if viewStore.isExistNewVersion {
+                            Button {
+                                let url = URL(
+                                    string: "https://apps.apple.com/app/id1629567018"
+                                ) ?? URL(string: "https://google.com")!
+                                openURL(url)
+                            } label: {
+                                Circle()
+                                    .frame(width: 56, height: 56)
+                                    .foregroundColor(.extraBlack)
+                                    .overlay {
+                                        Image(systemName: "arrow.down.to.line")
+                                            .foregroundColor(.extraWhite)
+                                            .accessibilityHidden(true)
+                                    }
+                            }
+                            .padding([.bottom, .trailing], 16)
+                            .accessibilityLabel("새 버전 업데이트")
+                            .accessibilityHint("앱스토어로 이동하여 새 버전을 설치할 수 있습니다")
+                        }
                     }
                 }
             }
@@ -181,7 +199,7 @@ public struct MainView: View {
     }
 
     @ViewBuilder
-    var navigationLinks: some View {
+    private var navigationLinks: some View {
         NavigationLinkStore(
             store.scope(state: \.$settingsCore, action: \.settingsCore),
             onTap: {},

@@ -54,6 +54,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Shared: String, MicroTargetPathConvertable {
+        case FeatureFlagClient
         case KeychainClient
         case TutorialClient
         case DeviceUtil

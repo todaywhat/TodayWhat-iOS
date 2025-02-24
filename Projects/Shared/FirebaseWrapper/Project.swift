@@ -8,7 +8,8 @@ let project = Project.module(
         .implements(module: .shared(.FirebaseWrapper), product: .framework, dependencies: [
             .SPM.FirebaseAnalytics,
             .SPM.FirebaseCrashlytics,
-            .SPM.Firestore
+            .SPM.Firestore,
+            .SPM.FirebaseRemoteConfig
         ])
     ]
 )
