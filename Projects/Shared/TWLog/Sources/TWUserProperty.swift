@@ -7,4 +7,5 @@ public enum TWUserProperty: String {
     case isCustomTimeTable = "is_custom_time_table"
     case isSkipAfterDinner = "is_skip_after_dinner"
     case allergies = "allergies"
+    case widget = "widget"
 }

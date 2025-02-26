@@ -70,6 +70,7 @@ public struct MainView: View {
                         if viewStore.isShowingReviewToast {
                             ReviewToast {
                                 viewStore.send(.requestReview)
+                                TWLog.event(ClickReviewEventLog())
                             }
                             .frame(maxWidth: .infinity)
                             .padding(.horizontal, 16)
