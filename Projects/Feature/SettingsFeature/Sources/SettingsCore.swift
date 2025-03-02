@@ -1,3 +1,4 @@
+import AddWidgetFeature
 import AllergySettingFeature
 import BaseFeature
 import ComposableArchitecture
@@ -24,6 +25,7 @@ public struct SettingsCore: Reducer {
         @PresentationState public var allergySettingCore: AllergySettingCore.State?
         @PresentationState public var modifyTimeTableCore: ModifyTimeTableCore.State?
         @PresentationState public var tutorialCore: TutorialCore.State?
+        @PresentationState public var addWidgetCore: AddWidgetCore.State?
         @PresentationState public var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
         @PresentationState public var alert: AlertState<Action.Alert>?
 
@@ -37,6 +39,7 @@ public struct SettingsCore: Reducer {
         case isSkipAfterDinnerChanged(Bool)
         case isOnModifiedTimeTableChagned(Bool)
         case schoolBlockButtonDidTap
+        case addWidgetButtonDidTap
         case allergyBlockButtonDidTap
         case modifyTimeTableButtonDidTap
         case consultingButtonDidTap
@@ -45,6 +48,7 @@ public struct SettingsCore: Reducer {
         case allergySettingCore(PresentationAction<AllergySettingCore.Action>)
         case modifyTimeTableCore(PresentationAction<ModifyTimeTableCore.Action>)
         case tutorialCore(PresentationAction<TutorialCore.Action>)
+        case addWidgetCore(PresentationAction<AddWidgetCore.Action>)
         case alert(PresentationAction<Alert>)
         case confirmationDialog(PresentationAction<ConfirmationDialog>)
 
@@ -112,6 +116,9 @@ public struct SettingsCore: Reducer {
 
                 let log = ModifyTimeTableButtonClickedEventLog()
                 TWLog.event(log)
+
+            case .addWidgetButtonDidTap:
+                state.addWidgetCore = .init()
 
             case .tutorialButtonDidTap:
                 state.tutorialCore = .init()
@@ -205,6 +212,7 @@ extension Reducer where State == SettingsCore.State, Action == SettingsCore.Acti
             .ifLet(\.$allergySettingCore, action: /Action.allergySettingCore) { AllergySettingCore() }
             .ifLet(\.$modifyTimeTableCore, action: /Action.modifyTimeTableCore) { ModifyTimeTableCore() }
             .ifLet(\.$tutorialCore, action: /Action.tutorialCore) { TutorialCore() }
+            .ifLet(\.$addWidgetCore, action: /Action.addWidgetCore) { AddWidgetCore() }
     }
 
     func alertFeatures() -> some ReducerOf<Self> {

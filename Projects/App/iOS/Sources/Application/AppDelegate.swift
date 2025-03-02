@@ -39,6 +39,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             session.delegate = self
             session.activate()
         }
+        TWLog.setUserProperty(property: .activeWatch, value: WCSession.default.isWatchAppInstalled ? "true" : "false")
 
         if let schoolTypeRawString = self.userDefaultsClient.getValue(.schoolType) as? String,
            let schoolType = SchoolType(rawValue: schoolTypeRawString) {

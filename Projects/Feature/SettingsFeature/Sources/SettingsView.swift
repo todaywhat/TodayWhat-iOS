@@ -1,3 +1,4 @@
+import AddWidgetFeature
 import AllergySettingFeature
 import ComposableArchitecture
 import DesignSystem
@@ -24,6 +25,8 @@ public struct SettingsView: View {
                 schoolSettingsView()
 
                 VStack(spacing: 0) {
+                    addWidgetSettingsView()
+
                     allergySettingsView()
 
                     timeTableSettingsView()
@@ -83,8 +86,17 @@ public struct SettingsView: View {
 
     // MARK: - Settings Chevron
     @ViewBuilder
-    func allergySettingsView() -> some View {
+    func addWidgetSettingsView() -> some View {
         SettingsBlockView(corners: [.topLeft, .topRight]) {
+            viewStore.send(.addWidgetButtonDidTap)
+        } label: {
+            settingsOptionChevronView(icon: .widgetSetting, text: "위젯 추가")
+        }
+    }
+
+    @ViewBuilder
+    func allergySettingsView() -> some View {
+        SettingsBlockView(corners: []) {
             viewStore.send(.allergyBlockButtonDidTap)
         } label: {
             settingsOptionChevronView(icon: .allergySetting, text: "알레르기 설정")
@@ -223,6 +235,14 @@ public struct SettingsView: View {
     // MARK: - Navigation Links
     @ViewBuilder
     func navigationLinks() -> some View {
+        NavigationLinkStore(
+            store.scope(state: \.$addWidgetCore, action: \.addWidgetCore),
+            onTap: {},
+            destination: { store in
+                AddWidgetView(store: store)
+            },
+            label: { EmptyView() }
+        )
         NavigationLinkStore(
             store.scope(state: \.$schoolSettingCore, action: \.schoolSettingCore),
             onTap: {},

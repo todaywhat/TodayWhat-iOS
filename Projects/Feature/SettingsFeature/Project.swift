@@ -11,6 +11,7 @@ let project = Project.module(
             .feature(target: .AllergySettingFeature),
             .feature(target: .ModifyTimeTableFeature),
             .feature(target: .TutorialFeature),
+            .feature(target: .AddWidgetFeature),
             .shared(target: .UserDefaultsClient),
             .shared(target: .ITunesClient),
             .shared(target: .DeviceClient)

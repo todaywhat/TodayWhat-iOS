@@ -16,4 +16,6 @@ public extension Image {
     static let writingPencil = DesignSystemAsset.Images.writingPencil.swiftUIImage
     static let tutorial = DesignSystemAsset.Images.tutorial.swiftUIImage
     static let triangleDown = DesignSystemAsset.Images.triangleDown.swiftUIImage
+    static let circularMeal = DesignSystemAsset.Images.circularMeal.swiftUIImage
+    static let widgetSetting = DesignSystemAsset.Images.widgetSetting.swiftUIImage
 }

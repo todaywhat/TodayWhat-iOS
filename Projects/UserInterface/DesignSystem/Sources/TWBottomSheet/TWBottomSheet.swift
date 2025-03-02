@@ -7,6 +7,7 @@ struct TWBottomSheet<T: View>: ViewModifier {
     @State var dragHeight: CGFloat = 0
     var content: () -> T
     var height: CGFloat
+    var backgroundColor: Color
     var sheetDragging: some Gesture {
         DragGesture(minimumDistance: 0, coordinateSpace: .global)
             .onChanged { value in
@@ -30,10 +31,12 @@ struct TWBottomSheet<T: View>: ViewModifier {
     init(
         isShowing: Binding<Bool>,
         height: CGFloat = .infinity,
+        backgroundColor: Color = .backgroundMain,
         content: @escaping () -> T
     ) {
         _isShowing = isShowing
         self.height = height
+        self.backgroundColor = backgroundColor
         self.content = content
     }
 
@@ -54,7 +57,7 @@ struct TWBottomSheet<T: View>: ViewModifier {
                         .transition(.opacity)
 
                     ZStack {
-                        Color.backgroundMain
+                        backgroundColor
                             .cornerRadius(16, corners: [.topLeft, .topRight])
                             .padding(.top, -dragHeight)
                             .gesture(sheetDragging)
@@ -84,9 +87,16 @@ struct TWBottomSheet<T: View>: ViewModifier {
 public extension View {
     func twBottomSheet(
         isShowing: Binding<Bool>,
+        backgroundColor: Color = .backgroundMain,
         content: @escaping () -> some View
     ) -> some View {
-        modifier(TWBottomSheet(isShowing: isShowing, content: content))
+        modifier(
+            TWBottomSheet(
+                isShowing: isShowing,
+                backgroundColor: backgroundColor,
+                content: content
+            )
+        )
     }
 }
 #endif
