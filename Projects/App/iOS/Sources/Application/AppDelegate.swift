@@ -34,6 +34,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         initializeAnalyticsUserID()
+        sendUserPropertyWidget()
         session = WCSession.default
         if WCSession.isSupported() {
             session.delegate = self

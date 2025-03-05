@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import ComposableArchitectureWrapper
+import Intents
 
 public struct AddWidgetCore: Reducer {
     public struct State: Equatable {
