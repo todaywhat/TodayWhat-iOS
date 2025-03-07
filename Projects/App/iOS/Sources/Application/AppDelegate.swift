@@ -34,11 +34,13 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         initializeAnalyticsUserID()
+        sendUserPropertyWidget()
         session = WCSession.default
         if WCSession.isSupported() {
             session.delegate = self
             session.activate()
         }
+        TWLog.setUserProperty(property: .activeWatch, value: WCSession.default.isWatchAppInstalled ? "true" : "false")
 
         if let schoolTypeRawString = self.userDefaultsClient.getValue(.schoolType) as? String,
            let schoolType = SchoolType(rawValue: schoolTypeRawString) {

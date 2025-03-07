@@ -14,6 +14,7 @@ public extension TargetDependency.SPM {
     static let FirebaseCrashlytics = TargetDependency.external(name: "FirebaseCrashlytics")
     static let FirebaseRemoteConfig = TargetDependency.external(name: "FirebaseRemoteConfig")
     static let LaunchAtScreen = TargetDependency.external(name: "LaunchAtLogin")
+    static let Lottie = TargetDependency.external(name: "Lottie")
 }
 
 public extension Package {
