@@ -5,6 +5,7 @@ import NoticeFeature
 import SettingsFeature
 import SwiftUI
 import TimeTableFeature
+import TipKit
 import TWLog
 
 public struct MainView: View {

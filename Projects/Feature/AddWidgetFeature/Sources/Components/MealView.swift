@@ -221,7 +221,7 @@ private struct MealRectangularView: View {
             .fill(.ultraThinMaterial)
             .overlay {
                 Text("아침 - \(items.joined(separator: ","))")
-                    .twFont(.caption1)
+                    .twFont(.caption1, color: .extraBlack)
                     .lineLimit(nil)
             }
     }
