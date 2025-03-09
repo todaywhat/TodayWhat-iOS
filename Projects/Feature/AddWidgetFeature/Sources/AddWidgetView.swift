@@ -3,6 +3,8 @@ import ComposableArchitectureWrapper
 import DesignSystem
 import Lottie
 import SwiftUI
+import SwiftUIUtil
+import TWLog
 
 // swiftlint: disable
 public struct AddWidgetView: View {
@@ -54,29 +56,31 @@ public struct AddWidgetView: View {
     private func widgetSection(
         widget: WidgetReperesentation
     ) -> some View {
-        VStack(spacing: 0) {
-            widgetPreview(for: widget)
-                .padding(.top, 24)
-
-            VStack(spacing: 4) {
-                Text(widget.kind.title)
-                    .twFont(.headline4)
-                    .foregroundColor(.textPrimary)
-
-                Text(widget.family.title)
-                    .twFont(.caption1)
-                    .foregroundColor(.textSecondary)
-            }
-            .padding(.vertical, 16)
-        }
-        .frame(maxWidth: .infinity)
-        .background {
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color.cardBackground)
-        }
-        .padding(.horizontal, 16)
-        .onTapGesture {
+        Button {
+            TWLog.event(ClickAddToWidgetTypeEventLog(widget: widget))
             viewStore.send(.selectWidget(widget))
+        } label: {
+            VStack(spacing: 0) {
+                widgetPreview(for: widget)
+                    .padding(.top, 24)
+
+                VStack(spacing: 4) {
+                    Text(widget.kind.title)
+                        .twFont(.headline4)
+                        .foregroundColor(.textPrimary)
+
+                    Text(widget.family.title)
+                        .twFont(.caption1)
+                        .foregroundColor(.textSecondary)
+                }
+                .padding(.vertical, 16)
+            }
+            .frame(maxWidth: .infinity)
+            .background {
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color.cardBackground)
+            }
+            .padding(.horizontal, 16)
         }
     }
 

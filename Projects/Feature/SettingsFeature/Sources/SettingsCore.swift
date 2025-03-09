@@ -120,6 +120,9 @@ public struct SettingsCore: Reducer {
             case .addWidgetButtonDidTap:
                 state.addWidgetCore = .init()
 
+                let log = ClickAddToWidgetEventLog()
+                TWLog.event(log)
+
             case .tutorialButtonDidTap:
                 state.tutorialCore = .init()
 
