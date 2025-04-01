@@ -8,6 +8,7 @@ import FoundationUtil
 import LocalDatabaseClient
 import TimeTableClient
 import TWLog
+import WidgetKit
 
 public struct ModifyTimeTableCore: Reducer {
     public init() {}
@@ -132,6 +133,7 @@ public struct ModifyTimeTableCore: Reducer {
                         )
                     }
                 try? localDatabaseClient.save(records: modifiedTimeTables)
+                WidgetCenter.shared..reloadTimelines(ofKind: "TodayWhatTimeTableWidget")
                 state.isShowingSuccessToast = true
 
             case let .toastDismissed(dismissed):
