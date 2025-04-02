@@ -133,7 +133,7 @@ public struct ModifyTimeTableCore: Reducer {
                         )
                     }
                 try? localDatabaseClient.save(records: modifiedTimeTables)
-                WidgetCenter.shared..reloadTimelines(ofKind: "TodayWhatTimeTableWidget")
+                WidgetCenter.shared.reloadTimelines(ofKind: "TodayWhatTimeTableWidget")
                 state.isShowingSuccessToast = true
 
             case let .toastDismissed(dismissed):
