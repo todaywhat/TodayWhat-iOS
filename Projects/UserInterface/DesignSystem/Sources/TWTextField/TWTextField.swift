@@ -37,7 +37,7 @@ public struct TWTextField: View {
                 if isFocused || !text.isEmpty {
                     Text(placeholder)
                         .twFont(.body2, color: .textPrimary)
-                        .offset(y: -35)
+                        .offset(y: -44)
                         .transition(.offset(y: 20))
                         .zIndex(0)
                 } else {
