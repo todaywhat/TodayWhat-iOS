@@ -29,7 +29,7 @@ public struct SchoolSettingView: View {
     public var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             ZStack {
-                VStack(spacing: 16) {
+                VStack(spacing: 34) {
                     if !viewStore.isFocusedSchool {
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
