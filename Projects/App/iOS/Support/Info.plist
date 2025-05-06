@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>7.4</string>
+	<string>7.5</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -32,13 +32,13 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>66</string>
+	<string>67</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>© Hyeongwoo Choi 2023</string>
+	<string>© Hyeongwoo Choi 2025</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>DisplayMealIntent</string>

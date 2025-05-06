@@ -190,25 +190,25 @@ private struct MediumMealWidgetView: View {
     }
 
     func getMealText(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "MM월 dd일 EEE"
+
+        let dayString = dateFormatter.string(from: date)
         let calendar = Calendar.current
         let now = Date()
 
-        var dateSuffix: String = "[다음주]"
         if calendar.isDate(date, inSameDayAs: now) {
-            dateSuffix = "[오늘]"
+            return "\(dayString) [오늘]"
         }
 
         let components = calendar.dateComponents([.day], from: now, to: date)
 
         if let days = components.day, days == 1 {
-            dateSuffix = "[내일]"
+            return "\(dayString) [내일]"
         }
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "MM월 dd일 EEE"
-        let dayString = dateFormatter.string(from: date)
-        return "\(dayString) \(dateSuffix)"
+        return "\(dayString)"
     }
 
     private func mealDisplay(meal: String) -> String {
@@ -290,25 +290,25 @@ private struct LargeMealWidgetView: View {
     }
 
     func getMealText(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "MM월 dd일 EEE"
+
+        let dayString = dateFormatter.string(from: date)
         let calendar = Calendar.current
         let now = Date()
 
-        var dateSuffix: String = "[다음주]"
         if calendar.isDate(date, inSameDayAs: now) {
-            dateSuffix = "[오늘]"
+            return "\(dayString) [오늘]"
         }
 
         let components = calendar.dateComponents([.day], from: now, to: date)
 
         if let days = components.day, days == 1 {
-            dateSuffix = "[내일]"
+            return "\(dayString) [내일]"
         }
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "MM월 dd일 EEE"
-        let dayString = dateFormatter.string(from: date)
-        return "\(dayString) \(dateSuffix)"
+        return "\(dayString)"
     }
 
     private func mealDisplay(meal: String) -> String {
