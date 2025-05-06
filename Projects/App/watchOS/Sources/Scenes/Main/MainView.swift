@@ -6,9 +6,38 @@ struct MainView: View {
     @State var isPresentedOption = false
     var body: some View {
         ScrollView {
+            Button {
+                Task {
+                    await viewModel.loadData()
+                }
+            } label: {
+                Label {
+                    Text("새로고침")
+                } icon: {
+                    Image(systemName: "arrow.clockwise")
+                }
+                .font(.system(size: 14))
+                .foregroundColor(.secondary)
+            }
+            .buttonStyle(.plain)
+            .padding(.top, 4)
+            .padding(.bottom, 4)
+            .padding(.horizontal, 12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color("Main"))
+            }
+
             VStack(alignment: .leading) {
-                Text(viewModel.part.display)
-                    .font(.system(size: 16))
+                HStack {
+                    Text(viewModel.part.display)
+                        .font(.system(size: 16))
+
+                    Text(Date(), format: .dateTime.year().month().day())
+                        .font(.system(size: 14))
+                        .foregroundStyle(.secondary)
+                }
 
                 Text("옵션변경")
                     .font(.system(size: 14))
@@ -36,6 +65,11 @@ struct MainView: View {
             }
 
             LazyVStack(spacing: 4) {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .progressViewStyle(.automatic)
+                }
+
                 if viewModel.part == .timeTable {
                     ForEach(viewModel.timeTables, id: \.hashValue) { timetable in
                         VStack(alignment: .leading) {
@@ -58,7 +92,12 @@ struct MainView: View {
             }
         }
         .task {
-            await viewModel.onAppear()
+            await viewModel.loadData()
+        }
+        .refreshable {
+            Task {
+                await viewModel.loadData()
+            }
         }
         .sheet(isPresented: $isPresentedOption) {
             PartSelectView(selectedPart: viewModel.part) { part in

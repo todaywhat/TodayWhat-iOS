@@ -14,7 +14,8 @@ final class MainViewModel: ObservableObject {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
     @Dependency(\.localDatabaseClient) var localDatabaseClient
     @Published var part: DisplayInfoPart = .breakfast
-    @Published var timeTables: [TimeTable] = []
+    @Published private(set) var timeTables: [TimeTable] = []
+    @Published private(set) var isLoading: Bool = false
     var meal: Meal?
     var currentMeal: [String] {
         switch part {
@@ -33,8 +34,9 @@ final class MainViewModel: ObservableObject {
     }
 
     @MainActor
-    func onAppear() async {
+    func loadData() async {
         do {
+            self.isLoading = true
             let todayDate = Date()
             let meal = try await mealClient.fetchMeal(todayDate)
             self.meal = meal
@@ -50,6 +52,9 @@ final class MainViewModel: ObservableObject {
                 let timeTable = try await timeTableClient.fetchTimeTable(Date())
                 self.timeTables = timeTable
             }
-        } catch {}
+            isLoading = false
+        } catch {
+            isLoading = false
+        }
     }
 }
