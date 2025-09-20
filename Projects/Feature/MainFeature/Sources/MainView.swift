@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import DesignSystem
+import FirebaseRemoteConfig
 import MealFeature
 import NoticeFeature
 import SettingsFeature
@@ -14,6 +15,7 @@ public struct MainView: View {
     @Environment(\.openURL) var openURL
     @Environment(\.calendar) var calendar
     @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @RemoteConfigProperty(key: "enable_weekly_time_table", fallback: false) private var enableWeeklyTimeTable
 
     public init(store: StoreOf<MainCore>) {
         self.store = store
@@ -58,54 +60,63 @@ public struct MainView: View {
                         .tag(0)
 
                         VStack {
-                            IfLetStore(
-                                store.scope(state: \.timeTableCore, action: MainCore.Action.timeTableCore)
-                            ) { store in
-                                TimeTableView(store: store)
+                            if enableWeeklyTimeTable {
+                                IfLetStore(
+                                    store.scope(
+                                        state: \.weeklyTimeTableCore,
+                                        action: MainCore.Action.weeklyTimeTableCore
+                                    )
+                                ) { store in
+                                    WeeklyTimeTableView(store: store)
+                                }
+                            } else {
+                                IfLetStore(
+                                    store.scope(state: \.timeTableCore, action: MainCore.Action.timeTableCore)
+                                ) { store in
+                                    TimeTableView(store: store)
+                                }
                             }
                         }
                         .tag(1)
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
 
-                    VStack {
-                        if viewStore.isShowingReviewToast {
-                            ReviewToast {
-                                viewStore.send(.requestReview)
-                                TWLog.event(ClickReviewEventLog())
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding(.horizontal, 16)
-                            .padding(.bottom, viewStore.isExistNewVersion ? 72 : 16)
-                            .animation(.default, value: viewStore.isShowingReviewToast)
-                            .transition(.move(edge: .bottom).combined(with: .opacity))
-                            .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                                    viewStore.send(.hideReviewToast)
-                                }
+                    if viewStore.isShowingReviewToast {
+                        ReviewToast {
+                            viewStore.send(.requestReview)
+                            TWLog.event(ClickReviewEventLog())
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, viewStore.isExistNewVersion ? 72 : 16)
+                        .animation(.default, value: viewStore.isShowingReviewToast)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                                viewStore.send(.hideReviewToast)
                             }
                         }
+                    }
 
-                        if viewStore.isExistNewVersion {
-                            Button {
-                                let url = URL(
-                                    string: "https://apps.apple.com/app/id1629567018"
-                                ) ?? URL(string: "https://google.com")!
-                                openURL(url)
-                            } label: {
-                                Circle()
-                                    .frame(width: 56, height: 56)
-                                    .foregroundColor(.extraBlack)
-                                    .overlay {
-                                        Image(systemName: "arrow.down.to.line")
-                                            .foregroundColor(.extraWhite)
-                                            .accessibilityHidden(true)
-                                    }
-                            }
-                            .padding([.bottom, .trailing], 16)
-                            .accessibilityLabel("새 버전 업데이트")
-                            .accessibilityHint("앱스토어로 이동하여 새 버전을 설치할 수 있습니다")
+                    if viewStore.isExistNewVersion {
+                        Button {
+                            let url = URL(
+                                string: "https://apps.apple.com/app/id1629567018"
+                            ) ?? URL(string: "https://google.com")!
+                            openURL(url)
+                        } label: {
+                            Circle()
+                                .frame(width: 56, height: 56)
+                                .foregroundColor(.extraBlack)
+                                .overlay {
+                                    Image(systemName: "arrow.down.to.line")
+                                        .foregroundColor(.extraWhite)
+                                        .accessibilityHidden(true)
+                                }
                         }
+                        .padding([.bottom, .trailing], 16)
+                        .accessibilityLabel("새 버전 업데이트")
+                        .accessibilityHint("앱스토어로 이동하여 새 버전을 설치할 수 있습니다")
                     }
                 }
             }
@@ -208,6 +219,9 @@ public struct MainView: View {
             .onAppear {
                 viewStore.send(.onAppear, animation: .default)
             }
+            .onChange(of: enableWeeklyTimeTable, perform: { _ in
+                TWLog.setUserProperty(property: .enableWeeklyTimeTable, value: enableWeeklyTimeTable.description)
+            })
             .onLoad {
                 viewStore.send(.onLoad)
             }
