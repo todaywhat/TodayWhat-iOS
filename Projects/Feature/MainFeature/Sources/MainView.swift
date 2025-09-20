@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import DesignSystem
+import FirebaseRemoteConfig
 import MealFeature
 import NoticeFeature
 import SettingsFeature
@@ -14,6 +15,7 @@ public struct MainView: View {
     @Environment(\.openURL) var openURL
     @Environment(\.calendar) var calendar
     @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @RemoteConfigProperty(key: "enable_weekly_time_table", fallback: false) private var enableWeeklyTimeTable
 
     public init(store: StoreOf<MainCore>) {
         self.store = store
@@ -58,10 +60,21 @@ public struct MainView: View {
                         .tag(0)
 
                         VStack {
-                            IfLetStore(
-                                store.scope(state: \.timeTableCore, action: MainCore.Action.timeTableCore)
-                            ) { store in
-                                TimeTableView(store: store)
+                            if enableWeeklyTimeTable {
+                                IfLetStore(
+                                    store.scope(
+                                        state: \.weeklyTimeTableCore,
+                                        action: MainCore.Action.weeklyTimeTableCore
+                                    )
+                                ) { store in
+                                    WeeklyTimeTableView(store: store)
+                                }
+                            } else {
+                                IfLetStore(
+                                    store.scope(state: \.timeTableCore, action: MainCore.Action.timeTableCore)
+                                ) { store in
+                                    TimeTableView(store: store)
+                                }
                             }
                         }
                         .tag(1)
@@ -208,6 +221,9 @@ public struct MainView: View {
             .onAppear {
                 viewStore.send(.onAppear, animation: .default)
             }
+            .onChange(of: enableWeeklyTimeTable, perform: { _ in
+                TWLog.setUserProperty(property: .enableWeeklyTimeTable, value: enableWeeklyTimeTable.description)
+            })
             .onLoad {
                 viewStore.send(.onLoad)
             }

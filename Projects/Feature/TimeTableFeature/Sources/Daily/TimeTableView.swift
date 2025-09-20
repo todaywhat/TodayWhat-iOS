@@ -21,12 +21,12 @@ public struct TimeTableView: View {
                     .accessibilityLabel("시간표를 찾을 수 없습니다")
                     .accessibilitySortPriority(1)
 
-                if Date().month == 3 {
-                    Text("3월 초중반에는 neis에 정규시간표가\n 등록되어있지 않을 수도 있어요.")
+                if Date().month == 3 || Date().month == 9 {
+                    Text("학기 초에는 neis에 정규시간표가\n 등록되어있지 않을 수도 있어요.")
                         .multilineTextAlignment(.center)
                         .padding(.top, 14)
                         .foregroundColor(.textSecondary)
-                        .accessibilityLabel("3월 초중반에는 정규시간표가 등록되어 있지 않을 수 있습니다")
+                        .accessibilityLabel("학기 초에는 정규시간표가 등록되어 있지 않을 수 있습니다")
                         .accessibilitySortPriority(2)
                 }
             }
