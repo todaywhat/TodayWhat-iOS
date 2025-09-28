@@ -12,6 +12,7 @@ public struct MainView: View {
     let store: StoreOf<MainCore>
     @ObservedObject var viewStore: ViewStoreOf<MainCore>
     @Environment(\.openURL) var openURL
+    @Environment(\.calendar) var calendar
     @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     public init(store: StoreOf<MainCore>) {
@@ -111,14 +112,67 @@ public struct MainView: View {
             .background(Color.backgroundMain)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        viewStore.send(.toggleDatePicker(true))
-                        TWLog.event(ClickDateTensePickerEventLog())
+                    Menu {
+                        let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
+                        let isSkipAfterDinner = userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true
+                        let datePolicy = DatePolicy(isSkipWeekend: isSkipWeekend, isSkipAfterDinner: isSkipAfterDinner)
+
+                        let today = Date()
+                        let yesterday = datePolicy.previousDay(from: today)
+                        let tomorrow = datePolicy.nextDay(from: today)
+
+                        ForEach([yesterday, today, tomorrow], id: \.timeIntervalSince1970) { date in
+                            Button {
+                                let today = Date()
+                                let tense: SelectDateTenseEventLog.Tense
+
+                                if calendar.isDate(date, inSameDayAs: today) {
+                                    tense = .present
+                                } else if date > today {
+                                    tense = .future
+                                } else {
+                                    tense = .past
+                                }
+
+                                TWLog.event(SelectDateTenseEventLog(tense: tense))
+
+                                _ = viewStore.send(.dateSelected(date))
+                                _ = viewStore.send(.toggleDatePicker(false))
+                            } label: {
+                                if calendar.isDate(viewStore.displayDate, inSameDayAs: date) {
+                                    Label {
+                                        Text(datePolicy.displayText(for: date, baseDate: today))
+                                            .twFont(.body1)
+                                            .foregroundStyle(
+                                                calendar.isDate(viewStore.displayDate, inSameDayAs: date)
+                                                    ? Color.extraWhite
+                                                    : Color.extraBlack
+                                            )
+                                            .animation(.easeInOut(duration: 0.2), value: viewStore.displayDate)
+                                    } icon: {
+                                        Image(systemName: "checkmark")
+                                    }
+                                    
+
+                                } else {
+                                    Text(datePolicy.displayText(for: date, baseDate: today))
+                                        .twFont(.body1)
+                                        .foregroundStyle(
+                                            calendar.isDate(viewStore.displayDate, inSameDayAs: date)
+                                                ? Color.extraWhite
+                                                : Color.extraBlack
+                                        )
+                                        .animation(.easeInOut(duration: 0.2), value: viewStore.displayDate)
+                                }
+                            }
+                            .accessibilityLabel("\(datePolicy.displayText(for: date, baseDate: today)) 선택")
+                            .accessibilityHint("날짜 변경")
+                        }
                     } label: {
                         HStack(spacing: 0) {
                             Text(viewStore.displayTitle)
                                 .twFont(.headline3)
-                                .foregroundColor(.extraBlack)
+                                .foregroundStyle(Color.extraBlack)
 
                             Image.triangleDown
                                 .renderingMode(.template)
@@ -129,6 +183,25 @@ public struct MainView: View {
                     }
                     .accessibilityLabel("날짜 선택")
                     .accessibilityHint("클릭하여 날짜를 선택할 수 있습니다")
+
+//                    Button {
+//                        viewStore.send(.toggleDatePicker(true))
+//                        TWLog.event(ClickDateTensePickerEventLog())
+//                    } label: {
+//                        HStack(spacing: 0) {
+//                            Text(viewStore.displayTitle)
+//                                .twFont(.headline3)
+//                                .foregroundColor(.extraBlack)
+//
+//                            Image.triangleDown
+//                                .renderingMode(.template)
+//                                .foregroundStyle(Color.textPrimary)
+//                                .rotationEffect(.degrees(viewStore.isDatePickerPresented ? 180.0 : 0))
+//                                .animation(.easeInOut, value: viewStore.isDatePickerPresented)
+//                        }
+//                    }
+//                    .accessibilityLabel("날짜 선택")
+//                    .accessibilityHint("클릭하여 날짜를 선택할 수 있습니다")
                 }
 
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
