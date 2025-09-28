@@ -31,10 +31,10 @@ public extension GenerateEnvironment {
             return [.launchAtLogin]
 
         case .cd:
-            return [.firebaseInfoByMacOSConfiguration, .launchAtLogin]
+            return [.launchAtLogin]
 
         case .dev:
-            return [.swiftLint, .firebaseInfoByMacOSConfiguration, .launchAtLogin]
+            return [.swiftLint, .launchAtLogin]
         }
     }
 }

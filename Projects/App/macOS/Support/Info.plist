@@ -19,9 +19,9 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.6.3</string>
+	<string>3.0</string>
 	<key>CFBundleVersion</key>
-	<string>33</string>
+	<string>37</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
@@ -29,7 +29,7 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>© Hyeongwoo Choi 2023</string>
+	<string>© Hyeongwoo Choi 2025</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>DisplayMealIntent</string>

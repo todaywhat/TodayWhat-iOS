@@ -105,6 +105,7 @@ let targets: [Target] = [
         dependencies: [
             .SPM.LaunchAtScreen,
             .shared(target: .ComposableArchitectureWrapper),
+            .shared(target: .FirebaseWrapper),
             .shared(target: .Entity),
             .shared(target: .EnumUtil),
             .shared(target: .SwiftUIUtil),

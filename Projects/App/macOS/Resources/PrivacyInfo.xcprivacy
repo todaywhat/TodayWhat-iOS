@@ -96,9 +96,7 @@
 		</dict>
 	</array>
 	<key>NSPrivacyTrackingDomains</key>
-	<array>
-		<string>https://open.neis.go.kr</string>
-	</array>
+	<array/>
 	<key>NSPrivacyTracking</key>
 	<false/>
 </dict>

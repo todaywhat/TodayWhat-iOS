@@ -38,20 +38,4 @@ public extension TargetScript {
         name: "Firebase Info copy by Configuration",
         basedOnDependencyAnalysis: false
     )
-
-    static let firebaseInfoByMacOSConfiguration = TargetScript.post(
-        script: """
-            case "${CONFIGURATION}" in
-              "Release" )
-                cp -r "$SRCROOT/macOS/Resources/GoogleService-Info.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
-                ;;
-              *)
-                cp -r "$SRCROOT/macOS/Resources/GoogleService-QA-Info.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist"
-                ;;
-            esac
-
-            """,
-        name: "Firebase Info copy by Configuration",
-        basedOnDependencyAnalysis: false
-    )
 }

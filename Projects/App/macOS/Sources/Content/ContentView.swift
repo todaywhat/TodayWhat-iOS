@@ -142,7 +142,7 @@ struct ContentView: View {
                 .overlay(alignment: .top) {
                     HStack {
                         Text(text)
-                            .foregroundColor(foregroundColor)
+                            .foregroundStyle(foregroundColor)
 
                         Spacer()
                     }
@@ -157,7 +157,7 @@ struct ContentView: View {
 
                             Text("cmd + \(shortcut)")
                                 .font(.caption2)
-                                .foregroundColor(foregroundColor)
+                                .foregroundStyle(.gray)
                         }
                         .padding(.bottom, 4)
                         .padding(.trailing, 8)

@@ -2,6 +2,7 @@ import Cocoa
 import Combine
 import ComposableArchitecture
 import SwiftUI
+import Firebase
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
@@ -39,6 +40,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         self.popover = popover
 
         eventMonitor = .init(mask: [.leftMouseDown, .rightMouseDown], handler: mouseEventHandle(_:))
+
+        FirebaseApp.configure()
     }
 
     func applicationWillTerminate(_ notification: Notification) {}
