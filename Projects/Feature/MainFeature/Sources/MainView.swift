@@ -137,7 +137,6 @@ public struct MainView: View {
                                 TWLog.event(SelectDateTenseEventLog(tense: tense))
 
                                 _ = viewStore.send(.dateSelected(date))
-                                _ = viewStore.send(.toggleDatePicker(false))
                             } label: {
                                 if calendar.isDate(viewStore.displayDate, inSameDayAs: date) {
                                     Label {
@@ -177,31 +176,11 @@ public struct MainView: View {
                             Image.triangleDown
                                 .renderingMode(.template)
                                 .foregroundStyle(Color.textPrimary)
-                                .rotationEffect(.degrees(viewStore.isDatePickerPresented ? 180.0 : 0))
-                                .animation(.easeInOut, value: viewStore.isDatePickerPresented)
+                                .rotationEffect(.degrees(0))
                         }
                     }
                     .accessibilityLabel("날짜 선택")
                     .accessibilityHint("클릭하여 날짜를 선택할 수 있습니다")
-
-//                    Button {
-//                        viewStore.send(.toggleDatePicker(true))
-//                        TWLog.event(ClickDateTensePickerEventLog())
-//                    } label: {
-//                        HStack(spacing: 0) {
-//                            Text(viewStore.displayTitle)
-//                                .twFont(.headline3)
-//                                .foregroundColor(.extraBlack)
-//
-//                            Image.triangleDown
-//                                .renderingMode(.template)
-//                                .foregroundStyle(Color.textPrimary)
-//                                .rotationEffect(.degrees(viewStore.isDatePickerPresented ? 180.0 : 0))
-//                                .animation(.easeInOut, value: viewStore.isDatePickerPresented)
-//                        }
-//                    }
-//                    .accessibilityLabel("날짜 선택")
-//                    .accessibilityHint("클릭하여 날짜를 선택할 수 있습니다")
                 }
 
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -226,40 +205,6 @@ public struct MainView: View {
                     .accessibilityHint("앱 설정을 변경할 수 있습니다")
                 }
             }
-            .overlay {
-                if viewStore.isDatePickerPresented {
-                    Color.black.opacity(0.2)
-                        .ignoresSafeArea()
-                        .onTapGesture {
-                            viewStore.send(.toggleDatePicker(false))
-                        }
-                }
-            }
-            .overlay(alignment: .top) {
-                if viewStore.isDatePickerPresented {
-                    DateTensePickerView(displayDate: viewStore.displayDate) { date in
-                        let calendar = Calendar.current
-                        let today = Date()
-                        let tense: SelectDateTenseEventLog.Tense
-
-                        if calendar.isDate(date, inSameDayAs: today) {
-                            tense = .present
-                        } else if date > today {
-                            tense = .future
-                        } else {
-                            tense = .past
-                        }
-
-                        TWLog.event(SelectDateTenseEventLog(tense: tense))
-
-                        _ = viewStore.send(.dateSelected(date))
-                        _ = viewStore.send(.toggleDatePicker(false))
-                    }
-                    .padding(.horizontal, 16)
-                    .transition(.move(edge: .top).combined(with: .opacity))
-                }
-            }
-            .animation(.spring(), value: viewStore.isDatePickerPresented)
             .onAppear {
                 viewStore.send(.onAppear, animation: .default)
             }
