@@ -24,7 +24,6 @@ public struct MainCore: Reducer {
         public var currentTab = 0
         public var isInitial: Bool = true
         public var isExistNewVersion: Bool = false
-        public var isDatePickerPresented: Bool = false
         public var mealCore: MealCore.State?
         public var timeTableCore: TimeTableCore.State?
         @PresentationState public var settingsCore: SettingsCore.State?
@@ -74,7 +73,6 @@ public struct MainCore: Reducer {
         case settingsCore(PresentationAction<SettingsCore.Action>)
         case noticeCore(PresentationAction<NoticeCore.Action>)
         case dateSelected(Date)
-        case toggleDatePicker(Bool)
         case showReviewToast
         case hideReviewToast
         case requestReview
@@ -174,10 +172,6 @@ public struct MainCore: Reducer {
 
             case let .dateSelected(date):
                 state.$displayDate.withLock { $0 = date }
-                return .none
-
-            case let .toggleDatePicker(isOn):
-                state.isDatePickerPresented = isOn
                 return .none
 
             case .showReviewToast:

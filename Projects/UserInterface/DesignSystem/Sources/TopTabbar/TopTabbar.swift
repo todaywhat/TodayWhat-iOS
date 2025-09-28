@@ -37,7 +37,7 @@ public struct TopTabbarView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .background {
-                        Color.extraWhite
+                        Color.backgroundMain
                     }
                     .padding(.horizontal, 16)
                 }
