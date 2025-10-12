@@ -60,9 +60,9 @@ public struct WeeklyTimeTableView: View {
     }
 
     public var body: some View {
-        ScrollView(.vertical) {
-            VStack {
-                if viewStore.weeklyTimeTable == nil && !viewStore.isLoading {
+        ScrollView(.vertical, showsIndicators: false) {
+            if viewStore.weeklyTimeTable == nil && !viewStore.isLoading {
+                VStack {
                     Text("이번 주 시간표를 찾을 수 없어요!")
                         .padding(.top, 16)
                         .foregroundColor(.textSecondary)
@@ -77,29 +77,30 @@ public struct WeeklyTimeTableView: View {
                             .accessibilityLabel("학기 초에는 정규시간표가 등록되어 있지 않을 수 있습니다")
                             .accessibilitySortPriority(2)
                     }
-                } else {
-                    ZStack(alignment: .top) {
-                        if viewStore.isLoading {
-                            ProgressView()
-                                .progressViewStyle(.automatic)
-                                .padding(.top, 16)
-                                .accessibilityLabel("시간표를 불러오는 중입니다")
-                                .accessibilitySortPriority(1)
-                        }
+                }
+            } else {
+                ZStack(alignment: .top) {
+                    if viewStore.isLoading {
+                        ProgressView()
+                            .progressViewStyle(.automatic)
+                            .padding(.top, 16)
+                            .accessibilityLabel("시간표를 불러오는 중입니다")
+                            .accessibilitySortPriority(1)
+                    }
 
-                        if let weeklyTimeTable = viewStore.weeklyTimeTable {
-                            if shouldUseFlexibleWidth(weeklyTimeTable: weeklyTimeTable) {
+                    if let weeklyTimeTable = viewStore.weeklyTimeTable {
+                        if shouldUseFlexibleWidth(weeklyTimeTable: weeklyTimeTable) {
+                            timeTableGrid(weeklyTimeTable: weeklyTimeTable)
+                                .frame(alignment: .top)
+                        } else {
+                            ScrollView(.horizontal, showsIndicators: false) {
                                 timeTableGrid(weeklyTimeTable: weeklyTimeTable)
-                                    .frame(alignment: .top)
-                            } else {
-                                ScrollView(.horizontal) {
-                                    timeTableGrid(weeklyTimeTable: weeklyTimeTable)
-                                        .frame(alignment: .top)
-                                }
                             }
+                            .frame(alignment: .top)
                         }
                     }
                 }
+                .frame(minHeight: 560, alignment: .top)
             }
         }
         .onLoad {
@@ -115,14 +116,78 @@ public struct WeeklyTimeTableView: View {
 
     @ViewBuilder
     private func timeTableGrid(weeklyTimeTable: WeeklyTimeTableCore.WeeklyTimeTable) -> some View {
+        let headerHeight: CGFloat = 40
+        let firstColumnWidth: CGFloat = 32
+        let columnCount = max(weeklyTimeTable.weekdays.count, 1)
+        let periodCount = CGFloat(weeklyTimeTable.periods.count)
+
+        if shouldUseFlexibleWidth(weeklyTimeTable: weeklyTimeTable) {
+            GeometryReader { geometry in
+                let availableWidth = max(geometry.size.width - firstColumnWidth, 0)
+                let fallbackWidth = columnWidth(weeklyTimeTable: weeklyTimeTable)
+                let rawCellSide = availableWidth / CGFloat(columnCount)
+                let cellSide = rawCellSide > 0 ? rawCellSide : fallbackWidth
+
+                timeTableContent(
+                    weeklyTimeTable: weeklyTimeTable,
+                    cellSide: cellSide,
+                    headerHeight: headerHeight,
+                    firstColumnWidth: firstColumnWidth
+                )
+                .frame(
+                    width: firstColumnWidth + cellSide * CGFloat(columnCount),
+                    alignment: .topLeading
+                )
+                .frame(
+                    height: headerHeight + cellSide * periodCount,
+                    alignment: .top
+                )
+            }
+        } else {
+            let cellSide = columnWidth(weeklyTimeTable: weeklyTimeTable)
+
+            timeTableContent(
+                weeklyTimeTable: weeklyTimeTable,
+                cellSide: cellSide,
+                headerHeight: headerHeight,
+                firstColumnWidth: firstColumnWidth
+            )
+            .frame(
+                width: firstColumnWidth + cellSide * CGFloat(columnCount),
+                alignment: .topLeading
+            )
+            .frame(
+                height: headerHeight + cellSide * periodCount,
+                alignment: .top
+            )
+        }
+    }
+
+    @ViewBuilder
+    private func timeTableContent(
+        weeklyTimeTable: WeeklyTimeTableCore.WeeklyTimeTable,
+        cellSide: CGFloat,
+        headerHeight: CGFloat,
+        firstColumnWidth: CGFloat
+    ) -> some View {
         VStack(spacing: 0) {
-            headerRow(weeklyTimeTable: weeklyTimeTable)
+            headerRow(
+                weeklyTimeTable: weeklyTimeTable,
+                cellWidth: cellSide,
+                headerHeight: headerHeight,
+                firstColumnWidth: firstColumnWidth
+            )
 
             ForEach(weeklyTimeTable.periods, id: \.self) { period in
-                timeTableRow(period: period, weeklyTimeTable: weeklyTimeTable)
+                timeTableRow(
+                    period: period,
+                    periodCount: weeklyTimeTable.periods.count,
+                    weeklyTimeTable: weeklyTimeTable,
+                    cellSide: cellSide,
+                    firstColumnWidth: firstColumnWidth
+                )
             }
         }
-        .frame(maxWidth: .infinity)
         .background(Color.cardBackground)
         .overlay {
             if #available(iOS 16.0, *) {
@@ -130,59 +195,42 @@ public struct WeeklyTimeTableView: View {
                     borderWidth: 1,
                     cornerRadius: 16,
                     selectedColumnIndex: weeklyTimeTable.todayIndex,
-                    headerHeight: 44,
-                    firstColumnWidth: 40,
+                    headerHeight: headerHeight,
+                    firstColumnWidth: firstColumnWidth,
                     columnWidth: columnWidth(weeklyTimeTable: weeklyTimeTable),
                     useFlexibleWidth: shouldUseFlexibleWidth(weeklyTimeTable: weeklyTimeTable),
                     columnCount: weeklyTimeTable.weekdays.count,
-                    cellHeight: 56,
+                    cellHeight: cellSide,
                     selectedColumnPeriodCount: {
-                        if let todayIndex = weeklyTimeTable
-                            .todayIndex { weeklyTimeTable.actualPeriodCount(for: todayIndex)
+                        if let todayIndex = weeklyTimeTable.todayIndex {
+                            weeklyTimeTable.actualPeriodCount(for: todayIndex)
                         } else {
                             0
                         }
                     }()
                 )
-                .stroke(Color.extraBlack.opacity(0.8), lineWidth: 2)
+                .stroke(Color.extraBlack, lineWidth: 1)
             }
         }
     }
 
     @ViewBuilder
-    private func headerRow(weeklyTimeTable: WeeklyTimeTableCore.WeeklyTimeTable) -> some View {
+    private func headerRow(
+        weeklyTimeTable: WeeklyTimeTableCore.WeeklyTimeTable,
+        cellWidth: CGFloat,
+        headerHeight: CGFloat,
+        firstColumnWidth: CGFloat
+    ) -> some View {
         HStack(spacing: 0) {
             Text("")
-                .frame(width: 40, height: 44)
-                .background(Color.unselectedSecondary.opacity(0.1))
+                .frame(width: firstColumnWidth, height: headerHeight)
 
             ForEach(0..<weeklyTimeTable.weekdays.count, id: \.self) { index in
                 VStack(spacing: 2) {
                     Text(weeklyTimeTable.weekdays[index])
-                        .twFont(horizontalSizeClass == .regular ? .body2 : .body3, color: .textPrimary)
+                        .twFont(horizontalSizeClass == .regular ? .body1 : .body2, color: .textSecondary)
                 }
-                .frame(
-                    maxWidth: shouldUseFlexibleWidth(weeklyTimeTable: weeklyTimeTable) ? .infinity : nil,
-                    minHeight: 44
-                )
-                .frame(
-                    width: { () -> CGFloat? in
-                        return shouldUseFlexibleWidth(weeklyTimeTable: weeklyTimeTable)
-                            ? nil
-                            : columnWidth(weeklyTimeTable: weeklyTimeTable)
-                    }()
-                )
-                .background(
-                    weeklyTimeTable.isToday(weekdayIndex: index)
-                        ? Color.unselectedSecondary.opacity(0.2)
-                        : Color.unselectedSecondary.opacity(0.1)
-                )
-                .overlay(
-                    Rectangle()
-                        .fill(Color.unselectedSecondary.opacity(0.3))
-                        .frame(height: 0.5),
-                    alignment: .bottom
-                )
+                .frame(width: cellWidth, height: headerHeight)
             }
         }
     }
@@ -190,13 +238,15 @@ public struct WeeklyTimeTableView: View {
     @ViewBuilder
     private func timeTableRow(
         period: Int,
-        weeklyTimeTable: WeeklyTimeTableCore.WeeklyTimeTable
+        periodCount: Int,
+        weeklyTimeTable: WeeklyTimeTableCore.WeeklyTimeTable,
+        cellSide: CGFloat,
+        firstColumnWidth: CGFloat
     ) -> some View {
         HStack(spacing: 0) {
             Text("\(period)")
-                .twFont(horizontalSizeClass == .regular ? .body2 : .body3, color: .textPrimary)
-                .frame(width: 40, height: 56)
-                .background(Color.unselectedSecondary.opacity(0.05))
+                .twFont(.body2, color: .textSecondary)
+                .frame(width: firstColumnWidth, height: cellSide)
 
             ForEach(0..<weeklyTimeTable.weekdays.count, id: \.self) { weekdayIndex in
                 let subject = weeklyTimeTable.subject(
@@ -210,28 +260,20 @@ public struct WeeklyTimeTableView: View {
                             isToday: weeklyTimeTable.isToday(weekdayIndex: weekdayIndex),
                             horizontalSizeClass: horizontalSizeClass
                         ),
-                        color: .textPrimary
+                        color: weeklyTimeTable.isToday(weekdayIndex: weekdayIndex) ? Color.extraBlack : .textSecondary
                     )
-                    .lineLimit(2)
                     .multilineTextAlignment(.center)
-                    .frame(
-                        maxWidth: shouldUseFlexibleWidth(weeklyTimeTable: weeklyTimeTable) ? .infinity : nil,
-                        minHeight: 56
-                    )
-                    .frame(
-                        width: { () -> CGFloat? in
-                            shouldUseFlexibleWidth(weeklyTimeTable: weeklyTimeTable)
-                                ? nil
-                                : columnWidth(weeklyTimeTable: weeklyTimeTable)
-                        }()
-                    )
+                    .minimumScaleFactor(0.3)
+                    .padding(8)
+                    .frame(width: cellSide, height: cellSide)
                     .background(Color.extraWhite)
-                    .overlay(
-                        Rectangle()
-                            .fill(Color.unselectedSecondary.opacity(0.3))
-                            .frame(height: 0.5),
-                        alignment: .bottom
-                    )
+                    .overlay(alignment: .bottom) {
+                        if period != periodCount {
+                            Rectangle()
+                                .fill(Color.unselectedSecondary)
+                                .frame(height: 1.0)
+                        }
+                    }
             }
         }
     }
@@ -241,14 +283,14 @@ public struct WeeklyTimeTableView: View {
     }
 
     private func columnWidth(weeklyTimeTable: WeeklyTimeTableCore.WeeklyTimeTable) -> CGFloat {
-        return viewStore.showWeekend ? 55.0 : 65.5
+        return viewStore.showWeekend ? 64.0 : 65.5
     }
 
     private func fontForCell(isToday: Bool, horizontalSizeClass: UserInterfaceSizeClass?) -> Font.TWFontSystem {
         if horizontalSizeClass == .regular {
             return isToday ? .body1 : .body2
         } else {
-            return isToday ? .body3 : .body2
+            return isToday ? .caption1 : .caption1
         }
     }
 }

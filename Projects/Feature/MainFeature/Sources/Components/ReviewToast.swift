@@ -8,7 +8,7 @@ struct ReviewToast: View {
     let onTap: () -> Void
 
     var body: some View {
-        Button {
+        let baseButton = Button {
             onTap()
         } label: {
             HStack(spacing: 8) {
@@ -21,9 +21,18 @@ struct ReviewToast: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
-            .background(Color.extraWhite)
-            .cornerRadius(20)
-            .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 4)
+        }
+
+        if #available(iOS 26.0, *) {
+            baseButton
+                .glassEffect(.regular.interactive(), in: .capsule)
+        } else {
+            baseButton
+                .background {
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color.extraWhite)
+                }
+                .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 4)
         }
     }
 }

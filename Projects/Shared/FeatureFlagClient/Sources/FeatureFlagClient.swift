@@ -4,8 +4,10 @@ import FirebaseWrapper
 
 public enum FeatureFlagKey: String, Sendable {
     case reviewText = "review_text"
+    case enableWeeklyView = "enable_weekly_view"
 }
 
+@available(*, deprecated, message: "deprecated")
 public struct FeatureFlagClient: Sendable {
     public var getString: @Sendable (FeatureFlagKey) -> String?
     public var getBool: @Sendable (FeatureFlagKey) -> Bool
@@ -18,13 +20,10 @@ public struct FeatureFlagClient: Sendable {
         getNumber: @Sendable @escaping (FeatureFlagKey) -> NSNumber,
         getDictionary: @Sendable @escaping (FeatureFlagKey) -> [String: Any]?
     ) {
-        do {
-            try RemoteConfig.remoteConfig().setDefaults(from: [
-                FeatureFlagKey.reviewText.rawValue: "오늘뭐임을 더 발전시킬 수 있게 리뷰 부탁드려요!"
-            ])
-        } catch {
-            print(error)
-        }
+        RemoteConfig.remoteConfig().setDefaults([
+            FeatureFlagKey.reviewText.rawValue: "오늘뭐임을 더 발전시킬 수 있게 리뷰 부탁드려요!" as NSString,
+            FeatureFlagKey.enableWeeklyView.rawValue: false as NSNumber
+        ] as [String: NSObject])
         self.getString = getString
         self.getBool = getBool
         self.getNumber = getNumber

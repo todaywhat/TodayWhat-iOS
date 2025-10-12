@@ -1,4 +1,5 @@
 import Dependencies
+import DesignSystem
 import Entity
 import EnumUtil
 import FeatureFlagClient
@@ -29,11 +30,12 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         Task {
             do {
-                try await featureFlagClient.activate()
+                try await RemoteConfig.remoteConfig().fetchAndActivate()
             } catch {
                 TWLog.error(error)
             }
         }
+        DesignSystemFontFamily.Suit.all.forEach { $0.register() }
         initializeAnalyticsUserID()
         sendUserPropertyWidget()
         session = WCSession.default

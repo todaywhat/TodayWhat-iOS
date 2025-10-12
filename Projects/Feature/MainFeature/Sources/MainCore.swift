@@ -17,42 +17,56 @@ public struct MainCore: Reducer {
     public init() {}
 
     public struct State: Equatable {
+        public enum DateSelectionMode: Equatable {
+            case daily
+            case weekly
+        }
+
         public var school = ""
         public var grade = ""
         public var `class` = ""
         @Shared public var displayDate: Date
         public var currentTab = 0
         public var isInitial: Bool = true
-        public var isExistNewVersion: Bool = false
         public var mealCore: MealCore.State?
+        public var weeklyMealCore: WeeklyMealCore.State?
         public var timeTableCore: TimeTableCore.State?
         public var weeklyTimeTableCore: WeeklyTimeTableCore.State?
         @PresentationState public var settingsCore: SettingsCore.State?
         @PresentationState public var noticeCore: NoticeCore.State?
         public var isShowingReviewToast: Bool = false
+        public var dateSelectionMode: DateSelectionMode = .daily
 
         public var displayTitle: String {
             let calendar = Calendar.current
             let today = Date()
 
-            if calendar.isDate(displayDate, inSameDayAs: today) {
-                return "오늘뭐임"
-            }
+            switch dateSelectionMode {
+            case .daily:
+                if calendar.isDate(displayDate, inSameDayAs: today) {
+                    return "오늘뭐임"
+                }
 
-            if let yesterday = calendar.date(byAdding: .day, value: -1, to: today),
-               calendar.isDate(displayDate, inSameDayAs: yesterday) {
-                return "어제뭐임"
-            }
+                if let yesterday = calendar.date(byAdding: .day, value: -1, to: today),
+                   calendar.isDate(displayDate, inSameDayAs: yesterday) {
+                    return "어제뭐임"
+                }
 
-            if let tomorrow = calendar.date(byAdding: .day, value: 1, to: today),
-               calendar.isDate(displayDate, inSameDayAs: tomorrow) {
-                return "내일뭐임"
-            }
+                if let tomorrow = calendar.date(byAdding: .day, value: 1, to: today),
+                   calendar.isDate(displayDate, inSameDayAs: tomorrow) {
+                    return "내일뭐임"
+                }
 
-            let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "ko_kr")
-            formatter.dateFormat = "EEEE"
-            return "\(formatter.string(from: displayDate))뭐임"
+                let formatter = DateFormatter()
+                formatter.locale = Locale(identifier: "ko_kr")
+                formatter.dateFormat = "EEEE"
+                return "\(formatter.string(from: displayDate))뭐임"
+
+            case .weekly:
+                let policy = DatePolicy(isSkipWeekend: false, isSkipAfterDinner: false)
+                let label = policy.weekDisplayText(for: policy.startOfWeek(for: displayDate), baseDate: today)
+                return "\(label)뭐임"
+            }
         }
 
         public init() {
@@ -67,10 +81,10 @@ public struct MainCore: Reducer {
         case tabTapped(Int)
         case tabSwiped(Int)
         case mealCore(MealCore.Action)
+        case weeklyMealCore(WeeklyMealCore.Action)
         case timeTableCore(TimeTableCore.Action)
         case weeklyTimeTableCore(WeeklyTimeTableCore.Action)
         case settingButtonDidTap
-        case checkVersion(TaskResult<String>)
         case noticeButtonDidTap
         case settingsCore(PresentationAction<SettingsCore.Action>)
         case noticeCore(PresentationAction<NoticeCore.Action>)
@@ -78,6 +92,7 @@ public struct MainCore: Reducer {
         case showReviewToast
         case hideReviewToast
         case requestReview
+        case weeklyModeUpdated(weeklyEnabled: Bool)
     }
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
@@ -90,6 +105,25 @@ public struct MainCore: Reducer {
             case .onLoad:
                 let pageShowedEvengLog = PageShowedEventLog(pageName: "main_page")
                 TWLog.event(pageShowedEvengLog)
+
+                let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
+                let isSkipAfterDinner = userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true
+
+                let datePolicy = DatePolicy(
+                    isSkipWeekend: isSkipWeekend,
+                    isSkipAfterDinner: isSkipAfterDinner
+                )
+
+                let today = Date()
+                let adjustedDate = datePolicy.adjustedDate(for: today)
+                state.$displayDate.withLock { date in
+                    switch state.dateSelectionMode {
+                    case .daily:
+                        date = adjustedDate
+                    case .weekly:
+                        date = datePolicy.startOfWeek(for: adjustedDate)
+                    }
+                }
 
                 if shouldRequestReview() {
                     return .send(.showReviewToast)
@@ -105,7 +139,15 @@ public struct MainCore: Reducer {
                 )
 
                 let today = Date()
-                state.$displayDate.withLock { date in date = datePolicy.adjustedDate(for: today) }
+                let adjustedDate = datePolicy.adjustedDate(for: today)
+                state.$displayDate.withLock { date in
+                    switch state.dateSelectionMode {
+                    case .daily:
+                        date = adjustedDate
+                    case .weekly:
+                        date = datePolicy.startOfWeek(for: adjustedDate)
+                    }
+                }
 
                 state.school = userDefaultsClient.getValue(.school) as? String ?? ""
                 state.grade = "\(userDefaultsClient.getValue(.grade) as? Int ?? 1)"
@@ -113,22 +155,18 @@ public struct MainCore: Reducer {
                 if state.mealCore == nil {
                     state.mealCore = .init(displayDate: state.$displayDate)
                 }
+                if state.weeklyMealCore == nil {
+                    state.weeklyMealCore = .init(displayDate: state.$displayDate)
+                }
                 if state.timeTableCore == nil {
                     state.timeTableCore = .init(displayDate: state.$displayDate)
                 }
                 if state.weeklyTimeTableCore == nil {
                     state.weeklyTimeTableCore = .init(displayDate: state.$displayDate)
                 }
-                return Effect.run { send in
-                    let checkVersion = await Action.checkVersion(
-                        TaskResult {
-                            try await iTunesClient.fetchCurrentVersion(.ios)
-                        }
-                    )
-                    await send(checkVersion)
-                }
+                return .none
 
-            case .mealCore(.refresh), .timeTableCore(.refresh):
+            case .mealCore(.refresh), .weeklyMealCore(.refresh), .timeTableCore(.refresh), .weeklyTimeTableCore(.refresh):
                 let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
                 let isSkipAfterDinner = userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true
 
@@ -136,9 +174,6 @@ public struct MainCore: Reducer {
                     isSkipWeekend: isSkipWeekend,
                     isSkipAfterDinner: isSkipAfterDinner
                 )
-
-                let today = Date()
-                state.$displayDate.withLock { date in date = datePolicy.adjustedDate(for: today) }
 
             case let .tabTapped(tab):
                 state.currentTab = tab
@@ -148,7 +183,7 @@ public struct MainCore: Reducer {
                 state.currentTab = tab
                 logTabSelected(index: tab, selectionType: .swiped)
 
-            case .settingButtonDidTap, .mealCore(.settingsButtonDidTap):
+            case .settingButtonDidTap, .mealCore(.settingsButtonDidTap), .weeklyMealCore(.settingsButtonDidTap):
                 state.settingsCore = .init()
                 let log = SettingButtonClickedEventLog()
                 TWLog.event(log)
@@ -161,11 +196,6 @@ public struct MainCore: Reducer {
 
             case .settingsCore(.presented(.schoolSettingCore(.presented(.schoolSettingFinished)))):
                 state.settingsCore = nil
-
-            case let .checkVersion(.success(latestVersion)):
-                guard !latestVersion.isEmpty else { break }
-                let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-                state.isExistNewVersion = currentVersion != latestVersion
 
             case .noticeButtonDidTap:
                 state.noticeCore = .init()
@@ -192,6 +222,30 @@ public struct MainCore: Reducer {
                 userDefaultsClient.setValue(.hasReviewed, true)
                 if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                     SKStoreReviewController.requestReview(in: windowScene)
+                }
+                return .none
+
+            case let .weeklyModeUpdated(weeklyEnabled):
+                let newMode: State.DateSelectionMode = weeklyEnabled ? .weekly : .daily
+                guard state.dateSelectionMode != newMode else { return .none }
+                state.dateSelectionMode = newMode
+
+                let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
+                let isSkipAfterDinner = userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true
+                let datePolicy = DatePolicy(
+                    isSkipWeekend: isSkipWeekend,
+                    isSkipAfterDinner: isSkipAfterDinner
+                )
+                let today = Date()
+                let adjustedDate = datePolicy.adjustedDate(for: today)
+
+                state.$displayDate.withLock { date in
+                    switch newMode {
+                    case .daily:
+                        date = adjustedDate
+                    case .weekly:
+                        date = datePolicy.startOfWeek(for: adjustedDate)
+                    }
                 }
                 return .none
 
@@ -230,6 +284,9 @@ extension Reducer where State == MainCore.State, Action == MainCore.Action {
         self
             .ifLet(\.mealCore, action: /Action.mealCore) {
                 MealCore()
+            }
+            .ifLet(\.weeklyMealCore, action: /Action.weeklyMealCore) {
+                WeeklyMealCore()
             }
             .ifLet(\.timeTableCore, action: /Action.timeTableCore) {
                 TimeTableCore()

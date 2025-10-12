@@ -1,10 +1,12 @@
 import ComposableArchitecture
 import DesignSystem
+import FirebaseRemoteConfig
 import SwiftUI
 
 struct SchoolInfoCardView: View {
     let store: StoreOf<MainCore>
     @ObservedObject var viewStore: ViewStoreOf<MainCore>
+    @RemoteConfigProperty(key: "enable_weekly", fallback: false) private var enableWeeklyView
 
     init(store: StoreOf<MainCore>) {
         self.store = store
@@ -20,9 +22,15 @@ struct SchoolInfoCardView: View {
 
                     let gradeClassString = "\(viewStore.grade)학년 \(viewStore.class)반"
                     let dateString = "\(viewStore.displayDate.toString())"
-                    Text("\(gradeClassString) • \(dateString)")
-                        .twFont(.body2, color: .textSecondary)
-                        .accessibilitySortPriority(3)
+                    if enableWeeklyView {
+                        Text(gradeClassString)
+                            .twFont(.body2, color: .textSecondary)
+                            .accessibilitySortPriority(3)
+                    } else {
+                        Text("\(gradeClassString) • \(dateString)")
+                            .twFont(.body2, color: .textSecondary)
+                            .accessibilitySortPriority(3)
+                    }
                 }
 
                 Spacer()

@@ -32,6 +32,29 @@ public struct DatePolicy: Sendable {
         return formatter.string(from: date)
     }
 
+    public func weekDisplayText(for weekStartDate: Date, baseDate: Date) -> String {
+        let calendar = Calendar.current
+        let currentWeekStart = startOfWeek(for: baseDate)
+        if calendar.isDate(weekStartDate, inSameDayAs: currentWeekStart) {
+            return "이번주"
+        }
+
+        if let previousWeek = calendar.date(byAdding: .day, value: -7, to: currentWeekStart),
+           calendar.isDate(weekStartDate, inSameDayAs: previousWeek) {
+            return "저번주"
+        }
+
+        if let nextWeek = calendar.date(byAdding: .day, value: 7, to: currentWeekStart),
+           calendar.isDate(weekStartDate, inSameDayAs: nextWeek) {
+            return "다음주"
+        }
+
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_kr")
+        formatter.dateFormat = "M월 d일"
+        return "\(formatter.string(from: weekStartDate)) 주"
+    }
+
     public func adjustedDate(for date: Date) -> Date {
         var adjustedDate = date
 
@@ -78,5 +101,28 @@ public struct DatePolicy: Sendable {
         }
 
         return nextDate
+    }
+
+    public func startOfWeek(for date: Date) -> Date {
+        let calendar = Calendar.current
+
+        let components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: date)
+        let weekStart = calendar.date(from: components) ?? date
+        return weekStart
+    }
+
+    public func adjustedWeekStart(for date: Date) -> Date {
+        let adjusted = adjustedDate(for: date)
+        return startOfWeek(for: adjusted)
+    }
+
+    public func previousWeekStart(from date: Date) -> Date {
+        let weekStart = startOfWeek(for: date)
+        return weekStart.adding(by: .day, value: -7)
+    }
+
+    public func nextWeekStart(from date: Date) -> Date {
+        let weekStart = startOfWeek(for: date)
+        return weekStart.adding(by: .day, value: 7)
     }
 }
