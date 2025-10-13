@@ -135,11 +135,9 @@ public struct WeeklyMealCore: Reducer {
     }
 
     private func fetchWeeklyMeals(displayDate: Date, showWeekend: Bool) -> Effect<Action> {
-        var isoCalendar = Calendar(identifier: .iso8601)
-        isoCalendar.timeZone = Calendar.current.timeZone
-        isoCalendar.locale = Calendar.current.locale
-        let components = isoCalendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: displayDate)
-        let mondayDate = isoCalendar.date(from: components) ?? displayDate
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: displayDate)
+        let mondayDate = calendar.date(from: components) ?? displayDate
         let dayCount = showWeekend ? 7 : 5
 
         return .concatenate(
