@@ -39,28 +39,28 @@ public extension Font.TWFontSystem {
     var font: Font {
         switch self {
         case .headline1:
-            return Font(DesignSystemFontFamily.Suit.bold.font(size: 28))
+            return Font.custom(DesignSystemFontFamily.Suit.bold.name, size: 28)
 
         case .headline2:
-            return Font(DesignSystemFontFamily.Suit.bold.font(size: 24))
+            return Font.custom(DesignSystemFontFamily.Suit.bold.name, size: 24)
 
         case .headline3:
-            return Font(DesignSystemFontFamily.Suit.bold.font(size: 18))
+            return Font.custom(DesignSystemFontFamily.Suit.bold.name, size: 18)
 
         case .headline4:
-            return Font(DesignSystemFontFamily.Suit.bold.font(size: 16))
+            return Font.custom(DesignSystemFontFamily.Suit.bold.name, size: 16)
 
         case .body1:
-            return Font(DesignSystemFontFamily.Suit.medium.font(size: 16))
+            return Font.custom(DesignSystemFontFamily.Suit.medium.name, size: 16)
 
         case .body2:
-            return Font(DesignSystemFontFamily.Suit.medium.font(size: 14))
+            return Font.custom(DesignSystemFontFamily.Suit.medium.name, size: 14)
 
         case .body3:
-            return Font(DesignSystemFontFamily.Suit.bold.font(size: 14))
+            return Font.custom(DesignSystemFontFamily.Suit.bold.name, size: 14)
 
         case .caption1:
-            return Font(DesignSystemFontFamily.Suit.medium.font(size: 12))
+            return Font.custom(DesignSystemFontFamily.Suit.medium.name, size: 12)
         }
     }
 }

@@ -87,23 +87,27 @@ public struct WeeklyTimeTableCore: Reducer {
         Reduce { state, action in
             switch action {
             case .onLoad:
-                return .publisher {
-                    state.$displayDate.publisher
-                        .map { _ in Action.refreshData }
-                }
+                return .merge(
+                    .send(.onAppear),
+                    .publisher {
+                        state.$displayDate.publisher
+                            .map { _ in Action.refreshData }
+                    }
+                )
 
             case .onAppear, .refreshData:
                 state.isLoading = true
                 state.showWeekend =
                     !(userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false)
 
-                let baseDate = state.displayDate
                 let calendar = Calendar.current
-                let weekday = calendar.component(.weekday, from: baseDate)
+                let baseDate = state.displayDate
+                let normalizedBaseDate = calendar.startOfDay(for: baseDate)
+                let weekday = calendar.component(.weekday, from: normalizedBaseDate)
                 let daysFromMonday = (weekday + 5) % 7
                 let mondayDate =
-                    calendar.date(byAdding: .day, value: -daysFromMonday, to: baseDate)
-                        ?? baseDate
+                    calendar.date(byAdding: .day, value: -daysFromMonday, to: normalizedBaseDate)
+                        ?? normalizedBaseDate
 
                 return .concatenate(
                     .cancel(id: CancellableID.fetch),
@@ -138,37 +142,45 @@ public struct WeeklyTimeTableCore: Reducer {
         }
     }
 
-    private func fetchWeeklyTimeTable(mondayDate: Date, showWeekend: Bool)
-        async throws -> WeeklyTimeTable {
+    private func fetchWeeklyTimeTable(mondayDate: Date, showWeekend: Bool) async throws -> WeeklyTimeTable {
         let calendar = Calendar.current
         let dayCount = showWeekend ? 7 : 5
         var weeklyData: [Int: [TimeTable]] = [:]
+        let isOnModifiedTimeTable = userDefaultsClient.getValue(.isOnModifiedTimeTable) as? Bool ?? false
+        let endDate = calendar.date(byAdding: .day, value: dayCount - 1, to: mondayDate) ?? mondayDate
+        do {
+            let fetchedTimeTables = try await timeTableClient.fetchTimeTableRange(mondayDate, endDate)
+            let groupedByDate = Dictionary(
+                grouping: fetchedTimeTables,
+                by: { table -> Date in
+                    let targetDate = table.date ?? mondayDate
+                    return calendar.startOfDay(for: targetDate)
+                }
+            )
 
-        for i in 0..<dayCount {
-            let currentDate = calendar.date(byAdding: .day, value: i, to: mondayDate) ?? mondayDate
-            let weekday = calendar.component(.weekday, from: currentDate)
+            let modifiedRecords = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
 
-            let isOnModifiedTimeTable = userDefaultsClient.getValue(.isOnModifiedTimeTable) as? Bool ?? false
-
-            if isOnModifiedTimeTable {
-                let modifiedTimeTables = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
-                    .filter { $0.weekday == weekday }
-
-                if let modifiedTimeTables, !modifiedTimeTables.isEmpty {
-                    let timeTables = modifiedTimeTables
+            for i in 0..<dayCount {
+                let currentDate = calendar.date(byAdding: .day, value: i, to: mondayDate) ?? mondayDate
+                let normalizedDate = calendar.startOfDay(for: currentDate)
+                let dayData = groupedByDate[normalizedDate] ?? []
+                
+                if isOnModifiedTimeTable {
+                    let currentDate = calendar.date(byAdding: .day, value: i, to: mondayDate) ?? mondayDate
+                    let weekday = calendar.component(.weekday, from: currentDate)
+                    let customDayRecords = modifiedRecords?
+                        .filter { $0.weekday == weekday }
                         .sorted { $0.perio < $1.perio }
                         .map { TimeTable(perio: $0.perio, content: $0.content) }
-                    weeklyData[i] = timeTables
+                    
+                    weeklyData[i] = customDayRecords ?? dayData.sorted { $0.perio < $1.perio }
                 } else {
-                    weeklyData[i] = []
+                    weeklyData[i] = dayData.sorted { $0.perio < $1.perio }
                 }
-            } else {
-                do {
-                    let dayData = try await timeTableClient.fetchTimeTable(currentDate)
-                    weeklyData[i] = dayData
-                } catch {
-                    weeklyData[i] = []
-                }
+            }
+        } catch {
+            for i in 0..<dayCount {
+                weeklyData[i] = []
             }
         }
 
@@ -216,7 +228,7 @@ public struct WeeklyTimeTableCore: Reducer {
                     daySubjects.append("")
                     lastPeriod += 1
                 }
-                daySubjects.append(timeTable.content)
+                daySubjects.append(sanitizeSubject(timeTable.content))
                 lastPeriod = timeTable.perio
             }
 
@@ -264,6 +276,15 @@ public struct WeeklyTimeTableCore: Reducer {
             periods: periods,
             subjects: weeklySubjects,
             todayIndex: todayIndex
+        )
+    }
+
+    private func sanitizeSubject(_ text: String) -> String {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.replacingOccurrences(
+            of: #"^\*+\s*"#,
+            with: "",
+            options: [.regularExpression]
         )
     }
 }

@@ -4,6 +4,12 @@ import Entity
 import EnumUtil
 import SwiftUI
 import UserDefaultsClient
+#if canImport(UIKit)
+import UIKit
+#endif
+#if canImport(AppKit)
+import AppKit
+#endif
 
 public struct MealView: View {
     let store: StoreOf<MealCore>
@@ -82,15 +88,19 @@ public struct MealView: View {
 
         LazyVStack {
             ForEach(subMeal.meals, id: \.hashValue) { meal in
+                let display = mealDisplay(meal: meal)
+                let containsAllergy = isMealContainsAllergy(meal: meal)
+
                 HStack {
-                    Text(mealDisplay(meal: meal))
-                        .twFont(.headline4, color: .textPrimary)
+                    Text(display)
+                        .twFont(.headline4, color: containsAllergy ? .point : .textPrimary)
 
                     Spacer()
 
-                    if isMealContainsAllergy(meal: meal) {
+                    if containsAllergy {
                         Image.allergy
-                            .renderingMode(.original)
+                            .renderingMode(.template)
+                            .foregroundColor(.point)
                             .accessibilityHidden(true)
                     }
                 }
@@ -103,9 +113,13 @@ public struct MealView: View {
                 }
                 .padding(.horizontal, 16)
                 .accessibilityElement(children: .combine)
-                .accessibilityLabel("\(mealDisplay(meal: meal))")
-                .accessibilityHint(isMealContainsAllergy(meal: meal) ? "알레르기 유발 식품이 포함되어 있습니다" : "")
+                .accessibilityLabel("\(display)")
+                .accessibilityHint(containsAllergy ? "알레르기 유발 식품이 포함되어 있습니다" : "")
                 .accessibilitySortPriority(2)
+                .contentShape(Rectangle())
+                .onLongPressGesture {
+                    copyMealToClipboard(display)
+                }
             }
         }
         .padding(.bottom, 24)
@@ -127,4 +141,13 @@ private extension Meal {
             self.lunch.meals.isEmpty &&
             self.dinner.meals.isEmpty
     }
+}
+
+private func copyMealToClipboard(_ text: String) {
+#if canImport(UIKit)
+    UIPasteboard.general.string = text
+#elseif canImport(AppKit)
+    NSPasteboard.general.clearContents()
+    NSPasteboard.general.setString(text, forType: .string)
+#endif
 }
