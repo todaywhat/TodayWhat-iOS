@@ -45,7 +45,7 @@ public struct SchoolSettingCore: Reducer {
             if major.isEmpty || schoolMajorList.isEmpty {
                 return "이대로하기"
             } else if !major.isEmpty || schoolMajorList.isEmpty {
-                return "확인"
+                return "확인!"
             }
             return "다음"
         }

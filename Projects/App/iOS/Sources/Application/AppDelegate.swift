@@ -5,6 +5,7 @@ import FeatureFlagClient
 import Firebase
 import FirebaseAnalytics
 import FirebaseCore
+import FirebaseRemoteConfig
 import FirebaseWrapper
 import KeychainClient
 import LocalDatabaseClient

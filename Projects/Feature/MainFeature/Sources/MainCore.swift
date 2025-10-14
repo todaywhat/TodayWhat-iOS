@@ -26,6 +26,7 @@ public struct MainCore: Reducer {
         public var isExistNewVersion: Bool = false
         public var mealCore: MealCore.State?
         public var timeTableCore: TimeTableCore.State?
+        public var weeklyTimeTableCore: WeeklyTimeTableCore.State?
         @PresentationState public var settingsCore: SettingsCore.State?
         @PresentationState public var noticeCore: NoticeCore.State?
         public var isShowingReviewToast: Bool = false
@@ -67,6 +68,7 @@ public struct MainCore: Reducer {
         case tabSwiped(Int)
         case mealCore(MealCore.Action)
         case timeTableCore(TimeTableCore.Action)
+        case weeklyTimeTableCore(WeeklyTimeTableCore.Action)
         case settingButtonDidTap
         case checkVersion(TaskResult<String>)
         case noticeButtonDidTap
@@ -113,6 +115,9 @@ public struct MainCore: Reducer {
                 }
                 if state.timeTableCore == nil {
                     state.timeTableCore = .init(displayDate: state.$displayDate)
+                }
+                if state.weeklyTimeTableCore == nil {
+                    state.weeklyTimeTableCore = .init(displayDate: state.$displayDate)
                 }
                 return Effect.run { send in
                     let checkVersion = await Action.checkVersion(
@@ -228,6 +233,9 @@ extension Reducer where State == MainCore.State, Action == MainCore.Action {
             }
             .ifLet(\.timeTableCore, action: /Action.timeTableCore) {
                 TimeTableCore()
+            }
+            .ifLet(\.weeklyTimeTableCore, action: /Action.weeklyTimeTableCore) {
+                WeeklyTimeTableCore()
             }
             .ifLet(\.$settingsCore, action: \.settingsCore) {
                 SettingsCore()
