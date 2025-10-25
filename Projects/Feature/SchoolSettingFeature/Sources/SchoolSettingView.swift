@@ -136,6 +136,7 @@ public struct SchoolSettingView: View {
                                         .background {
                                             Color.backgroundMain
                                         }
+                                        .contentShape(.rect)
                                         .onTapGesture {
                                             viewStore.send(.schoolRowDidSelect(school), animation: .default)
                                             focusField = .grade

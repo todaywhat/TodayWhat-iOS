@@ -142,6 +142,11 @@ struct MealTimeTableProvider: IntentTimelineProvider {
             let timeTables = (modifiedTimeTables ?? [])
                 .sorted { $0.perio < $1.perio }
                 .map { TimeTable(perio: $0.perio, content: $0.content) }
+
+            if timeTables.isEmpty {
+                let timeTable = try await timeTableClient.fetchTimeTable(date).prefix(7)
+                return (Array(timeTable), date)
+            }
             return (timeTables, date)
         }
 

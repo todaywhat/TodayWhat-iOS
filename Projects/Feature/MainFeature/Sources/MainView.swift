@@ -262,6 +262,7 @@ public struct MainView: View {
                 }
             }
             .onAppear {
+              TWLog.setUserProperty(property: .enableWeeklyView, value: enableWeeklyView.description)
                 viewStore.send(.onAppear, animation: .default)
                 viewStore.send(.weeklyModeUpdated(weeklyEnabled: enableWeeklyView))
             }

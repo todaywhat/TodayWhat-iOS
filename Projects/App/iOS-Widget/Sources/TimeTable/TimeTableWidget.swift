@@ -66,6 +66,12 @@ struct TimeTableProvider: TimelineProvider {
             let modifiedTimeTables: [ModifiedTimeTableLocalEntity]? = try? localDatabaseClient
                 .readRecords(as: ModifiedTimeTableLocalEntity.self)
                 .filter { $0.weekday == WeekdayType(weekday: date.weekday).rawValue }
+
+            if modifiedTimeTables?.isEmpty ?? true {
+                let timeTable = try await timeTableClient.fetchTimeTable(date).prefix(7)
+                return Array(timeTable)
+            }
+
             return (modifiedTimeTables ?? [])
                 .sorted { $0.perio < $1.perio }
                 .map { TimeTable(perio: $0.perio, content: $0.content) }
