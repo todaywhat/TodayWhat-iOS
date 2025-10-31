@@ -38,7 +38,7 @@ public struct MainCore: Reducer {
         public var dateSelectionMode: DateSelectionMode = .daily
 
         public var displayTitle: String {
-            let calendar = Calendar.current
+            let calendar = Calendar.autoupdatingCurrent
             let today = Date()
 
             switch dateSelectionMode {

@@ -10,7 +10,7 @@ public struct DatePolicy: Sendable {
     }
 
     public func displayText(for date: Date, baseDate: Date) -> String {
-        let calendar = Calendar.current
+        let calendar = Calendar.autoupdatingCurrent
 
         if calendar.isDate(date, inSameDayAs: baseDate) {
             return "오늘"
@@ -33,7 +33,7 @@ public struct DatePolicy: Sendable {
     }
 
     public func weekDisplayText(for weekStartDate: Date, baseDate: Date) -> String {
-        let calendar = Calendar.current
+        let calendar = Calendar.autoupdatingCurrent
         let currentWeekStart = startOfWeek(for: baseDate)
         if calendar.isDate(weekStartDate, inSameDayAs: currentWeekStart) {
             return "이번주"
@@ -104,7 +104,7 @@ public struct DatePolicy: Sendable {
     }
 
     public func startOfWeek(for date: Date) -> Date {
-        let calendar = Calendar.current
+        let calendar = Calendar.autoupdatingCurrent
 
         let components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: date)
         let weekStart = calendar.date(from: components) ?? date

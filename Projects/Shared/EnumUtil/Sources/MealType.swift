@@ -32,8 +32,8 @@ public enum MealType: String, Decodable {
     }
 
     public init(hour: Date, isSkipWeekend: Bool = false) {
-        let weekday = Calendar.current.component(.weekday, from: hour)
-        let hourTime = Calendar.current.component(.hour, from: hour)
+        let weekday = Calendar.autoupdatingCurrent.component(.weekday, from: hour)
+        let hourTime = Calendar.autoupdatingCurrent.component(.hour, from: hour)
 
         if isSkipWeekend && weekday.isWeekend {
             self = .breakfast

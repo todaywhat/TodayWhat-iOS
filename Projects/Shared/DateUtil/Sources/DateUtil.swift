@@ -2,24 +2,24 @@ import Foundation
 
 public extension Date {
     var year: Int {
-        return Calendar.current.component(.year, from: self)
+        return Calendar.autoupdatingCurrent.component(.year, from: self)
     }
 
     var month: Int {
-        return Calendar.current.component(.month, from: self)
+        return Calendar.autoupdatingCurrent.component(.month, from: self)
     }
 
     var day: Int {
-        return Calendar.current.component(.day, from: self)
+        return Calendar.autoupdatingCurrent.component(.day, from: self)
     }
 
     var hour: Int {
-        return Calendar.current.component(.hour, from: self)
+        return Calendar.autoupdatingCurrent.component(.hour, from: self)
     }
 
     /// 1 2 3 4 5 6 7 - 일 월 화 수 목 금 토
     var weekday: Int {
-        return Calendar.current.component(.weekday, from: self)
+        return Calendar.autoupdatingCurrent.component(.weekday, from: self)
     }
 
     var weekdayString: String {
@@ -49,11 +49,11 @@ public extension Date {
     }
 
     func adding(by component: Calendar.Component, value: Int) -> Date {
-        return Calendar.current.date(byAdding: component, value: value, to: self) ?? self
+        return Calendar.autoupdatingCurrent.date(byAdding: component, value: value, to: self) ?? self
     }
 
     static func getDateForDayOfWeek(dayOfWeek: Int) -> Date? {
-        let calendar = Calendar.current
+        let calendar = Calendar.autoupdatingCurrent
         let today = Date()
         let daysUntilTargetDay = (dayOfWeek - calendar.component(.weekday, from: today) + 7) % 7
         let targetDate = calendar.date(byAdding: .day, value: daysUntilTargetDay, to: today)

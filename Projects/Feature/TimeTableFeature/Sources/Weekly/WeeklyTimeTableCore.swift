@@ -100,7 +100,7 @@ public struct WeeklyTimeTableCore: Reducer {
                 state.showWeekend =
                     !(userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false)
 
-                let calendar = Calendar.current
+                let calendar = Calendar.autoupdatingCurrent
                 let baseDate = state.displayDate
                 let normalizedBaseDate = calendar.startOfDay(for: baseDate)
                 let weekday = calendar.component(.weekday, from: normalizedBaseDate)
@@ -143,7 +143,7 @@ public struct WeeklyTimeTableCore: Reducer {
     }
 
     private func fetchWeeklyTimeTable(mondayDate: Date, showWeekend: Bool) async throws -> WeeklyTimeTable {
-        let calendar = Calendar.current
+        let calendar = Calendar.autoupdatingCurrent
         let dayCount = showWeekend ? 7 : 5
         var weeklyData: [Int: [TimeTable]] = [:]
         let isOnModifiedTimeTable = userDefaultsClient.getValue(.isOnModifiedTimeTable) as? Bool ?? false
@@ -197,7 +197,7 @@ public struct WeeklyTimeTableCore: Reducer {
         mondayDate: Date,
         showWeekend: Bool
     ) -> WeeklyTimeTable {
-        let calendar = Calendar.current
+        let calendar = Calendar.autoupdatingCurrent
         let weekdays =
             showWeekend
                 ? ["월", "화", "수", "목", "금", "토", "일"] : ["월", "화", "수", "목", "금"]

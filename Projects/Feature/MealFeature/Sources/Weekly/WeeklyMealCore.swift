@@ -110,7 +110,7 @@ public struct WeeklyMealCore: Reducer {
             case let .mealsResponse(.success(mealDictionary)):
                 state.isLoading = false
 
-                let calendar = Calendar.current
+                let calendar = Calendar.autoupdatingCurrent
                 let sortedEntries = mealDictionary
                     .map { (calendar.startOfDay(for: $0.key), $0.value) }
                     .sorted { $0.0 < $1.0 }
@@ -135,7 +135,7 @@ public struct WeeklyMealCore: Reducer {
     }
 
     private func fetchWeeklyMeals(displayDate: Date, showWeekend: Bool) -> Effect<Action> {
-        let calendar = Calendar.current
+        let calendar = Calendar.autoupdatingCurrent
         let components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: displayDate)
         let mondayDate = calendar.date(from: components) ?? displayDate
         let dayCount = showWeekend ? 7 : 5

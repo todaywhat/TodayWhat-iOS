@@ -69,7 +69,7 @@ extension MealClient: DependencyKey {
         fetchMeals: { startDate, dayCount in
             guard dayCount > 0 else { return [:] }
             @Dependency(\.userDefaultsClient) var userDefaultsClient: UserDefaultsClient
-            let calendar = Calendar.current
+            let calendar = Calendar.autoupdatingCurrent
             let normalizedStart = calendar.startOfDay(for: startDate)
 
             guard
