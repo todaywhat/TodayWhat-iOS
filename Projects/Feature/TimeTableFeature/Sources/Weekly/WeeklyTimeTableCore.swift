@@ -173,7 +173,11 @@ public struct WeeklyTimeTableCore: Reducer {
                         .sorted { $0.perio < $1.perio }
                         .map { TimeTable(perio: $0.perio, content: $0.content) }
                     
-                    weeklyData[i] = customDayRecords ?? dayData.sorted { $0.perio < $1.perio }
+                  weeklyData[i] = if let customDayRecords, customDayRecords.isEmpty == false {
+                    customDayRecords
+                  } else {
+                    dayData.sorted { $0.perio < $1.perio }
+                  }
                 } else {
                     weeklyData[i] = dayData.sorted { $0.perio < $1.perio }
                 }

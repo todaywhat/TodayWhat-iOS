@@ -137,7 +137,9 @@ public struct WeeklyMealCore: Reducer {
     private func fetchWeeklyMeals(displayDate: Date, showWeekend: Bool) -> Effect<Action> {
         let calendar = Calendar.autoupdatingCurrent
         let components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: displayDate)
-        let mondayDate = calendar.date(from: components) ?? displayDate
+        var adjustedComponents = components
+        adjustedComponents.weekday = 2
+        let mondayDate = calendar.date(from: adjustedComponents) ?? displayDate
         let dayCount = showWeekend ? 7 : 5
 
         return .concatenate(
