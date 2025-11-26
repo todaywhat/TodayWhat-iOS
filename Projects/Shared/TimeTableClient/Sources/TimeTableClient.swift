@@ -200,7 +200,6 @@ private func syncTimeTableFromServer(date: Date, reqDate: String) async {
     let timeTables = await fetchTimeTableFromServer(date: date, reqDate: reqDate)
     let entity = TimeTableLocalEntity(date: reqDate, timeTables: timeTables)
 
-    try? localDatabaseClient.delete(record: TimeTableLocalEntity.self, key: entity.id)
     try? localDatabaseClient.save(record: entity)
 }
 
@@ -273,13 +272,6 @@ private func fetchTimeTableRangeFromServer(
         let dateString = formatDate(date)
         let entity = TimeTableLocalEntity(date: dateString, timeTables: tables)
 
-        if let existing = try? localDatabaseClient.readRecordByColumn(
-            record: TimeTableLocalEntity.self,
-            column: "date",
-            value: dateString
-        ) {
-            try? localDatabaseClient.delete(record: existing)
-        }
         try? localDatabaseClient.save(record: entity)
     }
 

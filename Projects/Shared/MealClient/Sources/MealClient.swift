@@ -95,7 +95,7 @@ extension MealClient: DependencyKey {
                 }
             }
 
-            let hasNonEmptyCache = !result.isEmpty && result.values.allSatisfy { !$0.isEmpty }
+            let hasNonEmptyCache = !result.isEmpty
 
             if hasNonEmptyCache {
                 Task.detached {
@@ -172,7 +172,6 @@ private func syncMealFromServer(date: Date, reqDate: String) async {
     let meal = await fetchMealFromServer(date: date, reqDate: reqDate)
     let entity = MealLocalEntity(date: reqDate, meal: meal)
 
-    try? localDatabaseClient.delete(record: MealLocalEntity.self, key: entity.id)
     try? localDatabaseClient.save(record: entity)
 }
 
@@ -231,13 +230,6 @@ private func fetchMealsFromServer(
 
         let entity = MealLocalEntity(date: dateString, meal: meal)
 
-        if let existing = try? localDatabaseClient.readRecordByColumn(
-            record: MealLocalEntity.self,
-            column: "date",
-            value: dateString
-        ) {
-            try? localDatabaseClient.delete(record: existing)
-        }
         try? localDatabaseClient.save(record: entity)
 
         if let date = formatter.date(from: dateString) {
