@@ -102,12 +102,10 @@ public struct WeeklyTimeTableCore: Reducer {
 
                 let calendar = Calendar.autoupdatingCurrent
                 let baseDate = state.displayDate
-                let normalizedBaseDate = calendar.startOfDay(for: baseDate)
-                let weekday = calendar.component(.weekday, from: normalizedBaseDate)
-                let daysFromMonday = (weekday + 5) % 7
-                let mondayDate =
-                    calendar.date(byAdding: .day, value: -daysFromMonday, to: normalizedBaseDate)
-                        ?? normalizedBaseDate
+                let components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: baseDate)
+                var adjustedComponents = components
+                adjustedComponents.weekday = 2
+                let mondayDate = calendar.date(from: adjustedComponents) ?? baseDate
 
                 return .concatenate(
                     .cancel(id: CancellableID.fetch),
