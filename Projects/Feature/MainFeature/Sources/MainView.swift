@@ -15,7 +15,6 @@ public struct MainView: View {
     @Environment(\.openURL) var openURL
     @Environment(\.calendar) var calendar
     @Dependency(\.userDefaultsClient) var userDefaultsClient
-    @RemoteConfigProperty(key: "enable_weekly", fallback: false) private var enableWeeklyView
 
     public init(store: StoreOf<MainCore>) {
         self.store = store
@@ -51,51 +50,33 @@ public struct MainView: View {
                         ).animation(.default)
                     ) {
                         VStack {
-                            if enableWeeklyView {
-                                IfLetStore(
-                                    store.scope(
-                                        state: \.weeklyMealCore,
-                                        action: MainCore.Action.weeklyMealCore
-                                    )
-                                ) { store in
-                                    WeeklyMealView(store: store)
-                                }
-                            } else {
-                                IfLetStore(
-                                    store.scope(state: \.mealCore, action: MainCore.Action.mealCore)
-                                ) { store in
-                                    MealView(store: store)
-                                }
+                            IfLetStore(
+                                store.scope(
+                                    state: \.weeklyMealCore,
+                                    action: MainCore.Action.weeklyMealCore
+                                )
+                            ) { store in
+                                WeeklyMealView(store: store)
                             }
                         }
                         .tag(0)
 
                         VStack {
-                            if enableWeeklyView {
-                                IfLetStore(
-                                    store.scope(
-                                        state: \.weeklyTimeTableCore,
-                                        action: MainCore.Action.weeklyTimeTableCore
-                                    )
-                                ) { store in
-                                    WeeklyTimeTableView(store: store)
-                                }
-                            } else {
-                                IfLetStore(
-                                    store.scope(state: \.timeTableCore, action: MainCore.Action.timeTableCore)
-                                ) { store in
-                                    TimeTableView(store: store)
-                                }
+                            IfLetStore(
+                                store.scope(
+                                    state: \.weeklyTimeTableCore,
+                                    action: MainCore.Action.weeklyTimeTableCore
+                                )
+                            ) { store in
+                                WeeklyTimeTableView(store: store)
                             }
                         }
                         .tag(1)
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
                     .background {
-                        if enableWeeklyView {
-                            Color.backgroundSecondary
-                                .ignoresSafeArea()
-                        }
+                        Color.backgroundSecondary
+                            .ignoresSafeArea()
                     }
 
                     if viewStore.isShowingReviewToast {
@@ -124,104 +105,52 @@ public struct MainView: View {
 
                 ToolbarItem(placement: .topBarLeading) {
                     Menu {
-                        let isWeeklyModeEnabled = enableWeeklyView
                         let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
                         let isSkipAfterDinner = userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true
                         let datePolicy = DatePolicy(isSkipWeekend: isSkipWeekend, isSkipAfterDinner: isSkipAfterDinner)
 
                         let today = Date()
-                        if isWeeklyModeEnabled {
-                            let currentWeekStart = datePolicy.startOfWeek(for: today)
-                            let previousWeek = datePolicy.previousWeekStart(from: currentWeekStart)
-                            let nextWeek = datePolicy.nextWeekStart(from: currentWeekStart)
-                            ForEach([previousWeek, currentWeekStart, nextWeek], id: \.timeIntervalSince1970) { weekStart in
-                                let normalizedWeekStart = datePolicy.startOfWeek(for: weekStart)
-                                Button {
-                                    let tense: SelectDateTenseEventLog.Tense
-                                    if calendar.isDate(normalizedWeekStart, inSameDayAs: currentWeekStart) {
-                                        tense = .present
-                                    } else if normalizedWeekStart > currentWeekStart {
-                                        tense = .future
-                                    } else {
-                                        tense = .past
-                                    }
-
-                                    TWLog.event(SelectDateTenseEventLog(tense: tense))
-                                    _ = viewStore.send(.dateSelected(normalizedWeekStart))
-                                } label: {
-                                    let labelText = datePolicy.weekDisplayText(for: normalizedWeekStart, baseDate: today)
-                                    let isSelected = calendar.isDate(
-                                        datePolicy.startOfWeek(for: viewStore.displayDate),
-                                        inSameDayAs: normalizedWeekStart
-                                    )
-                                    if isSelected {
-                                        Label {
-                                            Text(labelText)
-                                                .twFont(.body1)
-                                                .foregroundStyle(Color.extraWhite)
-                                                .animation(.easeInOut(duration: 0.2), value: viewStore.displayDate)
-                                        } icon: {
-                                            Image(systemName: "checkmark")
-                                        }
-                                    } else {
+                        let currentWeekStart = datePolicy.startOfWeek(for: today)
+                        let previousWeek = datePolicy.previousWeekStart(from: currentWeekStart)
+                        let nextWeek = datePolicy.nextWeekStart(from: currentWeekStart)
+                        ForEach([previousWeek, currentWeekStart, nextWeek], id: \.timeIntervalSince1970) { weekStart in
+                            let normalizedWeekStart = datePolicy.startOfWeek(for: weekStart)
+                            Button {
+                                let tense: SelectDateTenseEventLog.Tense
+                                if calendar.isDate(normalizedWeekStart, inSameDayAs: currentWeekStart) {
+                                    tense = .present
+                                } else if normalizedWeekStart > currentWeekStart {
+                                    tense = .future
+                                } else {
+                                    tense = .past
+                                }
+                                
+                                TWLog.event(SelectDateTenseEventLog(tense: tense))
+                                _ = viewStore.send(.dateSelected(normalizedWeekStart))
+                            } label: {
+                                let labelText = datePolicy.weekDisplayText(for: normalizedWeekStart, baseDate: today)
+                                let isSelected = calendar.isDate(
+                                    datePolicy.startOfWeek(for: viewStore.displayDate),
+                                    inSameDayAs: normalizedWeekStart
+                                )
+                                if isSelected {
+                                    Label {
                                         Text(labelText)
                                             .twFont(.body1)
-                                            .foregroundStyle(Color.extraBlack)
+                                            .foregroundStyle(Color.extraWhite)
                                             .animation(.easeInOut(duration: 0.2), value: viewStore.displayDate)
+                                    } icon: {
+                                        Image(systemName: "checkmark")
                                     }
+                                } else {
+                                    Text(labelText)
+                                        .twFont(.body1)
+                                        .foregroundStyle(Color.extraBlack)
+                                        .animation(.easeInOut(duration: 0.2), value: viewStore.displayDate)
                                 }
-                                .accessibilityLabel("\(datePolicy.weekDisplayText(for: normalizedWeekStart, baseDate: today)) 선택")
-                                .accessibilityHint("주 변경")
                             }
-                        } else {
-                            let yesterday = datePolicy.previousDay(from: today)
-                            let tomorrow = datePolicy.nextDay(from: today)
-
-                            ForEach([yesterday, today, tomorrow], id: \.timeIntervalSince1970) { date in
-                                Button {
-                                    let today = Date()
-                                    let tense: SelectDateTenseEventLog.Tense
-
-                                    if calendar.isDate(date, inSameDayAs: today) {
-                                        tense = .present
-                                    } else if date > today {
-                                        tense = .future
-                                    } else {
-                                        tense = .past
-                                    }
-
-                                    TWLog.event(SelectDateTenseEventLog(tense: tense))
-
-                                    _ = viewStore.send(.dateSelected(date))
-                                } label: {
-                                    if calendar.isDate(viewStore.displayDate, inSameDayAs: date) {
-                                        Label {
-                                            Text(datePolicy.displayText(for: date, baseDate: today))
-                                                .twFont(.body1)
-                                                .foregroundStyle(
-                                                    calendar.isDate(viewStore.displayDate, inSameDayAs: date)
-                                                        ? Color.extraWhite
-                                                        : Color.extraBlack
-                                                )
-                                                .animation(.easeInOut(duration: 0.2), value: viewStore.displayDate)
-                                        } icon: {
-                                            Image(systemName: "checkmark")
-                                        }
-
-                                    } else {
-                                        Text(datePolicy.displayText(for: date, baseDate: today))
-                                            .twFont(.body1)
-                                            .foregroundStyle(
-                                                calendar.isDate(viewStore.displayDate, inSameDayAs: date)
-                                                    ? Color.extraWhite
-                                                    : Color.extraBlack
-                                            )
-                                            .animation(.easeInOut(duration: 0.2), value: viewStore.displayDate)
-                                    }
-                                }
-                                .accessibilityLabel("\(datePolicy.displayText(for: date, baseDate: today)) 선택")
-                                .accessibilityHint("날짜 변경")
-                            }
+                            .accessibilityLabel("\(datePolicy.weekDisplayText(for: normalizedWeekStart, baseDate: today)) 선택")
+                            .accessibilityHint("주 변경")
                         }
                     } label: {
                         HStack(spacing: 0) {
@@ -262,17 +191,10 @@ public struct MainView: View {
                 }
             }
             .onAppear {
-              TWLog.setUserProperty(property: .enableWeeklyView, value: enableWeeklyView.description)
                 viewStore.send(.onAppear, animation: .default)
-                viewStore.send(.weeklyModeUpdated(weeklyEnabled: enableWeeklyView))
             }
-            .onChange(of: enableWeeklyView, perform: { _ in
-                TWLog.setUserProperty(property: .enableWeeklyView, value: enableWeeklyView.description)
-                viewStore.send(.weeklyModeUpdated(weeklyEnabled: enableWeeklyView))
-            })
             .onLoad {
                 viewStore.send(.onLoad)
-                viewStore.send(.weeklyModeUpdated(weeklyEnabled: enableWeeklyView))
             }
             .background {
                 navigationLinks

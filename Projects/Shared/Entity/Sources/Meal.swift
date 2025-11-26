@@ -34,4 +34,8 @@ public struct Meal: Equatable, Hashable {
             return dinner
         }
     }
+
+    public var isEmpty: Bool {
+        return breakfast.meals.isEmpty && lunch.meals.isEmpty && dinner.meals.isEmpty
+    }
 }

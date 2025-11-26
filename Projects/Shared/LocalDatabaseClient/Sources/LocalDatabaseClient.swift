@@ -40,6 +40,26 @@ public struct LocalDatabaseClient {
         }
     }
 
+    public func readRecordByColumn<Record: FetchableRecord & PersistableRecord>(
+        record: Record.Type,
+        column: String,
+        value: some DatabaseValueConvertible
+    ) throws -> Record? {
+        try dbQueue.read { db in
+            try record.filter(Column(column) == value).fetchOne(db)
+        }
+    }
+
+    public func readRecordsByColumn<Record: FetchableRecord & PersistableRecord>(
+        record: Record.Type,
+        column: String,
+        values: [some DatabaseValueConvertible]
+    ) throws -> [Record] {
+        try dbQueue.read { db in
+            try record.filter(values.contains(Column(column))).fetchAll(db)
+        }
+    }
+
     public func updateRecord<Record: FetchableRecord & PersistableRecord>(
         record: Record.Type,
         at key: any DatabaseValueConvertible,
@@ -214,6 +234,27 @@ extension LocalDatabaseClient: DependencyKey {
                 table.column("weekday", .integer).notNull().defaults(to: 1)
                 table.column("perio", .integer).notNull().defaults(to: 1)
                 table.column("content", .text).notNull().defaults(to: "")
+            }
+        }
+
+        migrator.registerMigration("v1.2.0") { db in
+            try db.create(table: "mealLocalEntity") { table in
+                table.column("id", .text).primaryKey(onConflict: .replace).notNull()
+                table.column("date", .text).notNull().unique(onConflict: .replace)
+                table.column("breakfastMeals", .text).notNull()
+                table.column("breakfastCal", .double).notNull()
+                table.column("lunchMeals", .text).notNull()
+                table.column("lunchCal", .double).notNull()
+                table.column("dinnerMeals", .text).notNull()
+                table.column("dinnerCal", .double).notNull()
+                table.column("createdAt", .date).notNull()
+            }
+
+            try db.create(table: "timeTableLocalEntity") { table in
+                table.column("id", .text).primaryKey(onConflict: .replace).notNull()
+                table.column("date", .text).notNull().unique(onConflict: .replace)
+                table.column("timeTableData", .text).notNull()
+                table.column("createdAt", .date).notNull()
             }
         }
     }

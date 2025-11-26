@@ -9,6 +9,7 @@ let project = Project.module(
             .shared(target: .ComposableArchitectureWrapper),
             .shared(target: .NeisClient),
             .shared(target: .UserDefaultsClient),
+            .shared(target: .LocalDatabaseClient),
             .shared(target: .DateUtil),
             .shared(target: .EnumUtil),
             .shared(target: .Entity)
