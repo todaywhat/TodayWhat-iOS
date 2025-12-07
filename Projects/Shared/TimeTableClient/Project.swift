@@ -12,7 +12,8 @@ let project = Project.module(
             .shared(target: .ConstantUtil),
             .shared(target: .Entity),
             .shared(target: .NeisClient),
-            .shared(target: .UserDefaultsClient)
+            .shared(target: .UserDefaultsClient),
+            .shared(target: .LocalDatabaseClient)
         ])
     ]
 )

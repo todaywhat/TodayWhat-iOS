@@ -62,24 +62,10 @@ public struct WeeklyMealCore: Reducer {
         Reduce { state, action in
             switch action {
             case .onLoad:
-                do {
-                    state.allergyList = try localDatabaseClient.readRecords(as: AllergyLocalEntity.self)
-                        .compactMap { AllergyType(rawValue: $0.allergy) ?? nil }
-                } catch {}
-
-                state.showWeekend = !(userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false)
-                state.isLoading = true
-
-                let displayDate = state.displayDate
-                let showWeekend = state.showWeekend
-
-                return .merge(
-                    fetchWeeklyMeals(displayDate: displayDate, showWeekend: showWeekend),
-                    .publisher {
-                        state.$displayDate.publisher
-                            .map { _ in Action.refreshData }
-                    }
-                )
+              return .publisher {
+                state.$displayDate.publisher
+                    .map { _ in Action.refreshData }
+            }
 
             case .onAppear:
                 do {
