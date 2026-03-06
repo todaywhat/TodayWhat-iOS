@@ -61,7 +61,7 @@ public struct WeeklyTimeTableView: View {
 
     public var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            if viewStore.weeklyTimeTable == nil && !viewStore.isLoading {
+            if (viewStore.weeklyTimeTable == nil || viewStore.weeklyTimeTable?.periods.isEmpty == true) && !viewStore.isLoading {
                 VStack {
                     Text("이번 주 시간표를 찾을 수 없어요!")
                         .padding(.top, 16)
