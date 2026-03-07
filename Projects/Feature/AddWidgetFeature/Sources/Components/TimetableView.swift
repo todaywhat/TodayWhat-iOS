@@ -48,14 +48,16 @@ struct TimetableView: View {
 }
 
 private struct TimetableSmallView: View {
+    private static let items: [String] = ["현대문학 감상", "음악 감상과 비평", "운동과 건강", "영미 문학 읽기", "생활과 과학", "미적분", "논술"]
+    private static let indexedItems: [(Int, String)] = Array(zip(items.indices, items))
+
     var body: some View {
         RoundedRectangle(cornerRadius: 12)
             .fill(Color.backgroundMain)
             .overlay(
                 VStack(alignment: .leading, spacing: 0) {
-                    let items = ["현대문학 감상", "음악 감상과 비평", "운동과 건강", "영미 문학 읽기", "생활과 과학", "미적분", "논술"]
                     ForEach(
-                        Array(zip(items.indices, items)),
+                        Self.indexedItems,
                         id: \.0
                     ) { index, item in
                         HStack(spacing: 4) {
@@ -76,10 +78,13 @@ private struct TimetableSmallView: View {
 }
 
 private struct TimetableMediumView: View {
-    private let rows = Array(repeating: GridItem(.flexible(), spacing: nil), count: 4)
-    private let today = Date()
+    private static let rows: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: nil), count: 4)
+    private static let items: [String] = ["현대문학 감상", "음악 감상과 비평", "운동과 건강", "영미 문학 읽기", "생활과 과학", "미적분", "논술"]
+    private static let indexedItems: [(Int, String)] = Array(zip(items.indices, items))
+    private let today: Date = Date()
 
     var body: some View {
+        let dateText: String = "\(today.month)월 \(today.day)일 \(today.weekdayString)"
         RoundedRectangle(cornerRadius: 16)
             .fill(Color.backgroundMain)
             .overlay {
@@ -91,15 +96,14 @@ private struct TimetableMediumView: View {
 
                             Spacer()
 
-                            Text("\(today.month)월 \(today.day)일 \(today.weekdayString)")
+                            Text(dateText)
                                 .twFont(.caption1, color: .textSecondary)
                         }
                         .padding(.horizontal, 4)
 
-                        let items = ["현대문학 감상", "음악 감상과 비평", "운동과 건강", "영미 문학 읽기", "생활과 과학", "미적분", "논술"]
-                        LazyHGrid(rows: rows, spacing: 0) {
+                        LazyHGrid(rows: Self.rows, spacing: 0) {
                             ForEach(
-                                Array(zip(items.indices, items)),
+                                Self.indexedItems,
                                 id: \.0
                             ) { index, timetable in
                                 HStack(spacing: 2) {
@@ -128,9 +132,12 @@ private struct TimetableMediumView: View {
 }
 
 private struct TimetableLargeView: View {
-    private let today = Date()
+    private static let items: [String] = ["현대문학 감상", "음악 감상과 비평", "운동과 건강", "영미 문학 읽기", "생활과 과학", "미적분", "논술"]
+    private static let indexedItems: [(Int, String)] = Array(zip(items.indices, items))
+    private let today: Date = Date()
 
     var body: some View {
+        let dateText: String = "\(today.month)월 \(today.day)일 \(today.weekdayString)"
         RoundedRectangle(cornerRadius: 16)
             .fill(Color.backgroundMain)
             .overlay {
@@ -141,15 +148,14 @@ private struct TimetableLargeView: View {
 
                         Spacer()
 
-                        Text("\(today.month)월 \(today.day)일 \(today.weekdayString)")
+                        Text(dateText)
                             .twFont(.caption1, color: .textSecondary)
                     }
                     .padding(.horizontal, 4)
 
-                    let items = ["현대문학 감상", "음악 감상과 비평", "운동과 건강", "영미 문학 읽기", "생활과 과학", "미적분", "논술"]
                     VStack(alignment: .leading, spacing: 0) {
                         ForEach(
-                            Array(zip(items.indices, items)),
+                            Self.indexedItems,
                             id: \.0
                         ) { index, timetable in
                             HStack(spacing: 4) {

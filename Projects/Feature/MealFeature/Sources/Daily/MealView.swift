@@ -15,6 +15,8 @@ public struct MealView: View {
     let store: StoreOf<MealCore>
     @ObservedObject var viewStore: ViewStoreOf<MealCore>
 
+    private static let mealTypes: [MealType] = [.breakfast, .lunch, .dinner]
+
     public init(store: StoreOf<MealCore>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
@@ -28,7 +30,7 @@ public struct MealView: View {
                 let date = Date()
                 if let meal = viewStore.meal {
                     LazyVStack(spacing: 8) {
-                        ForEach([MealType.breakfast, .lunch, .dinner], id: \.hashValue) { type in
+                        ForEach(Self.mealTypes, id: \.hashValue) { type in
                             mealListView(type: type, subMeal: meal.mealByType(type: type))
                         }
                     }
@@ -39,8 +41,8 @@ public struct MealView: View {
                         .accessibilityLabel("급식 정보를 불러오는 중입니다")
                         .accessibilitySortPriority(1)
                 } else if viewStore.meal?.isEmpty ?? true,
-                          date.weekday == 7 || date.weekday == 1,
-                          userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false {
+                          (date.weekday == 7 || date.weekday == 1),
+                          (userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false) {
                     Text("주말에도 월요일 급식을 보고 싶다면?")
                         .foregroundColor(.textSecondary)
                         .accessibilityLabel("주말 급식 설정 안내")
@@ -78,12 +80,17 @@ public struct MealView: View {
 
     @ViewBuilder
     private func mealListView(type: MealType, subMeal: Meal.SubMeal) -> some View {
-        LabelledDivider(label: type.display, subLabel: "\(String(format: "%.1f", subMeal.cal)) Kcal")
+        let calText: String = String(format: "%.1f", subMeal.cal)
+        let typeDisplay: String = type.display
+        let subLabelText: String = "\(calText) Kcal"
+        let accessibilityText: String = "\(typeDisplay) 메뉴, \(calText) 칼로리"
+
+        LabelledDivider(label: typeDisplay, subLabel: subLabelText)
             .padding(.top, 16)
             .padding(.horizontal, 16)
             .id(type)
             .accessibilityElement(children: .combine)
-            .accessibilityLabel("\(type.display) 메뉴, \(String(format: "%.1f", subMeal.cal)) 칼로리")
+            .accessibilityLabel(accessibilityText)
             .accessibilitySortPriority(1)
 
         LazyVStack {

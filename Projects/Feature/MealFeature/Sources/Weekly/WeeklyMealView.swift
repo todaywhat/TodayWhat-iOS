@@ -14,6 +14,8 @@ public struct WeeklyMealView: View {
     @State private var shouldShowTodayButton = false
     @State private var todayButtonDirection: TodayButtonDirection = .up
 
+    private static let mealTypes: [MealType] = [.breakfast, .lunch, .dinner]
+
     public init(store: StoreOf<WeeklyMealCore>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
@@ -130,7 +132,7 @@ public struct WeeklyMealView: View {
                     }
                     .padding(.horizontal, 16)
             } else {
-                ForEach([MealType.breakfast, .lunch, .dinner], id: \.hashValue) { type in
+                ForEach(Self.mealTypes, id: \.hashValue) { type in
                     let subMeal = dayMeal.meal.mealByType(type: type)
                     if !subMeal.meals.isEmpty {
                         mealCard(dayMeal: dayMeal, type: type, subMeal: subMeal)
@@ -146,17 +148,25 @@ public struct WeeklyMealView: View {
         type: MealType,
         subMeal: Meal.SubMeal
     ) -> some View {
-        let isToday = calendar.isDate(dayMeal.date, inSameDayAs: viewStore.today)
-        let isHighlighted = isToday && viewStore.currentTimeMealType == type
+        let isToday: Bool = calendar.isDate(dayMeal.date, inSameDayAs: viewStore.today)
+        let isHighlighted: Bool = isToday && viewStore.currentTimeMealType == type
+        let calText: String = String(format: "%.1f", subMeal.cal)
+        let calLabel: String = "\(calText) Kcal"
+        let titleText: String = relativeTitle(for: dayMeal.date, mealType: type)
+        let accessibilityText: String = "\(titleText) \(calText) 칼로리"
+        let mealTexts: [String] = subMeal.meals.map { mealDisplay(meal: $0) }
+        let dateText: String = "\(dayMeal.date.formatted(.dateTime.month().day().weekday(.wide))) \(type.display)"
+        let joinedMeals: String = mealTexts.joined(separator: "\n")
+        let shareText: String = "\(dateText)\n\(joinedMeals)"
 
         let mealCardView = VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .firstTextBaseline) {
-                Text(relativeTitle(for: dayMeal.date, mealType: type))
+                Text(titleText)
                     .twFont(.headline4, color: .textPrimary)
 
                 Spacer()
 
-                Text("\(String(format: "%.1f", subMeal.cal)) Kcal")
+                Text(calLabel)
                     .twFont(.body2, color: .unselectedPrimary)
             }
 
@@ -164,9 +174,9 @@ public struct WeeklyMealView: View {
                 .foregroundStyle(Color.unselectedSecondary)
 
             VStack(alignment: .leading, spacing: 14) {
-                ForEach(subMeal.meals, id: \.hashValue) { meal in
-                    let mealText = mealDisplay(meal: meal)
-                    let containsAllergy = isMealContainsAllergy(meal: meal)
+                ForEach(Array(zip(subMeal.meals.indices, subMeal.meals)), id: \.0) { index, meal in
+                    let mealText: String = mealTexts[index]
+                    let containsAllergy: Bool = isMealContainsAllergy(meal: meal)
 
                     HStack(alignment: .center, spacing: 8) {
                         Text(mealText)
@@ -202,14 +212,10 @@ public struct WeeklyMealView: View {
 
         mealCardView
             .accessibilityElement(children: .combine)
-            .accessibilityLabel("\(relativeTitle(for: dayMeal.date, mealType: type)) \(String(format: "%.1f", subMeal.cal)) 칼로리")
+            .accessibilityLabel(accessibilityText)
             .contextMenu {
                 Button {
-                    let mealToCopy = subMeal.meals
-                        .map { mealDisplay(meal: $0) }
-                        .joined(separator: "\n")
-                    let dateText = "\(dayMeal.date.formatted(.dateTime.month().day().weekday(.wide))) \(type.display)"
-                    UIPasteboard.general.string = "\(dateText)\n\(mealToCopy)"
+                    UIPasteboard.general.string = shareText
                     TWLog.event(ShareMealEventLog())
                 } label: {
                     Label("복사하기", systemImage: "doc.on.doc")
@@ -229,11 +235,7 @@ public struct WeeklyMealView: View {
                 }
             }
             .onDrag {
-                let mealToDrag = subMeal.meals
-                    .map { mealDisplay(meal: $0) }
-                    .joined(separator: "\n")
-                let dateText = "\(dayMeal.date.formatted(.dateTime.month().day().weekday(.wide))) \(type.display)"
-                return NSItemProvider(object: "\(dateText)\n\(mealToDrag)" as NSString)
+                NSItemProvider(object: shareText as NSString)
             }
             .overlay {
                 RoundedRectangle(cornerRadius: 16)

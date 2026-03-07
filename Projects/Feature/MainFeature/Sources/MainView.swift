@@ -28,8 +28,16 @@ public struct MainView: View {
                     .padding(.horizontal, 16)
                     .padding(.vertical, 12)
                     .accessibilityElement(children: .combine)
-                    .accessibilityLabel("\(viewStore.school) \(viewStore.grade)학년 \(viewStore.class)반")
-                    .accessibilityHint("\(viewStore.displayDate.toString()) 입니다. 현재 학교 정보를 표시하고 있습니다.")
+                    .accessibilityLabel({
+                        let school: String = viewStore.school
+                        let grade: String = viewStore.grade
+                        let cls: String = viewStore.class
+                        return "\(school) \(grade)학년 \(cls)반"
+                    }())
+                    .accessibilityHint({
+                        let dateStr: String = viewStore.displayDate.toString()
+                        return "\(dateStr) 입니다. 현재 학교 정보를 표시하고 있습니다."
+                    }())
 
                 TopTabbarView(
                     currentTab: viewStore.binding(
@@ -113,8 +121,13 @@ public struct MainView: View {
                         let currentWeekStart = datePolicy.startOfWeek(for: today)
                         let previousWeek = datePolicy.previousWeekStart(from: currentWeekStart)
                         let nextWeek = datePolicy.nextWeekStart(from: currentWeekStart)
-                        ForEach([previousWeek, currentWeekStart, nextWeek], id: \.timeIntervalSince1970) { weekStart in
-                            let normalizedWeekStart = datePolicy.startOfWeek(for: weekStart)
+                        let displayDateWeekStart: Date = datePolicy.startOfWeek(for: viewStore.displayDate)
+                        let weekStarts: [Date] = [previousWeek, currentWeekStart, nextWeek]
+                        ForEach(weekStarts, id: \.timeIntervalSince1970) { weekStart in
+                            let normalizedWeekStart: Date = datePolicy.startOfWeek(for: weekStart)
+                            let labelText: String = datePolicy.weekDisplayText(for: normalizedWeekStart, baseDate: today)
+                            let isSelected: Bool = calendar.isDate(displayDateWeekStart, inSameDayAs: normalizedWeekStart)
+                            let accessibilityText: String = "\(labelText) 선택"
                             Button {
                                 let tense: SelectDateTenseEventLog.Tense
                                 if calendar.isDate(normalizedWeekStart, inSameDayAs: currentWeekStart) {
@@ -124,15 +137,10 @@ public struct MainView: View {
                                 } else {
                                     tense = .past
                                 }
-                                
+
                                 TWLog.event(SelectDateTenseEventLog(tense: tense))
                                 _ = viewStore.send(.dateSelected(normalizedWeekStart))
                             } label: {
-                                let labelText = datePolicy.weekDisplayText(for: normalizedWeekStart, baseDate: today)
-                                let isSelected = calendar.isDate(
-                                    datePolicy.startOfWeek(for: viewStore.displayDate),
-                                    inSameDayAs: normalizedWeekStart
-                                )
                                 if isSelected {
                                     Label {
                                         Text(labelText)
@@ -149,7 +157,7 @@ public struct MainView: View {
                                         .animation(.easeInOut(duration: 0.2), value: viewStore.displayDate)
                                 }
                             }
-                            .accessibilityLabel("\(datePolicy.weekDisplayText(for: normalizedWeekStart, baseDate: today)) 선택")
+                            .accessibilityLabel(accessibilityText)
                             .accessibilityHint("주 변경")
                         }
                     } label: {
@@ -227,10 +235,14 @@ public struct MainView: View {
 }
 
 private extension Date {
+    private static let displayFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "MM월 dd일 EEEE"
+        f.locale = Locale(identifier: "ko_kr")
+        return f
+    }()
+
     func toString() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM월 dd일 EEEE"
-        formatter.locale = Locale(identifier: "ko_kr")
-        return formatter.string(from: self)
+        Self.displayFormatter.string(from: self)
     }
 }

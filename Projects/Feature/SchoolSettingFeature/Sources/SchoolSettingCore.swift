@@ -85,14 +85,20 @@ public struct SchoolSettingCore: Reducer {
                 TWLog.event(pageShowedEvengLog)
 
             case .onLoad:
+                let schoolVal: String? = userDefaultsClient.getValue(.school) as? String
+                let orgCodeVal: String? = userDefaultsClient.getValue(.orgCode) as? String
+                let schoolCodeVal: String? = userDefaultsClient.getValue(.schoolCode) as? String
+                let gradeVal: Int? = userDefaultsClient.getValue(.grade) as? Int
+                let classVal: Int? = userDefaultsClient.getValue(.class) as? Int
+                let schoolTypeRaw: String? = userDefaultsClient.getValue(.schoolType) as? String
                 guard
-                    let school = userDefaultsClient.getValue(.school) as? String,
-                    let orgCode = userDefaultsClient.getValue(.orgCode) as? String,
-                    let schoolCode = userDefaultsClient.getValue(.schoolCode) as? String,
-                    let grade = userDefaultsClient.getValue(.grade) as? Int,
-                    let `class` = userDefaultsClient.getValue(.class) as? Int,
-                    let schoolTypeRaw = userDefaultsClient.getValue(.schoolType) as? String,
-                    let schoolType = SchoolType(rawValue: schoolTypeRaw)
+                    let school = schoolVal,
+                    let orgCode = orgCodeVal,
+                    let schoolCode = schoolCodeVal,
+                    let grade = gradeVal,
+                    let `class` = classVal,
+                    let schoolTypeRawValue = schoolTypeRaw,
+                    let schoolType = SchoolType(rawValue: schoolTypeRawValue)
                 else {
                     return .none
                 }
@@ -107,8 +113,9 @@ public struct SchoolSettingCore: Reducer {
                 state.school = school
                 state.grade = "\(grade)"
                 state.class = "\(`class`)"
-                state.major = userDefaultsClient.getValue(.major) as? String ?? ""
-                let majorList = try? localDatabaseClient.readRecords(as: SchoolMajorLocalEntity.self)
+                let majorVal: String? = userDefaultsClient.getValue(.major) as? String
+                state.major = majorVal ?? ""
+                let majorList: [SchoolMajorLocalEntity]? = try? localDatabaseClient.readRecords(as: SchoolMajorLocalEntity.self)
                 state.schoolMajorList = majorList?.map(\.major) ?? []
                 [SchoolSettingStep.school, .grade, .class, .major].forEach {
                     state.completedStep.insert($0)
@@ -117,12 +124,12 @@ public struct SchoolSettingCore: Reducer {
             case let .schoolChanged(school):
                 state.school = school
                 state.isLoading = true
-                return .run { [school = state.school] send in
-                    let task = await Action.schoolListResponse(
-                        TaskResult {
-                            try await schoolClient.fetchSchoolList(school)
-                        }
-                    )
+                let schoolQuery: String = state.school
+                return .run { send in
+                    let result: TaskResult<[School]> = await TaskResult {
+                        try await schoolClient.fetchSchoolList(schoolQuery)
+                    }
+                    let task: Action = Action.schoolListResponse(result)
                     await send(task)
                 }
                 .debounce(id: SchoolDebounceID(), for: .milliseconds(150), scheduler: DispatchQueue.main)
@@ -164,16 +171,18 @@ public struct SchoolSettingCore: Reducer {
 
             case let .schoolRowDidSelect(school):
                 self.logCompletedStep(state: &state, step: .school)
+                let schoolName: String = school.name
+                let orgCode: String = school.orgCode
+                let schoolCode: String = school.schoolCode
                 state.selectedSchool = school
-                state.school = school.name
+                state.school = schoolName
                 state.isFocusedSchool = false
                 state.major = ""
                 return .run { send in
-                    let task = await Action.schoolMajorListResponse(
-                        TaskResult {
-                            try await schoolClient.fetchSchoolsMajorList(school.orgCode, school.schoolCode)
-                        }
-                    )
+                    let result: TaskResult<[String]> = await TaskResult {
+                        try await schoolClient.fetchSchoolsMajorList(orgCode, schoolCode)
+                    }
+                    let task: Action = Action.schoolMajorListResponse(result)
                     await send(task)
                 }
 
@@ -184,17 +193,19 @@ public struct SchoolSettingCore: Reducer {
                     let `class` = Int(state.class)
                 else { return .none }
 
-                let dict: [(UserDefaultsKeys, Any?)] = [
-                    (UserDefaultsKeys.school, state.school),
-                    (.orgCode, selectedSchool.orgCode),
-                    (.schoolCode, selectedSchool.schoolCode),
-                    (.grade, grade),
-                    (.class, `class`),
-                    (.major, state.major.isEmpty ? nil : state.major),
-                    (.schoolType, selectedSchool.schoolType.rawValue)
+                let majorValue: Any? = state.major.isEmpty ? nil : state.major
+                let schoolTypeValue: String = selectedSchool.schoolType.rawValue
+                let settings: [(key: UserDefaultsKeys, value: Any?)] = [
+                    (key: .school, value: state.school),
+                    (key: .orgCode, value: selectedSchool.orgCode),
+                    (key: .schoolCode, value: selectedSchool.schoolCode),
+                    (key: .grade, value: grade),
+                    (key: .class, value: `class`),
+                    (key: .major, value: majorValue),
+                    (key: .schoolType, value: schoolTypeValue)
                 ]
-                dict.forEach {
-                    userDefaultsClient.setValue($0.0, $0.1)
+                for setting in settings {
+                    userDefaultsClient.setValue(setting.key, setting.value)
                 }
 
                 TWLog.setUserProperty(property: .schoolType, value: selectedSchool.schoolType.analyticsValue)

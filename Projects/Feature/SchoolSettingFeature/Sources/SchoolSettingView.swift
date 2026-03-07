@@ -28,17 +28,51 @@ public struct SchoolSettingView: View {
 
     public var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
+            let hasClassAndMajorList: Bool = !viewStore.class.isEmpty && !viewStore.schoolMajorList.isEmpty
+            let titleMessage: String = viewStore.titleMessage
+            let gradeValue: String = viewStore.grade
+            let classValue: String = viewStore.class
+            let schoolValue: String = viewStore.school
+            let isFocusedSchool: Bool = viewStore.isFocusedSchool
+            let nextButtonTitle: String = viewStore.nextButtonTitle
+
+            let majorBinding: Binding<String> = viewStore.binding(
+                get: \.major,
+                send: SchoolSettingCore.Action.majorChanged
+            )
+            let classBinding: Binding<String> = viewStore.binding(
+                get: \.class,
+                send: SchoolSettingCore.Action.classChanged
+            )
+            let gradeBinding: Binding<String> = viewStore.binding(
+                get: \.grade,
+                send: SchoolSettingCore.Action.gradeChanged
+            )
+            let schoolBinding: Binding<String> = viewStore.binding(
+                get: \.school,
+                send: SchoolSettingCore.Action.schoolChanged
+            )
+            let majorSheetBinding: Binding<Bool> = viewStore.binding(
+                get: \.isPresentedMajorSheet,
+                send: .majorSheetDismissed
+            )
+
+            let showBottomButton: Bool = !classValue.isEmpty &&
+                !gradeValue.isEmpty &&
+                !isFocusedSchool &&
+                !schoolValue.isEmpty
+
             ZStack {
                 VStack(spacing: 34) {
-                    if !viewStore.isFocusedSchool {
+                    if !isFocusedSchool {
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
-                                Text(viewStore.titleMessage)
+                                Text(titleMessage)
                                     .twFont(.headline2, color: .extraBlack)
-                                    .accessibilityLabel(viewStore.titleMessage)
+                                    .accessibilityLabel(titleMessage)
                                     .accessibilityAddTraits(.isHeader)
 
-                                if !viewStore.class.isEmpty && !viewStore.schoolMajorList.isEmpty {
+                                if hasClassAndMajorList {
                                     Text("학과는 없으면 안해도 괜찮아요!")
                                         .twFont(.body3, color: .extraBlack)
                                         .accessibilityLabel("학과 입력은 선택사항입니다")
@@ -49,14 +83,11 @@ public struct SchoolSettingView: View {
                         }
                         .padding(.bottom, 16)
 
-                        if !viewStore.class.isEmpty && !viewStore.schoolMajorList.isEmpty {
+                        if hasClassAndMajorList {
                             VStack {
                                 TWTextField(
                                     "학과",
-                                    text: viewStore.binding(
-                                        get: \.major,
-                                        send: SchoolSettingCore.Action.majorChanged
-                                    )
+                                    text: majorBinding
                                 )
                                 .disabled(true)
                                 .accessibilityLabel("학과 선택")
@@ -69,13 +100,10 @@ public struct SchoolSettingView: View {
                             }
                         }
 
-                        if !viewStore.grade.isEmpty {
+                        if !gradeValue.isEmpty {
                             TWTextField(
                                 "반",
-                                text: viewStore.binding(
-                                    get: \.class,
-                                    send: SchoolSettingCore.Action.classChanged
-                                )
+                                text: classBinding
                             ) {
                                 viewStore.send(.majorTextFieldDidTap, animation: .default)
                                 focusField = nil
@@ -90,10 +118,7 @@ public struct SchoolSettingView: View {
                         if viewStore.selectedSchool != nil {
                             TWTextField(
                                 "학년",
-                                text: viewStore.binding(
-                                    get: \.grade,
-                                    send: SchoolSettingCore.Action.gradeChanged
-                                )
+                                text: gradeBinding
                             ) {
                                 focusField = .class
                             }
@@ -107,10 +132,7 @@ public struct SchoolSettingView: View {
 
                     TWTextField(
                         "학교이름",
-                        text: viewStore.binding(
-                            get: \.school,
-                            send: SchoolSettingCore.Action.schoolChanged
-                        )
+                        text: schoolBinding
                     ) {
                         focusField = .school
                     }
@@ -118,7 +140,7 @@ public struct SchoolSettingView: View {
                     .accessibilityLabel("학교 이름 입력")
                     .accessibilityHint("학교 이름을 입력하면 검색 결과가 나타납니다")
 
-                    if viewStore.isFocusedSchool {
+                    if isFocusedSchool {
                         if viewStore.isLoading {
                             ProgressView()
                                 .progressViewStyle(.automatic)
@@ -127,6 +149,9 @@ public struct SchoolSettingView: View {
                             ScrollView {
                                 LazyVStack(spacing: 16) {
                                     ForEach(viewStore.schoolList, id: \.schoolCode) { school in
+                                        let schoolName: String = school.name
+                                        let schoolLocation: String = school.location
+                                        let accessibilityText: String = "\(schoolName) \(schoolLocation)"
                                         HStack {
                                             schoolRowView(school: school)
 
@@ -142,7 +167,7 @@ public struct SchoolSettingView: View {
                                             focusField = .grade
                                         }
                                         .accessibilityElement(children: .combine)
-                                        .accessibilityLabel("\(school.name) \(school.location)")
+                                        .accessibilityLabel(accessibilityText)
                                         .accessibilityHint("이 학교를 선택하려면 두 번 탭하세요")
                                     }
                                 }
@@ -153,15 +178,16 @@ public struct SchoolSettingView: View {
 
                     Spacer()
                 }
-                .animation(.default, value: viewStore.grade)
-                .animation(.default, value: viewStore.class)
-                .animation(.default, value: viewStore.school)
+                .animation(.default, value: gradeValue)
+                .animation(.default, value: classValue)
+                .animation(.default, value: schoolValue)
                 .padding(.horizontal, 16)
                 .padding(.top, 24)
                 .onChange(of: focusField) { newValue in
-                    viewStore.send(.schoolFocusedChanged(newValue == .school), animation: .default)
+                    let isSchoolFocused: Bool = newValue == .school
+                    viewStore.send(.schoolFocusedChanged(isSchoolFocused), animation: .default)
                 }
-                .onChange(of: viewStore.grade) { newValue in
+                .onChange(of: gradeValue) { newValue in
                     if !newValue.isEmpty {
                         focusField = .class
                     }
@@ -169,15 +195,12 @@ public struct SchoolSettingView: View {
                 VStack {
                     Spacer()
 
-                    if !viewStore.class.isEmpty &&
-                        !viewStore.grade.isEmpty &&
-                        !viewStore.isFocusedSchool &&
-                        !viewStore.school.isEmpty {
-                        TWButton(title: viewStore.nextButtonTitle, style: .wide) {
+                    if showBottomButton {
+                        TWButton(title: nextButtonTitle, style: .wide) {
                             viewStore.send(.nextButtonDidTap, animation: .default)
                             focusField = nil
                         }
-                        .accessibilityLabel(viewStore.nextButtonTitle)
+                        .accessibilityLabel(nextButtonTitle)
                         .accessibilityHint("입력한 정보로 설정을 완료 혹은 다음 단계로 넘어갑니다")
                     }
                 }
@@ -196,10 +219,7 @@ public struct SchoolSettingView: View {
                 Color.backgroundMain.ignoresSafeArea()
             }
             .twBottomSheet(
-                isShowing: viewStore.binding(
-                    get: \.isPresentedMajorSheet,
-                    send: .majorSheetDismissed
-                )
+                isShowing: majorSheetBinding
             ) {
                 IfLetStore(
                     store.scope(state: \.schoolMajorSheetCore, action: SchoolSettingCore.Action.schoolMajorSheetCore)

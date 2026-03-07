@@ -16,17 +16,22 @@ public struct TopTabbarView: View {
     public var body: some View {
         HStack {
             ForEach(items.indices, id: \.self) { index in
+                let isSelected: Bool = currentTab == index
+                let itemTitle: String = items[index]
+                let tabForeground: Color = isSelected ? .extraBlack : .unselectedPrimary
+                let accessLabel: String = "\(itemTitle), \(isSelected ? "선택됨" : "선택안됨")"
+
                 Button {
                     withAnimation {
                         currentTab = index
                     }
                 } label: {
                     VStack {
-                        Text(items[index])
+                        Text(itemTitle)
                             .twFont(.headline4)
-                            .foregroundColor(currentTab == index ? .extraBlack : .unselectedPrimary)
+                            .foregroundColor(tabForeground)
 
-                        if currentTab == index {
+                        if isSelected {
                             RoundedRectangle(cornerRadius: 17)
                                 .fill(Color.textPrimary)
                                 .frame(height: 2)
@@ -41,8 +46,8 @@ public struct TopTabbarView: View {
                     }
                     .padding(.horizontal, 16)
                 }
-                .accessibilityLabel("\(items[index]), \(currentTab == index ? "선택됨" : "선택안됨")")
-                .accessibilityAddTraits(currentTab == index ? .isSelected : [])
+                .accessibilityLabel(accessLabel)
+                .accessibilityAddTraits(isSelected ? .isSelected : [])
                 .accessibilitySortPriority(1)
             }
         }
