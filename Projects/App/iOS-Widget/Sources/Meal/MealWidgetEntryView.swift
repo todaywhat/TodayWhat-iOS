@@ -162,7 +162,7 @@ private struct MediumMealWidgetView: View {
                         }
                     }
                 }
-                .widgetAccentable()
+                .widgetAccentableIfAvailable()
                 .padding(.horizontal, 4)
 
                 LazyHGrid(rows: rows, spacing: 0) {
@@ -178,7 +178,7 @@ private struct MediumMealWidgetView: View {
                         .frame(width: (proxy.size.width / 2) - 24)
                     }
                 }
-                .widgetAccentable()
+                .widgetAccentableIfAvailable()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(8)
                 .background {
@@ -262,7 +262,7 @@ private struct LargeMealWidgetView: View {
                     }
                 }
             }
-            .widgetAccentable()
+            .widgetAccentableIfAvailable()
 
             VStack(alignment: .leading, spacing: 0) {
                 ForEach(entry.meal.meals(mealPartTime: entry.mealPartTime).meals, id: \.hashValue) { meal in
@@ -278,7 +278,7 @@ private struct LargeMealWidgetView: View {
                     .padding(.horizontal, 8)
                 }
             }
-            .widgetAccentable()
+            .widgetAccentableIfAvailable()
             .padding(.top, 4)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
@@ -288,7 +288,7 @@ private struct LargeMealWidgetView: View {
 
             Text("\(String(format: "%.1f", calorie)) kcal")
                 .twFont(.caption1, color: .textSecondary)
-                .widgetAccentable()
+                .widgetAccentableIfAvailable()
                 .frame(maxWidth: .infinity, alignment: .trailing)
         }
         .padding(16)

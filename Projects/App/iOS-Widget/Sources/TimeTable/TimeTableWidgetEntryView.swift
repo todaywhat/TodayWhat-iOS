@@ -79,7 +79,7 @@ private struct MediumTimeTableWidgetView: View {
                     Text("\(entry.date.month)월 \(entry.date.day)일 \(entry.date.weekdayString)")
                         .twFont(.caption1, color: .textSecondary)
                 }
-                .widgetAccentable()
+                .widgetAccentableIfAvailable()
                 .padding(.horizontal, 4)
 
                 LazyHGrid(rows: rows, spacing: 0) {
@@ -97,7 +97,7 @@ private struct MediumTimeTableWidgetView: View {
                         .frame(width: (proxy.size.width / 2) - 24)
                     }
                 }
-                .widgetAccentable()
+                .widgetAccentableIfAvailable()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(8)
                 .background {
@@ -146,7 +146,7 @@ private struct LargeTimeTableWidgetView: View {
                 Text("\(entry.date.month)월 \(entry.date.day)일 \(entry.date.weekdayString)")
                     .twFont(.caption1, color: .textSecondary)
             }
-            .widgetAccentable()
+            .widgetAccentableIfAvailable()
             .padding(.horizontal, 4)
 
             VStack(alignment: .leading, spacing: 0) {
@@ -164,7 +164,7 @@ private struct LargeTimeTableWidgetView: View {
                     .padding(.horizontal, 8)
                 }
             }
-            .widgetAccentable()
+            .widgetAccentableIfAvailable()
             .padding(.top, 4)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
