@@ -77,6 +77,7 @@ private struct MediumMealTimeTableWidgetView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
+            .widgetAccentable()
             .padding(8)
             .background {
                 Color.cardBackground
@@ -110,6 +111,7 @@ private struct MediumMealTimeTableWidgetView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
+            .widgetAccentable()
             .padding(8)
             .background {
                 Color.cardBackground
