@@ -16,16 +16,19 @@ public struct SchoolMajorSheetView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack(spacing: 0) {
                     ForEach(viewStore.majorList, id: \.self) { major in
+                        let isSelected: Bool = viewStore.selectedMajor == major
+                        let accessLabel: String = "\(major) \(isSelected ? "선택됨" : "선택안됨")"
+
                         Button {
                             viewStore.send(.majorRowDidSelect(major), animation: .default)
                         } label: {
-                            schoolMajorRowView(major: major)
+                            schoolMajorRowView(major: major, isSelected: isSelected)
                         }
                         .padding(.horizontal, 32)
                         .accessibilityElement(children: .combine)
-                        .accessibilityLabel("\(major) \(viewStore.selectedMajor == major ? "선택됨" : "선택안됨")")
+                        .accessibilityLabel(accessLabel)
                         .accessibilityHint("이 학과를 선택하려면 두 번 탭하세요")
-                        .accessibilityAddTraits(viewStore.selectedMajor == major ? .isSelected : [])
+                        .accessibilityAddTraits(isSelected ? .isSelected : [])
                     }
                 }
             }
@@ -35,14 +38,14 @@ public struct SchoolMajorSheetView: View {
     }
 
     @ViewBuilder
-    private func schoolMajorRowView(major: String) -> some View {
+    private func schoolMajorRowView(major: String, isSelected: Bool) -> some View {
         HStack {
             Text(major)
                 .twFont(.headline4, color: .textPrimary)
 
             Spacer()
 
-            TWRadioButton(isChecked: viewStore.selectedMajor == major) {
+            TWRadioButton(isChecked: isSelected) {
                 viewStore.send(.majorRowDidSelect(major), animation: .default)
             }
         }

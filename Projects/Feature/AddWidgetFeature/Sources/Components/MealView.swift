@@ -52,6 +52,8 @@ struct MealView: View {
 }
 
 private struct MealSmallView: View {
+    private static let items: [String] = ["퀴노아밥", "테리야키 그릴스테이크", "한우 불고기", "팝스터 쉐이크", "구운 채소", "가지 라따뚜이", "깍두기", "자몽에이드"]
+
     var body: some View {
         RoundedRectangle(cornerRadius: 12)
             .fill(Color.backgroundMain)
@@ -62,11 +64,11 @@ private struct MealSmallView: View {
                         .foregroundColor(.textSecondary)
                         .padding(.bottom, 4)
 
-                    let items = ["퀴노아밥", "테리야키 그릴스테이크", "한우 불고기", "팝스터 쉐이크", "구운 채소", "가지 라따뚜이", "깍두기", "자몽에이드"]
-                    ForEach(items, id: \.self) { meal in
+                    ForEach(Self.items, id: \.self) { meal in
+                        let mealColor: Color = meal == "구운 채소" ? .point : .extraBlack
                         Text(meal)
                             .twFont(.caption1)
-                            .foregroundColor(meal == "구운 채소" ? .point : .extraBlack)
+                            .foregroundColor(mealColor)
                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                     }
                 }
@@ -76,7 +78,9 @@ private struct MealSmallView: View {
 }
 
 private struct MealMediumView: View {
-    private let rows = Array(repeating: GridItem(.flexible(), spacing: nil), count: 4)
+    private static let rows: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: nil), count: 4)
+    private static let items: [String] = ["퀴노아밥", "테리야키 그릴스테이크", "한우 불고기", "팝스터 쉐이크", "구운 채소", "가지 라따뚜이", "깍두기", "자몽에이드"]
+    private static let partTimes: [MealPartTime] = [.breakfast, .lunch, .dinner]
 
     var body: some View {
         RoundedRectangle(cornerRadius: 16)
@@ -92,11 +96,12 @@ private struct MealMediumView: View {
 
                             HStack(spacing: 0) {
                                 if #available(iOS 17.0, *) {
-                                    ForEach([MealPartTime.breakfast, .lunch, .dinner], id: \.self) { partTime in
+                                    ForEach(Self.partTimes, id: \.self) { partTime in
                                         Button {} label: {
-                                            let isSelected = partTime == .breakfast
+                                            let isSelected: Bool = partTime == .breakfast
+                                            let textColor: Color = isSelected ? .extraWhite : .textSecondary
                                             Text(partTime.display)
-                                                .twFont(.body3, color: isSelected ? .extraWhite : .textSecondary)
+                                                .twFont(.body3, color: textColor)
                                                 .minimumScaleFactor(0.5)
                                                 .padding(.horizontal, 12)
                                                 .background {
@@ -117,14 +122,14 @@ private struct MealMediumView: View {
                         }
                         .padding(.horizontal, 4)
 
-                        let items = ["퀴노아밥", "테리야키 그릴스테이크", "한우 불고기", "팝스터 쉐이크", "구운 채소", "가지 라따뚜이", "깍두기", "자몽에이드"]
-                        LazyHGrid(rows: rows, spacing: 0) {
-                            ForEach(items, id: \.self) { meal in
+                        LazyHGrid(rows: Self.rows, spacing: 0) {
+                            ForEach(Self.items, id: \.self) { meal in
+                                let mealColor: Color = meal == "구운 채소" ? .point : .extraBlack
                                 HStack(spacing: 0) {
                                     Text(meal)
                                         .frame(maxHeight: .infinity)
                                         .twFont(.caption1)
-                                        .foregroundColor(meal == "구운 채소" ? .point : .extraBlack)
+                                        .foregroundColor(mealColor)
 
                                     Spacer()
                                 }
@@ -146,6 +151,10 @@ private struct MealMediumView: View {
 }
 
 private struct MealLargeView: View {
+    private static let items: [String] = ["퀴노아밥", "테리야키 그릴스테이크", "한우 불고기", "팝스터 쉐이크", "구운 채소", "가지 라따뚜이", "깍두기", "자몽에이드"]
+    private static let partTimes: [MealPartTime] = [.breakfast, .lunch, .dinner]
+    private static let kcalText: String = "\(String(format: "%.1f", 1290)) kcal"
+
     var body: some View {
         RoundedRectangle(cornerRadius: 16)
             .fill(Color.backgroundMain)
@@ -159,11 +168,12 @@ private struct MealLargeView: View {
 
                         HStack(spacing: 0) {
                             if #available(iOS 17.0, *) {
-                                ForEach([MealPartTime.breakfast, .lunch, .dinner], id: \.self) { partTime in
+                                ForEach(Self.partTimes, id: \.self) { partTime in
                                     Button {} label: {
-                                        let isSelected = partTime == .breakfast
+                                        let isSelected: Bool = partTime == .breakfast
+                                        let textColor: Color = isSelected ? .extraWhite : .textSecondary
                                         Text(partTime.display)
-                                            .twFont(.body3, color: isSelected ? .extraWhite : .textSecondary)
+                                            .twFont(.body3, color: textColor)
                                             .minimumScaleFactor(0.5)
                                             .padding(.horizontal, 12)
                                             .background {
@@ -183,14 +193,14 @@ private struct MealLargeView: View {
                         }
                     }
 
-                    let items = ["퀴노아밥", "테리야키 그릴스테이크", "한우 불고기", "팝스터 쉐이크", "구운 채소", "가지 라따뚜이", "깍두기", "자몽에이드"]
                     VStack(alignment: .leading, spacing: 0) {
-                        ForEach(items, id: \.self) { meal in
+                        ForEach(Self.items, id: \.self) { meal in
+                            let mealColor: Color = meal == "구운 채소" ? .point : .extraBlack
                             HStack {
                                 Text(meal)
                                     .twFont(.body1)
                                     .frame(maxHeight: .infinity)
-                                    .foregroundColor(meal == "구운 채소" ? .point : .extraBlack)
+                                    .foregroundColor(mealColor)
 
                                 Spacer()
                             }
@@ -204,7 +214,7 @@ private struct MealLargeView: View {
                     }
                     .cornerRadius(8)
 
-                    Text("\(String(format: "%.1f", 1290)) kcal")
+                    Text(Self.kcalText)
                         .twFont(.caption1, color: .textSecondary)
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 }
@@ -214,13 +224,14 @@ private struct MealLargeView: View {
 }
 
 private struct MealRectangularView: View {
-    let items = ["퀴노아밥", "테리야키 그릴스테이크", "한우 불고기", "팝스터 쉐이크", "구운 채소", "가지 라따뚜이", "깍두기", "자몽에이드"]
+    private static let items: [String] = ["퀴노아밥", "테리야키 그릴스테이크", "한우 불고기", "팝스터 쉐이크", "구운 채소", "가지 라따뚜이", "깍두기", "자몽에이드"]
+    private static let displayText: String = "아침 - \(items.joined(separator: ","))"
 
     var body: some View {
         RoundedRectangle(cornerRadius: 4)
             .fill(.ultraThinMaterial)
             .overlay {
-                Text("아침 - \(items.joined(separator: ","))")
+                Text(Self.displayText)
                     .twFont(.caption1, color: .extraBlack)
                     .lineLimit(nil)
             }

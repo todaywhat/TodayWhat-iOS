@@ -13,15 +13,17 @@ public struct TimeTableView: View {
     }
 
     public var body: some View {
+        let currentMonth: Int = Date().month
+        let isEmpty: Bool = viewStore.timeTableList.isEmpty && !viewStore.isLoading
         ScrollView {
-            if viewStore.timeTableList.isEmpty && !viewStore.isLoading {
+            if isEmpty {
                 Text("오늘 시간표를 찾을 수 없어요!")
                     .padding(.top, 16)
                     .foregroundColor(.textSecondary)
                     .accessibilityLabel("시간표를 찾을 수 없습니다")
                     .accessibilitySortPriority(1)
 
-                if Date().month == 3 || Date().month == 9 {
+                if currentMonth == 3 || currentMonth == 9 {
                     Text("학기 초에는 neis에 정규시간표가\n 등록되어있지 않을 수도 있어요.")
                         .multilineTextAlignment(.center)
                         .padding(.top, 14)
@@ -65,8 +67,11 @@ public struct TimeTableView: View {
 
     @ViewBuilder
     private func timeTableRow(timeTable: TimeTable) -> some View {
+        let perioText: String = "\(timeTable.perio)교시"
+        let contentText: String = timeTable.content
+        let accessibilityText: String = "\(timeTable.perio)교시 \(contentText)"
         HStack(spacing: 8) {
-            Text("\(timeTable.perio)교시")
+            Text(perioText)
                 .twFont(.caption1, color: .textPrimary)
 
             Divider()
@@ -74,7 +79,7 @@ public struct TimeTableView: View {
                 .frame(height: 18)
                 .accessibilityHidden(true)
 
-            Text(timeTable.content)
+            Text(contentText)
                 .twFont(.headline4, color: .textPrimary)
                 .padding(.leading, 4)
 
@@ -88,7 +93,7 @@ public struct TimeTableView: View {
         }
         .cornerRadius(8)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(timeTable.perio)교시 \(timeTable.content)")
+        .accessibilityLabel(accessibilityText)
         .accessibilitySortPriority(2)
     }
 }

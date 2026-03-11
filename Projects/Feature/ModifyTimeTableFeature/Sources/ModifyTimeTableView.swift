@@ -18,6 +18,7 @@ public struct ModifyTimeTableView: View {
     }
 
     public var body: some View {
+        let toastText: String = "\(viewStore.weekdayString) 시간표 저장완료"
         VStack {
             TopTabbarView(
                 currentTab: viewStore.binding(
@@ -54,23 +55,24 @@ public struct ModifyTimeTableView: View {
                         .frame(height: 1)
 
                     ForEach(viewStore.inputedTimeTables.indices, id: \.self) { index in
-                        TWTextField(
-                            text: viewStore.binding(
-                                get: { $0.inputedTimeTables[safe: index] ?? "" },
-                                send: { .timeTableInputed(index: index, content: $0) }
-                            )
+                        let textBinding: Binding<String> = viewStore.binding(
+                            get: { $0.inputedTimeTables[safe: index] ?? "" },
+                            send: { .timeTableInputed(index: index, content: $0) }
                         )
+                        let isFocusedAtIndex: Bool = focusIndex == index
+                        let strokeColor: Color = isFocusedAtIndex ? Color.extraBlack : .clear
+                        TWTextField(text: textBinding)
                         .disabled(true)
                         .onTapGesture {
                             focusIndex = index
                         }
                         .overlay {
                             RoundedRectangle(cornerRadius: 8)
-                                .stroke(focusIndex == index ? Color.extraBlack : .clear, lineWidth: 1)
+                                .stroke(strokeColor, lineWidth: 1)
                         }
                         .overlay(alignment: .trailing) {
                             Button {
-                                if focusIndex == index {
+                                if isFocusedAtIndex {
                                     viewStore.send(.timeTableInputed(index: index, content: ""))
                                 } else {
                                     viewStore.send(.removeTimeTable(index: index))
@@ -97,16 +99,16 @@ public struct ModifyTimeTableView: View {
         }
         .safeAreaInset(edge: .bottom) {
             if let index = focusIndex {
-                TWTextField(
-                    text: viewStore.binding(
-                        get: { $0.inputedTimeTables[safe: index] ?? "" },
-                        send: { .timeTableInputed(index: index, content: $0) }
-                    )
+                let bottomTextBinding: Binding<String> = viewStore.binding(
+                    get: { $0.inputedTimeTables[safe: index] ?? "" },
+                    send: { .timeTableInputed(index: index, content: $0) }
                 )
+                let isBottomFocused: Bool = focusIndex == index
+                TWTextField(text: bottomTextBinding)
                 .focused($isFocused)
                 .overlay(alignment: .trailing) {
                     Button {
-                        if focusIndex == index {
+                        if isBottomFocused {
                             viewStore.send(.timeTableInputed(index: index, content: ""))
                         } else {
                             viewStore.send(.removeTimeTable(index: index))
@@ -156,7 +158,7 @@ public struct ModifyTimeTableView: View {
                 get: \.isShowingSuccessToast,
                 send: ModifyTimeTableCore.Action.toastDismissed
             ),
-            text: "\(viewStore.weekdayString) 시간표 저장완료"
+            text: toastText
         )
     }
 }

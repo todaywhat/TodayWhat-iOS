@@ -4,7 +4,12 @@ import SwiftUI
 struct MainView: View {
     @StateObject var viewModel = MainViewModel()
     @State var isPresentedOption = false
+    private let mainColor: Color = Color("Main")
+    private let subColor: Color = Color("Sub")
+
     var body: some View {
+        let currentDate: Date = Date()
+
         ScrollView {
             Button {
                 Task {
@@ -26,7 +31,7 @@ struct MainView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .background {
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color("Main"))
+                    .fill(mainColor)
             }
 
             VStack(alignment: .leading) {
@@ -34,30 +39,35 @@ struct MainView: View {
                     Text(viewModel.part.display)
                         .font(.system(size: 16))
 
-                    Text(Date(), format: .dateTime.year().month().day())
+                    Text(currentDate, format: .dateTime.year().month().day())
                         .font(.system(size: 14))
                         .foregroundStyle(.secondary)
                 }
 
                 Text("옵션변경")
                     .font(.system(size: 14))
-                    .foregroundColor(Color("Sub"))
+                    .foregroundColor(subColor)
             }
             .padding(.top, 8)
             .padding(.bottom, 4)
             .padding(.horizontal, 12)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color("Main"))
+            .background(mainColor)
             .cornerRadius(8)
             .onTapGesture {
                 isPresentedOption.toggle()
             }
 
-            if viewModel.part != .timeTable && viewModel.meal == nil {
+            let isTimeTable: Bool = viewModel.part == .timeTable
+            let isWeekend: Bool = {
+                let weekday: Int = Date().weekday
+                return weekday == 7 || weekday == 1
+            }()
+
+            if !isTimeTable && viewModel.meal == nil {
                 Text("등록된 정보를 찾지 못했어요 😥")
-            } else if viewModel.part == .timeTable && viewModel.timeTables.isEmpty {
-                let date = Date()
-                if date.weekday == 7 || date.weekday == 1 {
+            } else if isTimeTable && viewModel.timeTables.isEmpty {
+                if isWeekend {
                     Text("오늘은 주말이에요! 🛏️")
                 } else {
                     Text("등록된 정보를 찾지 못했어요 😥")
@@ -70,13 +80,13 @@ struct MainView: View {
                         .progressViewStyle(.automatic)
                 }
 
-                if viewModel.part == .timeTable {
+                if isTimeTable {
                     ForEach(viewModel.timeTables, id: \.hashValue) { timetable in
                         VStack(alignment: .leading) {
                             timetableView(timetable)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color("Main"))
+                        .background(mainColor)
                         .cornerRadius(8)
                     }
                 } else {
@@ -85,7 +95,7 @@ struct MainView: View {
                             mealView(meal)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color("Main"))
+                        .background(mainColor)
                         .cornerRadius(8)
                     }
                 }
@@ -119,12 +129,14 @@ struct MainView: View {
 
     @ViewBuilder
     func timetableView(_ timetable: TimeTable) -> some View {
+        let perioText: String = "\(timetable.perio)교시"
+
         VStack(alignment: .leading, spacing: 0) {
             Text(timetable.content)
                 .font(.system(size: 14, weight: .medium))
 
-            Text("\(timetable.perio)교시")
-                .foregroundColor(Color("Sub"))
+            Text(perioText)
+                .foregroundColor(self.subColor)
                 .font(.system(size: 14))
         }
         .padding(.vertical, 8)

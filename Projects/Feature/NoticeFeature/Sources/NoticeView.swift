@@ -19,14 +19,16 @@ public struct NoticeView: View {
         ScrollView {
             LazyVStack {
                 ForEach(viewStore.noticeList, id: \.id) { notice in
-                    if viewStore.selectedNotice != notice {
+                    let isSelected: Bool = viewStore.selectedNotice == notice
+                    let modalID: String = "NOTICE_MODAL\(notice.id)"
+                    if !isSelected {
                         Button {
                             viewStore.send(.noticeDidSelect(notice), animation: .default)
                         } label: {
                             noticeRowView(notice: notice)
                                 .padding(.horizontal, 16)
                                 .matchedGeometryEffect(
-                                    id: "NOTICE_MODAL\(notice.id)",
+                                    id: modalID,
                                     in: noticeModal,
                                     properties: .position,
                                     anchor: .center
@@ -41,6 +43,7 @@ public struct NoticeView: View {
         }
         .overlay {
             if let selectedNotice = viewStore.selectedNotice {
+                let selectedModalID: String = "NOTICE_MODAL\(selectedNotice.id)"
                 ZStack {
                     Color.lightBox
                         .ignoresSafeArea()
@@ -55,7 +58,7 @@ public struct NoticeView: View {
                         .padding(.horizontal, 16)
                         .aspectRatio(1.0, contentMode: .fit)
                         .matchedGeometryEffect(
-                            id: "NOTICE_MODAL\(selectedNotice.id)",
+                            id: selectedModalID,
                             in: noticeModal,
                             properties: .position,
                             anchor: .center
@@ -73,6 +76,7 @@ public struct NoticeView: View {
 
     @ViewBuilder
     func noticeRowView(notice: Notice) -> some View {
+        let dateText: String = notice.createdAt.toStringCustomFormat(format: "yyyy년 MM월 dd일")
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text(notice.title)
@@ -81,7 +85,7 @@ public struct NoticeView: View {
 
                 Spacer()
 
-                Text(notice.createdAt.toStringCustomFormat(format: "yyyy년 MM월 dd일"))
+                Text(dateText)
                     .twFont(.body2, color: .textPrimary)
             }
 
@@ -99,6 +103,8 @@ public struct NoticeView: View {
 
     @ViewBuilder
     func noticeModalView(notice: Notice) -> some View {
+        let modalDateText: String = notice.createdAt.toStringCustomFormat(format: "yyyy년 MM월 dd일")
+        let formattedContent: String = notice.content.replacingOccurrences(of: "\\n", with: "\n")
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text(notice.title)
@@ -107,12 +113,12 @@ public struct NoticeView: View {
 
                 Spacer()
 
-                Text(notice.createdAt.toStringCustomFormat(format: "yyyy년 MM월 dd일"))
+                Text(modalDateText)
                     .twFont(.body2, color: .textPrimary)
             }
 
             ScrollView {
-                Text(notice.content.replacingOccurrences(of: "\\n", with: "\n"))
+                Text(formattedContent)
                     .lineLimit(nil)
                     .twFont(.body3, color: .textPrimary)
             }
