@@ -150,7 +150,7 @@ public struct SettingsView: View {
         SettingsBlockView(corners: []) {
             settingsOptionToggleView(
                 icon: .clock,
-                text: "커스텀 시간표 표시",
+                text: "수정한 시간표 표시",
                 isOn: viewStore.binding(
                     get: \.isOnModifiedTimeTable,
                     send: SettingsCore.Action.isOnModifiedTimeTableChagned

@@ -115,7 +115,9 @@ struct TodayWhatTimeTableWidget: Widget {
             kind: kind,
             provider: TimeTableProvider()
         ) { entry in
-            TimeTableWidgetEntryView(entry: entry)
+            BackportedWidgetRenderingModeView {
+                TimeTableWidgetEntryView(entry: entry)
+            }
         }
         .configurationDisplayName("오늘 시간표 뭐임")
         .description("오늘 시간표를 확인해요!")

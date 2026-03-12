@@ -306,7 +306,9 @@ struct TodayWhatMealTimeTableWidget: Widget {
             intent: DisplayMealIntent.self,
             provider: MealTimeTableProvider()
         ) { entry in
-            MealTimeTableWidgetEntryView(entry: entry)
+            BackportedWidgetRenderingModeView {
+                MealTimeTableWidgetEntryView(entry: entry)
+            }
         }
         .configurationDisplayName("오늘 급식이랑 시간표 뭐임")
         .description("시간에 따라 시간표와 아침, 점심, 저녁 급식을 확인해요!\n(아침0~8, 점심8~13, 저녁13~20, 내일아침20~24)")

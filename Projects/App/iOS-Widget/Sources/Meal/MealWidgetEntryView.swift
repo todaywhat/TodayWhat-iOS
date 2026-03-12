@@ -127,6 +127,38 @@ private struct MediumMealWidgetView: View {
     private var calorie: CGFloat {
         CGFloat(entry.meal.meals(mealPartTime: entry.mealPartTime).cal)
     }
+    @Environment(\.backportedWidgetRenderingMode) var widgetRenderingMode: BackportedWidgetRenderingMode
+
+    @ViewBuilder
+    private var columnBackground: some View {
+        switch widgetRenderingMode {
+        case .accented:
+            if #available(iOSApplicationExtension 26.0, *) {
+                EmptyView()
+            } else {
+                RoundedRectangle(cornerRadius: 8)
+                    .strokeBorder(Color.cardBackground, lineWidth: 1)
+            }
+
+        case .fullColor, .vibrant:
+            if #available(iOSApplicationExtension 26.0, *) {
+                ConcentricRectangle()
+                    .fill(Color.cardBackground)
+            } else {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.cardBackground)
+            }
+
+        default:
+            if #available(iOSApplicationExtension 26.0, *) {
+                ConcentricRectangle()
+                    .fill(Color.cardBackground)
+            } else {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.cardBackground)
+            }
+        }
+    }
 
     var body: some View {
         GeometryReader { proxy in
@@ -148,9 +180,15 @@ private struct MediumMealWidgetView: View {
                                         .padding(.horizontal, 12)
                                         .background {
                                             if isSelected {
-                                                RoundedRectangle(cornerRadius: 8)
-                                                    .fill(Color.extraBlack)
-                                                    .frame(height: 24)
+                                                if widgetRenderingMode == .accented {
+                                                    RoundedRectangle(cornerRadius: 8)
+                                                        .strokeBorder(Color.extraBlack, lineWidth: 1)
+                                                        .frame(height: 24)
+                                                } else {
+                                                    RoundedRectangle(cornerRadius: 8)
+                                                        .fill(Color.extraBlack)
+                                                        .frame(height: 24)
+                                                }
                                             } else {
                                                 Color.clear
                                             }
@@ -162,6 +200,7 @@ private struct MediumMealWidgetView: View {
                         }
                     }
                 }
+                .widgetAccentableIfAvailable()
                 .padding(.horizontal, 4)
 
                 LazyHGrid(rows: rows, spacing: 0) {
@@ -177,11 +216,11 @@ private struct MediumMealWidgetView: View {
                         .frame(width: (proxy.size.width / 2) - 24)
                     }
                 }
+                .widgetAccentableIfAvailable()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(8)
                 .background {
-                    Color.cardBackground
-                        .cornerRadius(8)
+                    columnBackground
                 }
                 .padding([.bottom, .horizontal], 4)
             }
@@ -226,6 +265,38 @@ private struct LargeMealWidgetView: View {
     private var calorie: CGFloat {
         CGFloat(entry.meal.meals(mealPartTime: entry.mealPartTime).cal)
     }
+    @Environment(\.backportedWidgetRenderingMode) var widgetRenderingMode: BackportedWidgetRenderingMode
+
+    @ViewBuilder
+    private var columnBackground: some View {
+        switch widgetRenderingMode {
+        case .accented:
+            if #available(iOSApplicationExtension 26.0, *) {
+                EmptyView()
+            } else {
+                RoundedRectangle(cornerRadius: 8)
+                    .strokeBorder(Color.cardBackground, lineWidth: 1)
+            }
+
+        case .fullColor, .vibrant:
+            if #available(iOSApplicationExtension 26.0, *) {
+                ConcentricRectangle()
+                    .fill(Color.cardBackground)
+            } else {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.cardBackground)
+            }
+
+        default:
+            if #available(iOSApplicationExtension 26.0, *) {
+                ConcentricRectangle()
+                    .fill(Color.cardBackground)
+            } else {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.cardBackground)
+            }
+        }
+    }
 
     var body: some View {
         VStack(spacing: 4) {
@@ -246,9 +317,15 @@ private struct LargeMealWidgetView: View {
                                     .padding(.horizontal, 12)
                                     .background {
                                         if isSelected {
-                                            RoundedRectangle(cornerRadius: 8)
-                                                .fill(Color.extraBlack)
-                                                .frame(height: 24)
+                                            if widgetRenderingMode == .accented {
+                                                RoundedRectangle(cornerRadius: 8)
+                                                    .strokeBorder(Color.extraBlack, lineWidth: 1)
+                                                    .frame(height: 24)
+                                            } else {
+                                                RoundedRectangle(cornerRadius: 8)
+                                                    .fill(Color.extraBlack)
+                                                    .frame(height: 24)
+                                            }
                                         } else {
                                             Color.clear
                                         }
@@ -260,6 +337,7 @@ private struct LargeMealWidgetView: View {
                     }
                 }
             }
+            .widgetAccentableIfAvailable()
 
             VStack(alignment: .leading, spacing: 0) {
                 ForEach(entry.meal.meals(mealPartTime: entry.mealPartTime).meals, id: \.hashValue) { meal in
@@ -275,15 +353,16 @@ private struct LargeMealWidgetView: View {
                     .padding(.horizontal, 8)
                 }
             }
+            .widgetAccentableIfAvailable()
             .padding(.top, 4)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
-                Color.cardBackground
+                columnBackground
             }
-            .cornerRadius(8)
 
             Text("\(String(format: "%.1f", calorie)) kcal")
                 .twFont(.caption1, color: .textSecondary)
+                .widgetAccentableIfAvailable()
                 .frame(maxWidth: .infinity, alignment: .trailing)
         }
         .padding(16)
