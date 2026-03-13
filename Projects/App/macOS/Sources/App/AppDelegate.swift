@@ -150,9 +150,9 @@ private extension AppDelegate {
                 .compactMap { info -> String? in
                     switch info.kind {
                     case "TodayWhatMealWidget":
-                        return "meal_\(widgetFamilyToProperty(family: info.family))"
+                        return "meal_\(self.widgetFamilyToProperty(family: info.family))"
                     case "TodayWhatTimeTableWidget":
-                        return "timetable_\(widgetFamilyToProperty(family: info.family))"
+                        return "timetable_\(self.widgetFamilyToProperty(family: info.family))"
                     default:
                         return nil
                     }
