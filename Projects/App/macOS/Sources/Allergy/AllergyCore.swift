@@ -1,6 +1,7 @@
 import ComposableArchitecture
 import Entity
 import EnumUtil
+import TWLog
 
 struct AllergyCore: Reducer {
     struct State: Equatable {
@@ -35,6 +36,15 @@ struct AllergyCore: Reducer {
             try? localDatabaseClient.save(
                 records: state.selectedAllergyList.map { AllergyLocalEntity(allergy: $0.rawValue) }
             )
+            TWLog.event(MacOSAllergySettingCompleteEventLog(allergies: state.selectedAllergyList))
+            if state.selectedAllergyList.isEmpty {
+                TWLog.setUserProperty(property: .allergies, value: Optional<[String]>.none)
+            } else {
+                TWLog.setUserProperty(
+                    property: .allergies,
+                    value: state.selectedAllergyList.map(\.analyticsValue)
+                )
+            }
         }
         return .none
     }

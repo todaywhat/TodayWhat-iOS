@@ -31,4 +31,15 @@ extension DisplayInfoType {
             return "⚙️ 설정"
         }
     }
+
+    var analyticsValue: String {
+        switch self {
+        case .breakfast: return "breakfast"
+        case .lunch: return "lunch"
+        case .dinner: return "dinner"
+        case .timetable: return "timetable"
+        case .allergy: return "allergy"
+        case .settings: return "settings"
+        }
+    }
 }
