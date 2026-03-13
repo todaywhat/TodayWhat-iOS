@@ -1,3 +1,4 @@
+import AmplitudeSwift
 import FirebaseAnalytics
 import Foundation
 import OSLog
@@ -16,6 +17,25 @@ fileprivate extension OSLog {
  * - error: 런타임 중 나타난 에러를 위한 level
  */
 public enum TWLog {
+    nonisolated(unsafe) private static let amplitude: Amplitude = {
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "AMPLITUDE_API_KEY") as? String else {
+          return Amplitude(configuration: Configuration(apiKey: "AMPLITUDE_API_KEY"))
+        }
+        
+#if PROD
+        return Amplitude(
+            configuration: Configuration(apiKey: apiKey)
+        )
+        #else
+        return Amplitude(
+            configuration: Configuration(
+                apiKey: apiKey,
+                logLevel: .debug
+            )
+        )
+        #endif
+    }()
+
     fileprivate enum Level {
         case debug
         case event
@@ -42,17 +62,34 @@ public enum TWLog {
 public extension TWLog {
     static func setUserID(id: String) {
         Analytics.setUserID(id)
+        amplitude.setUserId(userId: id)
 
         TWLog.log("Set UserID : \(id)", level: .event)
     }
 
-    static func setUserProperty(key: String, value: String?) {
-        Analytics.setUserProperty(value, forName: key)
+    static func setUserProperty(key: String, value: Any) {
+        let isNil: Bool = {
+            let mirror = Mirror(reflecting: value)
+            if mirror.displayStyle == .optional {
+                return mirror.children.isEmpty
+            }
+            return false
+        }()
 
-        TWLog.log("Set UserProperty : [\(key) = \(value ?? "nil")]", level: .event)
+        let identify = Identify()
+        if isNil {
+            Analytics.setUserProperty(nil, forName: key)
+            identify.unset(property: key)
+        } else {
+            Analytics.setUserProperty(String(describing: value), forName: key)
+            identify.set(property: key, value: value)
+        }
+        amplitude.identify(identify: identify)
+
+        TWLog.log("Set UserProperty : [\(key) = \(isNil ? "nil" : "\(value)")]", level: .event)
     }
 
-    static func setUserProperty(property: TWUserProperty, value: String?) {
+    static func setUserProperty(property: TWUserProperty, value: Any) {
         Self.setUserProperty(key: property.rawValue, value: value)
     }
 
@@ -64,6 +101,7 @@ public extension TWLog {
         #if PROD
         Analytics.logEvent(eventLog.name, parameters: eventLog.params)
         #endif
+        amplitude.track(eventType: eventLog.name, eventProperties: eventLog.params)
         TWLog.log("Logged \(eventLog.name)\n\(eventLog.params)", level: .event)
     }
 

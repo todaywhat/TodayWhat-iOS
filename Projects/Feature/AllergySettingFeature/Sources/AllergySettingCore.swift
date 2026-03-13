@@ -56,11 +56,11 @@ public struct AllergySettingCore: Reducer {
                 TWLog.event(log)
 
                 if state.selectedAllergyList.isEmpty {
-                    TWLog.setUserProperty(property: .allergies, value: nil)
+                    TWLog.setUserProperty(property: .allergies, value: Optional<[String]>.none)
                 } else {
                     TWLog.setUserProperty(
                         property: .allergies,
-                        value: state.selectedAllergyList.map(\.analyticsValue).joined(separator: ",")
+                        value: state.selectedAllergyList.map(\.analyticsValue)
                     )
                 }
 
