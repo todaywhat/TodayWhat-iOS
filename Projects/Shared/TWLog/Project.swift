@@ -7,7 +7,8 @@ let project = Project.module(
     targets: [
         .implements(module: .shared(.TWLog), product: .framework, dependencies: [
             .shared(target: .FirebaseWrapper),
-            .SPM.AmplitudeSwift
+            .SPM.AmplitudeSwift,
+            .SPM.AmplitudeSessionReplay
         ])
     ]
 )

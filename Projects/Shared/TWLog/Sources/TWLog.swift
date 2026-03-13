@@ -1,4 +1,7 @@
 import AmplitudeSwift
+#if os(iOS)
+import AmplitudeSwiftSessionReplayPlugin
+#endif
 import FirebaseAnalytics
 import Foundation
 import OSLog
@@ -21,19 +24,26 @@ public enum TWLog {
         guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "AMPLITUDE_API_KEY") as? String else {
           return Amplitude(configuration: Configuration(apiKey: "AMPLITUDE_API_KEY"))
         }
-        
+
+        let amplitude: Amplitude
 #if PROD
-        return Amplitude(
+        amplitude = Amplitude(
             configuration: Configuration(apiKey: apiKey)
         )
         #else
-        return Amplitude(
+        amplitude = Amplitude(
             configuration: Configuration(
                 apiKey: apiKey,
                 logLevel: .debug
             )
         )
         #endif
+
+        #if os(iOS)
+        amplitude.add(plugin: AmplitudeSwiftSessionReplayPlugin(sampleRate: 1.0))
+        #endif
+
+        return amplitude
     }()
 
     fileprivate enum Level {
