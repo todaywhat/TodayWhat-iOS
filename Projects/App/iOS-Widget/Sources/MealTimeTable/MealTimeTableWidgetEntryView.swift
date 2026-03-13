@@ -40,6 +40,39 @@ private struct MediumMealTimeTableWidgetView: View {
     private var calorie: CGFloat {
         CGFloat(entry.meal.meals(mealPartTime: entry.mealPartTime).cal)
     }
+    @Environment(\.backportedWidgetRenderingMode) var widgetRenderingMode: BackportedWidgetRenderingMode
+
+    @ViewBuilder
+    private var columnBackground: some View {
+        switch widgetRenderingMode {
+        case .accented:
+            if #available(iOSApplicationExtension 26.0, *) {
+                EmptyView()
+            } else {
+                RoundedRectangle(cornerRadius: 8)
+                    .strokeBorder(Color.cardBackground, lineWidth: 1)
+            }
+                
+            
+        case .fullColor, .vibrant:
+            if #available(iOSApplicationExtension 26.0, *) {
+                ConcentricRectangle()
+                    .fill(Color.cardBackground)
+            } else {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.cardBackground)
+            }
+
+        default:
+            if #available(iOSApplicationExtension 26.0, *) {
+                ConcentricRectangle()
+                    .fill(Color.cardBackground)
+            } else {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.cardBackground)
+            }
+        }
+    }
 
     var body: some View {
         HStack(spacing: 8) {
@@ -54,33 +87,47 @@ private struct MediumMealTimeTableWidgetView: View {
         GeometryReader { proxy in
             VStack(spacing: 8) {
                 HStack(spacing: 4) {
-                    Text(getTimeTableText(date: entry.date))
+                    Text(getTimeTableText(date: entry.timeTableDate))
                         .twFont(.headline4, color: .textPrimary)
 
                     Spacer()
                 }
 
-                LazyHGrid(rows: fiveRows, spacing: 0) {
-                    ForEach(entry.timetables, id: \.hashValue) { timetable in
-                        HStack(spacing: 2) {
-                            Text("\(timetable.perio)")
+                if entry.timetables.isEmpty {
+                    VStack(spacing: 4) {
+                        Text("시간표를 찾을 수 없어요!")
+                            .twFont(.caption1, color: .textSecondary)
+
+                        if Date().month == 3 || Date().month == 9 {
+                            Text("학기 초에는 neis에\n정규시간표가 등록되어있지\n않을 수도 있어요.")
+                                .multilineTextAlignment(.center)
                                 .twFont(.caption1, color: .textSecondary)
-
-                            Text(timetable.content)
-                                .twFont(.caption1, color: .extraBlack)
-
-                            Spacer()
                         }
-                        .frame(maxHeight: .infinity)
-                        .frame(width: (proxy.size.width / 2) - 8)
                     }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    LazyHGrid(rows: fiveRows, spacing: 0) {
+                        ForEach(entry.timetables, id: \.hashValue) { timetable in
+                            HStack(spacing: 2) {
+                                Text("\(timetable.perio)")
+                                    .twFont(.caption1, color: .textSecondary)
+
+                                Text(timetable.content)
+                                    .twFont(.caption1, color: .extraBlack)
+
+                                Spacer()
+                            }
+                            .frame(maxHeight: .infinity)
+                            .frame(width: (proxy.size.width / 2) - 8)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .widgetAccentableIfAvailable()
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .padding(8)
             .background {
-                Color.cardBackground
-                    .cornerRadius(8)
+                columnBackground
             }
         }
     }
@@ -89,7 +136,7 @@ private struct MediumMealTimeTableWidgetView: View {
         GeometryReader { proxy in
             VStack(spacing: 4) {
                 HStack(spacing: 4) {
-                    Text(getMealText(date: entry.date))
+                    Text(getMealText(date: entry.mealDate))
                         .twFont(.headline4, color: .extraBlack)
 
                     Spacer()
@@ -110,10 +157,10 @@ private struct MediumMealTimeTableWidgetView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
+            .widgetAccentableIfAvailable()
             .padding(8)
             .background {
-                Color.cardBackground
-                    .cornerRadius(8)
+                columnBackground
             }
         }
     }
