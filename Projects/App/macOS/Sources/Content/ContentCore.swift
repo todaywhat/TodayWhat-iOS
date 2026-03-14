@@ -6,6 +6,7 @@ import EnumUtil
 import Foundation
 import LocalDatabaseClient
 import MealClient
+import TWLog
 import TimeTableClient
 import UserDefaultsClient
 
@@ -113,6 +114,7 @@ struct ContentCore: Reducer {
 
             case let .displayInfoTypeDidSelect(part):
                 guard state.selectedInfoType != part else { break }
+                TWLog.event(MacOSTabSelectedEventLog(tab: part.analyticsValue))
                 switch part {
                 case .breakfast, .lunch, .dinner, .timetable:
                     state.settingsCore = nil
@@ -124,9 +126,11 @@ struct ContentCore: Reducer {
 
                 case .allergy:
                     state.allergyCore = .init()
+                    TWLog.event(MacOSPageShowedEventLog(pageName: "allergy_setting_page"))
 
                 case .settings:
                     state.settingsCore = .init()
+                    TWLog.event(MacOSPageShowedEventLog(pageName: "setting_page"))
 
                 default:
                     state.settingsCore = nil

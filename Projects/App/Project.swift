@@ -115,6 +115,8 @@ let targets: [Target] = [
             .shared(target: .SchoolClient),
             .shared(target: .UserDefaultsClient),
             .shared(target: .LocalDatabaseClient),
+            .shared(target: .KeychainClient),
+            .shared(target: .TWLog),
             .userInterface(target: .DesignSystem),
             .target(name: "\(env.name)MacWidget")
         ],

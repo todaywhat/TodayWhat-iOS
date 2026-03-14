@@ -1,9 +1,11 @@
 import ComposableArchitecture
 import Entity
+import EnumUtil
 import Foundation
 import ITunesClient
 import LocalDatabaseClient
 import SchoolClient
+import TWLog
 import UserDefaultsClient
 
 struct SettingsCore: Reducer {
@@ -105,10 +107,14 @@ struct SettingsCore: Reducer {
         case let .setIsSkipWeekend(isSkipWeekend):
             state.isSkipWeekend = isSkipWeekend
             userDefaultsClient.setValue(.isSkipWeekend, isSkipWeekend)
+            TWLog.event(MacOSIsSkipWeekendToggledEventLog(isSkipWeekend: isSkipWeekend))
+            TWLog.setUserProperty(property: .isSkipWeekend, value: isSkipWeekend)
 
         case let .setIsSkipAfterDinner(isSkipAfterDinner):
             state.isSkipAfterDinner = isSkipAfterDinner
             userDefaultsClient.setValue(.isSkipAfterDinner, isSkipAfterDinner)
+            TWLog.event(MacOSIsSkipAfterDinnerToggledEventLog(isSkipAfterDinner: isSkipAfterDinner))
+            TWLog.setUserProperty(property: .isSkipAfterDinner, value: isSkipAfterDinner)
 
         case let .schoolListResponse(.success(schoolList)):
             state.schoolList = schoolList
@@ -141,6 +147,8 @@ struct SettingsCore: Reducer {
             userDefaultsClient.setValue(.schoolType, school.schoolType.rawValue)
             userDefaultsClient.setValue(.schoolCode, school.schoolCode)
             userDefaultsClient.setValue(.school, school.name)
+            TWLog.event(MacOSSchoolSelectedEventLog(schoolName: school.name))
+            TWLog.setUserProperty(property: .schoolType, value: school.schoolType.analyticsValue)
             return .run { [orgCode = school.orgCode, schoolCode = school.schoolCode] send in
                 let action = await Action.schoolMajorListResponse(
                     TaskResult {
