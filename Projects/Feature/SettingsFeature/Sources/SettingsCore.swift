@@ -87,7 +87,7 @@ public struct SettingsCore: Reducer {
 
                 let log = IsSkipWeekendToggledEventLog(isSkipWeekend: isSkipWeekend)
                 TWLog.event(log)
-                TWLog.setUserProperty(property: .isSkipWeekend, value: "\(isSkipWeekend)")
+                TWLog.setUserProperty(property: .isSkipWeekend, value: isSkipWeekend)
 
             case let .isSkipAfterDinnerChanged(isSkipAfterDinner):
                 state.isSkipAfterDinner = isSkipAfterDinner
@@ -95,7 +95,7 @@ public struct SettingsCore: Reducer {
 
                 let log = IsSkipAfterDinnerToggledEventLog(isSkipAfterDinner: isSkipAfterDinner)
                 TWLog.event(log)
-                TWLog.setUserProperty(property: .isSkipAfterDinner, value: "\(isSkipAfterDinner)")
+                TWLog.setUserProperty(property: .isSkipAfterDinner, value: isSkipAfterDinner)
 
             case let .isOnModifiedTimeTableChagned(isOnModifiedTimeTable):
                 state.isOnModifiedTimeTable = isOnModifiedTimeTable
@@ -103,7 +103,7 @@ public struct SettingsCore: Reducer {
 
                 let log = IsOnModifiedTimeTableToggledEventLog(isOnModifiedTimeTable: isOnModifiedTimeTable)
                 TWLog.event(log)
-                TWLog.setUserProperty(property: .isCustomTimeTable, value: "\(isOnModifiedTimeTable)")
+                TWLog.setUserProperty(property: .isCustomTimeTable, value: isOnModifiedTimeTable)
 
             case .schoolBlockButtonDidTap:
                 state.schoolSettingCore = .init()
@@ -177,7 +177,7 @@ public struct SettingsCore: Reducer {
 
             case .alert(.presented(.githubIssueButtonDidTap)),
                  .confirmationDialog(.presented(.githubIssueButtonDidTap)):
-                guard let url = URL(string: "https://github.com/baekteun/TodayWhat-new/issues") else { break }
+                guard let url = URL(string: "https://github.com/todaywhat/TodayWhat-iOS/issues") else { break }
                 UIApplication.shared.open(url)
 
                 let log = InquireTypeSelectedEventLog(inquireType: .github)

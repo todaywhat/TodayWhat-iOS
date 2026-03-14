@@ -43,7 +43,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             session.delegate = self
             session.activate()
         }
-        TWLog.setUserProperty(property: .activeWatch, value: WCSession.default.isWatchAppInstalled ? "true" : "false")
+        TWLog.setUserProperty(property: .activeWatch, value: WCSession.default.isWatchAppInstalled ? true : false)
 
         if let schoolTypeRawString = self.userDefaultsClient.getValue(.schoolType) as? String,
            let schoolType = SchoolType(rawValue: schoolTypeRawString) {
@@ -51,24 +51,24 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         let isSkipWeekend = self.userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
-        TWLog.setUserProperty(property: .isSkipWeekend, value: "\(isSkipWeekend)")
+        TWLog.setUserProperty(property: .isSkipWeekend, value: isSkipWeekend)
 
         let isCustomTimeTable = self.userDefaultsClient.getValue(.isOnModifiedTimeTable) as? Bool ?? false
-        TWLog.setUserProperty(property: .isCustomTimeTable, value: "\(isCustomTimeTable)")
+        TWLog.setUserProperty(property: .isCustomTimeTable, value: isCustomTimeTable)
 
         let isSkipAfterDinner = self.userDefaultsClient.getValue(.isSkipAfterDinner) as? Bool ?? true
-        TWLog.setUserProperty(property: .isSkipAfterDinner, value: "\(isSkipAfterDinner)")
+        TWLog.setUserProperty(property: .isSkipAfterDinner, value: isSkipAfterDinner)
 
         do {
             let allergies = try self.localDatabaseClient.readRecords(as: AllergyLocalEntity.self)
                 .compactMap { AllergyType(rawValue: $0.allergy) ?? nil }
 
             if allergies.isEmpty {
-                TWLog.setUserProperty(property: .allergies, value: nil)
+                TWLog.setUserProperty(property: .allergies, value: Optional<[String]>.none)
             } else {
                 TWLog.setUserProperty(
                     property: .allergies,
-                    value: allergies.map(\.analyticsValue).joined(separator: ",")
+                    value: allergies.map(\.analyticsValue)
                 )
             }
 
@@ -172,14 +172,13 @@ extension AppDelegate: WCSessionDelegate {
             guard case let .success(infos) = widgetInfos, widgetCount != infos.count else { return }
             self.userDefaultsClient.setValue(.widgetCount, infos.count)
 
-            TWLog.setUserProperty(property: .widgetCount, value: "\(infos.count)")
+            TWLog.setUserProperty(property: .widgetCount, value: infos.count)
 
-            let propertyString: String = infos
+            let propertyString: [String] = infos
                 .compactMap { (info: WidgetInfo) in
                     let string = WidgetUserPropertyBuiler(widgetInfo: info).buildString()
                     return string
                 }
-                .joined(separator: ",")
 
             TWLog.setUserProperty(property: .widget, value: propertyString)
         }
@@ -195,7 +194,7 @@ extension AppDelegate: WCSessionDelegate {
 
 private extension AppDelegate {
     func initializeAnalyticsUserID() {
-        if let uuid = keychainClient.getValue(.uuid) {
+        if let uuid = keychainClient.getValue(.uuid), !uuid.isEmpty {
             TWLog.setUserID(id: uuid)
         } else {
             let newUUID = UUID().uuidString
