@@ -29,7 +29,6 @@ public struct AllergySettingView: View {
                             .onTapGesture {
                                 viewStore.send(.allergyDidSelect(allergy), animation: .default)
                             }
-                            .animation(nil, value: viewStore.selectedAllergyList)
                     }
                 }
                 .padding(.horizontal, 16)
@@ -47,7 +46,7 @@ public struct AllergySettingView: View {
         .background(Color.backgroundSecondary.ignoresSafeArea())
         .navigationTitle("알레르기")
         .onAppear {
-            viewStore.send(.onAppear, animation: .default)
+            viewStore.send(.onAppear)
         }
         .twBackButton(dismiss: dismiss)
     }
