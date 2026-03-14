@@ -30,6 +30,6 @@ let package = Package(
         .package(url: "https://github.com/kean/Nuke.git", from: "12.4.0"),
         .package(url: "https://github.com/airbnb/lottie-spm", from: "4.5.1"),
         .package(url: "https://github.com/amplitude/Amplitude-Swift", from: "1.0.0"),
-        .package(url: "https://github.com/amplitude/AmplitudeSessionReplay-iOS", from: "0.0.0")
+        .package(url: "https://github.com/amplitude/AmplitudeSessionReplay-iOS", from: "0.9.6")
     ]
 )
