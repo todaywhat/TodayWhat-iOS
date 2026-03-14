@@ -16,6 +16,7 @@ public extension TargetDependency.SPM {
     static let LaunchAtScreen = TargetDependency.external(name: "LaunchAtLogin")
     static let Lottie = TargetDependency.external(name: "Lottie")
     static let AmplitudeSwift = TargetDependency.external(name: "AmplitudeSwift")
+    static let AmplitudeSessionReplay = TargetDependency.external(name: "AmplitudeSwiftSessionReplayPlugin")
 }
 
 public extension Package {
