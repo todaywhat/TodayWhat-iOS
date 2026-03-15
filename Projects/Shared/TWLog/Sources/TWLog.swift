@@ -40,7 +40,7 @@ public enum TWLog {
         #endif
 
         #if os(iOS)
-        amplitude.add(plugin: AmplitudeSwiftSessionReplayPlugin(sampleRate: 1.0))
+        amplitude.add(plugin: AmplitudeSwiftSessionReplayPlugin(sampleRate: 0.03))
         #endif
 
         return amplitude
