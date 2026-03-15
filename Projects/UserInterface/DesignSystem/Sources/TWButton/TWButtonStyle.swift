@@ -45,10 +45,16 @@ private extension TWButtonStyle {
         }
 
         var body: some View {
-            configuration.label
+            let contentView = configuration.label
                 .twFont(.headline4, color: foreground)
-                .background(background)
-                .cornerRadius(8)
+
+            if #available(iOS 26.0, watchOS 26.0, *) {
+                contentView
+                    .glassEffect(.clear.tint(background).interactive(), in: .rect(cornerRadius: 8))
+            } else {
+                contentView
+                    .background(background, in: .rect(cornerRadius: 8))
+            }
         }
     }
 
@@ -74,9 +80,16 @@ private extension TWButtonStyle {
         }
 
         var body: some View {
-            configuration.label
+            let contentView = configuration.label
                 .twFont(.headline4, color: foreground)
-                .background(background)
+
+            if #available(iOS 26.0, watchOS 26.0, *) {
+                contentView
+                    .glassEffect(.clear.tint(background).interactive(), in: .rect)
+            } else {
+                contentView
+                    .background(background)
+            }
         }
     }
 }

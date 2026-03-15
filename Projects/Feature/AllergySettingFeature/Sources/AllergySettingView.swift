@@ -16,39 +16,53 @@ public struct AllergySettingView: View {
     }
 
     public var body: some View {
-        VStack {
-            ScrollView {
-                Spacer()
-                    .frame(height: 20)
+        let scrollView = ScrollView {
+            Spacer()
+                .frame(height: 20)
 
-                LazyVGrid(columns: columns, spacing: 8) {
-                    ForEach(AllergyType.allCases.indices, id: \.self) { index in
-                        let allergy = AllergyType.allCases[safe: index] ?? .turbulence
-
-                        allergyColumnView(index: index, allergy: allergy)
-                            .onTapGesture {
-                                viewStore.send(.allergyDidSelect(allergy), animation: .default)
-                            }
-                    }
+            LazyVGrid(columns: columns, spacing: 8) {
+                ForEach(AllergyType.allCases.indices, id: \.self) { index in
+                    let allergy = AllergyType.allCases[safe: index] ?? .turbulence
+                    
+                    allergyColumnView(index: index, allergy: allergy)
+                        .onTapGesture {
+                            viewStore.send(.allergyDidSelect(allergy), animation: .default)
+                        }
                 }
-                .padding(.horizontal, 16)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-            if viewStore.allergyDidTap {
-                TWButton(title: "저장") {
-                    viewStore.send(.saveButtonDidTap)
-                }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 8)
-            }
+            .padding(.horizontal, 16)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.backgroundSecondary.ignoresSafeArea())
         .navigationTitle("알레르기")
         .onAppear {
             viewStore.send(.onAppear)
         }
         .twBackButton(dismiss: dismiss)
+
+        if #available(iOS 26.0, *) {
+            scrollView
+                .safeAreaBar(edge: .bottom) {
+                    if viewStore.allergyDidTap {
+                        TWButton(title: "저장") {
+                            viewStore.send(.saveButtonDidTap)
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, 8)
+                    }
+                }
+        } else {
+            scrollView
+                .safeAreaInset(edge: .bottom) {
+                    if viewStore.allergyDidTap {
+                        TWButton(title: "저장") {
+                            viewStore.send(.saveButtonDidTap)
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, 8)
+                    }
+                }
+        }
     }
 
     @ViewBuilder
