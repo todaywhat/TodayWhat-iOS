@@ -28,7 +28,7 @@ public struct TWTextField: View {
                 }
                 .overlay {
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(isFocused ? Color.extraBlack : .clear, lineWidth: 1)
+                        .strokeBorder(isFocused ? Color.extraBlack : .clear, lineWidth: 1)
                 }
                 .focused($isFocused)
                 .onSubmit(onCommit)

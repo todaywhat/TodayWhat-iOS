@@ -106,6 +106,7 @@ private struct WidgetGuideView: View {
 
     @State private var elapsedTime: Double = 0
     @State private var timerActive = true
+    @AccessibilityFocusState private var isGuideFocused: Bool
     private let cycleTime: Double = 10.0
 
     var currentGuideText: String {
@@ -142,6 +143,8 @@ private struct WidgetGuideView: View {
                     .frame(height: 100, alignment: .top)
                     .padding(.horizontal, 16)
                     .animation(.easeInOut, value: currentGuideText)
+                    .accessibilityFocused($isGuideFocused)
+                    .accessibilityLabel(currentGuideText)
                     .onReceive(
                         Timer.publish(
                             every: 0.5,
@@ -173,6 +176,9 @@ private struct WidgetGuideView: View {
             .onAppear {
                 timerActive = true
                 elapsedTime = 0
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    isGuideFocused = true
+                }
             }
         }
     }

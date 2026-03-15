@@ -208,21 +208,19 @@ public struct SchoolSettingView: View {
                 ScrollView {
                     LazyVStack(spacing: 16) {
                         ForEach(viewStore.schoolList, id: \.schoolCode) { school in
-                            HStack {
-                                schoolRowView(school: school)
-
-                                Spacer()
-                            }
-                            .frame(maxWidth: .infinity, minHeight: 44)
-                            .background {
-                                Color.backgroundMain
-                            }
-                            .contentShape(.rect)
-                            .onTapGesture {
+                            Button {
                                 viewStore.send(.schoolRowDidSelect(school), animation: .default)
                                 focusField = .grade
+                            } label: {
+                                HStack {
+                                    schoolRowView(school: school)
+
+                                    Spacer()
+                                }
+                                .frame(maxWidth: .infinity, minHeight: 44)
+                                .contentShape(.rect)
                             }
-                            .accessibilityElement(children: .combine)
+                            .buttonStyle(.plain)
                             .accessibilityLabel("\(school.name) \(school.location)")
                             .accessibilityHint("이 학교를 선택하려면 두 번 탭하세요")
                         }
