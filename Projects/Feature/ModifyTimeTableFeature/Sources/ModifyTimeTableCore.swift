@@ -40,6 +40,7 @@ public struct ModifyTimeTableCore: Reducer {
 
     @Dependency(\.timeTableClient) var timeTableClient
     @Dependency(\.localDatabaseClient) var localDatabaseClient
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     struct TabID: Hashable {}
     public var body: some ReducerOf<ModifyTimeTableCore> {
@@ -135,6 +136,7 @@ public struct ModifyTimeTableCore: Reducer {
                 try? localDatabaseClient.save(records: modifiedTimeTables)
                 WidgetCenter.shared.reloadTimelines(ofKind: "TodayWhatTimeTableWidget")
                 state.isShowingSuccessToast = true
+                userDefaultsClient.setValue(.isOnModifiedTimeTable, true)
 
             case let .toastDismissed(dismissed):
                 state.isShowingSuccessToast = dismissed
