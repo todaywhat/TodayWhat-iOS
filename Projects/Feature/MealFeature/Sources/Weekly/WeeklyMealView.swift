@@ -153,8 +153,8 @@ public struct WeeklyMealView: View {
         let calText: String = String(format: "%.1f", subMeal.cal)
         let calLabel: String = "\(calText) Kcal"
         let titleText: String = relativeTitle(for: dayMeal.date, mealType: type)
-        let accessibilityText: String = "\(titleText) \(calText) 칼로리. \(mealTexts.joined(separator: ", "))"
         let mealTexts: [String] = subMeal.meals.map { mealDisplay(meal: $0) }
+        let accessibilityText: String = "\(titleText) \(calText) 칼로리. \(mealTexts.joined(separator: ", "))"
         let dateText: String = "\(dayMeal.date.formatted(.dateTime.month().day().weekday(.wide))) \(type.display)"
         let joinedMeals: String = mealTexts.joined(separator: "\n")
         let shareText: String = "\(dateText)\n\(joinedMeals)"
