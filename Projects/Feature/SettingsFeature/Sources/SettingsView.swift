@@ -206,6 +206,21 @@ public struct SettingsView: View {
                 .labelsHidden()
                 .tint(.textPrimary)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(text)
+        .accessibilityValue(isOn.wrappedValue ? "활성화됨" : "비활성화됨")
+        .accessibilityAddTraits(isToggleTraits)
+        .accessibilityAction {
+            isOn.wrappedValue.toggle()
+        }
+    }
+
+    private var isToggleTraits: AccessibilityTraits {
+        if #available(iOS 17.0, *) {
+            return .isToggle
+        } else {
+            return .isButton
+        }
     }
 
     @ViewBuilder

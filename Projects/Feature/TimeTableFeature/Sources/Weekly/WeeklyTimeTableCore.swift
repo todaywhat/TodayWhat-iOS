@@ -27,6 +27,7 @@ public struct WeeklyTimeTableCore: Reducer {
 
     public struct WeeklyTimeTable: Equatable {
         public let weekdays: [String]
+        public let fullWeekdays: [String]
         public let dates: [String]
         public let periods: [Int]
         public let subjects: [[String]]
@@ -34,12 +35,14 @@ public struct WeeklyTimeTableCore: Reducer {
 
         public init(
             weekdays: [String],
+            fullWeekdays: [String],
             dates: [String],
             periods: [Int],
             subjects: [[String]],
             todayIndex: Int? = nil
         ) {
             self.weekdays = weekdays
+            self.fullWeekdays = fullWeekdays
             self.dates = dates
             self.periods = periods
             self.subjects = subjects
@@ -203,6 +206,10 @@ public struct WeeklyTimeTableCore: Reducer {
         let weekdays =
             showWeekend
                 ? ["월", "화", "수", "목", "금", "토", "일"] : ["월", "화", "수", "목", "금"]
+        let fullWeekdays =
+            showWeekend
+                ? ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"]
+                : ["월요일", "화요일", "수요일", "목요일", "금요일"]
         var dates: [String] = []
 
         let dateFormatter = DateFormatter()
@@ -274,6 +281,7 @@ public struct WeeklyTimeTableCore: Reducer {
 
         return WeeklyTimeTable(
             weekdays: weekdays,
+            fullWeekdays: fullWeekdays,
             dates: dates,
             periods: periods,
             subjects: weeklySubjects,

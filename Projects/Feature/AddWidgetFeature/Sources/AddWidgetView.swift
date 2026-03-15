@@ -63,6 +63,7 @@ public struct AddWidgetView: View {
             VStack(spacing: 0) {
                 widgetPreview(for: widget)
                     .padding(.top, 24)
+                    .accessibilityHidden(true)
 
                 VStack(spacing: 4) {
                     Text(widget.kind.title)
@@ -81,6 +82,8 @@ public struct AddWidgetView: View {
                     .fill(Color.cardBackground)
             }
             .padding(.horizontal, 16)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("\(widget.kind.title), \(widget.family.title)")
         }
     }
 

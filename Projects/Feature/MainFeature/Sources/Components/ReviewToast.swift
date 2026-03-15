@@ -5,7 +5,9 @@ import SwiftUI
 
 struct ReviewToast: View {
     @Dependency(\.featureFlagClient) private var featureFlagClient
+    @Environment(\.accessibilityReduceTransparency) var reduceTransparency
     let onTap: () -> Void
+    let onDismiss: () -> Void
 
     var body: some View {
         let baseButton = Button {
@@ -14,6 +16,7 @@ struct ReviewToast: View {
             HStack(spacing: 8) {
                 Image(systemName: "star.bubble.fill")
                     .foregroundColor(.yellow)
+                    .accessibilityHidden(true)
 
                 Text(featureFlagClient.getString(.reviewText) ?? "오늘뭐임을 더 발전시킬 수 있게 리뷰 부탁드려요!")
                     .font(.system(size: 14, weight: .medium))
@@ -22,8 +25,11 @@ struct ReviewToast: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
         }
+        .accessibilityLabel("앱 리뷰 남기기")
+        .accessibilityHint("탭하면 앱 스토어 리뷰 페이지로 이동합니다")
+        .accessibilityAction(.escape) { onDismiss() }
 
-        if #available(iOS 26.0, *) {
+        if #available(iOS 26.0, *), !reduceTransparency {
             baseButton
                 .glassEffect(.regular.interactive(), in: .capsule)
         } else {

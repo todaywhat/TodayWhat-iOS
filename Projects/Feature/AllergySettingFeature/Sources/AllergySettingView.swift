@@ -91,5 +91,8 @@ public struct AllergySettingView: View {
                 .padding(.top, 8)
                 .padding(.trailing, 16)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(allergy.rawValue)
+        .accessibilityAddTraits(isAllergyContains ? [.isButton, .isSelected] : .isButton)
     }
 }

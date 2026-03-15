@@ -21,6 +21,7 @@ public extension View {
                                 .frame(width: 9, height: 16)
                                 .foregroundColor(Color.extraBlack)
                         }
+                        .accessibilityLabel("뒤로")
                     }
                 }
                 .navigationBarBackButtonHidden(true)

@@ -26,10 +26,11 @@ public struct TopTabbarView: View {
                         currentTab = index
                     }
                 } label: {
-                    VStack {
+                    VStack(spacing: 0) {
                         Text(itemTitle)
                             .twFont(.headline4)
                             .foregroundColor(tabForeground)
+                            .frame(minHeight: 44)
 
                         if isSelected {
                             RoundedRectangle(cornerRadius: 17)
@@ -41,6 +42,7 @@ public struct TopTabbarView: View {
                         }
                     }
                     .frame(maxWidth: .infinity)
+                    .contentShape(Rectangle())
                     .background {
                         Color.backgroundMain
                     }

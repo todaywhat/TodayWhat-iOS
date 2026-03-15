@@ -153,7 +153,7 @@ public struct WeeklyMealView: View {
         let calText: String = String(format: "%.1f", subMeal.cal)
         let calLabel: String = "\(calText) Kcal"
         let titleText: String = relativeTitle(for: dayMeal.date, mealType: type)
-        let accessibilityText: String = "\(titleText) \(calText) 칼로리"
+        let accessibilityText: String = "\(titleText) \(calText) 칼로리. \(mealTexts.joined(separator: ", "))"
         let mealTexts: [String] = subMeal.meals.map { mealDisplay(meal: $0) }
         let dateText: String = "\(dayMeal.date.formatted(.dateTime.month().day().weekday(.wide))) \(type.display)"
         let joinedMeals: String = mealTexts.joined(separator: "\n")
@@ -213,6 +213,20 @@ public struct WeeklyMealView: View {
         mealCardView
             .accessibilityElement(children: .combine)
             .accessibilityLabel(accessibilityText)
+            .accessibilityAction(named: "텍스트로 복사") {
+                UIPasteboard.general.string = shareText
+                TWLog.event(ShareMealEventLog())
+            }
+            .accessibilityAction(named: "이미지로 복사") {
+                if #available(iOS 16.0, *) {
+                    let renderer = ImageRenderer(content: mealCardView)
+                    renderer.scale = displayScale
+                    if let image = renderer.uiImage {
+                        UIPasteboard.general.image = image
+                        TWLog.event(ShareMealImageEventLog())
+                    }
+                }
+            }
             .contextMenu {
                 Button {
                     UIPasteboard.general.string = shareText

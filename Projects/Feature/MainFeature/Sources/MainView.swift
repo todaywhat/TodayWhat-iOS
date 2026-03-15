@@ -6,6 +6,7 @@ import NoticeFeature
 import SettingsFeature
 import SwiftUI
 import TimeTableFeature
+import UIKit
 import TipKit
 import TWLog
 
@@ -14,6 +15,7 @@ public struct MainView: View {
     @ObservedObject var viewStore: ViewStoreOf<MainCore>
     @Environment(\.openURL) var openURL
     @Environment(\.calendar) var calendar
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
     @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     public init(store: StoreOf<MainCore>) {
@@ -28,6 +30,7 @@ public struct MainView: View {
                     .padding(.horizontal, 16)
                     .padding(.vertical, 12)
                     .accessibilityElement(children: .combine)
+                    .accessibilityAddTraits(.isStaticText)
                     .accessibilityLabel({
                         let school: String = viewStore.school
                         let grade: String = viewStore.grade
@@ -47,8 +50,6 @@ public struct MainView: View {
                     items: ["급식", "시간표"]
                 )
                 .padding(.top, 32)
-                .accessibilityLabel("메뉴 탭")
-                .accessibilityHint("급식과 시간표 중 원하는 메뉴를 선택할 수 있습니다.")
 
                 ZStack(alignment: .bottomTrailing) {
                     TabView(
@@ -86,18 +87,42 @@ public struct MainView: View {
                         Color.backgroundSecondary
                             .ignoresSafeArea()
                     }
+                    .onChange(of: viewStore.currentTab) { newTab in
+                        let tabName = newTab == 0 ? "급식" : "시간표"
+                        UIAccessibility.post(
+                            notification: .announcement,
+                            argument: "\(tabName) 탭"
+                        )
+                    }
 
                     if viewStore.isShowingReviewToast {
-                        ReviewToast {
-                            viewStore.send(.requestReview)
-                            TWLog.event(ClickReviewEventLog())
-                        }
+                        ReviewToast(
+                            onTap: {
+                                viewStore.send(.requestReview)
+                                TWLog.event(ClickReviewEventLog())
+                            },
+                            onDismiss: {
+                                viewStore.send(.hideReviewToast, animation: .default)
+                            }
+                        )
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal, 16)
                         .padding(.bottom, 24)
-                        .animation(.default, value: viewStore.isShowingReviewToast)
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .animation(
+                            reduceMotion ? .none : .default,
+                            value: viewStore.isShowingReviewToast
+                        )
+                        .transition(
+                            reduceMotion
+                                ? .opacity
+                                : .move(edge: .bottom).combined(with: .opacity)
+                        )
                         .onAppear {
+                            UIAccessibility.post(
+                                notification: .announcement,
+                                argument: "앱 리뷰 요청이 표시되었습니다"
+                            )
+                            guard !UIAccessibility.isVoiceOverRunning else { return }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 7.5) {
                                 viewStore.send(.hideReviewToast, animation: .default)
                             }
@@ -173,7 +198,7 @@ public struct MainView: View {
                         }
                     }
                     .accessibilityLabel("날짜 선택")
-                    .accessibilityHint("클릭하여 날짜를 선택할 수 있습니다")
+                    .accessibilityRemoveTraits(.isButton)
                 }
 
                 ToolbarItemGroup(placement: .topBarTrailing) {

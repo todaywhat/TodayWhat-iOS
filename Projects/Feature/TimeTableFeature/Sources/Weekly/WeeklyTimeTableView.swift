@@ -226,11 +226,17 @@ public struct WeeklyTimeTableView: View {
                 .frame(width: firstColumnWidth, height: headerHeight)
 
             ForEach(0..<weeklyTimeTable.weekdays.count, id: \.self) { index in
+                let isToday = weeklyTimeTable.isToday(weekdayIndex: index)
                 VStack(spacing: 2) {
                     Text(weeklyTimeTable.weekdays[index])
                         .twFont(horizontalSizeClass == .regular ? .body1 : .body2, color: .textSecondary)
                 }
                 .frame(width: cellWidth, height: headerHeight)
+                .accessibilityLabel(
+                    isToday
+                        ? "\(weeklyTimeTable.fullWeekdays[index]), 오늘"
+                        : weeklyTimeTable.fullWeekdays[index]
+                )
             }
         }
     }
@@ -247,20 +253,26 @@ public struct WeeklyTimeTableView: View {
             Text("\(period)")
                 .twFont(.body2, color: .textSecondary)
                 .frame(width: firstColumnWidth, height: cellSide)
+                .accessibilityLabel("\(period)교시")
 
             ForEach(0..<weeklyTimeTable.weekdays.count, id: \.self) { weekdayIndex in
                 let subject = weeklyTimeTable.subject(
                     for: period - 1,
                     weekday: weekdayIndex
                 )
+                let isToday = weeklyTimeTable.isToday(weekdayIndex: weekdayIndex)
+                let fullWeekdayName = weeklyTimeTable.fullWeekdays[weekdayIndex]
+                let accessLabel: String = subject.isEmpty
+                    ? "\(fullWeekdayName) \(period)교시 수업 없음"
+                    : "\(fullWeekdayName) \(period)교시 \(subject)\(isToday ? ", 오늘" : "")"
 
                 Text(subject)
                     .twFont(
                         fontForCell(
-                            isToday: weeklyTimeTable.isToday(weekdayIndex: weekdayIndex),
+                            isToday: isToday,
                             horizontalSizeClass: horizontalSizeClass
                         ),
-                        color: weeklyTimeTable.isToday(weekdayIndex: weekdayIndex) ? Color.extraBlack : .textSecondary
+                        color: isToday ? Color.extraBlack : .textSecondary
                     )
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.3)
@@ -274,6 +286,7 @@ public struct WeeklyTimeTableView: View {
                                 .frame(height: 1.0)
                         }
                     }
+                    .accessibilityLabel(accessLabel)
             }
         }
     }
