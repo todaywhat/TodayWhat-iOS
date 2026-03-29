@@ -15,6 +15,8 @@ public enum UserDefaultsKeys: String {
     case widgetCount = "WIDGET-COUNT"
     case appOpenCount = "APP-OPEN-COUNT"
     case hasReviewed = "HAS-REVIEWED"
+    case isOnboardingCompleted = "IS-ONBOARDING-COMPLETED"
+    case lastReOnboardingYear = "LAST-RE-ONBOARDING-YEAR"
 }
 
 public extension UserDefaults {

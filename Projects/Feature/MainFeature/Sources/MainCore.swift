@@ -1,5 +1,6 @@
 import BaseFeature
 import ComposableArchitecture
+import DateUtil
 import Entity
 import FoundationUtil
 import MealFeature
@@ -35,6 +36,7 @@ public struct MainCore: Reducer {
         @PresentationState public var settingsCore: SettingsCore.State?
         @PresentationState public var noticeCore: NoticeCore.State?
         public var isShowingReviewToast: Bool = false
+        public var isShowingReOnboardingSheet: Bool = false
         public var dateSelectionMode: DateSelectionMode = .weekly
 
         public var displayTitle: String {
@@ -90,6 +92,16 @@ public struct MainCore: Reducer {
         case showReviewToast
         case hideReviewToast
         case requestReview
+        case checkReOnboarding
+        case reOnboardingChangeSchool
+        case reOnboardingChangeGradeClass
+        case reOnboardingDismiss
+        case delegate(Delegate)
+
+        public enum Delegate {
+            case navigateToSchoolSetting
+            case navigateToGradeClassSetting
+        }
     }
 
     @Dependency(\.userDefaultsClient) var userDefaultsClient
@@ -125,6 +137,8 @@ public struct MainCore: Reducer {
                 if shouldRequestReview() {
                     return .send(.showReviewToast)
                 }
+
+                return .send(.checkReOnboarding)
 
             case .onAppear:
                 let isSkipWeekend = userDefaultsClient.getValue(.isSkipWeekend) as? Bool ?? false
@@ -215,6 +229,35 @@ public struct MainCore: Reducer {
                 if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                     SKStoreReviewController.requestReview(in: windowScene)
                 }
+                return .none
+
+            case .checkReOnboarding:
+                let today = Date()
+                guard today.month == 3 else { return .none }
+                let lastYear = userDefaultsClient.getValue(.lastReOnboardingYear) as? Int ?? 0
+                guard lastYear != today.year else { return .none }
+                state.isShowingReOnboardingSheet = true
+                return .none
+
+            case .reOnboardingChangeSchool:
+                state.isShowingReOnboardingSheet = false
+                let currentYear = Date().year
+                userDefaultsClient.setValue(.lastReOnboardingYear, currentYear)
+                return .send(.delegate(.navigateToSchoolSetting))
+
+            case .reOnboardingChangeGradeClass:
+                state.isShowingReOnboardingSheet = false
+                let currentYear = Date().year
+                userDefaultsClient.setValue(.lastReOnboardingYear, currentYear)
+                return .send(.delegate(.navigateToGradeClassSetting))
+
+            case .reOnboardingDismiss:
+                state.isShowingReOnboardingSheet = false
+                let currentYear = Date().year
+                userDefaultsClient.setValue(.lastReOnboardingYear, currentYear)
+                return .none
+
+            case .delegate:
                 return .none
 
             default:

@@ -32,6 +32,7 @@ public extension ModulePaths {
         case SchoolSettingFeature
         case SchoolMajorSheetFeature
         case RootFeature
+        case OnboardingFeature
         case NoticeFeature
         case ModifyTimeTableFeature
         case MealFeature

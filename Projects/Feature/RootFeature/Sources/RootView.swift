@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import MainFeature
+import OnboardingFeature
 import SchoolSettingFeature
 import SplashFeature
 import SwiftUI
@@ -22,6 +23,11 @@ public struct RootView: View {
             case .schoolSettingCore:
                 CaseLet(/RootCore.State.schoolSettingCore, action: RootCore.Action.schoolSettingCore) { store in
                     SchoolSettingView(store: store)
+                }
+
+            case .onboardingCore:
+                CaseLet(/RootCore.State.onboardingCore, action: RootCore.Action.onboardingCore) { store in
+                    OnboardingView(store: store)
                 }
 
             case .mainCore:

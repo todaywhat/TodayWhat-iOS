@@ -236,6 +236,25 @@ public struct MainView: View {
             .navigationTitle("급식 & 시간표")
         }
         .navigationViewStyle(.stack)
+        .sheet(
+            isPresented: viewStore.binding(
+                get: \.isShowingReOnboardingSheet,
+                send: MainCore.Action.reOnboardingDismiss
+            )
+        ) {
+            ReOnboardingSheetView(
+                onChangeSchool: {
+                    viewStore.send(.reOnboardingChangeSchool)
+                },
+                onChangeGradeClass: {
+                    viewStore.send(.reOnboardingChangeGradeClass)
+                },
+                onDismiss: {
+                    viewStore.send(.reOnboardingDismiss)
+                }
+            )
+            .modifier(ReOnboardingSheetModifier())
+        }
     }
 
     @ViewBuilder

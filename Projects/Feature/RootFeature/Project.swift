@@ -9,6 +9,7 @@ let project = Project.module(
             .feature(target: .BaseFeature),
             .feature(target: .SchoolSettingFeature),
             .feature(target: .MainFeature),
+            .feature(target: .OnboardingFeature),
             .feature(target: .SplashFeature),
             .shared(target: .UserDefaultsClient)
         ])
