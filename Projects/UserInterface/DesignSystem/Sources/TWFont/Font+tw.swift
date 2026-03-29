@@ -7,7 +7,7 @@ public extension View {
     ) -> some View {
         self
             .font(.tw(style))
-            .foregroundColor(color)
+            .foregroundStyle(color)
     }
 
     func twFont(

@@ -5,6 +5,7 @@ public struct TWTextField: View {
     private var placeholder: String
     private var onCommit: () -> Void
     @FocusState private var isFocused: Bool
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public init(
         _ placeholder: String = "",
@@ -27,10 +28,11 @@ public struct TWTextField: View {
                 }
                 .overlay {
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(isFocused ? Color.extraBlack : .clear, lineWidth: 1)
+                        .strokeBorder(isFocused ? Color.extraBlack : .clear, lineWidth: 1)
                 }
                 .focused($isFocused)
                 .onSubmit(onCommit)
+                .accessibilityLabel(placeholder)
                 .zIndex(1)
 
             Group {
@@ -40,6 +42,7 @@ public struct TWTextField: View {
                         .offset(y: -44)
                         .transition(.offset(y: 20))
                         .zIndex(0)
+                        .accessibilityHidden(true)
                 } else {
                     Text(placeholder)
                         .twFont(.body1, color: .unselectedPrimary)
@@ -48,15 +51,16 @@ public struct TWTextField: View {
                             isFocused = true
                         }
                         .zIndex(1)
+                        .accessibilityHidden(true)
                 }
             }
-            .animation(.default, value: isFocused)
+            .animation(reduceMotion ? .none : .default, value: isFocused)
 
             HStack {
                 Spacer()
 
                 Button {
-                    withAnimation {
+                    withAnimation(reduceMotion ? .none : nil) {
                         text = ""
                     }
                 } label: {
@@ -69,11 +73,13 @@ public struct TWTextField: View {
                         EmptyView()
                     }
                 }
+                .accessibilityLabel("입력 내용 삭제")
+                .accessibilityHidden(!isFocused || text.isEmpty)
             }
             .zIndex(2)
             .padding(.trailing)
-            .animation(.default, value: text)
-            .animation(.default, value: isFocused)
+            .animation(reduceMotion ? .none : .default, value: text)
+            .animation(reduceMotion ? .none : .default, value: isFocused)
         }
     }
 }

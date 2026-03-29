@@ -17,6 +17,7 @@ public struct SchoolSettingView: View {
     private let isNavigationPushed: Bool
     @FocusState private var focusField: FocusField?
     @Environment(\.dismiss) var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public init(
         store: StoreOf<SchoolSettingCore>,
@@ -46,9 +47,9 @@ public struct SchoolSettingView: View {
                     schoolSearchResults(viewStore: viewStore)
                 }
             }
-            .animation(.default, value: viewStore.grade)
-            .animation(.default, value: viewStore.class)
-            .animation(.default, value: viewStore.school)
+            .animation(reduceMotion ? .none : .default, value: viewStore.grade)
+            .animation(reduceMotion ? .none : .default, value: viewStore.class)
+            .animation(reduceMotion ? .none : .default, value: viewStore.school)
             .padding(.horizontal, 16)
             .padding(.top, 24)
             .onChange(of: focusField) { newValue in
@@ -124,14 +125,16 @@ public struct SchoolSettingView: View {
                     )
                 )
                 .disabled(true)
-                .accessibilityLabel("학과 선택")
-                .accessibilityHint("학과를 선택하려면 두 번 탭하세요")
             }
             .padding(.bottom, 16)
             .onTapGesture {
                 viewStore.send(.majorTextFieldDidTap, animation: .default)
                 focusField = nil
             }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(viewStore.major.isEmpty ? "학과 선택" : "학과: \(viewStore.major)")
+            .accessibilityHint("탭하면 학과 선택 시트가 열립니다")
+            .accessibilityAddTraits(.isButton)
         }
     }
 
@@ -205,21 +208,19 @@ public struct SchoolSettingView: View {
                 ScrollView {
                     LazyVStack(spacing: 16) {
                         ForEach(viewStore.schoolList, id: \.schoolCode) { school in
-                            HStack {
-                                schoolRowView(school: school)
-
-                                Spacer()
-                            }
-                            .frame(maxWidth: .infinity)
-                            .background {
-                                Color.backgroundMain
-                            }
-                            .contentShape(.rect)
-                            .onTapGesture {
+                            Button {
                                 viewStore.send(.schoolRowDidSelect(school), animation: .default)
                                 focusField = .grade
+                            } label: {
+                                HStack {
+                                    schoolRowView(school: school)
+
+                                    Spacer()
+                                }
+                                .frame(maxWidth: .infinity, minHeight: 44)
+                                .contentShape(.rect)
                             }
-                            .accessibilityElement(children: .combine)
+                            .buttonStyle(.plain)
                             .accessibilityLabel("\(school.name) \(school.location)")
                             .accessibilityHint("이 학교를 선택하려면 두 번 탭하세요")
                         }

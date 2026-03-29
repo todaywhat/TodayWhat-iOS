@@ -8,6 +8,8 @@ struct TWBottomSheet<T: View>: ViewModifier {
     var content: () -> T
     var height: CGFloat
     var backgroundColor: Color
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
     var sheetDragging: some Gesture {
         DragGesture(minimumDistance: 0, coordinateSpace: .global)
             .onChanged { value in
@@ -46,7 +48,7 @@ struct TWBottomSheet<T: View>: ViewModifier {
 
             ZStack(alignment: .bottom) {
                 if isShowing {
-                    Color.lightBox
+                    (reduceTransparency ? Color.black.opacity(0.6) : Color.lightBox)
                         .ignoresSafeArea()
                         .onTapGesture {
                             withAnimation {
@@ -55,6 +57,8 @@ struct TWBottomSheet<T: View>: ViewModifier {
                         }
                         .gesture(sheetDragging)
                         .transition(.opacity)
+                        .accessibilityLabel("닫기")
+                        .accessibilityAddTraits(.isButton)
 
                     ZStack {
                         backgroundColor
@@ -72,6 +76,12 @@ struct TWBottomSheet<T: View>: ViewModifier {
                     }
                     .fixedSize(horizontal: false, vertical: true)
                     .transition(.move(edge: .bottom))
+                    .accessibilityAddTraits(.isModal)
+                    .accessibilityAction(.escape) {
+                        withAnimation {
+                            isShowing = false
+                        }
+                    }
                     .if(height != .infinity) {
                         $0.frame(height: height)
                     }
@@ -80,7 +90,7 @@ struct TWBottomSheet<T: View>: ViewModifier {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
             .ignoresSafeArea()
         }
-        .animation(.default, value: isShowing)
+        .animation(reduceMotion ? .none : .default, value: isShowing)
     }
 }
 
