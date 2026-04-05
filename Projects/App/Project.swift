@@ -36,8 +36,12 @@ let targets: [Target] = [
         entitlements: .file(path: "iOS/Support/TodayWhat.entitlements"),
         scripts: generateEnvironment.iOSScripts,
         dependencies: [
+            .shared(target: .AppRouteClient),
             .feature(target: .RootFeature),
+            .shared(target: .Entity),
             .shared(target: .KeychainClient),
+            .shared(target: .MealClient),
+            .shared(target: .TimeTableClient),
             .target(name: "\(env.name)Widget"),
             .target(name: "\(env.name)WatchApp"),
             .shared(target: .TWLog)
@@ -56,6 +60,7 @@ let targets: [Target] = [
         entitlements: .file(path: "iOS-Widget/Support/TodayWhatWidget.entitlements"),
         scripts: scripts,
         dependencies: [
+            .shared(target: .AppRouteClient),
             .shared(target: .ComposableArchitectureWrapper),
             .shared(target: .UserDefaultsClient),
             .shared(target: .TimeTableClient),
@@ -98,12 +103,13 @@ let targets: [Target] = [
         bundleId: "\(env.organizationName).\(env.name)",
         deploymentTargets: .macOS("12.0"),
         infoPlist: .file(path: "macOS/Support/Info.plist"),
-        sources: ["macOS/Sources/**"],
+        sources: ["macOS/Sources/**", "Intents/**"],
         resources: ["macOS/Resources/**"],
         entitlements: .file(path: "macOS/Support/TodayWhat_Mac_App.entitlements"),
         scripts: generateEnvironment.macOSScripts,
         dependencies: [
             .SPM.LaunchAtScreen,
+            .shared(target: .AppRouteClient),
             .shared(target: .ComposableArchitectureWrapper),
             .shared(target: .FirebaseWrapper),
             .shared(target: .Entity),
