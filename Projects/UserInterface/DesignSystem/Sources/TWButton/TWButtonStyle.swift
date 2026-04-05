@@ -51,9 +51,11 @@ private extension TWButtonStyle {
             if #available(iOS 26.0, watchOS 26.0, *) {
                 contentView
                     .glassEffect(.clear.tint(background).interactive(), in: .rect(cornerRadius: 8))
+                    .contentShape(.rect(cornerRadius: 8))
             } else {
                 contentView
                     .background(background, in: .rect(cornerRadius: 8))
+                    .contentShape(.rect(cornerRadius: 8))
             }
         }
     }
@@ -86,9 +88,11 @@ private extension TWButtonStyle {
             if #available(iOS 26.0, watchOS 26.0, *) {
                 contentView
                     .glassEffect(.clear.tint(background).interactive(), in: .rect)
+                    .contentShape(.rect)
             } else {
                 contentView
                     .background(background)
+                    .contentShape(.rect)
             }
         }
     }
