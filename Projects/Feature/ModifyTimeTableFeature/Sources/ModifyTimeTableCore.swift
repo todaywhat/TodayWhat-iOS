@@ -137,6 +137,10 @@ public struct ModifyTimeTableCore: Reducer {
                 WidgetCenter.shared.reloadTimelines(ofKind: "TodayWhatTimeTableWidget")
                 state.isShowingSuccessToast = true
                 userDefaultsClient.setValue(.isOnModifiedTimeTable, true)
+                NotificationCenter.default.post(
+                    name: Notification.Name("TodayWhatWatchSyncDidRequest"),
+                    object: nil
+                )
 
             case let .toastDismissed(dismissed):
                 state.isShowingSuccessToast = dismissed

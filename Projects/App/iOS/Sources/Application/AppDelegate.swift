@@ -16,6 +16,8 @@ import UserDefaultsClient
 import WatchConnectivity
 import WidgetKit
 
+private let watchSyncNotification = Notification.Name("TodayWhatWatchSyncDidRequest")
+
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
     @Dependency(\.localDatabaseClient) var localDatabaseClient
@@ -44,6 +46,12 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             session.delegate = self
             session.activate()
         }
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleWatchSyncNotification(_:)),
+            name: watchSyncNotification,
+            object: nil
+        )
         TWLog.setUserProperty(property: .activeWatch, value: WCSession.default.isWatchAppInstalled ? true : false)
 
         if let schoolTypeRawString = self.userDefaultsClient.getValue(.schoolType) as? String,
@@ -104,33 +112,7 @@ extension AppDelegate: WCSessionDelegate {
         activationDidCompleteWith activationState: WCSessionActivationState,
         error: Error?
     ) {
-        guard
-            let type = userDefaultsClient.getValue(.schoolType) as? String,
-            let code = userDefaultsClient.getValue(.schoolCode) as? String,
-            let orgCode = userDefaultsClient.getValue(.orgCode) as? String,
-            let grade = userDefaultsClient.getValue(.grade) as? Int,
-            let `class` = userDefaultsClient.getValue(.class) as? Int
-        else {
-            return
-        }
-        let isOnModifiedTimeTable = userDefaultsClient.getValue(.isOnModifiedTimeTable) as? Bool ?? false
-        let timeTables = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
-        var dict: [String: Any] = [
-            "type": type,
-            "code": code,
-            "orgCode": orgCode,
-            "grade": grade,
-            "class": `class`,
-            "isOnModifiedTimeTable": isOnModifiedTimeTable,
-            "timeTables": encodeTimeTables(timeTables: timeTables ?? [])
-        ]
-        if let major = userDefaultsClient.getValue(.major) as? String {
-            dict["major"] = major
-        }
-
-        session.sendMessage(dict, replyHandler: nil) { error in
-            TWLog.error(error.localizedDescription)
-        }
+        pushCurrentWatchData()
     }
 
     func session(
@@ -138,30 +120,7 @@ extension AppDelegate: WCSessionDelegate {
         didReceiveMessage message: [String: Any],
         replyHandler: @escaping ([String: Any]) -> Void
     ) {
-        guard
-            let type = userDefaultsClient.getValue(.schoolType) as? String,
-            let code = userDefaultsClient.getValue(.schoolCode) as? String,
-            let orgCode = userDefaultsClient.getValue(.orgCode) as? String,
-            let grade = userDefaultsClient.getValue(.grade) as? Int,
-            let `class` = userDefaultsClient.getValue(.class) as? Int
-        else {
-            return
-        }
-        let isOnModifiedTimeTable = userDefaultsClient.getValue(.isOnModifiedTimeTable) as? Bool ?? false
-        let timeTables = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
-        var reply: [String: Any] = [
-            "type": type,
-            "code": code,
-            "orgCode": orgCode,
-            "grade": grade,
-            "class": `class`,
-            "isOnModifiedTimeTable": isOnModifiedTimeTable,
-            "timeTables": encodeTimeTables(timeTables: timeTables ?? [])
-        ]
-        if let major = userDefaultsClient.getValue(.major) as? String {
-            reply["major"] = major
-        }
-
+        guard let reply = buildWatchPayload() else { return }
         replyHandler(reply)
     }
 
@@ -190,6 +149,57 @@ extension AppDelegate: WCSessionDelegate {
         let data = try! JSONEncoder().encode(timeTables)
         // swiftlint: enable force_try
         return data
+    }
+
+    private func buildWatchPayload() -> [String: Any]? {
+        guard
+            let type = userDefaultsClient.getValue(.schoolType) as? String,
+            let code = userDefaultsClient.getValue(.schoolCode) as? String,
+            let orgCode = userDefaultsClient.getValue(.orgCode) as? String,
+            let grade = userDefaultsClient.getValue(.grade) as? Int,
+            let `class` = userDefaultsClient.getValue(.class) as? Int
+        else {
+            return nil
+        }
+
+        let isOnModifiedTimeTable = userDefaultsClient.getValue(.isOnModifiedTimeTable) as? Bool ?? false
+        let timeTables = try? localDatabaseClient.readRecords(as: ModifiedTimeTableLocalEntity.self)
+        var payload: [String: Any] = [
+            "type": type,
+            "code": code,
+            "orgCode": orgCode,
+            "grade": grade,
+            "class": `class`,
+            "isOnModifiedTimeTable": isOnModifiedTimeTable,
+            "timeTables": encodeTimeTables(timeTables: timeTables ?? [])
+        ]
+        if let major = userDefaultsClient.getValue(.major) as? String {
+            payload["major"] = major
+        }
+        return payload
+    }
+
+    @objc
+    private func handleWatchSyncNotification(_ notification: Notification) {
+        pushCurrentWatchData()
+    }
+
+    private func pushCurrentWatchData() {
+        guard let payload = buildWatchPayload() else { return }
+
+        do {
+            try session.updateApplicationContext(payload)
+        } catch {
+            TWLog.error(error)
+        }
+
+        guard session.activationState == .activated, session.isWatchAppInstalled, session.isReachable else {
+            return
+        }
+
+        session.sendMessage(payload, replyHandler: nil) { error in
+            TWLog.error(error.localizedDescription)
+        }
     }
 }
 
