@@ -33,11 +33,22 @@ struct TodayWhatApp: App {
                         RootCore()
                     }
                 )
-            )
+            ) {
+                siriSection
+            }
             .onOpenURL { url in
                 guard let route = TodayWhatAppRoute.from(url: url) else { return }
                 TodayWhatAppRouteStore.shared.request(route)
             }
+        }
+    }
+
+    @ViewBuilder
+    private var siriSection: some View {
+        if #available(iOS 17, *) {
+            SiriTipView(intent: GetMealIntent(mealTime: .all, daySelection: .today))
+        } else if #available(iOS 16, *) {
+            ShortcutsLink()
         }
     }
 }

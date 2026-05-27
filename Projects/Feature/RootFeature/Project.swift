@@ -7,7 +7,7 @@ let project = Project.module(
     targets: [
         .implements(module: .feature(.RootFeature), dependencies: [
             .feature(target: .BaseFeature),
-            .feature(target: .SchoolSettingFeature),
+            .feature(target: .OnboardingFeature),
             .feature(target: .MainFeature),
             .feature(target: .SplashFeature),
             .shared(target: .UserDefaultsClient)

@@ -1,14 +1,16 @@
 import ComposableArchitecture
 import MainFeature
-import SchoolSettingFeature
+import OnboardingFeature
 import SplashFeature
 import SwiftUI
 
-public struct RootView: View {
+public struct RootView<SiriSection: View>: View {
     private let store: StoreOf<RootCore>
+    private let siriSection: SiriSection
 
-    public init(store: StoreOf<RootCore>) {
+    public init(store: StoreOf<RootCore>, @ViewBuilder siriSection: () -> SiriSection) {
         self.store = store
+        self.siriSection = siriSection()
     }
 
     public var body: some View {
@@ -19,9 +21,9 @@ public struct RootView: View {
                     SplashView(store: store)
                 }
 
-            case .schoolSettingCore:
-                CaseLet(/RootCore.State.schoolSettingCore, action: RootCore.Action.schoolSettingCore) { store in
-                    SchoolSettingView(store: store)
+            case .onboardingCore:
+                CaseLet(/RootCore.State.onboardingCore, action: RootCore.Action.onboardingCore) { store in
+                    OnboardingView(store: store) { siriSection }
                 }
 
             case .mainCore:
@@ -30,5 +32,12 @@ public struct RootView: View {
                 }
             }
         }
+    }
+}
+
+extension RootView where SiriSection == EmptyView {
+    public init(store: StoreOf<RootCore>) {
+        self.store = store
+        self.siriSection = EmptyView()
     }
 }

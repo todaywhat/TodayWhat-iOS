@@ -15,16 +15,22 @@ public struct SchoolSettingView: View {
 
     let store: StoreOf<SchoolSettingCore>
     private let isNavigationPushed: Bool
+    private let progressText: String?
+    private let hidesInternalButton: Bool
     @FocusState private var focusField: FocusField?
     @Environment(\.dismiss) var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public init(
         store: StoreOf<SchoolSettingCore>,
-        isNavigationPushed: Bool = false
+        isNavigationPushed: Bool = false,
+        progressText: String? = nil,
+        hidesInternalButton: Bool = false
     ) {
         self.store = store
         self.isNavigationPushed = isNavigationPushed
+        self.progressText = progressText
+        self.hidesInternalButton = hidesInternalButton
     }
 
     public var body: some View {
@@ -36,6 +42,14 @@ public struct SchoolSettingView: View {
 
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 34) {
+                    if let progressText {
+                        HStack {
+                            Text(progressText)
+                                .twFont(.caption1, color: .textSecondary)
+                            Spacer()
+                        }
+                    }
+
                     if !viewStore.isFocusedSchool {
                         headerSection(viewStore: viewStore)
                         majorTextField(viewStore: viewStore)
@@ -46,12 +60,13 @@ public struct SchoolSettingView: View {
                     schoolTextField(viewStore: viewStore)
                     schoolSearchResults(viewStore: viewStore)
                 }
+                .padding(.horizontal, 20)
+                .padding(.top, 12)
+                .padding(.bottom, 40)
             }
             .animation(reduceMotion ? .none : .default, value: viewStore.grade)
             .animation(reduceMotion ? .none : .default, value: viewStore.class)
             .animation(reduceMotion ? .none : .default, value: viewStore.school)
-            .padding(.horizontal, 16)
-            .padding(.top, 24)
             .onChange(of: focusField) { newValue in
                 viewStore.send(.schoolFocusedChanged(newValue == .school), animation: .default)
             }
@@ -61,7 +76,9 @@ public struct SchoolSettingView: View {
                 }
             }
             .safeAreaInset(edge: .bottom) {
-                nextButton(viewStore: viewStore)
+                if !hidesInternalButton {
+                    nextButton(viewStore: viewStore)
+                }
             }
             .onLoad {
                 viewStore.send(.onLoad)
@@ -243,6 +260,9 @@ public struct SchoolSettingView: View {
                 viewStore.send(.nextButtonDidTap, animation: .default)
                 focusField = nil
             }
+            .padding(.horizontal, 20)
+            .padding(.top, 8)
+            .padding(.bottom, 8)
             .accessibilityLabel(viewStore.nextButtonTitle)
             .accessibilityHint("입력한 정보로 설정을 완료 혹은 다음 단계로 넘어갑니다")
         }
