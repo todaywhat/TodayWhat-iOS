@@ -6,7 +6,7 @@ enum PartTimeIntentUserDefaultsKeys: Sendable {
     static let latestSelectedDate = "LATEST_MEAL_PART_TIME_SELECTED_DATE"
 }
 
-@available(iOS 16, *)
+@available(iOS 16.0, macOS 13.0, *)
 struct MealPartTimeSelectionIntent: AppIntent {
     static var title: LocalizedStringResource = "Meal 조회 시간대 Intent"
 
@@ -30,7 +30,7 @@ struct MealPartTimeSelectionIntent: AppIntent {
     }
 }
 
-@available(iOS 16, *)
+@available(iOS 16.0, macOS 13.0, *)
 extension MealPartTime: AppEnum {
     static var typeDisplayRepresentation: TypeDisplayRepresentation = "Meal Part Time"
 

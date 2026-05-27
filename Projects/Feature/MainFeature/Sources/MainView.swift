@@ -1,3 +1,5 @@
+import AppRouteClient
+import Combine
 import ComposableArchitecture
 import DesignSystem
 import FirebaseRemoteConfig
@@ -10,9 +12,11 @@ import UIKit
 import TipKit
 import TWLog
 
+@MainActor
 public struct MainView: View {
     let store: StoreOf<MainCore>
     @ObservedObject var viewStore: ViewStoreOf<MainCore>
+    @ObservedObject var routeStore: TodayWhatAppRouteStore
     @Environment(\.openURL) var openURL
     @Environment(\.calendar) var calendar
     @Environment(\.accessibilityReduceMotion) var reduceMotion
@@ -21,6 +25,7 @@ public struct MainView: View {
     public init(store: StoreOf<MainCore>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
+        self.routeStore = TodayWhatAppRouteStore.shared
     }
 
     public var body: some View {
@@ -225,6 +230,10 @@ public struct MainView: View {
             }
             .onAppear {
                 viewStore.send(.onAppear, animation: .default)
+                applyPendingRouteIfNeeded()
+            }
+            .onReceive(routeStore.pendingRoutePublisher.compactMap { $0 }) { _ in
+                applyPendingRouteIfNeeded()
             }
             .onLoad {
                 viewStore.send(.onLoad)
@@ -256,6 +265,22 @@ public struct MainView: View {
             },
             label: { EmptyView() }
         )
+    }
+}
+
+private extension MainView {
+    func applyPendingRouteIfNeeded() {
+        guard let route = routeStore.consumePendingRoute() else { return }
+        apply(route: route)
+    }
+
+    func apply(route: TodayWhatAppRoute) {
+        switch route {
+        case .timetable:
+            viewStore.send(.tabTapped(1), animation: .default)
+        case .home, .meal:
+            viewStore.send(.tabTapped(0), animation: .default)
+        }
     }
 }
 

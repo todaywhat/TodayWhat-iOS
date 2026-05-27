@@ -11,6 +11,7 @@ let project = Project.module(
             .feature(target: .NoticeFeature),
             .feature(target: .TimeTableFeature),
             .feature(target: .SettingsFeature),
+            .shared(target: .AppRouteClient),
             .shared(target: .FeatureFlagClient),
             .shared(target: .NoticeClient),
             .shared(target: .UserDefaultsClient),

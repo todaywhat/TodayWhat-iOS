@@ -1,5 +1,5 @@
 import AmplitudeSwift
-#if os(iOS)
+#if canImport(AmplitudeSwiftSessionReplayPlugin)
 import AmplitudeSwiftSessionReplayPlugin
 #endif
 import FirebaseAnalytics
@@ -39,7 +39,7 @@ public enum TWLog {
         )
         #endif
 
-        #if os(iOS)
+        #if canImport(AmplitudeSwiftSessionReplayPlugin)
         amplitude.add(plugin: AmplitudeSwiftSessionReplayPlugin(sampleRate: 0.03))
         #endif
 
@@ -117,6 +117,37 @@ public extension TWLog {
 
     static func error(_ message: Any) {
         TWLog.log(message, level: .error)
+    }
+}
+
+// MARK: - Pending Event Queue (for AppIntent / Extension)
+public extension TWLog {
+    private static let appGroupID = "group.baegteun.TodayWhat"
+    private static let pendingEventsKey = "tw_pending_analytics_events"
+
+    private static var appGroupDefaults: UserDefaults? {
+        UserDefaults(suiteName: appGroupID)
+    }
+
+    static func enqueueEvent(_ eventLog: any EventLog) {
+        guard let defaults = appGroupDefaults else { return }
+        var queue = defaults.array(forKey: pendingEventsKey) as? [[String: String]] ?? []
+        var entry = eventLog.params
+        entry["__event_name"] = eventLog.name
+        queue.append(entry)
+        defaults.set(queue, forKey: pendingEventsKey)
+    }
+
+    static func flushPendingEvents() {
+        guard let defaults = appGroupDefaults else { return }
+        guard let queue = defaults.array(forKey: pendingEventsKey) as? [[String: String]], !queue.isEmpty else { return }
+        defaults.removeObject(forKey: pendingEventsKey)
+
+        for var entry in queue {
+            guard let name = entry.removeValue(forKey: "__event_name") else { continue }
+            let log = DefaultEventLog(name: name, params: entry)
+            TWLog.event(log)
+        }
     }
 }
 

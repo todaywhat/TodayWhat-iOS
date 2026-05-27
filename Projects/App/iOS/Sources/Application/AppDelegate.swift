@@ -37,6 +37,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         DesignSystemFontFamily.Suit.all.forEach { $0.register() }
         initializeAnalyticsUserID()
+        TWLog.flushPendingEvents()
         sendUserPropertyWidget()
         session = WCSession.default
         if WCSession.isSupported() {
