@@ -3,6 +3,7 @@ import AllergySettingFeature
 import BaseFeature
 import ComposableArchitecture
 import DeviceClient
+import Foundation
 import ITunesClient
 import ModifyTimeTableFeature
 import SchoolSettingFeature
@@ -100,6 +101,10 @@ public struct SettingsCore: Reducer {
             case let .isOnModifiedTimeTableChagned(isOnModifiedTimeTable):
                 state.isOnModifiedTimeTable = isOnModifiedTimeTable
                 userDefaultsClient.setValue(.isOnModifiedTimeTable, isOnModifiedTimeTable)
+                NotificationCenter.default.post(
+                    name: Notification.Name("TodayWhatWatchSyncDidRequest"),
+                    object: nil
+                )
 
                 let log = IsOnModifiedTimeTableToggledEventLog(isOnModifiedTimeTable: isOnModifiedTimeTable)
                 TWLog.event(log)

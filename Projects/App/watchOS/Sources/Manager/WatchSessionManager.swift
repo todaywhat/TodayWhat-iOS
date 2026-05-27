@@ -7,6 +7,7 @@ import WatchConnectivity
 final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
     @Dependency(\.localDatabaseClient) var localDatabaseClient
+    @Published private(set) var syncVersion: Int = 0
 
     var isReachable: Bool {
         session.isReachable
@@ -24,34 +25,7 @@ final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
         error: Error?
     ) {
         sendMessage(message: [:]) { [weak self] items in
-            guard let self else { return }
-            guard
-                let code = items["code"] as? String,
-                let orgCode = items["orgCode"] as? String,
-                let grade = items["grade"] as? Int,
-                let `class` = items["class"] as? Int,
-                let type = items["type"] as? String,
-                let isOnModifiedTimeTable = items["isOnModifiedTimeTable"] as? Bool,
-                let timeTablesData = items["timeTables"] as? Data
-            else {
-                return
-            }
-            let timeTables = self.decodeTimeTables(data: timeTablesData)
-            let dict: [UserDefaultsKeys: Any] = [
-                .grade: grade,
-                .class: `class`,
-                .schoolType: type,
-                .orgCode: orgCode,
-                .schoolCode: code,
-                .isOnModifiedTimeTable: isOnModifiedTimeTable
-            ]
-            dict.forEach { key, value in
-                self.userDefaultsClient.setValue(key, value)
-            }
-            if let major = items["major"] as? String {
-                self.userDefaultsClient.setValue(.major, major)
-            }
-            try? self.localDatabaseClient.save(records: timeTables)
+            self?.applyIncomingItems(items)
         }
     }
 
@@ -78,33 +52,15 @@ final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
         replyHandler: @escaping ([String: Any]) -> Void
     ) {
         print("RECEIVE : \(message)")
-        guard
-            let code = message["code"] as? String,
-            let orgCode = message["orgCode"] as? String,
-            let grade = message["grade"] as? Int,
-            let `class` = message["class"] as? Int,
-            let type = message["type"] as? String,
-            let isOnModifiedTimeTable = message["isOnModifiedTimeTable"] as? Bool,
-            let timeTablesData = message["timeTables"] as? Data
-        else {
-            return
-        }
-        let timeTables = decodeTimeTables(data: timeTablesData)
-        let dict: [UserDefaultsKeys: Any] = [
-            .grade: grade,
-            .class: `class`,
-            .schoolType: type,
-            .orgCode: orgCode,
-            .schoolCode: code,
-            .isOnModifiedTimeTable: isOnModifiedTimeTable
-        ]
-        dict.forEach { key, value in
-            self.userDefaultsClient.setValue(key, value)
-        }
-        if let major = message["major"] as? String {
-            self.userDefaultsClient.setValue(.major, major)
-        }
-        try? self.localDatabaseClient.save(records: timeTables)
+        applyIncomingItems(message)
+    }
+
+    func session(
+        _ session: WCSession,
+        didReceiveMessage message: [String: Any]
+    ) {
+        print("RECEIVE : \(message)")
+        applyIncomingItems(message)
     }
 
     func sendMessage(
@@ -123,10 +79,52 @@ final class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
         session.sendMessage(message, replyHandler: reply, errorHandler: error)
     }
 
+    func session(
+        _ session: WCSession,
+        didReceiveApplicationContext applicationContext: [String: Any]
+    ) {
+        applyIncomingItems(applicationContext)
+    }
+
     // swiftlint: disable force_try
     private func decodeTimeTables(data: Data) -> [ModifiedTimeTableLocalEntity] {
         let entities = try! JSONDecoder().decode([ModifiedTimeTableLocalEntity].self, from: data)
         return entities
+    }
+
+    private func applyIncomingItems(_ items: [String: Any]) {
+        guard
+            let code = items["code"] as? String,
+            let orgCode = items["orgCode"] as? String,
+            let grade = items["grade"] as? Int,
+            let `class` = items["class"] as? Int,
+            let type = items["type"] as? String,
+            let isOnModifiedTimeTable = items["isOnModifiedTimeTable"] as? Bool,
+            let timeTablesData = items["timeTables"] as? Data
+        else {
+            return
+        }
+
+        let timeTables = decodeTimeTables(data: timeTablesData)
+        let dict: [UserDefaultsKeys: Any] = [
+            .grade: grade,
+            .class: `class`,
+            .schoolType: type,
+            .orgCode: orgCode,
+            .schoolCode: code,
+            .isOnModifiedTimeTable: isOnModifiedTimeTable
+        ]
+        dict.forEach { key, value in
+            self.userDefaultsClient.setValue(key, value)
+        }
+        if let major = items["major"] as? String {
+            self.userDefaultsClient.setValue(.major, major)
+        }
+        try? self.localDatabaseClient.deleteAll(record: ModifiedTimeTableLocalEntity.self)
+        try? self.localDatabaseClient.save(records: timeTables)
+        DispatchQueue.main.async {
+            self.syncVersion += 1
+        }
     }
     // swiftlint: enable force_try
 }

@@ -3,6 +3,7 @@ import SwiftUI
 
 struct MainView: View {
     @StateObject var viewModel = MainViewModel()
+    @StateObject var watchSessionManager = WatchSessionManager.shared
     @State var isPresentedOption = false
     private let mainColor: Color = Color("Main")
     private let subColor: Color = Color("Sub")
@@ -103,6 +104,11 @@ struct MainView: View {
         }
         .task {
             await viewModel.loadData()
+        }
+        .onChange(of: watchSessionManager.syncVersion) { _ in
+            Task {
+                await viewModel.loadData()
+            }
         }
         .refreshable {
             Task {
