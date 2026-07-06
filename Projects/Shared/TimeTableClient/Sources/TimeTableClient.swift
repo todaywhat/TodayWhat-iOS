@@ -145,9 +145,9 @@ private func fetchTimeTableFromServer(date: Date, reqDate: String) async -> [Tim
     let major = userDefaultsClient.getValue(.major) as? String
 
     let key = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String
-    let response: [SingleTimeTableResponseDTO]
-    do {
-        response = try await neisClient.fetchDataOnNeis(
+
+    func performFetch(orgCode: String) async -> [SingleTimeTableResponseDTO] {
+        if let withMajor = try? await neisClient.fetchDataOnNeis(
             type.toSubURL(),
             queryItem: [
                 .init(name: "KEY", value: key),
@@ -164,29 +164,36 @@ private func fetchTimeTableFromServer(date: Date, reqDate: String) async -> [Tim
             ],
             key: type.toSubURL(),
             type: [SingleTimeTableResponseDTO].self
-        )
-    } catch {
-        do {
-            response = try await neisClient.fetchDataOnNeis(
-                type.toSubURL(),
-                queryItem: [
-                    .init(name: "KEY", value: key),
-                    .init(name: "Type", value: "json"),
-                    .init(name: "pIndex", value: "1"),
-                    .init(name: "pSize", value: "100"),
-                    .init(name: "ATPT_OFCDC_SC_CODE", value: orgCode),
-                    .init(name: "SD_SCHUL_CODE", value: code),
-                    .init(name: "GRADE", value: "\(grade)"),
-                    .init(name: "CLASS_NM", value: "\(`class`)"),
-                    .init(name: "TI_FROM_YMD", value: reqDate),
-                    .init(name: "TI_TO_YMD", value: reqDate)
-                ],
-                key: type.toSubURL(),
-                type: [SingleTimeTableResponseDTO].self
-            )
-        } catch {
-            response = []
+        ) {
+            return withMajor
         }
+        return (try? await neisClient.fetchDataOnNeis(
+            type.toSubURL(),
+            queryItem: [
+                .init(name: "KEY", value: key),
+                .init(name: "Type", value: "json"),
+                .init(name: "pIndex", value: "1"),
+                .init(name: "pSize", value: "100"),
+                .init(name: "ATPT_OFCDC_SC_CODE", value: orgCode),
+                .init(name: "SD_SCHUL_CODE", value: code),
+                .init(name: "GRADE", value: "\(grade)"),
+                .init(name: "CLASS_NM", value: "\(`class`)"),
+                .init(name: "TI_FROM_YMD", value: reqDate),
+                .init(name: "TI_TO_YMD", value: reqDate)
+            ],
+            key: type.toSubURL(),
+            type: [SingleTimeTableResponseDTO].self
+        )) ?? []
+    }
+
+    var response = await performFetch(orgCode: orgCode)
+    if response.isEmpty {
+        response = await healOrgCodeIfNeeded(
+            currentOrgCode: orgCode,
+            schoolCode: code,
+            apiKey: key,
+            retry: performFetch
+        )
     }
 
     return response
@@ -220,9 +227,9 @@ private func fetchTimeTableRangeFromServer(
     let endReqDate = formatDate(endAt)
 
     let key = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String
-    let response: [SingleTimeTableResponseDTO]
-    do {
-        response = try await neisClient.fetchDataOnNeis(
+
+    func performFetch(orgCode: String) async -> [SingleTimeTableResponseDTO] {
+        if let withMajor = try? await neisClient.fetchDataOnNeis(
             type.toSubURL(),
             queryItem: [
                 .init(name: "KEY", value: key),
@@ -239,29 +246,36 @@ private func fetchTimeTableRangeFromServer(
             ],
             key: type.toSubURL(),
             type: [SingleTimeTableResponseDTO].self
-        )
-    } catch {
-        do {
-            response = try await neisClient.fetchDataOnNeis(
-                type.toSubURL(),
-                queryItem: [
-                    .init(name: "KEY", value: key),
-                    .init(name: "Type", value: "json"),
-                    .init(name: "pIndex", value: "1"),
-                    .init(name: "pSize", value: "100"),
-                    .init(name: "ATPT_OFCDC_SC_CODE", value: orgCode),
-                    .init(name: "SD_SCHUL_CODE", value: code),
-                    .init(name: "GRADE", value: "\(grade)"),
-                    .init(name: "CLASS_NM", value: "\(classNum)"),
-                    .init(name: "TI_FROM_YMD", value: startReqDate),
-                    .init(name: "TI_TO_YMD", value: endReqDate)
-                ],
-                key: type.toSubURL(),
-                type: [SingleTimeTableResponseDTO].self
-            )
-        } catch {
-            response = []
+        ) {
+            return withMajor
         }
+        return (try? await neisClient.fetchDataOnNeis(
+            type.toSubURL(),
+            queryItem: [
+                .init(name: "KEY", value: key),
+                .init(name: "Type", value: "json"),
+                .init(name: "pIndex", value: "1"),
+                .init(name: "pSize", value: "100"),
+                .init(name: "ATPT_OFCDC_SC_CODE", value: orgCode),
+                .init(name: "SD_SCHUL_CODE", value: code),
+                .init(name: "GRADE", value: "\(grade)"),
+                .init(name: "CLASS_NM", value: "\(classNum)"),
+                .init(name: "TI_FROM_YMD", value: startReqDate),
+                .init(name: "TI_TO_YMD", value: endReqDate)
+            ],
+            key: type.toSubURL(),
+            type: [SingleTimeTableResponseDTO].self
+        )) ?? []
+    }
+
+    var response = await performFetch(orgCode: orgCode)
+    if response.isEmpty {
+        response = await healOrgCodeIfNeeded(
+            currentOrgCode: orgCode,
+            schoolCode: code,
+            apiKey: key,
+            retry: performFetch
+        )
     }
 
     let timeTables = response.map { $0.toDomain() }.uniqued()
@@ -298,6 +312,30 @@ private func syncTimeTableRangeFromServer(
         classNum: classNum,
         major: major
     )
+}
+
+/// 시간표 조회가 0건일 때, 저장된 학교코드로 현재 교육청코드를 재해석해 자동 복구를 시도한다.
+///
+/// 광주·전남 교육청 통합처럼 상위 소스에서 `ATPT_OFCDC_SC_CODE`가 바뀌면 저장된 orgCode로는
+/// 계속 빈 값이 내려온다. 새 코드를 찾으면 UserDefaults에 반영하고 원래 조회를 1회 재시도한다.
+private func healOrgCodeIfNeeded(
+    currentOrgCode: String,
+    schoolCode: String,
+    apiKey: String?,
+    retry: (String) async -> [SingleTimeTableResponseDTO]
+) async -> [SingleTimeTableResponseDTO] {
+    @Dependency(\.neisClient) var neisClient
+    @Dependency(\.userDefaultsClient) var userDefaultsClient: UserDefaultsClient
+
+    guard
+        let resolvedOrgCode = await neisClient.resolveOrgCode(schoolCode: schoolCode, apiKey: apiKey),
+        resolvedOrgCode != currentOrgCode
+    else {
+        return []
+    }
+
+    userDefaultsClient.setValue(.orgCode, resolvedOrgCode)
+    return await retry(resolvedOrgCode)
 }
 
 private extension Sequence where Element: Hashable {

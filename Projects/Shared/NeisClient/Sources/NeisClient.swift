@@ -32,6 +32,37 @@ public struct NeisClient {
     }
 }
 
+public extension NeisClient {
+    /// 저장된 표준학교코드(`SD_SCHUL_CODE`)로 현재 시도교육청코드(`ATPT_OFCDC_SC_CODE`)를 다시 조회한다.
+    ///
+    /// 광주·전남 교육청 통합처럼 상위 데이터 소스(NEIS)에서 교육청 코드가 바뀌면,
+    /// 기존에 저장해 둔 `orgCode`로는 급식/시간표가 0건으로 내려온다.
+    /// 표준학교코드는 통합과 무관하게 유지되므로, 이를 기준으로 현재 교육청 코드를 재해석해 자동 복구한다.
+    func resolveOrgCode(schoolCode: String, apiKey: String?) async -> String? {
+        let response = try? await fetchDataOnNeis(
+            "schoolInfo",
+            queryItem: [
+                .init(name: "KEY", value: apiKey),
+                .init(name: "Type", value: "json"),
+                .init(name: "pIndex", value: "1"),
+                .init(name: "pSize", value: "1"),
+                .init(name: "SD_SCHUL_CODE", value: schoolCode)
+            ],
+            key: "schoolInfo",
+            type: [OrgCodeResolveDTO].self
+        )
+        return response?.first?.orgCode
+    }
+}
+
+private struct OrgCodeResolveDTO: Decodable {
+    let orgCode: String
+
+    enum CodingKeys: String, CodingKey {
+        case orgCode = "ATPT_OFCDC_SC_CODE"
+    }
+}
+
 extension NeisClient: DependencyKey {
     public static var liveValue: NeisClient = NeisClient()
 }
