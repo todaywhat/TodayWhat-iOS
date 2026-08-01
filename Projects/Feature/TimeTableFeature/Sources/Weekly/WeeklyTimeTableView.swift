@@ -1,7 +1,10 @@
+import AppRouteClient
 import ComposableArchitecture
 import DesignSystem
 import Entity
 import SwiftUI
+import TWLog
+import UIKit
 
 @available(iOS 16.0, *)
 private struct ColumnBorder: Shape {
@@ -53,6 +56,8 @@ public struct WeeklyTimeTableView: View {
     let store: StoreOf<WeeklyTimeTableCore>
     @ObservedObject var viewStore: ViewStoreOf<WeeklyTimeTableCore>
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @State private var activeShareSheet: ShareSheetItem?
+    @State private var pendingWidgetShareRequest: PendingWidgetTimeTableShareRequest?
 
     public init(store: StoreOf<WeeklyTimeTableCore>) {
         self.store = store
@@ -89,15 +94,15 @@ public struct WeeklyTimeTableView: View {
                     }
 
                     if let weeklyTimeTable = viewStore.weeklyTimeTable {
-                        if shouldUseFlexibleWidth(weeklyTimeTable: weeklyTimeTable) {
-                            timeTableGrid(weeklyTimeTable: weeklyTimeTable)
-                                .frame(alignment: .top)
-                        } else {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                timeTableGrid(weeklyTimeTable: weeklyTimeTable)
-                            }
-                            .frame(alignment: .top)
-                        }
+                      if shouldUseFlexibleWidth(weeklyTimeTable: weeklyTimeTable) {
+                          timeTableGrid(weeklyTimeTable: weeklyTimeTable)
+                              .frame(alignment: .top)
+                      } else {
+                          ScrollView(.horizontal, showsIndicators: false) {
+                              timeTableGrid(weeklyTimeTable: weeklyTimeTable)
+                          }
+                          .frame(alignment: .top)
+                      }
                     }
                 }
                 .frame(minHeight: 560, alignment: .top)
@@ -108,9 +113,20 @@ public struct WeeklyTimeTableView: View {
         }
         .onAppear {
             viewStore.send(.onAppear, animation: .default)
+            attemptPresentPendingWidgetShare()
+        }
+        .onChange(of: viewStore.weeklyTimeTable) { _ in
+            attemptPresentPendingWidgetShare()
         }
         .refreshable {
             viewStore.send(.refresh, animation: .default)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .todayWhatWidgetTimeTableShareRequested)) { notification in
+            pendingWidgetShareRequest = PendingWidgetTimeTableShareRequest(notification: notification)
+            attemptPresentPendingWidgetShare()
+        }
+        .sheet(item: $activeShareSheet) { shareSheet in
+            ActivityViewController(activityItems: shareSheet.items)
         }
     }
 
@@ -291,6 +307,43 @@ public struct WeeklyTimeTableView: View {
         }
     }
 
+    private func weeklyTimeTableShareText(weeklyTimeTable: WeeklyTimeTableCore.WeeklyTimeTable) -> String {
+        let dateRange = [weeklyTimeTable.dates.first, weeklyTimeTable.dates.last]
+            .compactMap { $0 }
+        let title = if dateRange.count == 2 {
+            "[오늘뭐임] 이번 주 시간표 (\(dateRange[0]) ~ \(dateRange[1]))"
+        } else {
+            "[오늘뭐임] 이번 주 시간표"
+        }
+
+        let dayTexts = weeklyTimeTable.fullWeekdays.indices.compactMap { index -> String? in
+            let subjects = weeklyTimeTable.subjects[index]
+                .enumerated()
+                .compactMap { offset, subject in
+                    subject.isEmpty ? nil : "\(offset + 1)교시 \(subject)"
+                }
+
+            guard !subjects.isEmpty else { return nil }
+            let dateText = weeklyTimeTable.dates.indices.contains(index) ? " (\(weeklyTimeTable.dates[index]))" : ""
+            return "\(weeklyTimeTable.fullWeekdays[index])\(dateText)\n\(subjects.joined(separator: "\n"))"
+        }
+
+        return ([title] + dayTexts).joined(separator: "\n\n")
+    }
+
+    private func attemptPresentPendingWidgetShare() {
+        guard let request = pendingWidgetShareRequest,
+              let weeklyTimeTable = viewStore.weeklyTimeTable,
+              request.matches(weeklyTimeTable: weeklyTimeTable)
+        else {
+            return
+        }
+
+        activeShareSheet = ShareSheetItem(items: [weeklyTimeTableShareText(weeklyTimeTable: weeklyTimeTable)])
+        TWLog.event(ShareTimeTableEventLog())
+        pendingWidgetShareRequest = nil
+    }
+
     private func shouldUseFlexibleWidth(weeklyTimeTable: WeeklyTimeTableCore.WeeklyTimeTable) -> Bool {
         return horizontalSizeClass == .regular || !viewStore.showWeekend
     }
@@ -306,4 +359,32 @@ public struct WeeklyTimeTableView: View {
             return isToday ? .caption1 : .caption1
         }
     }
+}
+
+private struct PendingWidgetTimeTableShareRequest: Equatable {
+    let dateString: String?
+
+    init(notification: Notification) {
+        self.dateString = notification.userInfo?[TodayWhatAppRouteUserInfoKey.dateString] as? String
+    }
+
+    func matches(weeklyTimeTable: WeeklyTimeTableCore.WeeklyTimeTable) -> Bool {
+        guard let dateString else { return true }
+        return weeklyTimeTable.dates.contains(dateString)
+    }
+}
+
+private struct ShareSheetItem: Identifiable {
+    let id = UUID()
+    let items: [Any]
+}
+
+private struct ActivityViewController: UIViewControllerRepresentable {
+    let activityItems: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }

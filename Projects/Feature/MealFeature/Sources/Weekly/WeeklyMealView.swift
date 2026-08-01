@@ -1,3 +1,4 @@
+import AppRouteClient
 import ComposableArchitecture
 import DesignSystem
 import Entity
@@ -13,6 +14,8 @@ public struct WeeklyMealView: View {
     @Environment(\.displayScale) var displayScale
     @State private var shouldShowTodayButton = false
     @State private var todayButtonDirection: TodayButtonDirection = .up
+    @State private var activeShareSheet: ShareSheetItem?
+    @State private var pendingWidgetShareRequest: PendingWidgetMealShareRequest?
 
     private static let mealTypes: [MealType] = [.breakfast, .lunch, .dinner]
 
@@ -71,6 +74,7 @@ public struct WeeklyMealView: View {
                     }
                     .onChange(of: viewStore.weeklyMeals) { _ in
                         scrollToToday(proxy: proxy)
+                        attemptPresentPendingWidgetShare()
                     }
                     .refreshable {
                         viewStore.send(.refresh, animation: .default)
@@ -78,6 +82,10 @@ public struct WeeklyMealView: View {
                     .onPreferenceChange(DayFramePreferenceKey.self) { frames in
                         let containerFrame = outerGeometry.frame(in: .global)
                         updateTodayButtonVisibility(containerFrame: containerFrame, dayFrames: frames)
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: .todayWhatWidgetMealShareRequested)) { notification in
+                        pendingWidgetShareRequest = PendingWidgetMealShareRequest(notification: notification)
+                        attemptPresentPendingWidgetShare()
                     }
 
                     if shouldShowTodayButton {
@@ -93,6 +101,9 @@ public struct WeeklyMealView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                .sheet(item: $activeShareSheet) { shareSheet in
+                    ActivityViewController(activityItems: shareSheet.items)
+                }
             }
         }
     }
@@ -160,14 +171,16 @@ public struct WeeklyMealView: View {
         let shareText: String = "\(dateText)\n\(joinedMeals)"
 
         let mealCardView = VStack(alignment: .leading, spacing: 12) {
-            HStack(alignment: .firstTextBaseline) {
+            HStack(alignment: .center, spacing: 8) {
                 Text(titleText)
                     .twFont(.headline4, color: .textPrimary)
 
-                Spacer()
+                Spacer(minLength: 8)
 
                 Text(calLabel)
                     .twFont(.body2, color: .unselectedPrimary)
+
+                shareButton(shareText: shareText, accessibilityLabel: "\(titleText) 공유")
             }
 
             Divider()
@@ -256,6 +269,57 @@ public struct WeeklyMealView: View {
                     .stroke(isHighlighted ? Color.extraBlack : Color.clear, lineWidth: 2)
             }
             .padding(.horizontal, 16)
+    }
+
+    @ViewBuilder
+    private func shareButton(shareText: String, accessibilityLabel: String) -> some View {
+      ShareLink(item: shareText) {
+        Image(systemName: "square.and.arrow.up")
+            .font(.system(size: 16, weight: .semibold))
+            .foregroundStyle(Color.textSecondary)
+            .contentShape(Rectangle())
+            .accessibilityHidden(true)
+      }
+        .simultaneousGesture(
+          TapGesture()
+            .onEnded({
+              TWLog.event(ShareMealEventLog())
+            })
+        )
+        .buttonStyle(.plain)
+        .accessibilityLabel(accessibilityLabel)
+        .accessibilityHint("공유 시트를 엽니다")
+        .accessibilityInputLabels([accessibilityLabel, "급식 공유", "공유"])
+        .accessibilitySortPriority(3)
+        .offset(y: -2)
+    }
+
+    private func attemptPresentPendingWidgetShare() {
+        guard let request = pendingWidgetShareRequest,
+              let shareText = widgetMealShareText(for: request)
+        else {
+            return
+        }
+
+        activeShareSheet = ShareSheetItem(items: [shareText])
+        TWLog.event(ShareMealEventLog())
+        pendingWidgetShareRequest = nil
+    }
+
+    private func widgetMealShareText(for request: PendingWidgetMealShareRequest) -> String? {
+        guard let mealType = request.mealType,
+              let targetDate = request.targetDate,
+              let dayMeal = viewStore.weeklyMeals.first(where: { calendar.isDate($0.date, inSameDayAs: targetDate) })
+        else {
+            return nil
+        }
+
+        let subMeal = dayMeal.meal.mealByType(type: mealType)
+        let mealTexts = subMeal.meals.map { mealDisplay(meal: $0) }
+        guard !mealTexts.isEmpty else { return nil }
+
+        let dateText = "\(dayMeal.date.formatted(.dateTime.month().day().weekday(.wide))) \(mealType.display)"
+        return "\(dateText)\n\(mealTexts.joined(separator: "\n"))"
     }
 
     private func mealDisplay(meal: String) -> String {
@@ -412,4 +476,47 @@ private enum TodayButtonDirection {
             return "arrow.down"
         }
     }
+}
+
+private struct PendingWidgetMealShareRequest: Equatable {
+    let dateString: String?
+    let mealTypeString: String?
+
+    init(notification: Notification) {
+        self.dateString = notification.userInfo?[TodayWhatAppRouteUserInfoKey.dateString] as? String
+        self.mealTypeString = notification.userInfo?[TodayWhatAppRouteUserInfoKey.mealType] as? String
+    }
+
+    var targetDate: Date? {
+        guard let dateString else { return nil }
+        return TodayWhatAppRoute.decodeDate(dateString)
+    }
+
+    var mealType: MealType? {
+        switch mealTypeString?.lowercased() {
+        case "breakfast":
+            return .breakfast
+        case "lunch":
+            return .lunch
+        case "dinner":
+            return .dinner
+        default:
+            return nil
+        }
+    }
+}
+
+private struct ShareSheetItem: Identifiable {
+    let id = UUID()
+    let items: [Any]
+}
+
+private struct ActivityViewController: UIViewControllerRepresentable {
+    let activityItems: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }

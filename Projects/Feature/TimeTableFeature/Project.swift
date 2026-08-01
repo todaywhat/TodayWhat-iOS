@@ -7,6 +7,7 @@ let project = Project.module(
     targets: [
         .implements(module: .feature(.TimeTableFeature), dependencies: [
             .feature(target: .BaseFeature),
+            .shared(target: .AppRouteClient),
             .shared(target: .Entity),
             .shared(target: .LocalDatabaseClient),
             .shared(target: .TimeTableClient),

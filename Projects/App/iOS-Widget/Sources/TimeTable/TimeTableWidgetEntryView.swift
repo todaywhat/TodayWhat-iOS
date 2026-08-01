@@ -1,3 +1,4 @@
+import AppRouteClient
 import Dependencies
 import DesignSystem
 import Entity
@@ -45,6 +46,21 @@ private struct SmallTimeTableWidgetView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: 6) {
+                Text(getTimeTableText(date: entry.date))
+                    .twFont(.caption1, color: .textSecondary)
+
+                Spacer(minLength: 4)
+
+                WidgetShareLink(
+                    destination: TodayWhatAppRoute.timetableShare(date: entry.date).url,
+                    label: "시간표 공유",
+                    iconSize: 11,
+                    tapSize: 22
+                )
+            }
+            .padding(.bottom, 2)
+
             if entry.timeTable.isEmpty {
                 Spacer()
 
@@ -78,6 +94,27 @@ private struct SmallTimeTableWidgetView: View {
             }
         }
         .padding(12)
+    }
+
+    private func getTimeTableText(date: Date) -> String {
+        let calendar = Calendar.current
+        let now = Date()
+
+        if calendar.isDate(date, inSameDayAs: now) {
+            return "오늘의 [시간표]"
+        }
+
+        let components = calendar.dateComponents([.day], from: now, to: date)
+
+        if let days = components.day, days == 1 {
+            return "내일의 [시간표]"
+        }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "EEEE"
+        let dayOfWeek = dateFormatter.string(from: date)
+        return "\(dayOfWeek) [시간표]"
     }
 }
 
@@ -125,6 +162,11 @@ private struct MediumTimeTableWidgetView: View {
                         .twFont(.caption1, color: .textPrimary)
 
                     Spacer()
+
+                    WidgetShareLink(
+                        destination: TodayWhatAppRoute.timetableShare(date: entry.date).url,
+                        label: "시간표 공유"
+                    )
 
                     Text("\(entry.date.month)월 \(entry.date.day)일 \(entry.date.weekdayString)")
                         .twFont(.caption1, color: .textSecondary)
@@ -243,6 +285,11 @@ private struct LargeTimeTableWidgetView: View {
 
                 Spacer()
 
+                WidgetShareLink(
+                    destination: TodayWhatAppRoute.timetableShare(date: entry.date).url,
+                    label: "시간표 공유"
+                )
+
                 Text("\(entry.date.month)월 \(entry.date.day)일 \(entry.date.weekdayString)")
                     .twFont(.caption1, color: .textSecondary)
             }
@@ -311,5 +358,25 @@ private struct LargeTimeTableWidgetView: View {
         dateFormatter.dateFormat = "EEEE"
         let dayOfWeek = dateFormatter.string(from: date)
         return "\(dayOfWeek) [시간표]"
+    }
+}
+
+private struct WidgetShareLink: View {
+    let destination: URL
+    let label: String
+    var iconSize: CGFloat = 12
+    var tapSize: CGFloat = 24
+
+    var body: some View {
+        Link(destination: destination) {
+            Image(systemName: "square.and.arrow.up")
+                .font(.system(size: iconSize, weight: .semibold))
+                .foregroundStyle(Color.textSecondary)
+                .frame(width: tapSize, height: tapSize)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(label)
+        .accessibilityHint("앱을 열어 공유 시트를 엽니다")
     }
 }

@@ -275,11 +275,41 @@ private extension MainView {
     }
 
     func apply(route: TodayWhatAppRoute) {
-        switch route {
-        case .timetable:
+        if let date = route.date {
+            viewStore.send(.dateSelected(date), animation: .default)
+        }
+
+        switch route.kind {
+        case .timetable, .timetableShare:
             viewStore.send(.tabTapped(1), animation: .default)
-        case .home, .meal:
+        case .home, .meal, .mealShareBreakfast, .mealShareLunch, .mealShareDinner:
             viewStore.send(.tabTapped(0), animation: .default)
+        }
+
+        guard route.isShareRoute else { return }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            switch route.kind {
+            case .mealShareBreakfast, .mealShareLunch, .mealShareDinner:
+                NotificationCenter.default.post(
+                    name: .todayWhatWidgetMealShareRequested,
+                    object: nil,
+                    userInfo: [
+                        TodayWhatAppRouteUserInfoKey.dateString: route.dateString as Any,
+                        TodayWhatAppRouteUserInfoKey.mealType: route.mealTypeString as Any,
+                    ]
+                )
+            case .timetableShare:
+                NotificationCenter.default.post(
+                    name: .todayWhatWidgetTimeTableShareRequested,
+                    object: nil,
+                    userInfo: [
+                        TodayWhatAppRouteUserInfoKey.dateString: route.dateString as Any,
+                    ]
+                )
+            case .home, .meal, .timetable:
+                break
+            }
         }
     }
 }

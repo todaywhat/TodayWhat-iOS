@@ -7,6 +7,7 @@ let project = Project.module(
     targets: [
         .implements(module: .feature(.MealFeature), dependencies: [
             .feature(target: .BaseFeature),
+            .shared(target: .AppRouteClient),
             .shared(target: .MealClient),
             .shared(target: .UserDefaultsClient),
             .shared(target: .LocalDatabaseClient),

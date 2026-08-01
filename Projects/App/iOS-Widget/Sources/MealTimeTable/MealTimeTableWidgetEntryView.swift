@@ -1,3 +1,4 @@
+import AppRouteClient
 import DesignSystem
 import Entity
 import SwiftUI
@@ -91,6 +92,11 @@ private struct MediumMealTimeTableWidgetView: View {
                         .twFont(.headline4, color: .textPrimary)
 
                     Spacer()
+
+                    WidgetShareLink(
+                        destination: TodayWhatAppRoute.timetableShare(date: entry.timeTableDate).url,
+                        label: "시간표 공유"
+                    )
                 }
 
                 if entry.timetables.isEmpty {
@@ -140,6 +146,11 @@ private struct MediumMealTimeTableWidgetView: View {
                         .twFont(.headline4, color: .extraBlack)
 
                     Spacer()
+
+                    WidgetShareLink(
+                        destination: TodayWhatAppRoute.mealShare(mealType: entry.mealPartTime.routeKey, date: entry.mealDate).url,
+                        label: "\(entry.mealPartTime.display) 공유"
+                    )
                 }
 
                 LazyHGrid(rows: fiveRows, spacing: 0) {
@@ -229,5 +240,38 @@ private extension Meal {
         case .dinner:
             return dinner
         }
+    }
+}
+
+private extension MealPartTime {
+    var routeKey: String {
+        switch self {
+        case .breakfast:
+            return "breakfast"
+        case .lunch:
+            return "lunch"
+        case .dinner:
+            return "dinner"
+        }
+    }
+}
+
+private struct WidgetShareLink: View {
+    let destination: URL
+    let label: String
+    var iconSize: CGFloat = 12
+    var tapSize: CGFloat = 24
+
+    var body: some View {
+        Link(destination: destination) {
+            Image(systemName: "square.and.arrow.up")
+                .font(.system(size: iconSize, weight: .semibold))
+                .foregroundStyle(Color.textSecondary)
+                .frame(width: tapSize, height: tapSize)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(label)
+        .accessibilityHint("앱을 열어 공유 시트를 엽니다")
     }
 }

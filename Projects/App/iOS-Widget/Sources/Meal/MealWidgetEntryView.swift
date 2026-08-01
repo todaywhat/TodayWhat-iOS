@@ -1,4 +1,5 @@
 import AppIntents
+import AppRouteClient
 import Dependencies
 import DesignSystem
 import Entity
@@ -72,9 +73,20 @@ private struct SmallMealWidgetView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(getMealText(date: entry.date))
-                .frame(maxHeight: .infinity)
-                .twFont(.caption1, color: .textSecondary)
+            HStack(spacing: 6) {
+                Text(getMealText(date: entry.date))
+                    .frame(maxHeight: .infinity, alignment: .leading)
+                    .twFont(.caption1, color: .textSecondary)
+
+                Spacer(minLength: 4)
+
+                WidgetShareLink(
+                    destination: TodayWhatAppRoute.mealShare(mealType: entry.mealPartTime.routeKey, date: entry.date).url,
+                    label: "\(entry.mealPartTime.display) 공유",
+                    iconSize: 11,
+                    tapSize: 22
+                )
+            }
 
             ForEach(entry.meal.meals(mealPartTime: entry.mealPartTime).meals, id: \.hashValue) { meal in
                 HStack {
@@ -168,6 +180,11 @@ private struct MediumMealWidgetView: View {
                         .twFont(.body3, color: .extraBlack)
 
                     Spacer()
+
+                    WidgetShareLink(
+                        destination: TodayWhatAppRoute.mealShare(mealType: entry.mealPartTime.routeKey, date: entry.date).url,
+                        label: "\(entry.mealPartTime.display) 공유"
+                    )
 
                     HStack(spacing: 0) {
                         if #available(iOSApplicationExtension 17.0, *) {
@@ -306,6 +323,11 @@ private struct LargeMealWidgetView: View {
 
                 Spacer()
 
+                WidgetShareLink(
+                    destination: TodayWhatAppRoute.mealShare(mealType: entry.mealPartTime.routeKey, date: entry.date).url,
+                    label: "\(entry.mealPartTime.display) 공유"
+                )
+
                 HStack(spacing: 0) {
                     if #available(iOSApplicationExtension 17.0, *) {
                         ForEach([MealPartTime.breakfast, .lunch, .dinner], id: \.self) { partTime in
@@ -397,6 +419,39 @@ private struct LargeMealWidgetView: View {
     private func isMealContainsAllergy(meal: String) -> Bool {
         entry.allergyList
             .first { meal.contains("(\($0.number)") || meal.contains(".\($0.number)") } != nil
+    }
+}
+
+private extension MealPartTime {
+    var routeKey: String {
+        switch self {
+        case .breakfast:
+            return "breakfast"
+        case .lunch:
+            return "lunch"
+        case .dinner:
+            return "dinner"
+        }
+    }
+}
+
+private struct WidgetShareLink: View {
+    let destination: URL
+    let label: String
+    var iconSize: CGFloat = 12
+    var tapSize: CGFloat = 24
+
+    var body: some View {
+        Link(destination: destination) {
+            Image(systemName: "square.and.arrow.up")
+                .font(.system(size: iconSize, weight: .semibold))
+                .foregroundStyle(Color.textSecondary)
+                .frame(width: tapSize, height: tapSize)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(label)
+        .accessibilityHint("앱을 열어 공유 시트를 엽니다")
     }
 }
 
