@@ -138,9 +138,9 @@ private func fetchMealFromServer(date: Date, reqDate: String) async -> Meal {
     }
 
     let key = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String
-    let response: [SingleMealResponseDTO]
-    do {
-        response = try await neisClient.fetchDataOnNeis(
+
+    func performFetch(orgCode: String) async -> [SingleMealResponseDTO] {
+        (try? await neisClient.fetchDataOnNeis(
             "mealServiceDietInfo",
             queryItem: [
                 .init(name: "KEY", value: key),
@@ -154,9 +154,17 @@ private func fetchMealFromServer(date: Date, reqDate: String) async -> Meal {
             ],
             key: "mealServiceDietInfo",
             type: [SingleMealResponseDTO].self
+        )) ?? []
+    }
+
+    var response = await performFetch(orgCode: orgCode)
+    if response.isEmpty {
+        response = await healOrgCodeIfNeeded(
+            currentOrgCode: orgCode,
+            schoolCode: code,
+            apiKey: key,
+            retry: performFetch
         )
-    } catch {
-        response = []
     }
 
     let breakfast = parseMeal(response: response, type: .breakfast)
@@ -192,9 +200,9 @@ private func fetchMealsFromServer(
     let endDate = calendar.date(byAdding: .day, value: dayCount - 1, to: startDate) ?? startDate
 
     let key = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String
-    let response: [SingleMealResponseDTO]
-    do {
-        response = try await neisClient.fetchDataOnNeis(
+
+    func performFetch(orgCode: String) async -> [SingleMealResponseDTO] {
+        (try? await neisClient.fetchDataOnNeis(
             "mealServiceDietInfo",
             queryItem: [
                 .init(name: "KEY", value: key),
@@ -208,9 +216,17 @@ private func fetchMealsFromServer(
             ],
             key: "mealServiceDietInfo",
             type: [SingleMealResponseDTO].self
+        )) ?? []
+    }
+
+    var response = await performFetch(orgCode: orgCode)
+    if response.isEmpty {
+        response = await healOrgCodeIfNeeded(
+            currentOrgCode: orgCode,
+            schoolCode: code,
+            apiKey: key,
+            retry: performFetch
         )
-    } catch {
-        response = []
     }
 
     let groupedByDate = Dictionary(grouping: response, by: \.serviceDate)
@@ -262,6 +278,30 @@ private func syncMealsFromServer(
         orgCode: orgCode,
         code: code
     )
+}
+
+/// 급식 조회가 0건일 때, 저장된 학교코드로 현재 교육청코드를 재해석해 자동 복구를 시도한다.
+///
+/// 광주·전남 교육청 통합처럼 상위 소스에서 `ATPT_OFCDC_SC_CODE`가 바뀌면 저장된 orgCode로는
+/// 계속 빈 값이 내려온다. 새 코드를 찾으면 UserDefaults에 반영하고 원래 조회를 1회 재시도한다.
+private func healOrgCodeIfNeeded(
+    currentOrgCode: String,
+    schoolCode: String,
+    apiKey: String?,
+    retry: (String) async -> [SingleMealResponseDTO]
+) async -> [SingleMealResponseDTO] {
+    @Dependency(\.neisClient) var neisClient
+    @Dependency(\.userDefaultsClient) var userDefaultsClient: UserDefaultsClient
+
+    guard
+        let resolvedOrgCode = await neisClient.resolveOrgCode(schoolCode: schoolCode, apiKey: apiKey),
+        resolvedOrgCode != currentOrgCode
+    else {
+        return []
+    }
+
+    userDefaultsClient.setValue(.orgCode, resolvedOrgCode)
+    return await retry(resolvedOrgCode)
 }
 
 private func parseMeal(response: [SingleMealResponseDTO], type: MealType) -> Meal.SubMeal {
