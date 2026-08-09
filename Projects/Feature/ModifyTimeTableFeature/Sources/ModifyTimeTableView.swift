@@ -18,21 +18,32 @@ public struct ModifyTimeTableView: View {
     }
 
     public var body: some View {
-        let toastText: String = "\(viewStore.weekdayString) 시간표 저장완료"
         VStack {
             TopTabbarView(
                 currentTab: viewStore.binding(
                     get: \.currentTab,
                     send: ModifyTimeTableCore.Action.tabChanged
                 ),
-                items: ["월", "화", "수", "목", "금", "토", "일"]
+                items: ["월", "화", "수", "목", "금", "토", "일"],
+                badgedIndices: viewStore.customizedTabs
             )
             .padding(.top, 16)
             .animation(nil)
 
-            HStack {
+            HStack(spacing: 8) {
                 Text("교시 순서")
                     .twFont(.body2, color: .extraBlack)
+
+                if let customStatus {
+                    Text(customStatus.title)
+                        .twFont(.body3, color: customStatus.color)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 2)
+                        .background {
+                            Capsule()
+                                .fill(customStatus.color.opacity(0.12))
+                        }
+                }
 
                 Spacer()
 
@@ -42,6 +53,14 @@ public struct ModifyTimeTableView: View {
 
                     Text("시간표 가져오는 중...")
                         .twFont(.body3, color: .textSecondary)
+                } else if viewStore.isCurrentTabCustomized {
+                    Button {
+                        viewStore.send(.revertButtonDidTap)
+                    } label: {
+                        Text("되돌리기")
+                            .twFont(.body3, color: .textSecondary)
+                            .underline()
+                    }
                 }
             }
             .frame(height: 24)
@@ -132,6 +151,9 @@ public struct ModifyTimeTableView: View {
             guard !isFocused else { return }
             focusIndex = nil
         })
+        .onChange(of: viewStore.currentTab, perform: { _ in
+            focusIndex = nil
+        })
         .background(Color.backgroundMain)
         .onAppear {
             viewStore.send(.onAppear)
@@ -149,16 +171,27 @@ public struct ModifyTimeTableView: View {
                     viewStore.send(.saveButtonDidTap)
                 } label: {
                     Text("저장")
-                        .twFont(.body2, color: .extraBlack)
+                        .twFont(.body2, color: viewStore.hasUnsavedChanges ? .extraBlack : .unselectedPrimary)
                 }
+                .disabled(!viewStore.hasUnsavedChanges)
             }
         }
+        .alert(store: store.scope(state: \.$alert, action: \.alert))
         .twToast(
             isShowing: viewStore.binding(
                 get: \.isShowingSuccessToast,
                 send: ModifyTimeTableCore.Action.toastDismissed
             ),
-            text: toastText
+            text: viewStore.toastText
         )
+    }
+
+    private var customStatus: (title: String, color: Color)? {
+        if viewStore.isCurrentTabEdited {
+            return ("저장 안 됨", .point)
+        } else if viewStore.isCurrentTabCustomized {
+            return ("커스텀", .textSecondary)
+        }
+        return nil
     }
 }
